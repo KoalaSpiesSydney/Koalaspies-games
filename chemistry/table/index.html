@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cpath d=%27M40 20h20v22l18 34a8 8 0 0 1-7 12H29a8 8 0 0 1-7-12l18-34z%27 fill=%27none%27 stroke=%27%23f8fafc%27 stroke-width=%277%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M34 60h32%27 stroke=%27%23f8fafc%27 stroke-width=%277%27/%3E%3C/svg%3E">
+  <title>Chemistry Matching Games · Koalaspies</title>
+  <meta name="description" content="Seven free chemistry matching games: element symbols and uses, where elements come from, everyday names and formulas, what is inside a formula, word equations, and laboratory hazard signs.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650;8..60,700;8..60,800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --surface: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: rgba(15,23,42,.10);
+      --accent: #2563eb;
+      --header: #14161c;
+      --b1: #2f7d5d;   /* Beginner           */
+      --b2: #a5673f;   /* Elementary         */
+      --b3: #2563eb;   /* Intermediate       */
+      --b4: #6d28d9;   /* Upper intermediate */
+      --b5: #0f766e;   /* Laboratory safety  */
+      --sans: "Source Sans 3", system-ui, sans-serif;
+      --serif: "Source Serif 4", Georgia, serif;
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.75;
+      background:
+        radial-gradient(circle at top, #fffce6 0%, #f7f5ea 40%, #f0f4fa 100%);
+      background-size: 140% 140%;
+      background-attachment: fixed;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      background: var(--header);
+      background-image: linear-gradient(160deg, #1b1f28 0%, #14161c 55%, #0d0f14 100%);
+      overflow: hidden;
+      padding-block: 18px;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: grid-drift 24s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes grid-drift {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(48px,48px); }
+    }
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 4px;
+      min-width: 0;
+    }
+    .brand-top {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 9vw, 8.4rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      text-decoration: none;
+      color: #f8fafc;
+      background: linear-gradient(100deg, #ffffff 0%, #ffffff 30%, #a5c4fd 42%, #ffffff 60%, #ffffff 100%);
+      background-size: 250% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3.5s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -50% center; }
+    }
+    .qr-box {
+      flex: 0 0 auto;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 8px;
+      line-height: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .qr-box img { width: 60px; height: 60px; display: block; }
+
+    /* ===== INTRO ===== */
+    main.wrap { padding-block: 26px 56px; }
+
+    .page-intro { margin: 0 0 34px; }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 1.2rem + 2.6vw, 3.2rem);
+      margin: 0 0 12px;
+      line-height: 1.12;
+      text-align: center;
+    }
+    .intro {
+      font-size: clamp(1.02rem, .98rem + .3vw, 1.18rem);
+      color: var(--muted);
+      margin: 0 auto 26px;
+      max-width: 80ch;
+      text-align: center;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 0 0 26px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .fact { text-align: center; }
+    .fact .n {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .fact .l {
+      display: block;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .for-who {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .for-who p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    .for-who b {
+      display: block;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    /* ===== CARDS ===== */
+    .av-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 26px;
+    }
+    .av-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.08);
+    }
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .level-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: #fff;
+      border-radius: 999px;
+      padding: 2px 10px;
+      background: var(--accent);
+    }
+    .level-tag.b1 { background: var(--b1); }
+    .level-tag.b2 { background: var(--b2); }
+    .level-tag.b3 { background: var(--b3); }
+    .level-tag.b4 { background: var(--b4); }
+    .level-tag.b5 { background: var(--b5); }
+    .band {
+      font-size: .78rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .av-card strong { display: block; font-size: 1.05rem; margin-bottom: 2px; }
+    .av-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+    .av-desc { font-size: 0.93rem; line-height: 1.55; }
+    .sample {
+      margin-top: 10px;
+      font-size: 1.05rem;
+      letter-spacing: .06em;
+      color: var(--ink);
+      opacity: .55;
+      line-height: 1.5;
+      overflow-wrap: break-word;
+    }
+    .av-card iframe {
+      width: 100%;
+      height: 440px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-top: 12px;
+      background: #fff;
+    }
+    .open-full-btn {
+      align-self: flex-start;
+      margin-top: 12px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .open-full-btn.b1 { background: var(--b1); }
+    .open-full-btn.b2 { background: var(--b2); }
+    .open-full-btn.b3 { background: var(--b3); }
+    .open-full-btn.b4 { background: var(--b4); }
+    .open-full-btn.b5 { background: var(--b5); }
+    .open-full-btn:hover { filter: brightness(.9); }
+
+    /* ===== Laboratory safety section ===== */
+    .capstone { margin-top: 52px; }
+    .cap-head {
+      max-width: 70ch;
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+    .cap-rule {
+      width: 54px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--b5);
+      margin: 0 auto 12px;
+    }
+    .cap-head h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 1rem + 1.4vw, 1.95rem);
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+    .cap-head p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .capstone .av-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 520px));
+      justify-content: center;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--header);
+      color: rgba(248,250,252,.75);
+      padding: 18px 0 22px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .footer-nav a {
+      color: rgba(248,250,252,.9);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE (widest first) ===== */
+    @media (min-width: 1400px) {
+      .brand-top { font-size: 8.8rem; }
+      .av-card iframe { height: 480px; }
+    }
+    @media (max-width: 900px) {
+      .av-grid, .capstone .av-grid { grid-template-columns: 1fr; }
+      .av-card iframe { height: 420px; }
+      .facts { grid-template-columns: repeat(3, 1fr); gap: 18px 10px; }
+      .for-who { grid-template-columns: 1fr; gap: 14px; }
+    }
+    @media (max-width: 380px) {
+      .facts { gap: 6px; }
+      .fact .l { font-size: .68rem; letter-spacing: .05em; }
+    }
+    @media (max-width: 560px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-inline: 14px;
+      }
+      .brand-block { align-items: center; text-align: center; }
+      .brand-top { font-size: clamp(2rem, 11vw, 3rem); letter-spacing: 1px; }
+      .qr-box { align-self: flex-start; }
+      .qr-box img { width: 50px; height: 50px; }
+      .av-card { padding: 16px 14px 14px; }
+      .av-card iframe { height: 400px; }
+      .av-grid { gap: 18px; }
+      main.wrap { padding-block: 18px 36px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .brand-top, header::before { animation: none; }
+      .brand-top { -webkit-text-fill-color: #f8fafc; color: #f8fafc; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="qr-box">
+      <img id="qrIcon"
+           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fmodernenglish.au"
+           alt="QR code linking to this page">
+    </div>
+    <div class="brand-block">
+      <a href="index.html" class="brand-top">Koalaspies</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="page-intro">
+    <h1>Seven Ways to Revise the Periodic Table</h1>
+
+    <p class="intro">
+      Seven matching games, easiest first. Each one asks a different question about the same
+      chemistry: what a symbol stands for, what an element is used for, where it is dug out of
+      the ground, what an everyday substance is really called, what is inside a formula, and what
+      a reaction makes. Play them in order or drop into the one that matches the topic you are
+      teaching this week.
+    </p>
+
+    <div class="facts">
+      <div class="fact"><span class="n">7</span><span class="l">Games</span></div>
+      <div class="fact"><span class="n">118</span><span class="l">Elements</span></div>
+      <div class="fact"><span class="n">232</span><span class="l">Question cards</span></div>
+    </div>
+
+    <div class="for-who">
+      <p>
+        <b>Teachers</b>
+        Project a game on the board and play it as a class, or hand the link to students for
+        revision. Every game deals six fresh pairs each round and keeps going until the whole
+        list has been covered, so it never runs out mid-lesson.
+      </p>
+      <p>
+        <b>Students</b>
+        Work through them on your own, on a phone, tablet or computer. Nothing is timed and
+        nothing is scored — turn over a card, read the clue, and see whether you can place it.
+      </p>
+    </div>
+  </div>
+
+  <div class="av-grid">
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b1">Game 1</span>
+          <span class="band">Beginner</span>
+        </div>
+        <strong>Element Symbols</strong>
+        <div class="av-meta">118 elements</div>
+        <div class="av-desc">The whole periodic table, one symbol at a time. Choose a symbol and find the element it stands for — the game the rest of this series assumes you have played.</div>
+        <div class="sample">H · He · Li · Be · B · C · N · O · F · Ne</div>
+        <iframe src="element-symbols.html" title="Element Symbols" loading="lazy"></iframe>
+        <a href="element-symbols.html" class="open-full-btn b1" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b1">Game 2</span>
+          <span class="band">Beginner</span>
+        </div>
+        <strong>What Is It Used For?</strong>
+        <div class="av-meta">60 elements</div>
+        <div class="av-desc">The element is given — symbol, name and number. The question is what we actually do with it, from copper wiring to the americium in a smoke detector.</div>
+        <div class="sample">“Wiring and water pipes” → Cu</div>
+        <iframe src="element-uses.html" title="What Is It Used For?" loading="lazy"></iframe>
+        <a href="element-uses.html" class="open-full-btn b1" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b2">Game 3</span>
+          <span class="band">Elementary</span>
+        </div>
+        <strong>Where Does It Come From?</strong>
+        <div class="av-meta">36 elements</div>
+        <div class="av-desc">Ties the table back to the ground it comes out of: the ore it is mined as, the brine it is pumped from, or the air it is chilled out of.</div>
+        <div class="sample">“Mined as bauxite” → Al</div>
+        <iframe src="chem-ores.html" title="Where Does It Come From?" loading="lazy"></iframe>
+        <a href="chem-ores.html" class="open-full-btn b2" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b2">Game 4</span>
+          <span class="band">Elementary</span>
+        </div>
+        <strong>Everyday Names &amp; Formulas</strong>
+        <div class="av-meta">40 substances</div>
+        <div class="av-desc">The bridge students actually need: the thing in the cupboard, and what a chemist calls it. Baking soda, bleach, rust, quicklime, laughing gas.</div>
+        <div class="sample">“Baking soda, raises cakes” → NaHCO₃</div>
+        <iframe src="chem-common-names.html" title="Everyday Names and Formulas" loading="lazy"></iframe>
+        <a href="chem-common-names.html" class="open-full-btn b2" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b3">Game 5</span>
+          <span class="band">Intermediate</span>
+        </div>
+        <strong>What Is Inside It?</strong>
+        <div class="av-meta">38 formulas</div>
+        <div class="av-desc">Composition in the strictest sense — and the moment brackets stop being decoration. Ca(OH)₂ is one calcium, <em>two</em> oxygen and <em>two</em> hydrogen.</div>
+        <div class="sample">“1 calcium · 2 oxygen · 2 hydrogen” → Ca(OH)₂</div>
+        <iframe src="chem-atom-counts.html" title="What Is Inside It?" loading="lazy"></iframe>
+        <a href="chem-atom-counts.html" class="open-full-btn b3" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b4">Game 6</span>
+          <span class="band">Upper intermediate</span>
+        </div>
+        <strong>What Does It Make?</strong>
+        <div class="av-meta">24 reactions</div>
+        <div class="av-desc">Word equations, read left to right. What goes in is on the card; what comes out is the answer — burning, rusting, neutralising, respiring and photosynthesising.</div>
+        <div class="sample">“iron + oxygen →” → Fe₂O₃</div>
+        <iframe src="chem-reactions.html" title="What Does It Make?" loading="lazy"></iframe>
+        <a href="chem-reactions.html" class="open-full-btn b4" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+  </div>
+
+  <section class="capstone">
+    <div class="cap-head">
+      <div class="cap-rule"></div>
+      <h2>Before Anyone Touches a Bottle</h2>
+      <p>
+        The six games above are about the chemistry. This one is about staying in one piece.
+        The shape and the colour carry half the meaning of a safety sign — a red diamond warns
+        about the chemical, a blue circle says what you must wear, a red circle says what you
+        must not do, and a green square tells you where to go when something goes wrong. Worth
+        ten minutes at the start of a practical.
+      </p>
+    </div>
+
+    <div class="av-grid">
+
+      <div class="av-card">
+        <div class="card-top">
+          <span class="level-tag b5">Game 7</span>
+          <span class="band">Laboratory safety</span>
+        </div>
+        <strong>Hazard &amp; Safety Signs</strong>
+        <div class="av-meta">17 signs</div>
+        <div class="av-desc">The nine GHS hazard pictograms found on every chemical bottle, plus the workplace signs on the wall around them — goggles, gloves, eyewash, emergency shower, extinguisher.</div>
+        <div class="sample">“Burns skin and eats through metal” → the corrosion diamond</div>
+        <iframe src="chem-hazard-signs.html" title="Hazard and Safety Signs" loading="lazy"></iframe>
+        <a href="chem-hazard-signs.html" class="open-full-btn b5" target="_blank" rel="noopener">Open Full Page</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="http://modernenglish.au/Microlessons%26Games.html">More Micro Lessons &amp; Games</a>
+      <a href="http://modernenglish.au/IELTSPTEPLUS.html">Practice Tests for IELTS &amp; PTE</a>
+    </div>
+    <div>© Modern English Australia · Sydney</div>
+  </div>
+</footer>
+
+<script>
+  const qrIcon = document.getElementById("qrIcon");
+  if (qrIcon) {
+    qrIcon.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" +
+                 encodeURIComponent(window.location.href);
+  }
+</script>
+
+</body>
+</html>
