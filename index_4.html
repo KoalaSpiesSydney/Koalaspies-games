@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
+  <title>Koalaspies · Revision &amp; Brain Games</title>
+  <meta name="description" content="Free revision and brain games from Modern English Australia: chemistry and the periodic table, Japanese kanji, IELTS speaking, and more on the way. No sign-up, nothing timed.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650;8..60,700;8..60,800&display=swap" rel="stylesheet">
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       WHERE THE LINKS POINT
+
+       Every entry below is one <li>. A live one is an <a class="row">;
+       change its href to point wherever the subject really lives:
+
+         a folder next to this page   href="chemistry/index.html"
+         another GitHub Pages site    href="https://you.github.io/kanji/"
+         a page on your own domain    href="http://modernenglish.au/..."
+
+       A "soon" one is a <div class="row soon">. To turn it live, change
+       that opening tag to  <a class="row" href="...">  , the closing
+       </div> to </a>, and delete its <span class="soon-tag">Soon</span>.
+
+       THE EMAIL ADDRESS at the bottom is a placeholder — hello@modernenglish.au.
+       Search for "mailto:" and put your real address in all four places.
+       ══════════════════════════════════════════════════════════════════ -->
+
+  <style>
+    :root {
+      --ink: #1f2430;
+      --muted: #57534e;
+      --faint: #a8a29e;
+      --line: rgba(31,36,48,.14);
+      --accent: #2563eb;
+      --header: #14161c;
+      --sans: "Source Sans 3", system-ui, sans-serif;
+      --serif: "Source Serif 4", Georgia, serif;
+      /* Headings and link titles are written by hand; the paragraphs stay in
+         the sans, because a page of body copy in script is a page nobody
+         reads. */
+      --hand: "Caveat", "Bradley Hand", "Segoe Script", cursive;
+      --max: 1160px;
+      --col: 74ch;
+    }
+
+    * { box-sizing: border-box; }
+
+    /* ===== PAPER =====
+       A warm sheet with a little light at the top and shade at the edges,
+       and a fibre grain laid over it. --paper is the colour of the sheet;
+       the .grain opacity is how strongly the fibre shows. */
+    body {
+      font-family: var(--sans);
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.75;
+      background-color: #64ec98;
+      background-image:
+        radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(90% 60% at 50% 108%, rgba(176,150,102,.16) 0%, rgba(176,150,102,0) 60%),
+        linear-gradient(175deg, #fdfaf1 0%, #faf4e6 55%, #f3ead6 100%);
+      background-attachment: fixed;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .5;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E");
+      background-size: 170px 170px;
+      
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      background: var(--header);
+      background-image: linear-gradient(160deg, #1b1f28 0%, #14161c 55%, #0d0f14 100%);
+      overflow: hidden;
+      /* taller than the subject hubs (18px): this is the front door */
+      padding-block: clamp(22px, 4vw, 44px);
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: grid-drift 24s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes grid-drift {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(48px,48px); }
+    }
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 4px;
+      min-width: 0;
+    }
+    .brand-top {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 9vw, 8.4rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      text-decoration: none;
+      color: #f8fafc;
+      background: linear-gradient(100deg, #ffffff 0%, #ffffff 30%, #a5c4fd 42%, #ffffff 60%, #ffffff 100%);
+      background-size: 250% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3.5s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -50% center; }
+    }
+    .tagline {
+      color: rgba(248,250,252,.78);
+      font-size: clamp(.74rem, 2.4vw, 1rem);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .qr-box {
+      flex: 0 0 auto;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 8px;
+      line-height: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .qr-box img { width: 60px; height: 60px; display: block; }
+
+    /* ===== INTRO ===== */
+    main.wrap { padding-block: 30px 60px; }
+
+    h1 {
+      font-family: var(--hand);
+      font-weight: 700;
+      font-size: clamp(2.7rem, 1.4rem + 4.4vw, 4.8rem);
+      margin: 0 0 6px;
+      line-height: 1.05;
+      text-align: left;
+    }
+    
+    .intro {
+      font-size: clamp(1.02rem, .98rem + .3vw, 1.15rem);
+      color: var(--muted);
+      margin: 0 auto 26px;
+      max-width: 72ch;
+      text-align: left;
+    }
+      .lead {
+      margin: 0 0 20px;
+    }
+    .lead:last-child {
+      margin-bottom: 0;
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    /* ===== SECTIONS ===== */
+    section { max-width: var(--col); margin: 0 auto 54px; }
+
+    h2 {
+      font-family: var(--hand);
+      font-size: clamp(1.6rem, 1.2rem + 1vw, 2.1rem);
+      font-weight: 700;
+      margin: 0 0 2px;
+      line-height: 1.2;
+      text-align: left;
+    }
+    .lead {
+      margin: 0 0 20px;
+    }
+    .lead:last-child {
+      margin-bottom: 0;
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+.group-center {
+  text-align:justify;
+  max-width: 60ch;
+  margin-inline: auto;
+  margin-top: 22px;
+}
+
+    /* ===== THE LINKS =====
+       No boxes, no rules, no shadows — just a title, a line about it, and
+       space. The whole row is the link, so it is easy to hit on a phone. */
+    ul.list { list-style: none; margin: 0; padding: 0; }
+    ul.list li + li { margin-top: 22px; }
+
+    .row {
+      display: block;
+      padding: 0 34px 0 0;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+    .row .kicker {
+      display: block;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .row .name {
+      font-family: var(--hand);
+      font-size: 1.62rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .row .note {
+      display: block;
+      font-size: .93rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+
+    /* the arrow only appears on things you can actually open */
+    a.row::after {
+      content: "→";
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--faint);
+      font-size: 1.1rem;
+      transition: transform .15s ease, color .15s ease;
+    }
+    a.row:hover .name,
+    a.row:focus-visible .name {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    a.row:hover::after { color: var(--accent); transform: translate(4px, -50%); }
+    a.row:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* not built yet: quieter, and not clickable */
+    .row.soon .name { color: var(--muted); font-weight: 600; }
+    .soon-tag {
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 700;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      padding: 1px 6px;
+      margin-left: 8px;
+      vertical-align: 5px;
+      white-space: nowrap;
+    }
+
+    /* ===== SPONSOR SLOT =====
+       Deliberately plain: a marked-out space, not a graphic. When it sells,
+       replace everything inside .sponsor with the sponsor's line and link. */
+    .sponsor {
+      max-width: var(--col);
+      margin: 0 auto 46px;
+      border: 1px dashed var(--line);
+      border-radius: 4px;
+      padding: 22px 20px;
+      text-align: center;
+    }
+    .sponsor .slot {
+      display: block;
+      font-size: .68rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .sponsor .pitch {
+      font-family: var(--hand);
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 4px;
+    }
+    .sponsor .who {
+      margin: 0 0 10px;
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .sponsor a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      font-size: .92rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--header);
+      color: rgba(248,250,252,.75);
+      padding: 18px 0 22px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .footer-nav a {
+      color: rgba(248,250,252,.9);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 1400px) {
+      .brand-top { font-size: 8.8rem; }
+    }
+    @media (max-width: 560px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-inline: 14px;
+      }
+      .brand-block { align-items: center; text-align: center; }
+      .brand-top { font-size: clamp(2rem, 11vw, 3rem); letter-spacing: 1px; }
+      .qr-box { align-self: flex-start; }
+      .qr-box img { width: 50px; height: 50px; }
+      main.wrap { padding-block: 20px 40px; }
+      header { padding-block: 20px; }
+      section { margin-bottom: 40px; }
+      .row { padding-right: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .brand-top, header::before { animation: none; }
+      .brand-top { -webkit-text-fill-color: #f8fafc; color: #f8fafc; }
+      a.row::after { transition: none; }
+    }
+    /* ===== HOUSE AD ===== */
+.house-ad {
+  display: block;
+  max-width: var(--col);
+  margin: 0 auto 46px;
+  padding: 22px 22px 26px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.house-ad:hover { border-color: var(--ink); transform: translateY(-2px); }
+.house-ad:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.ha-slot {
+  display: block;
+  font-size: .68rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.ha-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.ha-strip img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 3px;
+  background: var(--line);
+}
+.ha-pitch {
+  font-family: var(--hand);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+.ha-who {
+  margin: 0 0 16px;
+  font-size: .92rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ha-btn {
+  display: inline-block;
+  background: var(--header);
+  color: #f8fafc;
+  font-size: .88rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  padding: 9px 22px;
+  border-radius: 999px;
+  transition: background .15s ease;
+}
+.house-ad:hover .ha-btn { background: var(--accent); }
+
+@media (max-width: 460px) {
+  .ha-strip { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .ha-pitch { font-size: 1.6rem; }
+}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="qr-box">
+      <img id="qrIcon"
+           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fmodernenglish.au"
+           alt="QR code linking to this page">
+    </div>
+    <div class="brand-block">
+      <a href="index.html" class="brand-top">Koalaspies</a>
+      <div class="tagline">Revision &amp; Brain Games</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h1>Games That Make Revision Stick</h1>
+</i>
+   <i> Warmer, old School Revision, Social games and speaking practice - for kids and kids at heart
+   </i> </p>
+   <br>
+
+<section class="group-center">
+   
+
+  <p class="lead">
+    Free matching games for the things that only go in with repetition — the periodic table,
+    eight hundred kanji, verb endings, vocabulary.... Nothing is timed, nothing is scored,
+    and nothing asks you to sign up.  Made to play with people. </p>
+
+   <p class="lead">
+     <b>Class or Groups : </b> Project one on the board or wall, or share a tablet in the middle of the table to share.
+   </p>
+      <b>Students or individuals : </b> can play almost all of the games alone on a phone or another device. There are QR codes in the cornder to share.
+  </section>
+
+<main class="wrap">
+    <h1>Revise & Memories</h1>
+    <i>Warmer, Social games and speaking practice</i>
+    </p>
+    </main>
+
+  <section>
+
+    <ul class="list">
+      <li>
+        <a class="row" href="chemistry/index.html">
+          <span class="name">Chemistry : The Periodic Table</span>
+          <span class="note">Symbols, what each element is used for, the ore it comes out of,
+            everyday names and formulas, what is inside a formula, what a reaction makes — and
+            the hazard signs on the bottles.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="japanese/index.html">
+          <span class="name">  Japanese: Your First 800 Kanji</span>
+          <span class="note">Level by level, in the order Japanese schools teach them,
+            eighty characters at a time — then the games that put those characters back together
+            into real words.</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="row" href="idioms/index.html">
+          <span class="name">  English Idioms</span>
+          <span class="note">Weather idioms, colour idioms, body idiom, and other idioms.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+<main class="wrap">
+    <h1>Just Talk</h1>
+    <i>Warmer, Social games and speaking practice</i>
+    </main>
+
+  <section>
+
+    <ul class="list">
+      <li>
+        <a class="row" href="smalltalk/index.html">
+          <span class="name">Small Talk Noughts & Crossses</span>
+          <span class="note">Symbols, what each element is used for, the ore it comes out of,
+            everyday names and formulas, what is inside a formula, what a reaction makes — and
+            the hazard signs on the bottles.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="misscongeniality.html">
+          <span class="name">  What Would Miss Congeniality Say?</span>
+          <span class="note"> Answer with beauty and grace, questions beyond world peace. </span>
+        </a>
+      </li>
+
+      <li>
+        <a class="row" href="idioms/index.html">
+          <span class="name"> More Coming Soon</span>
+          <span class="note"> more coming soon.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+
+ </section>
+<a class="house-ad" href="https://justine.deco-apparel.com/">
+  <span class="ha-slot">Koalaspies Shop</span>
+
+  <div class="ha-strip">
+    <img src="https://cdn.myportfolio.com/c930201a-c696-4b08-a062-486be8e0eeb3/2903d41e-81a9-4c68-9a5f-f914e4c2029b_carw_16x9x1280.jpg?h=2ca312dbd3a49520517f5e5675419fcf"
+         alt="Painting of a koala wearing a panda suit on a red background" loading="lazy">
+    <img src="https://cdn.myportfolio.com/c930201a-c696-4b08-a062-486be8e0eeb3/5d66b8d2-bd58-4f05-9986-9932e9b32ed9_carw_16x9x1280.jpg?h=be3bccbb049469c5b91b413adb2edfc7"
+         alt="Painting of a panda wearing a koala suit on a green background" loading="lazy">
+    <img src="https://cdn.myportfolio.com/c930201a-c696-4b08-a062-486be8e0eeb3/4c38762b-a89a-4c46-a42f-b2a9a0d44bad_carw_16x9x1280.png?h=5a9be5cba8ea5188b59af3484e24bfce"
+         alt="Painting of a koala in karate face paint" loading="lazy">
+  </div>
+
+  <p class="ha-pitch">The koalas have a shop</p>
+  <p class="ha-who">Original paintings by Justine Kelly — koalas in panda suits, pandas in koala
+    suits, karate koalas — printed on tees, hoodies, onesies, bags and plush toys.</p>
+  <span class="ha-btn">Shop the koalas →</span>
+</a>
+
+
+  <section>
+    <main class="wrap">
+    <h2>Get in touch</h2>
+    <p class="lead">Anything at all — a broken link, a game you wish existed, or work.</p>
+
+    <ul class="list">
+      <li>
+        <a class="row" href="mailto:hello@modernenglish.au?subject=Koalaspies">
+          <span class="kicker">Email</span>
+          <span class="name">Contact</span>
+          <span class="note">Questions, corrections, or a game that is behaving oddly on a
+            particular device. Corrections to the content are especially welcome.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="mailto:hello@modernenglish.au?subject=Game%20suggestion">
+          <span class="kicker">Free</span>
+          <span class="name">Suggest a game</span>
+          <span class="note">Tell me the set your students keep forgetting — irregular verbs,
+            bones of the hand, the ten districts of somewhere. If it is a list worth learning,
+            it can probably be a game.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="mailto:hello@modernenglish.au?subject=Bespoke%20game%20enquiry">
+          <span class="kicker">Commission</span>
+          <span class="name">A game built for your course</span>
+          <span class="note">Your content, your branding, your colours, delivered as a single
+            HTML file you own outright — drop it into Moodle, Canvas, a website or a USB stick.
+            Tell me the syllabus and I will quote.</span>
+        </a>
+      </li>
+    </ul>
+    </main>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="http://modernenglish.au/Microlessons%26Games.html">More Micro Lessons &amp; Games</a>
+      <a href="http://modernenglish.au/IELTSPTEPLUS.html">Practice Tests for IELTS &amp; PTE</a>
+    </div>
+    <div>© Justine Kelly 2026</div>
+  </div>
+</footer>
+
+<script>
+  /* The QR code points at whatever address this page is really open at, so it
+     works on your domain, on GitHub Pages, and in Moodle without editing. */
+  const qrIcon = document.getElementById("qrIcon");
+  if (qrIcon) {
+    qrIcon.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" +
+                 encodeURIComponent(window.location.href);
+  }
+</script>
+
+</body>
+</html>
