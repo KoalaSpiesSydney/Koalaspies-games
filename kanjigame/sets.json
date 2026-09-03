@@ -1,0 +1,179 @@
+[
+  {
+    "id": 1,
+    "title": "Set 1 · JLPT N5",
+    "blurb": "Absolute foundation - the complete N5 kanji set.",
+    "count": 80,
+    "file": "kanji-set1.js",
+    "game": "kanji-match.html?set=1",
+    "readingClashes": {
+      "ひ": [
+        "日",
+        "火"
+      ],
+      "き": [
+        "気",
+        "木"
+      ],
+      "ご": [
+        "五",
+        "語",
+        "午"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "title": "Set 2 · JLPT N4 (part 1)",
+    "blurb": "The first N4 characters: everyday verbs, people and places.",
+    "count": 80,
+    "file": "kanji-set2.js",
+    "game": "kanji-match.html?set=2",
+    "readingClashes": {
+      "もの": [
+        "者",
+        "物"
+      ],
+      "だい": [
+        "代",
+        "題"
+      ],
+      "い": [
+        "意",
+        "以"
+      ],
+      "きる": [
+        "切",
+        "着"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "title": "Set 3 · JLPT N4 (part 2)",
+    "blurb": "The rest of N4: school, travel, family and daily routine.",
+    "count": 80,
+    "file": "kanji-set3.js",
+    "game": "kanji-match.html?set=3",
+    "readingClashes": {
+      "ゆう": [
+        "有",
+        "夕"
+      ],
+      "えい": [
+        "映",
+        "英"
+      ],
+      "しつ": [
+        "質",
+        "室"
+      ],
+      "けん": [
+        "験",
+        "研"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "title": "Set 4 · N4 → N3 bridge",
+    "blurb": "The last ten N4 kanji, then the first N3 characters.",
+    "count": 80,
+    "file": "kanji-set4.js",
+    "game": "kanji-match.html?set=4",
+    "readingClashes": {
+      "かん": [
+        "漢",
+        "関",
+        "感"
+      ],
+      "せい": [
+        "性",
+        "政"
+      ],
+      "ほう": [
+        "法",
+        "報"
+      ],
+      "ぜん": [
+        "全",
+        "然"
+      ],
+      "き": [
+        "機",
+        "記",
+        "期"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "title": "Set 5 · JLPT N3 (part 1)",
+    "blurb": "N3 proper: abstract nouns and compound-heavy vocabulary.",
+    "count": 80,
+    "file": "kanji-set5.js",
+    "game": "kanji-match.html?set=5",
+    "readingClashes": {
+      "けん": [
+        "権",
+        "件"
+      ],
+      "さい": [
+        "際",
+        "歳"
+      ],
+      "はん": [
+        "反",
+        "判"
+      ],
+      "やく": [
+        "約",
+        "役"
+      ],
+      "し": [
+        "資",
+        "師"
+      ],
+      "とも": [
+        "共",
+        "供"
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "title": "Set 6 · JLPT N3 (part 2)",
+    "blurb": "More N3: society, work, emotion and description.",
+    "count": 80,
+    "file": "kanji-set6.js",
+    "game": "kanji-match.html?set=6",
+    "readingClashes": {
+      "おう": [
+        "追",
+        "王"
+      ],
+      "けい": [
+        "警",
+        "景"
+      ],
+      "だん": [
+        "段",
+        "談"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "title": "Set 7 · N3 review",
+    "blurb": "A shorter final round closing out the first 500 kanji.",
+    "count": 20,
+    "file": "kanji-set7.js",
+    "game": "kanji-match.html?set=7",
+    "readingClashes": {
+      "ひ": [
+        "費",
+        "非"
+      ]
+    }
+  }
+]

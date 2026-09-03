@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%231b1d20%27/%3E%3Ctext x=%2750%27 y=%2772%27 font-size=%2766%27 text-anchor=%27middle%27 fill=%27%23e8f7f2%27 font-family=%27serif%27%3E%E5%AD%97%3C/text%3E%3C/svg%3E">
+<title>Kanji &amp; Hiragana Matching · Level 8 | Koalaspies</title>
+
+<style>
+:root {
+  --bg:#e7e9ec;          /* brushed silver */
+  --card:#e8f7f2;        /* unchanged: the square you liked */
+  --face:#fdfdfd;        /* symbol cards */
+  --accent:#a5673f;      /* copper */
+  --accent-dark:#8a5333; /* copper, pressed */
+  --ink:#1b1d20;         /* near black */
+  --muted:#868c94;       /* grey */
+  --line:#c3c9d0;        /* silver rule */
+  --tile:#f4b6c2;        /* original tile accent - unchanged */
+}
+
+*, *::before, *::after { box-sizing:border-box; }
+
+/* ===== Background Video ===== */
+#bgVideo {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+  opacity:0.35;
+  pointer-events:none;
+}
+
+/* ===== Layout ===== */
+html { -webkit-text-size-adjust:100%; }
+
+body {
+  margin:0;
+  font-family:"Helvetica Neue", Helvetica, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP",
+    "MS PGothic", Meiryo, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100svh;
+  overflow-x:hidden;
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+}
+
+.topbar { width:100%; text-align:center; padding-top:.6rem; }
+
+.brand {
+  font-weight:700;
+  letter-spacing:2.5px;
+  font-size:clamp(.68rem, 2.4vw, .9rem);
+  color:var(--accent);
+  text-transform:uppercase;
+}
+
+main {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  padding:.5rem .6rem 1rem;
+  text-align:center;
+}
+
+h1 {
+  color:var(--ink);
+  font-weight:600;
+  letter-spacing:.5px;
+  margin:.6rem 0 .3rem;
+  font-size:clamp(1.05rem, 4.2vw, 1.75rem);
+}
+
+p.intro {
+  max-width:640px;
+  margin:.2rem auto .4rem;
+  opacity:.9;
+  font-size:clamp(.78rem, 2.6vw, 1rem);
+  line-height:1.4;
+}
+
+#progress {
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:clamp(.64rem, 2.1vw, .8rem);
+  color:var(--muted);
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+
+#status {
+  min-height:1.4em;
+  margin-top:.7rem;
+  color:var(--accent);
+  font-weight:600;
+  font-size:clamp(.82rem, 2.8vw, 1rem);
+}
+
+/* ===== 12-card board: 4 across, 3 down, always square ===== */
+#game {
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:clamp(5px, 1.4vw, 14px);
+  width:min(96vw, 640px, calc(56svh * 1.34));
+  margin:clamp(10px, 2vw, 20px) auto 0;
+}
+
+.card {
+  aspect-ratio:1 / 1;
+  background:var(--card);
+  border:2px solid var(--tile);
+  border-radius:clamp(7px, 1.6vw, 14px);
+  padding:clamp(3px, 1.2vw, 10px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:clamp(.95rem, 3.6vw, 1.6rem);
+  line-height:1.25;
+  text-align:center;
+  overflow-wrap:anywhere;
+  hyphens:auto;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .3s, color .3s;
+}
+
+/* Symbol cards stay face up */
+.card.symbol {
+  background:#ffffff;
+  color:var(--ink);
+  font-size:clamp(1.7rem, 7.5vw, 3.1rem);
+  font-weight:500;
+  line-height:1;
+  letter-spacing:0;
+}
+
+.card.symbol .z {
+  font-size:clamp(.46rem, 1.6vw, .72rem);
+  font-weight:600;
+  letter-spacing:.3px;
+  text-transform:uppercase;
+  color:var(--muted);
+  line-height:1.1;
+  margin-bottom:.35em;
+}
+
+.card.symbol.selected { background:var(--tile); color:#000; }
+.card.symbol.selected .z { color:#000; }
+
+.card.flipped { background:var(--tile); color:#000; }
+
+.card.matched {
+  background:#d1ffd1;
+  color:#000;
+  cursor:default;
+}
+
+.card.matched .z { color:#000; }
+
+/* ===== Button ===== */
+button.reset {
+  margin-top:.9rem;
+  padding:clamp(.55rem,2vw,.8rem) clamp(1rem,4vw,1.4rem);
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+  color:#fff;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-size:clamp(.8rem, 2.8vw, 1rem);
+  min-height:44px;
+  transition:transform .06s ease, background .2s ease;
+}
+
+button.reset:hover { background:var(--accent-dark); transform:translateY(-1px); }
+button.reset:active { transform:translateY(0); }
+
+/* ===== Footer ===== */
+footer {
+  width:100%;
+  text-align:center;
+  background:var(--bg);
+  color:var(--muted);
+  padding:.8rem 0 calc(.8rem + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  font-size:clamp(.68rem, 2.2vw, .9rem);
+}
+
+/* Landscape phones: keep the whole board on screen */
+@media (max-height:520px) and (orientation:landscape) {
+  h1 { font-size:1rem; margin:.3rem 0 .15rem; }
+  p.intro { display:none; }
+  #game { width:min(92vw, calc(72svh * 1.34)); }
+  button.reset { margin-top:.5rem; }
+}
+
+/* ===== QR code: top-left, tap to enlarge for a classroom ===== */
+.topbar { position:relative; }
+
+.qr-mini {
+  position:absolute;
+  top:.2rem;
+  left:.6rem;
+  width:38px;
+  height:38px;
+  padding:3px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  line-height:0;
+  cursor:pointer;
+  transition:transform .15s ease, border-color .15s ease;
+}
+.qr-mini:hover { transform:scale(1.08); border-color:var(--accent); }
+.qr-mini img { width:100%; height:100%; display:block; }
+
+.qr-overlay {
+  position:fixed;
+  inset:0;
+  z-index:60;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  padding:20px;
+  text-align:center;
+  background:rgba(27,29,32,.9);
+}
+.qr-overlay.open { display:flex; }
+.qr-overlay img {
+  width:min(58vmin,280px);
+  height:min(58vmin,280px);
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+}
+.qr-overlay p { margin:0; color:#f2f2f2; font-size:.85rem; max-width:34ch; line-height:1.5; }
+.qr-overlay code { display:block; margin-top:4px; color:#e6c2a6; font-size:.72rem; word-break:break-all; }
+
+@media (max-width:480px) {
+  .qr-mini { width:32px; height:32px; left:.4rem; }
+}
+
+/* ===== Sound toggle: top-right, mirroring the QR code on the left ===== */
+.sound-btn {
+  position:absolute;
+  top:.2rem;
+  right:.6rem;
+  width:38px;
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  cursor:pointer;
+  font-size:1.1rem;
+  line-height:1;
+  color:var(--ink);
+  transition:transform .15s ease, border-color .15s ease, opacity .15s ease;
+}
+.sound-btn:hover { transform:scale(1.08); border-color:var(--accent); }
+.sound-btn[data-on="false"] { opacity:.5; }
+.sound-btn[hidden] { display:none; }
+
+/* Spoken card gets a brief ring so it is obvious which one is being read */
+.card.speaking { box-shadow:0 0 0 3px rgba(165,103,63,.45); }
+
+@media (max-width:480px) {
+  .sound-btn { width:32px; height:32px; right:.4rem; font-size:1rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== Background Video ===== -->
+<!-- Optional background video. To use one, drop the file in beside this page and
+     uncomment the <source> line below. Left empty so the page makes no failed
+     request when there is no video. -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <!-- <source src="YOUR-VIDEO.mp4" type="video/mp4"> -->
+</video>
+
+<div class="topbar" role="banner">
+  <button class="sound-btn" id="soundBtn" data-on="true"
+          aria-label="Turn the spoken readings off" title="Sound on — readings are spoken aloud">
+    <span id="soundIcon" aria-hidden="true">&#128266;</span>
+  </button>
+  <button class="qr-mini" id="qrMini" aria-label="Show QR code for this game">
+    <img id="qrMiniImg" alt="">
+  </button>
+  <div class="brand">Koalaspies</div>
+</div>
+
+<main>
+  <h1>Kanji &amp; Hiragana Matching · Level 8</h1>
+  <p class="intro">Choose a kanji, then turn over cards to find how it is read in hiragana. Every round deals six new kanji, so play again for a fresh set.</p>
+  <div id="progress"></div>
+
+  <div id="game"></div>
+  <div id="status"></div>
+
+  <button class="reset" onclick="startGame()">Play Again</button>
+</main>
+
+<footer>
+  © 2025 KoalaSpiesSydney. All rights reserved.
+</footer>
+
+
+<div class="qr-overlay" id="qrOverlay">
+  <img id="qrBigImg" alt="QR code for this game">
+  <p>Scan to open this game on a phone.<code id="qrUrl"></code></p>
+  <button class="reset" id="qrClose" style="margin-top:0">Close</button>
+</div>
+
+<script>
+/* ===== Pairs dealt each round. 6 pairs = 12 cards = 4 across x 3 down.
+   Change this to 8 for a 4 x 4 board of 16 cards.               ===== */
+const PAIRS_PER_ROUND = 6;
+
+/* ===== Level 8 - School Grade 4 (Intermediate).
+   [kanji, hiragana reading, meaning]
+   dealRound() keeps two kanji with the same reading out of the same
+   round, so homophones across the set are safe.      ===== */
+const ELEMENTS = [
+  ["健","けん","healthy"],["側","がわ","side"],["副","ふく","vice-, secondary"],["唱","となえる","to chant"],
+  ["埼","さい","Saitama"],["崎","さき","cape, headland"],["巣","す","nest"],["康","こう","health, ease"],
+  ["敗","やぶれる","to be defeated"],["望","のぞみ","hope, wish"],["械","かい","machine"],["梨","なし","pear"],
+  ["清","きよい","clean, pure"],["産","うむ","to give birth"],["票","ひょう","ballot"],["菜","な","vegetable"],
+  ["貨","か","goods, freight"],["陸","りく","land"],["鹿","しか","deer"],["博","はく","broad, doctorate"],
+  ["媛","えん","Ehime"],["富","とみ","wealth"],["散","ちる","to scatter"],["景","けい","scenery"],
+  ["最","もっとも","most"],["極","きょく","extreme"],["滋","じ","nourishing (Shiga)"],["満","みちる","to be full"],
+  ["焼","やく","to burn, grill"],["然","ぜん","so, natural"],["無","む","nothing"],["給","きゅう","to supply"],
+  ["結","むすぶ","to tie"],["街","まち","street"],["覚","おぼえる","to remember"],["賀","が","congratulation"],
+  ["達","たつ","to reach"],["量","はかる","to measure"],["隊","たい","squad"],["順","じゅん","order"],
+  ["飯","めし","meal"],["働","はたらく","to work"],["塩","しお","salt"],["愛","あい","love"],
+  ["戦","たたかう","to fight"],["照","てる","to shine"],["節","ふし","joint, season"],["続","つづく","to continue"],
+  ["置","おく","to place"],["群","むれ","group, flock"],["試","ためす","to try"],["辞","やめる","to resign"],
+  ["察","さつ","to guess, police"],["徳","とく","virtue"],["旗","はた","flag"],["漁","りょう","fishing"],
+  ["熊","くま","bear"],["種","たね","seed"],["管","くだ","pipe"],["説","せつ","theory, explanation"],
+  ["関","せき","barrier"],["静","しずか","quiet"],["億","おく","hundred million"],["器","うつわ","vessel"],
+  ["標","ひょう","sign, mark"],["潟","かた","lagoon"],["熱","ねつ","heat"],["縄","なわ","rope"],
+  ["課","か","lesson, section"],["輪","わ","wheel, ring"],["選","えらぶ","to choose"],["養","やしなう","to nurture"],
+  ["機","き","machine, chance"],["積","つむ","to pile up"],["録","ろく","record"],["観","かん","to view"],
+  ["類","るい","kind, sort"],["験","けん","test, effect"],["鏡","かがみ","mirror"],["願","ねがう","to wish"]
+
+];
+
+const matchColors = [
+  "#ffd166","#06d6a0","#4cc9f0","#f72585","#ffb703",
+  "#90be6d","#f28482","#43aa8b","#577590","#ff9f1c",
+  "#b5179e","#00b4d8"
+];
+
+let selectedSymbol, revealedWord, lock, matchedCount, colorMap, roundPairs;
+let deck = [];              /* elements not yet dealt this cycle */
+let seen = new Set();       /* symbols covered so far this cycle */
+let round = 0;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* Deal the next set of kanji, never repeating one until the
+   whole list has been played, then start a fresh cycle.
+
+   Keyed on the KANJI (e[0]), not the reading. Keying on the reading meant that
+   if two kanji ever shared one, only the first could ever be dealt, `seen` could
+   never reach 80, the cycle never reset, and the progress count stalled short of
+   the full list. The Grade 1 readings happen to all be unique today, so this
+   never showed — but it would break the moment a reading was edited. */
+function dealRound() {
+  if (seen.size >= ELEMENTS.length) {
+    seen = new Set();
+    deck = [];
+  }
+  const picked = [];
+  const usedReadings = new Set();   /* no two kanji with the SAME reading in one round -
+                                       both tiles would be correct and the game looks broken */
+  const deferred = [];
+  let guard = 0;
+
+  while (picked.length < PAIRS_PER_ROUND && guard++ < 500) {
+    if (!deck.length) {
+      deck = shuffle(ELEMENTS.filter(e =>
+        !picked.includes(e) && !deferred.includes(e) && !seen.has(e[0])));
+      if (!deck.length) {
+        deck = shuffle(ELEMENTS.filter(e => !picked.includes(e) && !deferred.includes(e)));
+      }
+      if (!deck.length) break;
+    }
+    const el = deck.shift();
+    if (usedReadings.has(el[1])) { deferred.push(el); continue; }   /* try again next round */
+    usedReadings.add(el[1]);
+    picked.push(el);
+    seen.add(el[0]);
+  }
+
+  deck = shuffle(deferred).concat(deck);
+  return picked;
+}
+
+function startGame() {
+  const game = document.getElementById("game");
+  const status = document.getElementById("status");
+  const progress = document.getElementById("progress");
+  game.innerHTML = "";
+  status.textContent = "";
+
+  selectedSymbol = null;
+  revealedWord = null;
+  lock = false;
+  matchedCount = 0;
+  colorMap = {};
+  round++;
+
+  roundPairs = dealRound();
+
+  progress.textContent =
+    "Round " + round + "  ·  " + seen.size + " of " + ELEMENTS.length + " kanji covered";
+
+  let cards = roundPairs.flatMap(([kanji, reading, meaning]) => [
+    { text: kanji, pair: kanji, type: "symbol", z: meaning },
+    { text: reading, pair: kanji, type: "word" }
+  ]);
+
+  cards = shuffle(cards);
+
+  cards.forEach(data => {
+    const div = document.createElement("div");
+    div.classList.add("card", data.type);
+    div.dataset.pair = data.pair;
+    div.dataset.text = data.text;
+
+    /* Kanji are shown from the start; readings stay blank until turned. */
+    if (data.type === "symbol") {
+      const z = document.createElement("span");
+      z.className = "z";
+      z.textContent = data.z;
+      const s = document.createElement("span");
+      s.textContent = data.text;
+      div.append(z, s);
+    }
+
+    /* Reachable by keyboard as well as tap — the cards are divs, so they need
+       these three lines to behave like buttons for anyone not using a mouse. */
+    div.tabIndex = 0;
+    div.setAttribute("role", "button");
+    div.setAttribute("aria-label",
+      data.type === "symbol" ? data.text + ", meaning " + data.z : "hidden reading card");
+
+    game.appendChild(div);
+
+    const activate = () => {
+      if (lock || div.classList.contains("matched")) return;
+
+      if (data.type === "symbol") {
+        if (selectedSymbol === div) {
+          div.classList.remove("selected");
+          selectedSymbol = null;
+          return;
+        }
+        if (selectedSymbol) selectedSymbol.classList.remove("selected");
+        selectedSymbol = div;
+        div.classList.add("selected");
+      } else {
+        if (div.classList.contains("flipped")) return;
+        if (revealedWord) {
+          revealedWord.classList.remove("flipped");
+          revealedWord.textContent = "";
+        }
+        div.classList.add("flipped");
+        div.textContent = data.text;
+        revealedWord = div;
+
+        /* Say it out loud. Only reading cards speak - voicing the kanji card
+           would hand over the answer before the student has read it. */
+        speech.say(data.text);
+        div.classList.add("speaking");
+        setTimeout(() => div.classList.remove("speaking"), 700);
+      }
+
+      if (selectedSymbol && revealedWord) checkPair(status);
+    };
+
+    div.addEventListener("click", activate);
+    div.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); }
+    });
+  });
+}
+
+function checkPair(status) {
+  lock = true;
+  const symbol = selectedSymbol;
+  const word = revealedWord;
+
+  setTimeout(() => {
+    if (symbol.dataset.pair === word.dataset.pair) {
+      if (!colorMap[symbol.dataset.pair]) {
+        const used = Object.keys(colorMap).length;
+        colorMap[symbol.dataset.pair] = matchColors[used % matchColors.length];
+      }
+      const c = colorMap[symbol.dataset.pair];
+
+      [symbol, word].forEach(card => {
+        card.classList.remove("flipped", "selected");
+        card.classList.add("matched");
+        card.style.background = c;
+      });
+
+      matchedCount++;
+      if (matchedCount === roundPairs.length) {
+        status.textContent = seen.size >= ELEMENTS.length
+          ? "Brilliant. That is all 80 Level 8 kanji."
+          : "Brilliant. All matched — play again for six new kanji.";
+      }
+    } else {
+      symbol.classList.remove("selected");
+      word.classList.remove("flipped");
+      word.textContent = "";
+    }
+
+    selectedSymbol = null;
+    revealedWord = null;
+    lock = false;
+  }, 800);
+}
+
+/* If YOUR-VIDEO.mp4 isn't there, hide the element rather than leaving a failed
+   request behind on every page load. Drop your file in and it appears again. */
+(function () {
+  const v = document.getElementById("bgVideo");
+  if (!v) return;
+  const hide = () => { v.style.display = "none"; };
+  v.addEventListener("error", hide, true);
+  v.querySelectorAll("source").forEach(s => s.addEventListener("error", hide));
+})();
+
+
+/* ===== QR code for this page. Reads location.href at runtime, so it picks up
+   your real domain once the file is on the server - nothing to configure.
+   Tap it to enlarge: a 38px code will not scan from the back of a room. ===== */
+(function () {
+  const mini = document.getElementById("qrMini");
+  if (!mini) return;
+  const api = "https://api.qrserver.com/v1/create-qr-code/?data=" +
+              encodeURIComponent(location.href) + "&size=";
+  document.getElementById("qrMiniImg").src = api + "120x120";
+  document.getElementById("qrBigImg").src  = api + "400x400";
+  document.getElementById("qrUrl").textContent = location.href;
+
+  const box = document.getElementById("qrOverlay");
+  mini.addEventListener("click", () => box.classList.add("open"));
+  document.getElementById("qrClose").addEventListener("click", () => box.classList.remove("open"));
+  box.addEventListener("click", e => { if (e.target === box) box.classList.remove("open"); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") box.classList.remove("open");
+  });
+})();
+
+
+/* ===== Spoken readings =====
+   Uses the browser's built-in speech synthesis, so there are no audio files to
+   host and every one of the readings can be spoken - including ones you add later.
+
+   Voice availability varies by device. Most phones, Macs and Windows machines
+   have a Japanese voice; some Linux browsers have none, in which case the button
+   hides itself rather than reading Japanese with an English voice.            */
+const speech = (function () {
+  const synth = window.speechSynthesis;
+  let voice = null, enabled = true, warmed = false;
+
+  function pickVoice() {
+    if (!synth) return;
+    const vs = synth.getVoices() || [];
+    voice = vs.find(v => v.lang === "ja-JP")
+         || vs.find(v => (v.lang || "").toLowerCase().startsWith("ja"))
+         || null;
+  }
+
+  if (synth) {
+    pickVoice();
+    /* voices load asynchronously in most browsers */
+    if (typeof synth.addEventListener === "function") {
+      synth.addEventListener("voiceschanged", () => { pickVoice(); refreshButton(); });
+    } else {
+      synth.onvoiceschanged = () => { pickVoice(); refreshButton(); };
+    }
+  }
+
+  return {
+    get available() { return !!synth; },
+    get hasVoice() { return !!voice; },
+    get on() { return enabled; },
+    toggle() {
+      enabled = !enabled;
+      if (!enabled && synth) synth.cancel();
+      return enabled;
+    },
+    say(text) {
+      /* No Japanese voice means no speech at all. Reading kana aloud with an
+         English voice sounds wrong, and the toggle is hidden in that case, so
+         the user would have no way to switch it off. */
+      if (!synth || !enabled || !text || !voice) return;
+      /* iOS needs the engine nudged awake inside a user gesture the first time */
+      if (!warmed) { warmed = true; try { synth.cancel(); } catch (e) {} }
+      try {
+        synth.cancel();                      /* don't queue up behind fast play */
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "ja-JP";
+        if (voice) u.voice = voice;
+        u.rate = 0.85;                       /* a little slower than default, for learners */
+        synth.speak(u);
+      } catch (e) { /* speech is a nicety - never let it break the game */ }
+    }
+  };
+})();
+
+const soundBtn  = document.getElementById("soundBtn");
+const soundIcon = document.getElementById("soundIcon");
+
+function refreshButton() {
+  if (!soundBtn) return;
+  /* No speech engine, or no Japanese voice: hide rather than mislead */
+  if (!speech.available || !speech.hasVoice) { soundBtn.hidden = true; return; }
+  soundBtn.hidden = false;
+  soundBtn.dataset.on = String(speech.on);
+  soundIcon.innerHTML = speech.on ? "&#128266;" : "&#128263;";
+  soundBtn.setAttribute("aria-label",
+    speech.on ? "Turn the spoken readings off" : "Turn the spoken readings on");
+  soundBtn.title = speech.on
+    ? "Sound on — readings are spoken aloud"
+    : "Sound off — tap to hear the readings";
+}
+
+if (soundBtn) {
+  soundBtn.addEventListener("click", () => { speech.toggle(); refreshButton(); });
+}
+refreshButton();
+/* Some browsers only populate voices after a tick */
+setTimeout(refreshButton, 400);
+setTimeout(refreshButton, 1500);
+
+startGame();
+</script>
+
+</body>
+</html>

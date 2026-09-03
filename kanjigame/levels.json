@@ -1,0 +1,110 @@
+[
+  {
+    "level": 1,
+    "band": "Beginner",
+    "grade": "School Grade 1",
+    "blurb": "The characters Japanese children meet first — numbers, days of the week, up and down, people and nature.",
+    "count": 80,
+    "file": "kanji-level-1.html",
+    "sample": "一右雨円王音下火花貝学気"
+  },
+  {
+    "level": 2,
+    "band": "Beginner",
+    "grade": "School Grade 2",
+    "blurb": "Everyday words start forming: seasons, family, coming and going, thinking and speaking.",
+    "count": 80,
+    "file": "kanji-level-2.html",
+    "sample": "引羽雲園遠何科夏家歌画回"
+  },
+  {
+    "level": 3,
+    "band": "Beginner",
+    "grade": "School Grade 2",
+    "blurb": "Time and direction, buying and selling, reading and answering — the first long compounds.",
+    "count": 80,
+    "file": "kanji-level-3.html",
+    "sample": "場色食心新親図数西声星晴"
+  },
+  {
+    "level": 4,
+    "band": "Elementary",
+    "grade": "School Grade 3",
+    "blurb": "Bodies, places and daily actions, and the first properly abstract characters.",
+    "count": 80,
+    "file": "kanji-level-4.html",
+    "sample": "丁予化区反世主仕他代写去"
+  },
+  {
+    "level": 5,
+    "band": "Elementary",
+    "grade": "School Grade 3",
+    "blurb": "School, weather and travel, plus the vocabulary of describing and comparing things.",
+    "count": 80,
+    "file": "kanji-level-5.html",
+    "sample": "品客屋度待急指持拾昭柱洋"
+  },
+  {
+    "level": 6,
+    "band": "Elementary",
+    "grade": "Grade 3 into Grade 4",
+    "blurb": "Closes out Grade 3 and steps into Grade 4 — study, nature and measurement.",
+    "count": 80,
+    "file": "kanji-level-6.html",
+    "sample": "短童等筆葉落軽運遊開階陽"
+  },
+  {
+    "level": 7,
+    "band": "Intermediate",
+    "grade": "School Grade 4",
+    "blurb": "Place names, formal verbs and the language of plans, records and requests.",
+    "count": 80,
+    "file": "kanji-level-7.html",
+    "sample": "努労完岐希折改材束沖求臣"
+  },
+  {
+    "level": 8,
+    "band": "Intermediate",
+    "grade": "School Grade 4",
+    "blurb": "Society and work: industry, trade, competition and judgement.",
+    "count": 80,
+    "file": "kanji-level-8.html",
+    "sample": "健側副唱埼崎巣康敗望械梨"
+  },
+  {
+    "level": 9,
+    "band": "Intermediate",
+    "grade": "Grade 4 into Grade 5",
+    "blurb": "The last of Grade 4 into Grade 5 — cause, condition and consequence.",
+    "count": 80,
+    "file": "kanji-level-9.html",
+    "sample": "競議久士仏支比刊可句史圧"
+  },
+  {
+    "level": 10,
+    "band": "Upper intermediate",
+    "grade": "School Grade 5",
+    "blurb": "The most abstract set: economy, law, evidence and argument.",
+    "count": 80,
+    "file": "kanji-level-10.html",
+    "sample": "破粉素耕能脈航財造停務基"
+  },
+  {
+    "level": 11,
+    "band": "Word practice",
+    "grade": "Words from Levels 1–6",
+    "blurb": "Eighty everyday compounds. Every character comes from a level you have already played — the test is whether you can read them combined.",
+    "count": 80,
+    "file": "kanji-level-11.html",
+    "sample": "学校 先生 天気 電車 毎日 名前"
+  },
+  {
+    "level": 12,
+    "band": "Word practice",
+    "grade": "Words from Levels 1–10",
+    "blurb": "Eighty abstract compounds — the vocabulary of news, work and argument, built from characters in the earlier levels.",
+    "count": 80,
+    "file": "kanji-level-12.html",
+    "sample": "政治 経営 産業 貿易 貯金 税金"
+  }
+]

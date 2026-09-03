@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Ctext x=%2750%27 y=%2772%27 font-size=%2766%27 text-anchor=%27middle%27 fill=%27%23f8fafc%27 font-family=%27serif%27%3E%E5%AD%97%3C/text%3E%3C/svg%3E">
+<title>Kanji ↔ Hiragana Matching Game</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+    --accent:#2563eb; --good:#16a34a; --bad:#dc2626;
+    --sans:"Source Sans 3",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:var(--sans); color:var(--ink);
+    background:#fff; display:flex; flex-direction:column;
+    -webkit-text-size-adjust:100%;
+  }
+
+  /* One line, always — the title truncates rather than wrapping the score pills */
+  .bar{
+    display:flex; align-items:center; gap:8px; flex-wrap:nowrap;
+    padding:8px 12px; border-bottom:1px solid var(--line);
+    font-size:.82rem; color:var(--muted); flex:0 0 auto;
+  }
+  .bar .title{
+    font-weight:700; color:var(--ink);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;
+  }
+  .bar .spacer{flex:1 1 auto; min-width:4px}
+
+  /* QR code — top-left. Small in the bar, click to enlarge for the classroom. */
+  .qr-mini{
+    flex:0 0 auto; width:34px; height:34px; padding:2px; cursor:pointer;
+    border:1px solid var(--line); border-radius:6px; background:#fff;
+    line-height:0; transition:transform .15s, border-color .15s;
+  }
+  .qr-mini:hover{transform:scale(1.08); border-color:var(--accent)}
+  .qr-mini img{width:100%; height:100%; display:block}
+
+  .qr-overlay{
+    position:fixed; inset:0; z-index:50; display:none;
+    align-items:center; justify-content:center; flex-direction:column; gap:14px;
+    background:rgba(15,23,42,.88); padding:20px; text-align:center;
+  }
+  .qr-overlay.open{display:flex}
+  .qr-overlay img{
+    width:min(56vmin,260px); height:min(56vmin,260px);
+    background:#fff; padding:10px; border-radius:12px;
+  }
+  .qr-overlay p{
+    margin:0; color:#e2e8f0; font-size:.85rem; max-width:34ch; line-height:1.5;
+  }
+  .qr-overlay code{
+    color:#bfdbfe; font-size:.75rem; word-break:break-all; display:block; margin-top:4px;
+  }
+  .pill{
+    background:#f1f5f9; border-radius:999px; padding:2px 9px;
+    font-variant-numeric:tabular-nums; white-space:nowrap;
+  }
+  .pill.score{background:#dcfce7; color:#166534}
+  .pill.miss{background:#fee2e2; color:#991b1b}
+
+  .board{
+    flex:1 1 auto; min-height:0; overflow:auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:8px;
+    padding:10px 12px; align-content:start;
+  }
+  .col{display:flex; flex-direction:column; gap:6px; min-width:0}
+  .col h2{
+    margin:0 0 2px; font-size:.68rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); font-weight:700;
+  }
+
+  .tile{
+    width:100%; text-align:center; cursor:pointer;
+    border:1.5px solid var(--line); border-radius:9px; background:#fff;
+    padding:7px 6px; font:inherit; color:inherit; line-height:1.25;
+    transition:border-color .12s, background .12s, transform .12s, opacity .2s;
+  }
+  .tile:hover:not(:disabled){border-color:#cbd5e1; background:#f8fafc}
+  .tile.kanji{font-size:1.7rem; font-weight:600}
+  .tile.reading{font-size:1.05rem}
+  .tile.sel{border-color:var(--accent); background:#eff6ff}
+  .tile.done{
+    opacity:.32; cursor:default; border-style:dashed;
+    border-color:var(--good); background:#f0fdf4;
+  }
+  .tile.wrong{border-color:var(--bad); background:#fef2f2; animation:shake .3s}
+  @keyframes shake{
+    0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)}
+    75%{transform:translateX(4px)}
+  }
+
+  .foot{
+    flex:0 0 auto; border-top:1px solid var(--line);
+    padding:7px 12px; display:flex; align-items:center; gap:8px;
+    font-size:.8rem; min-height:38px;
+  }
+  .hint{color:var(--muted); flex:1; min-width:0}
+  .hint b{color:var(--ink)}
+  .btn{
+    border:1px solid var(--line); background:#fff; border-radius:7px;
+    padding:4px 11px; font:inherit; font-size:.8rem; cursor:pointer;
+    color:var(--ink); white-space:nowrap;
+  }
+  .btn:hover{background:#f8fafc}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+  .btn.primary:hover{background:#1e40af}
+
+  .done-screen{
+    flex:1; display:none; flex-direction:column; align-items:center;
+    justify-content:center; gap:10px; text-align:center; padding:20px;
+  }
+  .done-screen h2{margin:0; font-size:1.3rem}
+  .done-screen p{margin:0; color:var(--muted); font-size:.9rem}
+
+  @media (max-width:380px){
+    .tile.kanji{font-size:1.45rem}
+    .tile.reading{font-size:.95rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button class="qr-mini" id="qrMini" title="Scan to open this game on a phone" aria-label="Show QR code for this game">
+    <img id="qrMiniImg" alt="">
+  </button>
+  <span class="title" id="setTitle">Loading…</span>
+  <span class="pill" id="progress">–</span>
+  <span class="spacer"></span>
+  <span class="pill score" id="score">0</span>
+  <span class="pill miss" id="misses">0</span>
+</div>
+
+<div class="board" id="board">
+  <div class="col">
+    <h2>Kanji</h2>
+    <div class="col" id="colKanji"></div>
+  </div>
+  <div class="col">
+    <h2>Reading</h2>
+    <div class="col" id="colReading"></div>
+  </div>
+</div>
+
+<div class="done-screen" id="doneScreen">
+  <h2 id="doneTitle">Set complete</h2>
+  <p id="doneText"></p>
+  <button class="btn primary" id="againBtn">Play again</button>
+</div>
+
+<div class="foot" id="foot">
+  <div class="hint" id="hint">Tap a kanji, then its reading.</div>
+  <button class="btn" id="skipBtn">Skip round</button>
+</div>
+
+<div class="qr-overlay" id="qrOverlay">
+  <img id="qrBigImg" alt="QR code for this game">
+  <p>
+    Scan to open this set on a phone.
+    <code id="qrUrl"></code>
+  </p>
+  <button class="btn" id="qrClose">Close</button>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PER_ROUND = 6;                 // pairs shown at once - keeps it readable in an iframe
+  var params    = new URLSearchParams(location.search);
+  var setId     = parseInt(params.get("set"), 10) || 1;
+
+  var el = {
+    title: document.getElementById("setTitle"),
+    progress: document.getElementById("progress"),
+    score: document.getElementById("score"),
+    misses: document.getElementById("misses"),
+    board: document.getElementById("board"),
+    kanji: document.getElementById("colKanji"),
+    reading: document.getElementById("colReading"),
+    hint: document.getElementById("hint"),
+    foot: document.getElementById("foot"),
+    skip: document.getElementById("skipBtn"),
+    done: document.getElementById("doneScreen"),
+    doneTitle: document.getElementById("doneTitle"),
+    doneText: document.getElementById("doneText"),
+    again: document.getElementById("againBtn"),
+    qrMini: document.getElementById("qrMini"),
+    qrMiniImg: document.getElementById("qrMiniImg"),
+    qrBigImg: document.getElementById("qrBigImg"),
+    qrOverlay: document.getElementById("qrOverlay"),
+    qrUrl: document.getElementById("qrUrl"),
+    qrClose: document.getElementById("qrClose")
+  };
+
+  /* QR code for THIS game page (including ?set=), so a student who scans it
+     lands straight on this set rather than on the index. Works the same
+     whether the page is embedded in an iframe or opened on its own. */
+  function setUpQR() {
+    var url = location.href;
+    var api = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(url) + "&size=";
+    el.qrMiniImg.src = api + "120x120";
+    el.qrBigImg.src  = api + "400x400";
+    el.qrUrl.textContent = url;
+
+    el.qrMini.addEventListener("click", function () { el.qrOverlay.classList.add("open"); });
+    el.qrClose.addEventListener("click", function () { el.qrOverlay.classList.remove("open"); });
+    el.qrOverlay.addEventListener("click", function (e) {
+      if (e.target === el.qrOverlay) el.qrOverlay.classList.remove("open");
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") el.qrOverlay.classList.remove("open");
+    });
+  }
+
+  var pool = [], queue = [], round = [], picked = null;
+  var score = 0, misses = 0, matchedInRound = 0, totalDone = 0;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* Build a round of PER_ROUND kanji, never putting two identical readings
+     in the same round - otherwise two tiles would both be "correct". */
+  function takeRound() {
+    var used = {}, chosen = [], skipped = [];
+    while (queue.length && chosen.length < PER_ROUND) {
+      var item = queue.shift();
+      if (used[item.reading]) { skipped.push(item); }
+      else { used[item.reading] = true; chosen.push(item); }
+    }
+    queue = skipped.concat(queue);   // deferred clashes come back next round
+    return chosen;
+  }
+
+  function tile(cls, text, key) {
+    var b = document.createElement("button");
+    b.className = "tile " + cls;
+    b.textContent = text;
+    b.dataset.key = key;
+    return b;
+  }
+
+  function render() {
+    el.kanji.innerHTML = "";
+    el.reading.innerHTML = "";
+    picked = null;
+    matchedInRound = 0;
+
+    shuffle(round.slice()).forEach(function (item) {
+      el.kanji.appendChild(tile("kanji", item.kanji, item.kanji));
+    });
+    shuffle(round.slice()).forEach(function (item) {
+      el.reading.appendChild(tile("reading", item.reading, item.kanji));
+    });
+
+    el.progress.textContent = totalDone + " / " + pool.length;
+    el.hint.textContent = "Tap a kanji, then its reading.";
+  }
+
+  function lookup(k) {
+    for (var i = 0; i < round.length; i++) if (round[i].kanji === k) return round[i];
+    return null;
+  }
+
+  function showAnswer(item) {
+    el.hint.innerHTML =
+      "<b>" + item.kanji + "</b> " + item.reading +
+      " — " + item.meaning +
+      " · " + item.word + " (" + item.wordReading + ") " + item.wordMeaning;
+  }
+
+  function onTileClick(e) {
+    var t = e.target.closest(".tile");
+    if (!t || t.classList.contains("done")) return;
+
+    var isKanji = t.classList.contains("kanji");
+
+    if (!picked) {
+      picked = t;
+      t.classList.add("sel");
+      return;
+    }
+    if (picked === t) { picked = null; t.classList.remove("sel"); return; }
+
+    // both from the same column? move the selection instead of comparing
+    if (picked.classList.contains("kanji") === isKanji) {
+      picked.classList.remove("sel");
+      picked = t;
+      t.classList.add("sel");
+      return;
+    }
+
+    var a = picked, b = t;
+    a.classList.remove("sel");
+    picked = null;
+
+    if (a.dataset.key === b.dataset.key) {
+      a.classList.add("done"); b.classList.add("done");
+      a.disabled = true; b.disabled = true;
+      score++; matchedInRound++; totalDone++;
+      el.score.textContent = score;
+      el.progress.textContent = totalDone + " / " + pool.length;
+      showAnswer(lookup(a.dataset.key));
+
+      if (matchedInRound === round.length) {
+        setTimeout(nextRound, 750);
+      }
+    } else {
+      misses++;
+      el.misses.textContent = misses;
+      [a, b].forEach(function (x) {
+        x.classList.add("wrong");
+        setTimeout(function () { x.classList.remove("wrong"); }, 320);
+      });
+      el.hint.textContent = "Not a match — try again.";
+    }
+  }
+
+  function nextRound() {
+    if (!queue.length) return finish();
+    round = takeRound();
+    render();
+  }
+
+  function finish() {
+    el.board.style.display = "none";
+    el.foot.style.display = "none";
+    el.done.style.display = "flex";
+    var total = score + misses;
+    var pct = total ? Math.round((score / total) * 100) : 100;
+    el.doneTitle.textContent = "Set complete — " + score + " matched";
+    el.doneText.textContent =
+      misses === 0
+        ? "A clean run through all " + pool.length + " kanji."
+        : misses + (misses === 1 ? " miss" : " misses") + " · " + pct + "% first-try accuracy.";
+  }
+
+  function start() {
+    queue = shuffle(pool.slice());
+    score = 0; misses = 0; totalDone = 0;
+    el.score.textContent = "0";
+    el.misses.textContent = "0";
+    el.board.style.display = "grid";
+    el.foot.style.display = "flex";
+    el.done.style.display = "none";
+    nextRound();
+  }
+
+  setUpQR();
+  el.board.addEventListener("click", onTileClick);
+  el.again.addEventListener("click", start);
+  el.skip.addEventListener("click", function () {
+    round.forEach(function (item) { queue.push(item); });   // requeue, don't lose them
+    nextRound();
+  });
+
+  // ---- load the set -------------------------------------------------------
+  var s = document.createElement("script");
+  s.src = "kanji-set" + setId + ".js";
+  s.onload = function () {
+    var meta = (window.KANJI_SETS || {})[setId];
+    pool = window["KANJI_SET_" + setId] || [];
+    if (!pool.length) { el.title.textContent = "Set " + setId + " is empty"; return; }
+    el.title.textContent = meta ? meta.title : "Set " + setId;
+    document.title = (meta ? meta.title : "Set " + setId) + " · Kanji Matching";
+    start();
+  };
+  s.onerror = function () {
+    el.title.textContent = "Could not load set " + setId;
+    el.hint.textContent = "Check that kanji-set" + setId + ".js sits beside this page.";
+  };
+  document.head.appendChild(s);
+})();
+</script>
+</body>
+</html>
