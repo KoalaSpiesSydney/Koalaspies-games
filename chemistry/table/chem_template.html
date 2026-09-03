@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>__TITLE__ | Modern English Australia</title>
+
+<style>
+:root {
+  --bg:#e7e9ec;          /* brushed silver */
+  --card:#e8f7f2;        /* unchanged: the square you liked */
+  --face:#fdfdfd;        /* symbol cards */
+  --accent:#a5673f;      /* copper */
+  --accent-dark:#8a5333; /* copper, pressed */
+  --ink:#1b1d20;         /* near black */
+  --muted:#868c94;       /* grey */
+  --line:#c3c9d0;        /* silver rule */
+  --tile:#f4b6c2;        /* original tile accent - unchanged */
+
+  /* One width for the board, so the cards can size their text from it.
+     The first line is the fallback for browsers without svh units. */
+  --boardw:min(96vw, 640px, calc(56vh * 1.34));
+}
+@supports (height:1svh) {
+  :root { --boardw:min(96vw, 640px, calc(56svh * 1.34)); }
+}
+
+*, *::before, *::after { box-sizing:border-box; }
+
+/* ===== Background Video ===== */
+#bgVideo {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+  opacity:0.35;
+  pointer-events:none;
+}
+
+/* ===== Layout ===== */
+html { -webkit-text-size-adjust:100%; }
+
+body {
+  margin:0;
+  font-family:"Helvetica Neue", Helvetica, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+  min-height:100svh;
+  overflow-x:hidden;
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+}
+
+.topbar { width:100%; text-align:center; padding-top:.6rem; position:relative; }
+
+.brand {
+  font-weight:700;
+  letter-spacing:2.5px;
+  font-size:clamp(.68rem, 2.4vw, .9rem);
+  color:var(--accent);
+  text-transform:uppercase;
+}
+
+main {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  padding:.5rem .6rem 1rem;
+  text-align:center;
+}
+
+h1 {
+  color:var(--ink);
+  font-weight:600;
+  letter-spacing:.5px;
+  margin:.6rem 0 .3rem;
+  font-size:clamp(1.05rem, 4.2vw, 1.75rem);
+}
+
+p.intro {
+  max-width:640px;
+  margin:.2rem auto .4rem;
+  opacity:.9;
+  font-size:clamp(.78rem, 2.6vw, 1rem);
+  line-height:1.4;
+}
+
+#progress {
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:clamp(.64rem, 2.1vw, .8rem);
+  color:var(--muted);
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+
+#status {
+  min-height:1.4em;
+  margin-top:.7rem;
+  color:var(--accent);
+  font-weight:600;
+  font-size:clamp(.82rem, 2.8vw, 1rem);
+}
+
+/* ===== 12-card board: 4 across, 3 down, always square ===== */
+#game {
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:clamp(5px, 1.4vw, 14px);
+  width:var(--boardw);
+  margin:clamp(10px, 2vw, 20px) auto 0;
+}
+
+/* A use runs to five or six words, far more than an element name, so the
+   card text is sized from the board width: whatever the screen, the
+   longest one still fits inside its square. */
+.card {
+  aspect-ratio:1 / 1;
+  background:var(--card);
+  border:2px solid var(--tile);
+  border-radius:clamp(7px, 1.6vw, 14px);
+  padding:clamp(3px, 1.2vw, 9px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:clamp(.58rem, calc(var(--boardw) / 34), 1rem);
+  line-height:1.25;
+  text-align:center;
+  min-width:0;                 /* a grid item will not shrink below its
+                                  longest word without this */
+  overflow-wrap:anywhere;      /* ...and this lets that word break */
+  hyphens:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .3s, color .3s;
+}
+
+/* Element cards stay face up: atomic number, symbol, name. The name is
+   there on purpose — this game asks what the element is FOR, so making
+   them recall the symbol as well would be testing two things at once.
+   The symbols game already does that job. */
+.card.symbol {
+  background:#ffffff;
+  color:var(--ink);
+}
+
+.card.symbol .z {
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:.78em;
+  font-weight:500;
+  letter-spacing:.5px;
+  color:var(--muted);
+  line-height:1;
+  margin-bottom:.3em;
+}
+
+.card.symbol .sym svg { width:min(58%, 4.4em); height:auto; display:block; }
+.card.symbol .sym,
+.card.symbol .nm,
+.card.symbol .z { max-width:100%; }
+
+.card.symbol .sym {
+  font-size:__MAIN_SIZE__;
+  font-weight:700;
+  letter-spacing:1px;
+  line-height:1;
+}
+
+.card.symbol .nm {
+  font-size:.95em;
+  font-weight:600;
+  line-height:1.15;
+  margin-top:.3em;
+}
+
+.card.symbol.selected { background:var(--tile); color:#000; }
+.card.symbol.selected .z { color:#000; }
+
+/* ===== Whose turn it is on the board =====
+   The board is always in one of two states, and the cards that are not in
+   play say so: dashed and a little faded.
+
+     phase-use     a clue card is waiting to be turned over
+     phase-element a clue is showing, and an answer has to be chosen  */
+#game.phase-use .card.symbol:not(.matched),
+#game.phase-element .card:not(.symbol):not(.matched):not(.flipped) {
+  cursor:default;
+  opacity:.8;
+  border-style:dashed;
+}
+
+/* Turned over out of turn: a small shake, and nothing else happens. */
+.card.nudge { animation:nudge .34s ease-in-out; }
+@keyframes nudge {
+  0%,100% { transform:translateX(0); }
+  25%     { transform:translateX(-5px); }
+  75%     { transform:translateX(5px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card.nudge { animation:none; box-shadow:0 0 0 3px rgba(165,103,63,.45); }
+}
+
+.card.flipped { background:var(--tile); color:#000; }
+
+.card.matched {
+  background:#d1ffd1;
+  color:#000;
+  cursor:default;
+}
+
+.card.matched .z { color:#000; }
+
+/* ===== Button ===== */
+button.reset {
+  margin-top:.9rem;
+  padding:clamp(.55rem,2vw,.8rem) clamp(1rem,4vw,1.4rem);
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+  color:#fff;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-size:clamp(.8rem, 2.8vw, 1rem);
+  min-height:44px;
+  transition:transform .06s ease, background .2s ease;
+}
+
+button.reset:hover { background:var(--accent-dark); transform:translateY(-1px); }
+button.reset:active { transform:translateY(0); }
+
+/* ===== Footer ===== */
+footer {
+  width:100%;
+  text-align:center;
+  background:var(--bg);
+  color:var(--muted);
+  padding:.8rem 0 calc(.8rem + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  font-size:clamp(.68rem, 2.2vw, .9rem);
+}
+
+/* ===== QR code: top-left, tap to enlarge for a classroom =====
+   The code is built at runtime from location.href, so it points at
+   whatever address this page is really open at — nothing to configure
+   when you move the file or publish the site. */
+.qr-mini {
+  position:absolute;
+  top:.2rem;
+  left:.6rem;
+  width:38px;
+  height:38px;
+  padding:3px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  line-height:0;
+  cursor:pointer;
+  transition:transform .15s ease, border-color .15s ease;
+}
+.qr-mini:hover { transform:scale(1.08); border-color:var(--accent); }
+.qr-mini img { width:100%; height:100%; display:block; }
+
+.qr-overlay {
+  position:fixed;
+  inset:0;
+  z-index:60;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  padding:20px;
+  text-align:center;
+  background:rgba(27,29,32,.9);
+}
+.qr-overlay.open { display:flex; }
+.qr-overlay img {
+  width:min(58vmin,280px);
+  height:min(58vmin,280px);
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+}
+.qr-overlay p { margin:0; color:#f2f2f2; font-size:.85rem; max-width:34ch; line-height:1.5; }
+.qr-overlay code { display:block; margin-top:4px; color:#e6c2a6; font-size:.72rem; word-break:break-all; }
+
+@media (max-width:480px) {
+  .qr-mini { width:32px; height:32px; left:.4rem; top:.15rem; }
+}
+
+/* ===== Phones held sideways =====
+   Stacked, the board and the button cannot both fit in 390px of height,
+   so the furniture moves to the left and the board takes the right.
+   The board is 4 cards wide and 3 deep, hence the 4/3: its width is set
+   from the height that is actually left over after the bar and footer. */
+@media (max-height:520px) and (orientation:landscape) {
+  main {
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title    board"
+      "progress board"
+      "status   board"
+      "btn      board";
+    align-content:center;
+    justify-items:center;
+    gap:.15rem clamp(10px, 2vw, 22px);
+    padding:.4rem .7rem;
+  }
+  h1           { grid-area:title; font-size:1rem; margin:.2rem 0 .1rem; }
+  p.intro      { display:none; }
+  #progress    { grid-area:progress; }
+  #status      { grid-area:status; margin-top:.35rem; }
+  button.reset { grid-area:btn; margin-top:.45rem; }
+  #game {
+    grid-area:board;
+    width:min(52vw, calc((100vh - 96px) * 4 / 3));
+    margin:0;
+  }
+}
+@supports (height:1svh) {
+  @media (max-height:520px) and (orientation:landscape) {
+    #game { width:min(52vw, calc((100svh - 96px) * 4 / 3)); }
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== Background Video =====
+     Optional. Drop a file in beside this page and uncomment the <source>
+     line. Left commented out so the page makes no failed request. -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <!-- <source src="YOUR-VIDEO.mp4" type="video/mp4"> -->
+</video>
+
+<div class="topbar" role="banner">
+  <button class="qr-mini" id="qrMini" aria-label="Show a QR code for this game">
+    <img id="qrMiniImg" alt="">
+  </button>
+  <div class="brand">Modern English Australia</div>
+</div>
+
+<main>
+  <h1>__H1__</h1>
+  <p class="intro">__INTRO__</p>
+  <div id="progress"></div>
+
+  <div id="game"></div>
+  <div id="status"></div>
+
+  <button class="reset" onclick="startGame()">Play Again</button>
+</main>
+
+<footer>
+  © 2025 KoalaSpiesSydney. All rights reserved.
+</footer>
+
+<div class="qr-overlay" id="qrOverlay">
+  <img id="qrBigImg" alt="QR code for this game">
+  <p>Scan to open this game on a phone.<code id="qrUrl"></code></p>
+  <button class="reset" id="qrClose" style="margin-top:0">Close</button>
+</div>
+
+<script>
+/* ██████████████████████████████████████████████████████████████████████
+   ██   __H1__
+   ██████████████████████████████████████████████████████████████████████
+
+   __ABOUT__
+
+   The order of play: turn over a card to read the clue, then choose the
+   answer it belongs to — clue first, answer second, the way a person
+   actually thinks about it. Only one clue card is face up at a time, so
+   nobody can flip through all six without committing.
+
+   TO EDIT THE LIST: each line is
+      ["id", "small line", "big line", "line under", "the clue", "read aloud as"]
+   The id only has to be unique. Leave "" for any line you do not want.
+   Keep the clue to about six words — it has to fit inside a square card.
+
+/* Pairs dealt each round. 6 pairs = 12 cards = 4 across x 3 down.
+   Change this to 8 for a 4 x 4 board of 16 cards. */
+const PAIRS_PER_ROUND = 6;
+
+/* ===== __ITEMS_ABOUT__ ===== */
+const ITEMS = [
+__ITEMS__
+];
+
+/* Set to true when the big line holds a drawing rather than words. */
+const MAIN_IS_DRAWING = __MAIN_IS_DRAWING__;
+
+/* ===== Answers that read too much alike =====
+   Deal two of these into one round and both cards look right, which makes
+   a correct game feel broken. Each line is a set that is never dealt
+   together — the extras simply wait for a later round. Add a line
+   whenever you add items that overlap. */
+const AVOID_TOGETHER = [
+__GROUPS__
+];
+
+const matchColors = [
+  "#ffd166","#06d6a0","#4cc9f0","#f72585","#ffb703",
+  "#90be6d","#f28482","#43aa8b","#577590","#ff9f1c",
+  "#b5179e","#00b4d8"
+];
+
+let selectedSymbol, revealedWord, lock, matchedCount, colorMap, roundPairs;
+let deck = [];              /* elements not yet dealt this cycle */
+let seen = new Set();       /* symbols covered so far this cycle */
+let round = 0;
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* Would this item read too much like one already on the board? */
+function clashes(id, chosen) {
+  return AVOID_TOGETHER.some(group =>
+    group.indexOf(id) !== -1 && chosen.some(s => group.indexOf(s) !== -1));
+}
+
+/* Deal the next set, never repeating an item until the whole list has
+   been played, then start a fresh cycle. */
+function dealRound() {
+  if (seen.size >= ITEMS.length) {
+    seen = new Set();
+    deck = [];
+  }
+  const picked = [];
+  const chosen = [];          /* the ids on the board this round */
+  const deferred = [];        /* held back to a later round */
+  let guard = 0;
+
+  while (picked.length < PAIRS_PER_ROUND && guard++ < 500) {
+    if (!deck.length) {
+      deck = shuffle(ITEMS.filter(e =>
+        !picked.includes(e) && !deferred.includes(e) && !seen.has(e[0])));
+      if (!deck.length) {
+        deck = shuffle(ITEMS.filter(e => !picked.includes(e) && !deferred.includes(e)));
+      }
+      if (!deck.length) break;
+    }
+    const el = deck.shift();
+    if (clashes(el[0], chosen)) { deferred.push(el); continue; }
+    chosen.push(el[0]);
+    picked.push(el);
+    seen.add(el[0]);
+  }
+
+  deck = shuffle(deferred).concat(deck);
+  return picked;
+}
+
+/* ===== Order of play =====
+   Turn over a card to read a use, THEN say which element it belongs to.
+   That is the way round a person actually thinks about it: here is a job,
+   what does it? Reading the clue first also means the answer cards can
+   all stay in view while the student weighs them up.
+
+   Only one use card is ever face up. Once it is turned, the other use
+   cards go out of play until the guess is settled — so nobody can flip
+   through all six and read the lot without committing to anything. */
+
+const PHASE_USE     = "phase-use";       /* turn over a use card */
+const PHASE_ELEMENT = "phase-element";   /* now name the element   */
+
+const NUDGE = {
+  "phase-use":     "__NUDGE_CLUE__",
+  "phase-element": "__NUDGE_ANSWER__"
+};
+
+let phase = PHASE_USE;
+let nudgeTimer;
+
+function setPhase(next) {
+  phase = next;
+  const game = document.getElementById("game");
+  game.classList.toggle(PHASE_USE,     next === PHASE_USE);
+  game.classList.toggle(PHASE_ELEMENT, next === PHASE_ELEMENT);
+}
+
+function nudge(card, status) {
+  card.classList.remove("nudge");
+  void card.offsetWidth;              /* lets the same shake run again */
+  card.classList.add("nudge");
+  setTimeout(() => card.classList.remove("nudge"), 400);
+  status.textContent = NUDGE[phase];
+  clearTimeout(nudgeTimer);
+  nudgeTimer = setTimeout(() => clearNudge(status), 2200);
+}
+
+function clearNudge(status) {
+  clearTimeout(nudgeTimer);
+  if (status.textContent === NUDGE[PHASE_USE] ||
+      status.textContent === NUDGE[PHASE_ELEMENT]) status.textContent = "";
+}
+
+function startGame() {
+  const game = document.getElementById("game");
+  const status = document.getElementById("status");
+  const progress = document.getElementById("progress");
+  game.innerHTML = "";
+  status.textContent = "";
+
+  selectedSymbol = null;
+  revealedWord = null;
+  lock = false;
+  matchedCount = 0;
+  colorMap = {};
+  round++;
+
+  roundPairs = dealRound();
+
+  progress.textContent =
+    "Round " + round + "  ·  " + seen.size + " of " + ITEMS.length + " __PLURAL__ covered";
+
+  let cards = roundPairs.flatMap(([id, top, main, sub, clue, alt]) => [
+    { pair: id, type: "symbol", top: top, main: main, sub: sub, alt: alt },
+    { pair: id, type: "word", text: clue }
+  ]);
+
+  cards = shuffle(cards);
+
+  cards.forEach(data => {
+    const div = document.createElement("div");
+    div.classList.add("card", data.type);
+    div.dataset.pair = data.pair;
+    if (data.type === "word") div.dataset.text = data.text;
+
+    /* Answers are shown from the start; clues stay blank until turned. */
+    if (data.type === "symbol") {
+      if (data.top) {
+        const t = document.createElement("span");
+        t.className = "z";
+        t.textContent = data.top;
+        div.appendChild(t);
+      }
+      const m = document.createElement("span");
+      m.className = "sym";
+      if (MAIN_IS_DRAWING) m.innerHTML = data.main; else m.textContent = data.main;
+      div.appendChild(m);
+      if (data.sub) {
+        const n = document.createElement("span");
+        n.className = "nm";
+        n.textContent = data.sub;
+        div.appendChild(n);
+      }
+    }
+
+    /* Reachable by keyboard as well as tap — the cards are divs, so they
+       need these three lines to behave like buttons. */
+    div.tabIndex = 0;
+    div.setAttribute("role", "button");
+    div.setAttribute("aria-label",
+      data.type === "symbol" ? (data.alt || [data.main, data.sub].filter(Boolean).join(", "))
+                            : "face-down card — turn it over to read the clue");
+
+    game.appendChild(div);
+
+    const activate = () => {
+      if (lock || div.classList.contains("matched")) return;
+
+      if (data.type === "word") {
+        /* STEP ONE: turn over a use. */
+        if (div.classList.contains("flipped")) {
+          /* Turning the face-up card back over — a change of mind. */
+          div.classList.remove("flipped");
+          div.textContent = "";
+          revealedWord = null;
+          setPhase(PHASE_USE);
+          clearNudge(status);
+          return;
+        }
+        if (phase !== PHASE_USE) { nudge(div, status); return; }
+
+        div.classList.add("flipped");
+        div.textContent = data.text;
+        revealedWord = div;
+        setPhase(PHASE_ELEMENT);
+        clearNudge(status);
+        return;
+      }
+
+      /* STEP TWO: name the element that does that job. */
+      if (phase !== PHASE_ELEMENT || !revealedWord) { nudge(div, status); return; }
+
+      selectedSymbol = div;
+      div.classList.add("selected");
+      clearNudge(status);
+      checkPair(status);
+    };
+
+    div.addEventListener("click", activate);
+    div.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); }
+    });
+  });
+
+  setPhase(PHASE_USE);        /* a fresh round always starts on the use cards */
+}
+
+function checkPair(status) {
+  lock = true;
+  const symbol = selectedSymbol;
+  const word = revealedWord;
+
+  setTimeout(() => {
+    if (symbol.dataset.pair === word.dataset.pair) {
+      if (!colorMap[symbol.dataset.pair]) {
+        const used = Object.keys(colorMap).length;
+        colorMap[symbol.dataset.pair] = matchColors[used % matchColors.length];
+      }
+      const c = colorMap[symbol.dataset.pair];
+
+      [symbol, word].forEach(card => {
+        card.classList.remove("flipped", "selected");
+        card.classList.add("matched");
+        card.style.background = c;
+      });
+
+      matchedCount++;
+      if (matchedCount === roundPairs.length) {
+        status.textContent = seen.size >= ITEMS.length
+          ? "Brilliant. That is all " + ITEMS.length + " __PLURAL__."
+          : "Brilliant. All matched — play again for six new __PLURAL__.";
+      }
+    } else {
+      symbol.classList.remove("selected");
+      word.classList.remove("flipped");
+      word.textContent = "";
+    }
+
+    selectedSymbol = null;
+    revealedWord = null;
+    lock = false;
+    setPhase(PHASE_USE);      /* back to: turn over the next use */
+  }, 800);
+}
+
+/* ===== QR code for this page =====
+   Reads location.href at runtime, so it picks up your real domain once the
+   file is on the server. Tap it to enlarge: a 38px code will not scan from
+   the back of a room. */
+(function () {
+  const mini = document.getElementById("qrMini");
+  if (!mini) return;
+  const api = "https://api.qrserver.com/v1/create-qr-code/?data=" +
+              encodeURIComponent(location.href) + "&size=";
+  document.getElementById("qrMiniImg").src = api + "120x120";
+  document.getElementById("qrBigImg").src  = api + "400x400";
+  document.getElementById("qrUrl").textContent = location.href;
+
+  const box = document.getElementById("qrOverlay");
+  mini.addEventListener("click", () => box.classList.add("open"));
+  document.getElementById("qrClose").addEventListener("click", () => box.classList.remove("open"));
+  box.addEventListener("click", e => { if (e.target === box) box.classList.remove("open"); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") box.classList.remove("open");
+  });
+})();
+
+startGame();
+</script>
+
+</body>
+</html>
