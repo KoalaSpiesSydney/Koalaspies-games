@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Speaking Test XO | Koalaspies</title>
+
+<style>
+:root {
+/* Retro board‑game palette: cream paper, forest ink, deep red tiles, gold accents */
+  --bg:#f7f2e7;          /* warm cream paper */
+  --card:#fcfaf4;        /* lighter board square */
+  --accent:#2e5e3a;      /* forest green */
+  --accent-dark:#1f4028; /* deep forest */
+  --bright:#d4a94e;      /* gold button */
+  --bright-hi:#e2b866;   /* lighter gold */
+  --bright-lo:#b68c3d;   /* darker gold */
+  --ink:#2b2b2b;         /* charcoal ink */
+  --muted:#6b6f75;       /* soft grey */
+  --line:#e3dccf;        /* warm rule line */
+  --tile:#9c2b3d;        /* team 1 — deep red (kept from your original) */
+  --tile-soft:#e8d0d4;   /* softened red */
+  --tile-deep:#8b2334;   /* team 1 — the question card background */
+  --p2:#5b8f7a;          /* team 2 — muted Cambridge green (kept) */
+  --p2-soft:#cfe0d5;     /* soft green */
+  --p2-deep:#3f6f5b;     /* team 2 — the question card background */
+  --easy:#cfe0d5;        /* unchanged */
+  --hard:#dfe6ef;        /* unchanged */
+
+
+  /* One width for the board AND the team boxes, so their edges line up. */
+  --boardw:min(96vw, 620px, 52svh);
+}
+
+*, *::before, *::after { box-sizing:border-box; }
+
+#bgVideo {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  object-fit:cover; z-index:-1; opacity:.35; pointer-events:none;
+}
+
+html { -webkit-text-size-adjust:100%; }
+
+body {
+  margin:0;
+  font-family: "Roboto Slab", serif;
+  font-weight: 400;   /* main text */
+  background:var(--bg);
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100svh;
+  overflow-x:hidden;
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+}
+
+.topbar { width:100%; text-align:center; padding-top:.6rem; }
+
+.brand {
+  font-family:"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-weight:600; letter-spacing:3px;
+  font-size:clamp(.62rem, 2.2vw, .8rem);
+  color:var(--accent); text-transform:uppercase;
+}
+
+main {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  width:100%; padding:.4rem .6rem 1rem; text-align:center;
+}
+
+h1, h2 {
+  font-weight: 700;   /* strong titles */
+  font-family:"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  color:var(--ink); font-weight:600; letter-spacing:.2px;
+  margin:.5rem 0 .25rem;
+  font-size:clamp(1.15rem, 4.4vw, 1.9rem);
+}
+
+/* ===== The game title =====
+   Fredoka is the fun one; the fallbacks keep it friendly if the page is
+   opened with no internet. The X and the O sit in the two team colours,
+   tilted just enough to look hand-placed on the board. */
+.gametitle {
+  font-family:"Fredoka", "Trebuchet MS", "Avenir Next", Verdana, sans-serif;
+  font-weight:600;
+  font-size:clamp(1.45rem, 5.4vw, 2.6rem);
+  line-height:1.15;
+  letter-spacing:.055em;
+  color:var(--accent);
+  margin:.55rem 0 .5rem;
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(.35em, 1.4vw, .55em);
+  flex-wrap:wrap;
+}
+
+.gametitle .words {
+  white-space:nowrap;
+  text-shadow:3px 3px 0 rgba(43,43,43,.10);
+}
+
+.gametitle .xo { display:inline-flex; gap:.16em; }
+
+.gametitle .xo i {
+  display:grid; place-items:center;
+  width:1.35em; height:1.35em;
+  border-radius:.3em;
+  font-style:normal; font-weight:700;
+  font-size:.66em; line-height:1;
+  padding-bottom:.06em;
+  color:#fff;
+  box-shadow:0 3px 0 rgba(0,0,0,.20), 0 7px 14px rgba(43,43,43,.22);
+  will-change:transform;
+}
+.gametitle .xo .x { background:var(--tile); transform:rotate(-5deg); }
+.gametitle .xo .o { background:var(--p2);   transform:rotate(5deg);  }
+
+/* The two tiles jump and wobble when a game starts or the rules open.
+   Each keyframe set ends where the tile normally rests, so it settles
+   back into its usual tilt.                                          */
+.gametitle.shake .xo .x { animation:xshake .85s cubic-bezier(.2,.7,.3,1) both; }
+.gametitle.shake .xo .o { animation:oshake .85s cubic-bezier(.2,.7,.3,1) .09s both; }
+
+@keyframes xshake {
+  0%   { transform:rotate(-5deg)  translateY(0)     scale(1);    }
+  14%  { transform:rotate(-17deg) translateY(-9px)  scale(1.14); }
+  30%  { transform:rotate(8deg)   translateY(1px)   scale(1.03); }
+  46%  { transform:rotate(-11deg) translateY(-5px)  scale(1.08); }
+  62%  { transform:rotate(3deg)   translateY(0)     scale(1.01); }
+  80%  { transform:rotate(-8deg)  translateY(-2px)  scale(1.02); }
+  100% { transform:rotate(-5deg)  translateY(0)     scale(1);    }
+}
+@keyframes oshake {
+  0%   { transform:rotate(5deg)   translateY(0)     scale(1);    }
+  14%  { transform:rotate(17deg)  translateY(-9px)  scale(1.14); }
+  30%  { transform:rotate(-8deg)  translateY(1px)   scale(1.03); }
+  46%  { transform:rotate(11deg)  translateY(-5px)  scale(1.08); }
+  62%  { transform:rotate(-3deg)  translateY(0)     scale(1.01); }
+  80%  { transform:rotate(8deg)   translateY(-2px)  scale(1.02); }
+  100% { transform:rotate(5deg)   translateY(0)     scale(1);    }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gametitle.shake .xo .x, .gametitle.shake .xo .o { animation:none; }
+}
+
+p.intro {
+  max-width:620px; margin:.15rem auto .5rem; opacity:.9;
+  font-size:clamp(.76rem, 2.5vw, .98rem); line-height:1.4;
+}
+
+/* ===== Scoreboard ===== */
+#scores {
+  display:flex; gap:clamp(4px, 1.2vw, 11px); justify-content:center;
+  width:var(--boardw); margin:.35rem auto 0;
+}
+
+/* No card, no border, no shadow — the team sits straight on the paper.
+   The only thing that marks the turn is a soft wash of the team's own
+   colour behind whoever is playing.                                  */
+.score {
+  position:relative;
+  flex:1; min-width:0;
+  display:flex; align-items:center; gap:clamp(7px,2.2vw,12px);
+  border:0; border-radius:8px;
+  background:transparent;
+  padding:clamp(.45rem,1.8vw,.62rem) clamp(.55rem,2.2vw,.85rem);
+  box-shadow:none;
+  transition:background .25s ease;
+}
+
+.score.p1 { --edge:var(--tile); }
+.score.p2 { --edge:var(--p2); }
+
+.chip {
+  flex:none;
+  width:clamp(38px, 11.5vw, 50px); height:clamp(38px, 11.5vw, 50px);
+  border-radius:6px;
+  display:grid; place-items:center;
+  font-size:clamp(1.15rem, 4.8vw, 1.6rem);
+  font-weight:700; line-height:1;
+  transition:transform .18s cubic-bezier(.2,.8,.3,1), box-shadow .2s;
+}
+
+.score.p1 .chip { background:var(--tile); color:#fff; box-shadow:none; }
+.score.p2 .chip { background:var(--p2);   color:#fff; box-shadow:none; }
+
+.score.active .chip { transform:scale(1.04); }
+
+.meta { min-width:0; text-align:left; line-height:1.15; }
+
+.name {
+  display:block; max-width:100%;
+  font-size:clamp(.72rem, 2.6vw, .92rem); font-weight:600;
+  color:var(--ink); letter-spacing:.1px;
+  outline:none; border-radius:4px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  cursor:text;
+}
+.name:focus { box-shadow:0 0 0 2px rgba(224,138,60,.4); }
+
+.role {
+  display:flex; align-items:center; gap:.4em;
+  font-size:clamp(.55rem, 1.95vw, .67rem); letter-spacing:1.1px;
+  text-transform:uppercase; color:var(--muted); font-weight:700;
+  margin-top:.2em;
+}
+.role .dot {
+  width:.5em; height:.5em; border-radius:50%;
+  background:var(--muted); flex:none;
+}
+
+/* Hints remaining, as three small pips under the team name. */
+.hintsline {
+  display:flex; align-items:center; gap:.35em;
+  font-size:clamp(.5rem, 1.8vw, .62rem); letter-spacing:1px;
+  text-transform:uppercase; color:var(--muted); font-weight:700;
+  margin-top:.28em;
+}
+.hintsline .pips { display:flex; gap:.25em; }
+.hintsline .pip {
+  width:.55em; height:.55em; border-radius:50%;
+  background:var(--accent); opacity:.85; flex:none;
+}
+.hintsline .pip.spent { background:transparent; border:1px solid var(--line); opacity:1; }
+.score.active .role { color:var(--accent); }
+.score.active .role .dot {
+  background:var(--accent);
+  box-shadow:0 0 0 0 rgba(15,76,129,.5);
+  animation:pulse 1.8s ease-out infinite;
+}
+@keyframes pulse {
+  70%  { box-shadow:0 0 0 7px rgba(15,76,129,0); }
+  100% { box-shadow:0 0 0 0 rgba(15,76,129,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .score.active .role .dot { animation:none; }
+}
+
+/* No wash behind the active team — the turn shows in the "Your turn"
+   line and its pulsing dot alone. */
+.score.active { background:transparent; }
+
+#hint {
+  font-size:clamp(.56rem, 1.9vw, .66rem);
+  letter-spacing:.8px; text-transform:uppercase;
+  color:var(--muted); margin:.45rem 0 0; opacity:.75;
+}
+
+/* ===== 5 x 5 board (25 squares) =====
+   Width is capped against viewport width AND height, so the
+   whole board stays on screen on a phone in either orientation. */
+#board {
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:clamp(4px, 1.2vw, 11px);
+  width:var(--boardw);
+  margin:clamp(8px, 1.8vw, 16px) auto 0;
+}
+
+.sq {
+  aspect-ratio:1 / 1;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:clamp(3px, .8vw, 6px);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  cursor:pointer; user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  padding:clamp(3px,1.2vw,8px);
+  transition:background .25s, transform .1s, box-shadow .2s;
+}
+
+.sq:hover:not(.taken) { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.12); }
+
+.sq.taken { cursor:default; }
+.sq.taken:hover { transform:none; box-shadow:none; }
+
+.sq .claim {
+  font-size:clamp(1.1rem, 4.6vw, 2rem); font-weight:700; line-height:1;
+}
+
+/* A won square is filled solid in the team's colour, mark in white. */
+.sq.p1 {
+  background:var(--tile); border-color:var(--tile-deep); color:#fff;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.16);
+}
+.sq.p2 {
+  background:var(--p2); border-color:var(--p2-deep); color:#fff;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.16);
+}
+.sq.taken .claim { text-shadow:0 1px 2px rgba(0,0,0,.22); }
+
+/* The four winning squares get a gold ring — it shows on both colours —
+   and a single soft pop as the fanfare plays. */
+.sq.win, .sq.p1.win, .sq.p2.win {
+  box-shadow:0 0 0 3px var(--bright) inset, 0 3px 12px rgba(0,0,0,.18);
+  animation:winpop .55s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes winpop {
+  0%   { transform:scale(1);    }
+  45%  { transform:scale(1.06); }
+  100% { transform:scale(1);    }
+}
+@media (prefers-reduced-motion: reduce) { .sq.win { animation:none; } }
+
+/* ===== Status + buttons ===== */
+#status {
+  min-height:1.5em; margin-top:.8rem;
+  color:var(--accent); font-weight:600;
+  font-family:"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size:clamp(.84rem, 2.9vw, 1.05rem);
+}
+
+button {
+  font-family:inherit;
+  border:none; border-radius:4px; cursor:pointer;
+  font-weight:600; letter-spacing:1.1px; text-transform:uppercase;
+  font-size:clamp(.7rem, 2.4vw, .82rem);
+  min-height:44px; padding:.62rem 1.35rem;
+  transition:background .18s ease, box-shadow .18s ease,
+             transform .12s cubic-bezier(.2,.8,.3,1), border-color .18s ease;
+}
+
+button:focus-visible {
+  outline:none;
+  box-shadow:0 0 0 3px rgba(15,76,129,.35);
+}
+
+.btn-primary {
+  background:var(--accent); color:#fff;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.16);
+}
+.btn-primary:hover { background:var(--bright-hi); }
+.btn-primary:active {
+  background:var(--accent-dark);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.25);
+  transform:translateY(1px);
+}
+
+.btn-quiet {
+  background:transparent;
+  color:var(--accent);
+  border:1px solid var(--accent);
+  box-shadow:none;
+}
+.btn-quiet:hover { background:rgba(15,76,129,.07); }
+.btn-quiet:active { transform:translateY(1px); }
+
+/* The two buttons under the board (they move to the sides on a wide screen) */
+.actions {
+  display:flex; gap:.5rem; margin-top:.7rem;
+  justify-content:center; align-items:center; flex-wrap:wrap;
+}
+
+/* ===== Topic panel ===== */
+#intro {
+  position:fixed; inset:0; z-index:20;
+  background:rgba(27,29,32,.62);
+  display:none; align-items:center; justify-content:center;
+  padding:1rem;
+}
+#intro.open { display:flex; }
+
+#intro h2 {
+  font-family:"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  margin:0 0 .1rem; font-size:clamp(1.2rem, 4.6vw, 1.6rem);
+  font-weight:600; letter-spacing:.2px; color:var(--ink);
+}
+#intro .lead {
+  margin:.15rem 0 .9rem; color:var(--muted);
+  font-size:clamp(.62rem, 2.2vw, .74rem);
+  letter-spacing:1.1px; text-transform:uppercase; font-weight:700;
+}
+
+.rules {
+  text-align:left; margin:0 0 1rem; padding:0; list-style:none;
+  counter-reset:r;
+}
+.rules li {
+  counter-increment:r;
+  position:relative; padding-left:2.1em; margin:0 0 .7rem;
+  font-size:clamp(.82rem, 3vw, 1rem); line-height:1.4;
+}
+.rules li::before {
+  content:counter(r);
+  position:absolute; left:0; top:.05em;
+  width:1.5em; height:1.5em; border-radius:50%;
+  display:grid; place-items:center;
+  background:var(--accent);
+  color:#fff; font-size:.8em; font-weight:700;
+}
+
+.demo {
+  display:flex; flex-direction:column; align-items:center;
+  gap:.5rem; margin:.2rem 0 1.1rem;
+}
+.mini {
+  display:grid; grid-template-columns:repeat(5, 1fr);
+  gap:clamp(3px, .9vw, 5px);
+  width:clamp(132px, 40vw, 176px);
+}
+.mini i {
+  aspect-ratio:1/1; border-radius:2px;
+  background:var(--card); border:1px solid var(--line);
+  display:grid; place-items:center;
+  font-style:normal; font-weight:700; color:transparent;
+  font-size:clamp(.6rem, 2.2vw, .8rem);
+  transition:background .18s ease, color .18s ease, transform .18s ease;
+}
+.mini i.on {
+  background:var(--tile); color:#fff;
+  border-color:var(--tile-deep); transform:scale(1.05);
+}
+.minicap {
+  font-size:clamp(.6rem, 2.1vw, .72rem);
+  letter-spacing:1.3px; text-transform:uppercase;
+  font-weight:700; color:var(--accent);
+}
+
+#howto { margin-left:0; }
+
+/* Voice chooser on the How to play screen */
+.voicerow {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:.4rem; margin:0 0 1.05rem;
+  font-size:clamp(.58rem, 2vw, .7rem);
+  letter-spacing:1.1px; text-transform:uppercase;
+  font-weight:700; color:var(--muted);
+}
+.voicerow select {
+  font-family:inherit; font-size:1.05em; font-weight:600;
+  max-width:min(60vw, 230px);
+  padding:.4em .5em;
+  border:1px solid var(--line); border-radius:4px;
+  background:var(--bg); color:var(--ink);
+}
+.voicerow .vbtn {
+  min-height:34px; padding:.32rem .75rem;
+  font-size:1em; letter-spacing:1px;
+}
+
+/* Short screens: trim the how-to screen so Ready stays reachable. */
+@media (max-height:720px) {
+  #intro h2 { font-size:clamp(1rem, 3.6vw, 1.2rem); }
+  #intro .lead { margin-bottom:.6rem; }
+  .rules li { font-size:clamp(.75rem, 2.7vw, .88rem); margin-bottom:.5rem; }
+  .demo { margin:.1rem 0 .8rem; }
+  .mini { width:clamp(110px, 32vw, 140px); }
+}
+
+/* Phones held sideways: rules on the left, demo on the right. */
+@media (max-height:520px) and (orientation:landscape) {
+  #intro .sheet {
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title demo"
+      "rules demo"
+      "btn   demo";
+    align-items:center; text-align:left;
+    gap:.25rem 1rem;
+    padding:.9rem 1.1rem;
+    max-width:640px;
+  }
+  #intro h2   { grid-area:title; margin:0; font-size:1rem; }
+  #intro .lead{ display:none; }
+  .rules      { grid-area:rules; margin:.35rem 0 0; }
+  .rules li   { font-size:.74rem; margin-bottom:.4rem; padding-left:1.9em; }
+  .demo       { grid-area:demo; margin:0; }
+  .mini       { width:clamp(92px, 20vw, 118px); }
+  #intro .sheet > button { grid-area:btn; justify-self:start; margin-top:.5rem; }
+}
+
+#panel {
+  position:fixed; inset:0; z-index:10;
+  background:rgba(27,29,32,.6);
+  display:none; align-items:center; justify-content:center;
+  padding:1rem;
+}
+#panel.open { display:flex; }
+
+.sheet {
+  background:#fff; border-radius:16px;
+  width:100%; max-width:520px;
+  padding:clamp(1.1rem, 4.5vw, 2rem);
+  text-align:center;
+  box-shadow:0 18px 50px rgba(0,0,0,.3);
+  max-height:92svh; overflow-y:auto;
+}
+
+.sheet .lvl {
+  display:inline-block;
+  font-size:clamp(.58rem, 2.2vw, .74rem);
+  letter-spacing:1.4px; text-transform:uppercase; font-weight:700;
+  padding:.28em .8em; border-radius:99px;
+}
+.sheet .lvl.easy { background:var(--easy); color:#04372a; }
+.sheet .lvl.hard { background:var(--hard); color:#4a1b1a; }
+.sheet .lvl.topic {
+  background:#e4ecf5; color:var(--accent-dark);
+  border:1px solid #b9cde0; border-radius:3px;
+}
+.sheet .lvl.topic.quick {
+  background:var(--p2-soft); color:#2f5c46;
+  border:1px solid #9dbfab;
+}
+
+/* ===== The question pop-out: sizing and balance =====
+   Everything from here to the footer sets the rhythm of the card:
+   tag, whose turn, the wave, the clock, then the buttons.
+   The clock is the biggest thing on the card on purpose.        */
+
+#panel .sheet {
+  max-width:470px;
+  padding:clamp(1.3rem, 4.5vw, 1.9rem) clamp(1.15rem, 4.5vw, 1.9rem)
+          clamp(1.15rem, 4vw, 1.55rem);
+}
+
+#panel .sheet .lvl { padding:.3em .95em; }
+
+#turnline {
+  margin-top:.5rem;
+  font-size:clamp(.62rem, 2.2vw, .76rem);
+  letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--muted); font-weight:700;
+}
+
+#topic {
+  margin:.55rem 0 1.1rem;
+  font-size:clamp(1.15rem, 4.6vw, 1.6rem);
+  line-height:1.35; font-weight:500;
+  letter-spacing:-.2px;
+}
+
+#clock {
+  font-variant-numeric:tabular-nums;
+  font-size:clamp(2.7rem, 12vw, 3.8rem);
+  font-weight:700; line-height:1; letter-spacing:2px;
+  color:var(--ink);
+  margin:.1rem 0 1.15rem;
+}
+#clock.low { color:var(--tile); }
+
+/* ===== The card takes the team's colour, and everything on it is white.
+   Team 1 = maroon, Team 2 = green. Set by data-team on #panel in the
+   script, so the whole card flips colour with the turn.            ===== */
+#panel                  { --panel-bg:var(--tile-deep); }
+#panel[data-team="1"]   { --panel-bg:var(--tile-deep); }
+#panel[data-team="2"]   { --panel-bg:var(--p2-deep); }
+
+#panel .sheet {
+  background:var(--panel-bg);
+  color:#fff;
+  box-shadow:0 22px 60px rgba(0,0,0,.42);
+  transition:background .25s ease;
+}
+
+#panel #turnline { color:rgba(255,255,255,.82); }
+#panel #plays    { color:rgba(255,255,255,.78); }
+#panel #topic    { color:#fff; }
+#panel #clock    { color:#fff; }
+#panel #clock.low{ color:var(--bright); }          /* gold, not red */
+
+/* the topic tag: a pale panel on the colour rather than its own blue */
+#panel .sheet .lvl.topic,
+#panel .sheet .lvl.topic.quick {
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.38);
+}
+
+/* the wave bars */
+#panel .wave i      { background:rgba(255,255,255,.32); }
+#panel .wave.on i   { background:#fff; }
+
+/* buttons invert too: the main one is white, the quiet ones outlined */
+#panel .btn-primary {
+  background:#fff; color:var(--panel-bg);
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.14);
+}
+#panel .btn-primary:hover  { background:#f4efe3; }
+#panel .btn-primary:active { background:#e9e1cf; box-shadow:inset 0 2px 4px rgba(0,0,0,.2); }
+
+#panel .btn-quiet {
+  background:transparent; color:#fff;
+  border:1px solid rgba(255,255,255,.6);
+}
+#panel .btn-quiet:hover { background:rgba(255,255,255,.14); }
+
+#panel button:focus-visible { box-shadow:0 0 0 3px rgba(255,255,255,.55); }
+
+.sheet .row { display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; }
+
+/* The main action takes a full-width line of its own; the quieter
+   ones sit side by side underneath and share what is left. */
+.sheet .row button {
+  font-size:clamp(.62rem, 2.1vw, .76rem);
+  letter-spacing:1px;
+  min-height:44px;
+  padding:.55rem 1rem;
+  flex:1 1 auto;
+  min-width:7.5rem;
+  max-width:100%;
+}
+.sheet .row .btn-primary { flex:1 1 100%; }
+
+/* ===== Footer ===== */
+footer {
+  width:100%; text-align:center; background:var(--bg); color:var(--muted);
+  padding:.8rem 0 calc(.8rem + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  font-size:clamp(.68rem, 2.2vw, .9rem);
+}
+
+/* ===== Audio panel additions ===== */
+#listen { margin:.7rem 0 .9rem; }
+
+.wave { display:flex; gap:5px; justify-content:center; align-items:flex-end; height:30px; }
+.wave i {
+  width:5px; border-radius:3px; background:var(--line); height:9px;
+  transition:background .2s;
+}
+.wave.on i { background:var(--accent); animation:bounce .9s ease-in-out infinite; }
+.wave.on i:nth-child(2){ animation-delay:.12s }
+.wave.on i:nth-child(3){ animation-delay:.24s }
+.wave.on i:nth-child(4){ animation-delay:.36s }
+.wave.on i:nth-child(5){ animation-delay:.48s }
+@keyframes bounce { 0%,100%{height:9px} 50%{height:32px} }
+@media (prefers-reduced-motion: reduce) { .wave.on i { animation:none; height:22px; } }
+
+#plays {
+  margin-top:.55rem; min-height:1.15em;   /* holds its space so nothing jumps */
+  font-size:clamp(.56rem, 2vw, .68rem); letter-spacing:1.1px;
+  text-transform:uppercase; color:var(--muted); font-weight:700;
+  line-height:1.3;
+}
+
+#topic {
+  max-height:0; overflow:hidden; opacity:0; margin:0;
+  transition:max-height .3s ease, opacity .25s ease, margin .3s ease;
+}
+#topic.revealed {
+  max-height:40em; opacity:1; margin:.65rem 0 1rem;
+}
+#topic {
+  font-family:"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  color:var(--ink);
+}
+
+/* Short screens (small phones, tablets in landscape):
+   trim the vertical furniture so the board and the button both fit. */
+@media (max-height:780px) {
+  h1 { font-size:clamp(1rem, 3.4vw, 1.35rem); margin:.35rem 0 .2rem; }
+  p.intro { font-size:clamp(.7rem, 2.2vw, .85rem); margin:.1rem auto .3rem; }
+  #hint { margin-top:.3rem; }
+  #status { margin-top:.5rem; min-height:1.2em; }
+  .actions { margin-top:.5rem; }
+  :root { --boardw:min(96vw, 620px, 46svh); }
+}
+
+@media (max-height:660px) {
+  p.intro { display:none; }
+  :root { --boardw:min(96vw, 52svh); }
+}
+
+/* Phones held sideways: put the board beside the text instead of under it. */
+@media (max-height:560px) and (orientation:landscape) {
+  main {
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title  board"
+      "scores board"
+      "status board"
+      "btn    board";
+    align-content:center; justify-items:center;
+    gap:.15rem .9rem;
+    padding:.4rem .7rem;
+  }
+  h1       { grid-area:title; font-size:1rem; margin:.1rem 0; }
+  #scores  { grid-area:scores; width:min(100%, 330px); }
+  #status  { grid-area:status; margin-top:.3rem; }
+  .actions { grid-area:btn; margin-top:.3rem; }
+  #board   { grid-area:board; width:min(44vw, 88svh); margin:0; }
+  p.intro, #hint { display:none; }
+}
+
+/* ===== Wide screens: tablets in landscape, laptops, desktops =====
+   The stacked phone layout wastes the width here, so the furniture
+   moves to the sides and the board gets the middle to itself:
+
+        Team 1          BOARD          Team 2
+        New Game                       How to play
+
+   #scores and .actions become display:contents, which means their
+   two children each become a grid item of main and can be placed
+   independently. Change the 900px below to move the breakpoint. */
+@media (min-width:900px) and (min-height:561px) {
+  /* the board can be bigger here — nothing is stacked above it now */
+  :root { --boardw:min(48vw, 700px, 70svh); }
+
+  #scores, .actions { display:contents; }
+
+  main {
+    display:grid;
+    grid-template-areas:none;
+    grid-template-columns:minmax(160px, 250px) auto minmax(160px, 250px);
+    grid-template-rows:auto auto auto auto;
+    column-gap:clamp(16px, 2.6vw, 40px);
+    justify-items:stretch;
+    align-content:center;
+    align-content:safe center;   /* stays reachable if the screen is short */
+    width:100%; max-width:1320px;
+    padding:.6rem 1.2rem 1.4rem;
+  }
+
+  /* Row 2 is the tall one: the board sets its height. The team cards
+     pin to the TOP of that row and the buttons to the BOTTOM, so each
+     button lines up with the last row of squares.                    */
+  h1       { grid-column:1 / -1; grid-row:1; }
+  #board   { grid-column:2; grid-row:2; margin-top:0; }
+  #s1      { grid-column:1; grid-row:2; align-self:start; }
+  #s2      { grid-column:3; grid-row:2; align-self:start; }
+  #newgame { grid-column:1; grid-row:2; }
+  #howto   { grid-column:3; grid-row:2; }
+  #newgame, #howto { width:100%; margin:0; align-self:end; }
+  #status  { grid-column:2; grid-row:3; }
+  #hint    { grid-column:1 / -1; grid-row:4; margin-top:.8rem; }
+
+  /* a little more room inside the team cards now they have their own column */
+  .score { padding:.7rem .8rem; }
+  .name  { font-size:.95rem; }
+}
+
+/* A wide but short window (a small laptop, a resized browser): keep the
+   whole board on screen rather than making them scroll for the last row. */
+@media (min-width:900px) and (min-height:561px) and (max-height:700px) {
+  :root { --boardw:min(48vw, 700px, 58svh); }
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="YOUR-VIDEO.mp4" type="video/mp4">
+</video>
+
+<div class="topbar" role="banner">
+  <div class="brand">Koalaspies</div>
+</div>
+
+<main>
+  <h1 class="gametitle">
+    <span class="words">Speaking&nbsp;Test</span>
+    <span class="xo"><i class="x">X</i><i class="o">O</i></span>
+  </h1>
+
+
+  <div id="scores"></div>
+  <div id="hint">Tap a team name to rename</div>
+
+  <div id="board"></div>
+  <div id="status"></div>
+
+  <div class="row actions">
+    <button id="newgame" class="btn-primary" onclick="newGame()">New Game</button>
+    <button id="howto" class="btn-quiet" onclick="openIntro()">How to play</button>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 Justine Leigh Kelly. All rights reserved.
+</footer>
+
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="sheet">
+    <h2 id="introTitle">How to play</h2>
+    <div class="lead">Speaking Test XO</div>
+
+    <ol class="rules">
+      <li><strong>Get four in a row to win.</strong> Across, down or diagonally &mdash; the first team to claim four squares in a line takes the game.</li>
+      <li><strong>Win a square by speaking.</strong> Listen to the question, then answer and keep talking for the whole time on the clock. Stop early and the square stays open.</li>
+      <li><strong>Three hints each.</strong> A team may press <em>Hint</em> to read the question on the screen &mdash; but only three times in the whole game, so save them for the hard ones.</li>
+    </ol>
+
+    <div class="demo">
+      <div class="mini" id="mini"></div>
+      <div class="minicap" id="minicap">Across</div>
+    </div>
+
+    <div class="voicerow">
+      <label for="voicepick">Question voice</label>
+      <select id="voicepick"></select>
+      <button type="button" class="btn-quiet vbtn" onclick="testVoice()">Hear it</button>
+    </div>
+
+    <button class="btn-primary" onclick="startFromIntro()">Ready to go</button>
+  </div>
+</div>
+
+<div id="panel" role="dialog" aria-modal="true" aria-labelledby="topic">
+  <div class="sheet">
+    <span class="lvl topic" id="plvl">Topic</span>
+    <div id="turnline">Team 1</div>
+
+    <div id="listen">
+      <div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i></div>
+      <div id="plays"></div>
+    </div>
+
+    <div id="topic"></div>
+    <div id="clock">0:05</div>
+    <div class="row" id="controls"></div>
+  </div>
+</div>
+
+<script>
+/* ██████████████████████████████████████████████████████████████████████
+   ██                                                                  ██
+   ██   EDIT EVERYTHING BETWEEN THIS BANNER AND THE "END OF THE BIT     ██
+   ██   YOU EDIT" BANNER FURTHER DOWN. NOTHING ELSE NEEDS TOUCHING.     ██
+   ██                                                                  ██
+   ██████████████████████████████████████████████████████████████████████
+
+   The game: two teams, a 5 x 5 board, and the first team to claim four
+   squares in a row — horizontally, vertically or diagonally — wins.
+
+   ----------------------------------------------------------------------
+   HOW TO ADD YOUR OWN QUESTIONS
+   ----------------------------------------------------------------------
+
+   1. Record your audio as .mp3 (or .m4a / .wav).
+
+   2. Put the audio files next to this .html file. If you keep them in a
+      sub-folder called  audio  then the path is  "audio/yourfile.mp3".
+      In Moodle, upload the audio files into the SAME folder as this page.
+
+   3. Copy one of the lines below and change the three parts:
+
+         { topic:"Sport", audio:"audio/sport1.mp3",
+           text:"Do you play any sports?" },
+
+      topic  ....  shown on the card as a heading, e.g. "Sport".
+                   Group three or four questions under each topic, the way
+                   a real Part 1 works: now, in the past, in the future,
+                   and one about people in general.
+
+      audio  ....  the file to play. Leave it as ""  (two quote marks,
+                   nothing between) and the computer will read the text
+                   aloud instead.
+
+      text   ....  ALWAYS fill this in, even when you have audio. Students
+                   never see it unless the teacher presses "Show text", or
+                   the audio fails. It is your safety net and your record
+                   of what each file says.
+
+   4. Keep the comma at the end of every line except the last one.
+      Keep the straight quote marks "  —  not curly ones.
+
+   5. Delete any of my sample questions you do not want. They are the ones
+      with  sample:true  on the end. Open the browser console (F12) to see
+      how many of mine are still in there.
+
+   ----------------------------------------------------------------------
+   SETTINGS
+   ---------------------------------------------------------------------- */
+
+/* How long they get to answer, in seconds.
+
+   The game works this out from the FIRST WORD of the question:
+
+     what / where / when / why / who / whose / which / how
+                                  ->  WH_SECONDS   (10 by default)
+     anything else — do, did, is, are, have, would, can ...
+                                  ->  QUICK_SECONDS ( 5 by default)
+
+   To force a particular time on one question, add  seconds:  to it:
+
+     { topic:"Sport", audio:"", seconds:15,
+       text:"Do you think children played more sport in the past?" },   */
+
+const QUICK_SECONDS = 5;
+const WH_SECONDS    = 10;
+
+const WH_WORDS = ["what","where","when","why","who","whom","whose","which","how"];
+
+/* true  = the timer starts by itself the moment the question finishes,
+           which is what makes this feel like the real Part 1.
+   false = they press "Start answering" themselves and may replay the
+           question first.                                              */
+const AUTO_START = true;
+
+/* Only used when AUTO_START is false: how many times they may hear it. */
+const MAX_PLAYS = 2;
+
+/* ----------------------------------------------------------------------
+   THE VOICE
+   ----------------------------------------------------------------------
+   When a question has no audio file, the computer reads it aloud with
+   whatever voices the machine has. They vary enormously: the old built-in
+   ones (Microsoft David, Zira, Hazel; Apple's Albert or Fred) sound like a
+   robot, while the newer ones (anything called Natural, Neural, Online,
+   Premium, Enhanced, or Google) sound close to a person.
+
+   The game now scores every English voice it can find and picks the best
+   one by itself. You can also choose one by hand on the How to play
+   screen — the drop-down lists what THIS computer has, and "Hear it"
+   reads a sample so you can compare before class.
+
+   If your voices all sound robotic, install a better one:
+     Windows  Settings > Time & language > Speech > Manage voices >
+              Add voices, then pick an English (Australia) natural voice.
+              Chrome and Edge both see it after a restart.
+     Mac      System Settings > Accessibility > Spoken Content >
+              System Voice > Manage Voices, and download an English
+              (Australia) voice marked Premium or Enhanced — Matilda and
+              Karen (Premium) are the good Australian ones.
+     iPad     Settings > Accessibility > Spoken Content > Voices.
+
+   To force one voice everywhere, type its exact name here, e.g.
+   "Google UK English Female". Leave "" to let the game choose.        */
+
+const VOICE_NAME = "";
+
+/* Reading speed. 1 is the browser's normal pace; .9 is a little slower,
+   which sounds calmer and is kinder to lower-level students.          */
+const VOICE_RATE  = 0.92;
+const VOICE_PITCH = 1;
+
+/* Play a short fanfare when a team lands its fourth square in a row.
+   Set to false for a quiet classroom.                                 */
+const WIN_FANFARE = true;
+
+/* How many hints each team gets for the whole game. A hint shows the
+   question on the screen so the team can read it. Set to 0 to turn
+   hints off completely, or raise it for a weaker class.               */
+const HINTS_PER_TEAM = 3;
+
+/* ----------------------------------------------------------------------
+   THE COLOUR OF THE UNTURNED TILES
+   ----------------------------------------------------------------------
+   Every square gets one of these before it is claimed, dealt at random at
+   the start of each game. They are all soft and light on purpose: a tile
+   still has to read as EMPTY next to the deep red and green of a claimed
+   one, so nothing here goes dark or saturated.
+
+   Add, remove or change as many as you like — the game deals from
+   whatever is in the list and spreads them evenly over the board. Put a
+   single colour in the list to go back to a plain board.               */
+
+const TILE_COLOURS = [
+  "#f0dcc4",   /* warm sand      */
+  "#dde5d2",   /* sage           */
+  "#f4d9cc",   /* blush          */
+  "#d5e0e8",   /* pale slate     */
+  "#f2e3bd",   /* wheat          */
+  "#e4dbe9",   /* dusty lilac    */
+  "#d7e5dd",   /* eucalypt       */
+  "#f6dfd2",   /* apricot        */
+  "#e0e3ec",   /* periwinkle     */
+  "#eee2cd"    /* parchment      */
+];
+
+/* ----------------------------------------------------------------------
+   YOUR QUESTIONS
+   ---------------------------------------------------------------------- */
+
+const QUESTIONS = [
+
+  /* ===== PUT YOUR OWN QUESTIONS HERE =====================================
+     { topic:"Sport", audio:"audio/sport1.mp3",
+       text:"Do you play any sports?" },
+  ======================================================================== */
+
+
+  /* ===== MY SAMPLE QUESTIONS — delete or replace ======================== */
+
+  /* --- Sport --- */
+  { topic:"Sport", audio:"", sample:true,
+    text:"Do you play any sports?" },
+  { topic:"Sport", audio:"", sample:true,
+    text:"Did you play any sports when you were younger?" },
+  { topic:"Sport", audio:"", sample:true,
+    text:"Is there a sport you would like to try in the future?" },
+  { topic:"Sport", audio:"", sample:true,
+    text:"Do you think children should play more sports?" },
+
+  /* --- Your home town --- */
+  { topic:"Your home town", audio:"", sample:true,
+    text:"Where is your home town?" },
+  { topic:"Your home town", audio:"", sample:true,
+    text:"What do you like most about your home town?" },
+  { topic:"Your home town", audio:"", sample:true,
+    text:"Has your home town changed much since you were a child?" },
+  { topic:"Your home town", audio:"", sample:true,
+    text:"Would you like to live there in the future?" },
+
+  /* --- Your home --- */
+  { topic:"Your home", audio:"", sample:true,
+    text:"Do you live in a house or an apartment?" },
+  { topic:"Your home", audio:"", sample:true,
+    text:"Which room do you spend the most time in?" },
+  { topic:"Your home", audio:"", sample:true,
+    text:"What would you change about your home?" },
+  { topic:"Your home", audio:"", sample:true,
+    text:"Do most people in your country live in houses or apartments?" },
+
+  /* --- Work and study --- */
+  { topic:"Work and study", audio:"", sample:true,
+    text:"Do you work, or are you a student?" },
+  { topic:"Work and study", audio:"", sample:true,
+    text:"Why did you choose that work, or that subject?" },
+  { topic:"Work and study", audio:"", sample:true,
+    text:"What do you enjoy most about it?" },
+  { topic:"Work and study", audio:"", sample:true,
+    text:"What would you like to be doing in five years?" },
+
+  /* --- Food and cooking --- */
+  { topic:"Food and cooking", audio:"", sample:true,
+    text:"Do you enjoy cooking?" },
+  { topic:"Food and cooking", audio:"", sample:true,
+    text:"What did you usually eat as a child?" },
+  { topic:"Food and cooking", audio:"", sample:true,
+    text:"Is there a dish you would like to learn to make?" },
+  { topic:"Food and cooking", audio:"", sample:true,
+    text:"Do people in your country eat out more than they used to?" },
+
+  /* --- The weather --- */
+  { topic:"The weather", audio:"", sample:true,
+    text:"Do you prefer rainy weather or sunny weather?" },
+  { topic:"The weather", audio:"", sample:true,
+    text:"Which season do you like best?" },
+  { topic:"The weather", audio:"", sample:true,
+    text:"What do you usually do when it rains?" },
+  { topic:"The weather", audio:"", sample:true,
+    text:"Has the weather in your country changed in recent years?" },
+
+  /* --- Music --- */
+  { topic:"Music", audio:"", sample:true,
+    text:"What kind of music do you listen to?" },
+  { topic:"Music", audio:"", sample:true,
+    text:"Did you learn an instrument at school?" },
+  { topic:"Music", audio:"", sample:true,
+    text:"Would you like to learn an instrument in the future?" },
+  { topic:"Music", audio:"", sample:true,
+    text:"Do young people and older people listen to different music?" },
+
+  /* --- Travel --- */
+  { topic:"Travel", audio:"", sample:true,
+    text:"Do you like travelling?" },
+  { topic:"Travel", audio:"", sample:true,
+    text:"Where did you go on your last holiday?" },
+  { topic:"Travel", audio:"", sample:true,
+    text:"Is there a country you would like to visit?" },
+  { topic:"Travel", audio:"", sample:true,
+    text:"Do people in your country travel more than they used to?" },
+
+  /* --- Reading --- */
+  { topic:"Reading", audio:"", sample:true,
+    text:"Do you read much?" },
+  { topic:"Reading", audio:"", sample:true,
+    text:"Did you like reading as a child?" },
+  { topic:"Reading", audio:"", sample:true,
+    text:"Would you rather read on paper or on a screen?" },
+  { topic:"Reading", audio:"", sample:true,
+    text:"Do you think children read less now than in the past?" },
+
+  /* --- Phones and technology --- */
+  { topic:"Phones and technology", audio:"", sample:true,
+    text:"How often do you use your phone?" },
+  { topic:"Phones and technology", audio:"", sample:true,
+    text:"What was your first phone like?" },
+  { topic:"Phones and technology", audio:"", sample:true,
+    text:"How would you feel if you lost your phone?" },
+  { topic:"Phones and technology", audio:"", sample:true,
+    text:"Do you think people spend too much time on their phones these days?" },
+
+  /* --- Shopping --- */
+  { topic:"Shopping", audio:"", sample:true,
+    text:"Do you enjoy shopping?" },
+  { topic:"Shopping", audio:"", sample:true,
+    text:"Where did you go shopping as a child?" },
+  { topic:"Shopping", audio:"", sample:true,
+    text:"Do you prefer shopping online or in a shop?" },
+  { topic:"Shopping", audio:"", sample:true,
+    text:"Has shopping changed in your country in the last ten years?" },
+
+  /* --- Free time --- */
+  { topic:"Free time", audio:"", sample:true,
+    text:"What do you usually do at the weekend?" },
+  { topic:"Free time", audio:"", sample:true,
+    text:"How did you spend your free time as a child?" },
+  { topic:"Free time", audio:"", sample:true,
+    text:"Is there a hobby you would like to take up?" },
+  { topic:"Free time", audio:"", sample:true,
+    text:"Do people in your country have enough free time?" },
+
+  /* --- Photographs --- */
+  { topic:"Photographs", audio:"", sample:true,
+    text:"Do you take many photographs?" },
+  { topic:"Photographs", audio:"", sample:true,
+    text:"Who takes the photographs in your family?" },
+  { topic:"Photographs", audio:"", sample:true,
+    text:"Do you prefer taking photos or being in them?" },
+  { topic:"Photographs", audio:"", sample:true,
+    text:"Have photographs changed since you were young?" },
+
+  /* --- Animals --- */
+  { topic:"Animals", audio:"", sample:true,
+    text:"Do you have a pet?" },
+  { topic:"Animals", audio:"", sample:true,
+    text:"Did you have any animals at home as a child?" },
+  { topic:"Animals", audio:"", sample:true,
+    text:"Is there an animal you would like to keep?" },
+  { topic:"Animals", audio:"", sample:true,
+    text:"Are pets common in your country?" },
+
+  /* --- Friends --- */
+  { topic:"Friends", audio:"", sample:true,
+    text:"How often do you see your friends?" },
+  { topic:"Friends", audio:"", sample:true,
+    text:"How did you meet your closest friend?" },
+  { topic:"Friends", audio:"", sample:true,
+    text:"Do you prefer a few close friends or a large group?" },
+  { topic:"Friends", audio:"", sample:true,
+    text:"Is it harder to make friends as an adult?" },
+
+  /* --- Getting around --- */
+  { topic:"Getting around", audio:"", sample:true,
+    text:"How did you get here today?" },
+  { topic:"Getting around", audio:"", sample:true,
+    text:"How did you travel to school as a child?" },
+  { topic:"Getting around", audio:"", sample:true,
+    text:"Do you prefer public transport or?" },
+  { topic:"Getting around", audio:"", sample:true,
+    text:"Is public transport good in your city?" }
+
+];
+
+/* ██████████████████████████████████████████████████████████████████████
+   ██   END OF THE BIT YOU EDIT — nothing below here needs changing     ██
+   ██████████████████████████████████████████████████████████████████████ */
+
+const COLS = 5, ROWS = 5, WIN = 4;
+
+/* First word decides the time, unless the question sets seconds itself. */
+function secondsFor(q) {
+  if (q && q.seconds) return q.seconds;
+  const first = String(q && q.text || "")
+    .trim().replace(/^[^A-Za-z]+/, "")
+    .split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g, "");
+  return WH_WORDS.indexOf(first) !== -1 ? WH_SECONDS : QUICK_SECONDS;
+}
+
+/* Turn the clock red for roughly the last third. */
+function lowAt(seconds) { return Math.max(2, Math.round(seconds * 0.3)); }
+
+(function contentCheck() {
+  const total = QUESTIONS.length;
+  const mine  = QUESTIONS.filter(q => q.sample).length;
+  const withAudio = QUESTIONS.filter(q => q.audio).length;
+  const missing = QUESTIONS.filter(q => !q.text || !q.text.trim()).length;
+  const topics = [...new Set(QUESTIONS.map(q => q.topic))].length;
+  console.log(
+    "%cSpeaking Test XO — content check",
+    "font-weight:bold",
+    "\n  questions: " + total + " across " + topics + " topics" +
+    "\n  still samples: " + mine + (mine ? "  (still mine, not yours)" : "  — all yours") +
+    "\n  with an audio file: " + withAudio +
+    "\n  5-second questions: " + QUESTIONS.filter(q => secondsFor(q) === QUICK_SECONDS).length +
+    "\n  10-second questions: " + QUESTIONS.filter(q => secondsFor(q) === WH_SECONDS).length +
+    (missing ? "\n  MISSING TEXT on " + missing + " question(s)" : "")
+  );
+})();
+
+
+
+/* ================= WIN LINES ================= */
+function buildLines() {
+  const L = [];
+  const at = (r, c) => r * COLS + c;
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      if (c + WIN <= COLS) L.push(Array.from({length:WIN}, (_,k) => at(r, c+k)));
+      if (r + WIN <= ROWS) L.push(Array.from({length:WIN}, (_,k) => at(r+k, c)));
+      if (c + WIN <= COLS && r + WIN <= ROWS) L.push(Array.from({length:WIN}, (_,k) => at(r+k, c+k)));
+      if (c - WIN + 1 >= 0 && r + WIN <= ROWS) L.push(Array.from({length:WIN}, (_,k) => at(r+k, c-k)));
+    }
+  }
+  return L;
+}
+const LINES = buildLines();
+
+/* ================= PLAYERS ================= */
+const teams = [
+  { name:"Team 1", mark:"✕" },
+  { name:"Team 2", mark:"◯" }
+];
+
+function drawScores() {
+  const wrap = document.getElementById("scores");
+  wrap.innerHTML = "";
+  teams.forEach((tm, idx) => {
+    const card = document.createElement("div");
+    card.className = "score p" + (idx + 1);
+    card.id = "s" + (idx + 1);
+
+    const chip = document.createElement("div");
+    chip.className = "chip";
+    chip.textContent = tm.mark;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const name = document.createElement("span");
+    name.className = "name";
+    name.contentEditable = "true";
+    name.spellcheck = false;
+    name.textContent = tm.name;
+    name.title = "Rename";
+    name.addEventListener("blur", () => {
+      const v = name.textContent.trim().slice(0, 22);
+      tm.name = v || ("Team " + (idx + 1));
+      name.textContent = tm.name;
+    });
+    name.addEventListener("keydown", e => {
+      if (e.key === "Enter") { e.preventDefault(); name.blur(); }
+    });
+
+    const role = document.createElement("span");
+    role.className = "role";
+    role.innerHTML = '<i class="dot"></i><span class="rtxt">Waiting</span>';
+
+    const hints = document.createElement("span");
+    hints.className = "hintsline";
+    hints.innerHTML = '<span class="htxt">Hints</span><span class="pips"></span>';
+
+    meta.append(name, role, hints);
+    card.append(chip, meta);
+    wrap.appendChild(card);
+  });
+  drawHints();
+  markTurn();
+}
+
+/* Three pips per team; a spent hint turns into an empty ring. */
+function drawHints() {
+  [1, 2].forEach(n => {
+    const card = document.getElementById("s" + n);
+    if (!card) return;
+    const box = card.querySelector(".pips");
+    const line = card.querySelector(".hintsline");
+    if (!box || !line) return;
+    if (HINTS_PER_TEAM <= 0) { line.style.display = "none"; return; }
+    const left = hintsLeft ? hintsLeft[n - 1] : HINTS_PER_TEAM;
+    box.innerHTML = "";
+    for (let i = 0; i < HINTS_PER_TEAM; i++) {
+      const p = document.createElement("i");
+      p.className = "pip" + (i < left ? "" : " spent");
+      box.appendChild(p);
+    }
+    card.querySelector(".htxt").textContent = left ? "Hints" : "No hints";
+  });
+}
+
+/* ================= STATE ================= */
+let cells, player, over, used;
+let activeIndex, ticker, audioCtx, player_el;
+let playsLeft, heard, currentQ, currentSeconds, audioFailed, cancelled;
+let hintsLeft = [HINTS_PER_TEAM, HINTS_PER_TEAM];
+let hintUsedHere = false;   /* has this team already spent a hint on this square? */
+
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function nameOf(t) { return teams[t - 1].name; }
+
+/* Make the X and O in the title jump. Removing the class and forcing a
+   reflow first is what lets the same animation run again on the next
+   click instead of only the first time.                              */
+let shakeTimer;
+function wiggleXO() {
+  const t = document.querySelector(".gametitle");
+  if (!t) return;
+  t.classList.remove("shake");
+  void t.offsetWidth;
+  t.classList.add("shake");
+  clearTimeout(shakeTimer);
+  shakeTimer = setTimeout(() => t.classList.remove("shake"), 1000);
+}
+
+/* Deal a colour to every square. The palette is repeated until there are
+   enough, then shuffled, so all the colours get used a roughly equal
+   number of times instead of leaving it to luck. */
+function dealTileColours(howMany) {
+  const src = (TILE_COLOURS && TILE_COLOURS.length) ? TILE_COLOURS : ["#fcfaf4"];
+  const out = [];
+  while (out.length < howMany) out.push(src[out.length % src.length]);
+  for (let i = out.length - 1; i > 0; i--) {           /* shuffle */
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  /* Nudge apart any two neighbours that came out the same, so the board
+     looks dealt rather than blotchy. */
+  for (let i = 0; i < out.length; i++) {
+    const left = (i % COLS) ? out[i - 1] : null;
+    const up   = (i >= COLS) ? out[i - COLS] : null;
+    if (out[i] !== left && out[i] !== up) continue;
+    for (let k = 0; k < out.length; k++) {
+      const kl = (k % COLS) ? out[k - 1] : null;
+      const ku = (k >= COLS) ? out[k - COLS] : null;
+      if (out[k] !== left && out[k] !== up && out[i] !== kl && out[i] !== ku) {
+        [out[i], out[k]] = [out[k], out[i]];
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+function newGame() {
+  closePanel();
+  const tints = dealTileColours(COLS * ROWS);
+  cells = Array.from({length: COLS * ROWS}, (_, i) => ({ owner:0, tint:tints[i] }));
+  player = 1;
+  over = false;
+  used = [];
+  hintsLeft = [HINTS_PER_TEAM, HINTS_PER_TEAM];
+  hintUsedHere = false;
+  drawHints();
+  drawBoard();
+  setStatus("");
+  markTurn();
+  wiggleXO();
+}
+
+function drawBoard() {
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  cells.forEach((cell, i) => {
+    const sq = document.createElement("div");
+    sq.className = "sq";
+    if (cell.owner) {
+      sq.classList.add("taken", "p" + cell.owner);
+      const m = document.createElement("div");
+      m.className = "claim";
+      m.textContent = teams[cell.owner - 1].mark;
+      sq.appendChild(m);
+      /* no inline colour here — the team colour comes from .sq.p1 / .sq.p2 */
+    } else {
+      if (cell.tint) sq.style.background = cell.tint;
+      sq.addEventListener("click", () => openTopic(i));
+    }
+    board.appendChild(sq);
+  });
+}
+
+function markTurn() {
+  [1, 2].forEach(n => {
+    const card = document.getElementById("s" + n);
+    if (!card) return;
+    const isTurn = player === n && !over;
+    card.classList.toggle("active", isTurn);
+    const txt = card.querySelector(".rtxt");
+    if (txt) txt.textContent = over ? "Game over" : (isTurn ? "Your turn" : "Waiting");
+  });
+}
+
+function setStatus(t) { document.getElementById("status").textContent = t; }
+
+/* ================= AUDIO ================= */
+function stopAudio() {
+  if (player_el) { try { player_el.pause(); } catch (e) {} player_el = null; }
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+  document.getElementById("wave").classList.remove("on");
+}
+
+function playFile(src, onDone) {
+  let settled = false;
+  const finish = ok => { if (settled) return; settled = true; clearTimeout(guard); onDone(ok); };
+  const guard = setTimeout(() => finish(false), 8000);
+  try {
+    const a = new Audio(src);
+    player_el = a;
+    a.onplaying = () => clearTimeout(guard);
+    a.onended = () => finish(true);
+    a.onerror = () => finish(false);
+    document.getElementById("wave").classList.add("on");
+    const pr = a.play();
+    if (pr && pr.catch) pr.catch(() => finish(false));
+  } catch (e) { finish(false); }
+}
+
+/* Names that mark a modern, human-sounding voice … */
+const NICE_VOICE = [/natural/i, /neural/i, /online/i, /premium/i,
+                    /enhanced/i, /google/i, /siri/i, /multilingual/i];
+
+/* … and the old robotic or novelty ones to avoid if there is any choice. */
+const ROBOT_VOICE = /espeak|microsoft (david|zira|mark|hazel|george|susan|linda|richard|catherine|james)|albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|kathy|ralph|princess|agnes|victoria|grandma|grandpa|rocko|shelley|sandy|eddy|flo|reed|rishi/i;
+
+function voiceScore(v) {
+  const lang = String(v.lang || "").replace("_", "-");
+  let s;
+  if      (lang === "en-AU")        s = 46;   /* Australian first */
+  else if (lang === "en-GB")        s = 34;
+  else if (lang === "en-NZ")        s = 32;
+  else if (lang === "en-IE")        s = 28;
+  else if (lang === "en-US")        s = 26;
+  else if (lang.indexOf("en") === 0) s = 18;
+  else return -1000;
+  NICE_VOICE.forEach(re => { if (re.test(v.name)) s += 25; });
+  if (ROBOT_VOICE.test(v.name)) s -= 45;
+  if (v.localService === false) s += 8;       /* the cloud ones are better */
+  return s;
+}
+
+function englishVoices() {
+  const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  return vs.filter(v => String(v.lang || "").toLowerCase().indexOf("en") === 0)
+           .sort((a, b) => voiceScore(b) - voiceScore(a));
+}
+
+let chosenVoice = null;   /* set by the drop-down on the How to play screen */
+
+function pickVoice() {
+  if (chosenVoice) return chosenVoice;
+  const list = englishVoices();
+  if (VOICE_NAME) {
+    const forced = list.find(v => v.name === VOICE_NAME) ||
+                   list.find(v => v.name.toLowerCase()
+                                   .indexOf(VOICE_NAME.toLowerCase()) !== -1);
+    if (forced) return forced;
+  }
+  return list[0] || null;
+}
+
+/* The drop-down on the How to play screen, best voice first. */
+function buildVoicePicker() {
+  const sel = document.getElementById("voicepick");
+  if (!sel) return;
+  const list = englishVoices();
+  if (!list.length) {
+    sel.innerHTML = "<option>No voices on this computer</option>";
+    return;
+  }
+  const current = (pickVoice() || {}).name;
+  sel.innerHTML = "";
+  list.forEach(v => {
+    const o = document.createElement("option");
+    o.value = v.name;
+    o.textContent = v.name + " · " + v.lang;
+    if (v.name === current) o.selected = true;
+    sel.appendChild(o);
+  });
+  sel.onchange = () => {
+    chosenVoice = englishVoices().find(v => v.name === sel.value) || null;
+    testVoice();
+  };
+}
+
+function testVoice() {
+  speak("What do you usually do at the weekend?", () => {});
+}
+
+if (window.speechSynthesis) {
+  speechSynthesis.onvoiceschanged = () => {
+    buildVoicePicker();
+    const v = pickVoice();
+    if (v) console.log("Reading questions with: " + v.name + " (" + v.lang + ")");
+  };
+}
+
+function speak(text, onDone) {
+  if (!(typeof window.SpeechSynthesisUtterance === "function" && window.speechSynthesis)) {
+    onDone(false); return;
+  }
+  let settled = false;
+  const finish = ok => {
+    if (settled) return;
+    settled = true; clearTimeout(guard);
+    document.getElementById("wave").classList.remove("on");
+    onDone(ok);
+  };
+  const guard = setTimeout(() => finish(false), text.split(/\s+/).length * 900 + 5000);
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = pickVoice();
+    if (v) u.voice = v;
+    u.lang = v ? v.lang : "en-AU";
+    u.rate = VOICE_RATE;
+    u.pitch = VOICE_PITCH;
+    u.onend = () => finish(true);
+    u.onerror = () => finish(false);
+    document.getElementById("wave").classList.add("on");
+    speechSynthesis.speak(u);
+    setTimeout(() => {
+      if (!settled && !speechSynthesis.speaking && !speechSynthesis.pending) finish(false);
+    }, 700);
+  } catch (e) { finish(false); }
+}
+
+/* ================= A TURN ================= */
+function pickQuestion() {
+  if (used.length >= QUESTIONS.length) used = [];
+  const pool = QUESTIONS.filter(q => !used.includes(q));
+  const q = pool[Math.floor(Math.random() * pool.length)];
+  used.push(q);
+  return q;
+}
+
+function openTopic(i) {
+  if (over || cells[i].owner) return;
+  activeIndex = i;
+  currentQ = pickQuestion();
+  playsLeft = AUTO_START ? 1 : MAX_PLAYS;
+  heard = false;
+  audioFailed = false;
+  cancelled = false;
+  hintUsedHere = false;
+
+  currentSeconds = secondsFor(currentQ);
+
+  const lvlEl = document.getElementById("plvl");
+  lvlEl.className = "lvl topic" + (currentSeconds <= QUICK_SECONDS ? " quick" : "");
+  lvlEl.textContent = currentQ.topic || "Question";
+
+  document.getElementById("turnline").textContent =
+    nameOf(player) + "  " + teams[player - 1].mark;
+
+  /* the card takes the colour of the team whose turn it is */
+  document.getElementById("panel").dataset.team = player;
+
+  const topic = document.getElementById("topic");
+  topic.textContent = currentQ.text || "(no text set for this question)";
+  topic.classList.remove("revealed");
+
+  showClock(currentSeconds);
+  document.getElementById("clock").classList.remove("low");
+  document.getElementById("wave").classList.remove("on");
+
+  renderControls("listen");
+  document.getElementById("panel").classList.add("open");
+}
+
+function playsLabel() {
+  if (audioFailed) return "Audio could not play — question shown instead";
+  if (!heard) {
+    /* Nothing shown before the question plays — the buttons say it all. */
+    return AUTO_START
+      ? ""
+      : "You may hear it " + MAX_PLAYS + " times";
+  }
+  if (AUTO_START) return "";
+  return playsLeft > 0
+    ? playsLeft + " replay" + (playsLeft === 1 ? "" : "s") + " left"
+    : "No replays left";
+}
+
+let controlState = "listen";
+
+function useHint() {
+  if (hintUsedHere || hintsLeft[player - 1] <= 0) return;
+  hintsLeft[player - 1]--;
+  hintUsedHere = true;
+  document.getElementById("topic").classList.add("revealed");
+  drawHints();
+  renderControls(controlState);
+}
+
+function renderControls(state) {
+  controlState = state;
+  const row = document.getElementById("controls");
+  row.innerHTML = "";
+  document.getElementById("plays").textContent = (state === "listen") ? playsLabel() : "";
+
+  const add = (label, cls, fn, disabled) => {
+    const b = document.createElement("button");
+    b.className = cls; b.textContent = label; b.onclick = fn;
+    if (disabled) { b.disabled = true; b.style.opacity = ".45"; b.style.cursor = "default"; b.onclick = null; }
+    row.appendChild(b);
+    return b;
+  };
+
+  /* The hint: read the question instead of only hearing it.
+     Three per team for the whole game, one per square.        */
+  const addHint = () => {
+    if (HINTS_PER_TEAM <= 0 || audioFailed) return;
+    const left = hintsLeft[player - 1];
+    if (hintUsedHere) { add("Hint used", "btn-quiet", null, true); return; }
+    if (left <= 0)    { add("No hints left", "btn-quiet", null, true); return; }
+    add("Hint (" + left + " left)", "btn-quiet", useHint);
+  };
+
+  if (state === "listen") {
+    if (playsLeft > 0) add(heard ? "Play again" : "Play the question", "btn-primary", playQuestion);
+    if (heard) add("Start answering", "btn-primary", () => runTimer(currentSeconds));
+    addHint();
+    add("Back", "btn-quiet", closePanel);
+  } else if (state === "playing") {
+    add("Stop the audio", "btn-quiet", () => {
+      cancelled = true; stopAudio(); heard = true; renderControls("listen");
+    });
+  } else if (state === "running") {
+    addHint();
+    add("Stop — pass the turn", "btn-quiet", () => {
+      stopTimer(); closePanel(); swapPlayer();
+      setStatus("Turn passed. " + nameOf(player) + " to choose.");
+    });
+  } else if (state === "done") {
+    add("Claim the square", "btn-primary", claimSquare);
+    add("Not quite — pass", "btn-quiet", () => {
+      closePanel(); swapPlayer();
+      setStatus("Square left open. " + nameOf(player) + " to choose.");
+    });
+  }
+}
+
+function playQuestion() {
+  if (!currentQ || playsLeft <= 0) return;
+  playsLeft--;
+  cancelled = false;
+  renderControls("playing");
+
+  const done = ok => {
+    document.getElementById("wave").classList.remove("on");
+    heard = true;
+    if (!ok) {
+      audioFailed = true;
+      document.getElementById("topic").classList.add("revealed");
+    }
+    /* Ten seconds is too short to make them press a button first, so the
+       clock starts itself — unless the audio failed (they need a moment
+       to read it) or a teacher stopped the playback. */
+    if (AUTO_START && ok && !cancelled) {
+      document.getElementById("plays").textContent = "Answer now";
+      setTimeout(() => { if (!cancelled) runTimer(currentSeconds); }, 450);
+    } else {
+      renderControls("listen");
+    }
+  };
+
+  if (currentQ.audio) {
+    playFile(currentQ.audio, ok => ok ? done(true) : speak(currentQ.text, done));
+  } else {
+    speak(currentQ.text, done);
+  }
+}
+
+function showClock(remaining) {
+  const m = Math.floor(remaining / 60);
+  const s = remaining % 60;
+  document.getElementById("clock").textContent = m + ":" + String(s).padStart(2, "0");
+}
+
+function runTimer(seconds) {
+  stopAudio();
+  const red = lowAt(seconds);
+  const end = Date.now() + seconds * 1000;
+  renderControls("running");
+  stopTimer();
+  ticker = setInterval(() => {
+    const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+    showClock(left);
+    document.getElementById("clock").classList.toggle("low", left <= red && left > 0);
+    if (left <= 0) {
+      stopTimer();
+      document.getElementById("clock").textContent = "TIME";
+      document.getElementById("clock").classList.remove("low");
+      beep();
+      renderControls("done");
+    }
+  }, 200);
+}
+
+function stopTimer() { if (ticker) { clearInterval(ticker); ticker = null; } }
+
+/* ================= SOUNDS =================
+   Both sounds are made by the browser itself, so there are no extra
+   files to upload with the page. */
+
+function audioReady() {
+  audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === "suspended") { try { audioCtx.resume(); } catch (e) {} }
+  return audioCtx;
+}
+
+/* One note: when it starts, how long it lasts, how loud, what shape. */
+function tone(freq, at, dur, peak, type) {
+  const ctx = audioCtx;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = type || "sine";
+  o.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, at);
+  g.gain.exponentialRampToValueAtTime(peak, at + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(at);
+  o.stop(at + dur + 0.02);
+}
+
+/* Time is up: two short pips. */
+function beep() {
+  try {
+    const ctx = audioReady();
+    [0, 0.18].forEach(off => tone(660, ctx.currentTime + off, 0.14, 0.25, "sine"));
+  } catch (e) {}
+}
+
+/* Four in a row: a rising C–E–G–C, with the last note held and doubled
+   an octave below so it lands like a little chime rather than a beep. */
+function fanfare() {
+  if (!WIN_FANFARE) return;
+  try {
+    const ctx = audioReady();
+    const t = ctx.currentTime + 0.03;
+    [[523.25, 0, 0.30], [659.25, 0.13, 0.30],
+     [783.99, 0.26, 0.34], [1046.50, 0.42, 0.95]]
+      .forEach(n => tone(n[0], t + n[1], n[2], 0.22, "triangle"));
+    tone(523.25, t + 0.42, 0.95, 0.13, "triangle");   /* body underneath */
+    tone(1567.98, t + 0.42, 0.55, 0.07, "sine");      /* a little sparkle */
+  } catch (e) {}
+}
+
+function claimSquare() {
+  cells[activeIndex].owner = player;
+  closePanel();
+  drawBoard();
+
+  const line = winningLine(player);
+  if (line) {
+    over = true;
+    line.forEach(i => document.getElementById("board").children[i].classList.add("win"));
+    fanfare();
+    setStatus("Four in a row! Winner: " + nameOf(player));
+    markTurn();
+    return;
+  }
+  if (cells.every(c => c.owner)) {
+    over = true;
+    setStatus("Every square taken — it is a draw.");
+    markTurn();
+    return;
+  }
+  swapPlayer();
+  setStatus("Square won. " + nameOf(player) + " to choose.");
+}
+
+function winningLine(p) {
+  return LINES.find(l => l.every(i => cells[i].owner === p)) || null;
+}
+
+function swapPlayer() { player = player === 1 ? 2 : 1; markTurn(); }
+
+function closePanel() {
+  cancelled = true;
+  stopTimer();
+  stopAudio();
+  document.getElementById("panel").classList.remove("open");
+}
+
+/* ================= HOW-TO SCREEN =================
+   A small board flicks through the three ways to make four in a row. */
+
+const DEMO = [
+  { cells:[10, 11, 12, 13], label:"Across"      },
+  { cells:[ 2,  7, 12, 17], label:"Down"        },
+  { cells:[ 0,  6, 12, 18], label:"Diagonally"  }
+];
+
+let demoTimers = [], demoStep = 0;
+
+function buildMini() {
+  const mini = document.getElementById("mini");
+  if (mini.children.length) return;
+  for (let i = 0; i < 25; i++) mini.appendChild(document.createElement("i"));
+}
+
+function clearDemo() {
+  demoTimers.forEach(clearTimeout);
+  demoTimers = [];
+  [...document.getElementById("mini").children]
+    .forEach(c => { c.classList.remove("on"); c.textContent = ""; });
+}
+
+function runDemo() {
+  const reduced = window.matchMedia &&
+                  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  clearDemo();
+  const step = DEMO[demoStep % DEMO.length];
+  const mini = document.getElementById("mini");
+  document.getElementById("minicap").textContent = step.label;
+
+  const place = k => {
+    const cell = mini.children[step.cells[k]];
+    cell.classList.add("on");
+    cell.textContent = "✕";
+  };
+
+  if (reduced) {
+    step.cells.forEach((_, k) => place(k));
+    demoTimers.push(setTimeout(() => { demoStep++; runDemo(); }, 2200));
+    return;
+  }
+
+  step.cells.forEach((_, k) =>
+    demoTimers.push(setTimeout(() => place(k), 130 + k * 260)));
+
+  demoTimers.push(setTimeout(() => { demoStep++; runDemo(); }, 130 + 4 * 260 + 850));
+}
+
+function openIntro() {
+  buildMini();
+  buildVoicePicker();
+  demoStep = 0;
+  document.getElementById("intro").classList.add("open");
+  wiggleXO();
+  runDemo();
+}
+
+function startFromIntro() {
+  clearDemo();
+  document.getElementById("intro").classList.remove("open");
+  newGame();
+}
+
+drawScores();
+newGame();
+
+/* The rules open once at the start; after that the "How to play" button
+   at the bottom brings them back whenever a team wants to check. */
+openIntro();
+</script>
+
+</body>
+</html>
