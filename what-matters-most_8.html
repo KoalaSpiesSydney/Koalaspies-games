@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What matters most</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WHAT MATTERS MOST — one file, nothing to install, no sign-up.
+     1 to 4 players.
+
+     HOW THE SCORING WORKS
+       talk for 10 seconds ....... 1 point
+       talk for 20 seconds ....... 2 points
+       talk for 30 seconds ....... the topic's bonus, 3 to 7 points
+     It is the tier you reach, not the tiers added up: 25 seconds is
+     2 points, not 3. To make it add up instead, see CUMULATIVE below.
+
+     The clock only settles the seconds. Whether the talking counted
+     is decided by the people in the room — when the clock stops they
+     can raise or lower the points before awarding them.
+
+     THE BALLOONS. There are far more topics in the list than balloons
+     on the board, so each game deals a fresh handful and no two games
+     are the same. How many is chosen at the start; 35 by default, and
+     fewer if the screen is too small to fit them fairly. A balloon that
+     has been played leaves the board for good, and when the last one
+     goes the final scores come up.
+
+     TO CHANGE THE TOPICS: the POOL list near the bottom, grouped by
+     how hard they are to talk about — 3 is an easy one, 7 is a hard
+     one, and that number is also what a full 30 seconds on it pays.
+     ═══════════════════════════════════════════════════════════════ -->
+
+<style>
+  :root{
+    --bg:transparent;
+    --ink:#f6f3f0;
+    --muted:#b3aca6;
+    --faint:#7d766f;
+    --line:rgba(255,255,255,.18);
+    --accent:#ff5d8f;
+    --card-bg:#fffdf8;
+    --card-ink:#1f2430;
+    --card-muted:#57534e;
+    --card-faint:#a8a29e;
+    --card-line:rgba(31,36,48,.16);
+    --sans:"Source Sans 3",system-ui,sans-serif;
+    --hand:"Caveat","Bradley Hand","Segoe Script",cursive;
+  }
+  *{box-sizing:border-box}
+  /* The page paints no background of its own: html and body are both see
+     through, so whatever sits behind the page — a background video, a
+     parent page, an iframe's own backdrop — shows through it. Put the
+     colour back here (html{background:#000}) to go back to solid black. */
+  html{background:transparent}
+
+  /* ===== BACKGROUND VIDEO =====
+     Off unless BACKGROUND_VIDEO is filled in. The dimming layer over it is
+     not decoration: white text and a scoreboard over moving footage are
+     unreadable without it. */
+  .bg-video,.bg-dim{position:fixed;inset:0;z-index:0}
+  .bg-video{width:100%;height:100%;object-fit:cover}
+  .bg-dim{background:#000;opacity:.55}
+  body.has-video{background-image:none;background-color:transparent}
+  /* the page itself rides above both layers */
+  body > header,body > .scoreboard,body > .hint,body > .field,body > .foot{
+    position:relative;z-index:1;
+  }
+  /* The page's own text is pale, and with a transparent background it can
+     end up over anything — footage, a white parent page, whatever is behind
+     an iframe. So the shadow that used to be added only over video is now
+     always on: invisible against black, and what keeps the writing readable
+     against everything else. Delete this block to go back to bare text. */
+  .hint,
+  .scoreboard,
+  h1,
+  .brand,
+  .foot{text-shadow:0 1px 6px rgba(0,0,0,.9)}
+  .foot{border-top-color:rgba(255,255,255,.16)}
+  .btn{text-shadow:0 1px 6px rgba(0,0,0,.9)}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    line-height:1.6;
+    background-color:transparent;
+    background-image:none;
+    /* the page is a column: bar, scoreboard, then the field takes whatever
+       is left. Flexbox rather than a measured height, so the field is still
+       right when the buttons rewrap onto another line mid-game. */
+    display:flex;flex-direction:column;
+    min-height:100vh;min-height:100dvh;
+    overflow-wrap:break-word;
+  }
+  .bar,.hint,.scoreboard,.foot{flex:0 0 auto}
+
+  /* ===== TOP BAR =====
+     The brand and the title sit in the middle of the screen; the QR is
+     lifted out of the flow into the corner so it cannot shove them off
+     centre, and the buttons take their own row underneath. */
+  .bar{
+    position:relative;
+    max-width:1180px;margin:0 auto;width:100%;
+    padding:14px clamp(14px,4vw,28px) 2px;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;gap:2px;
+  }
+  .titles{min-width:0}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:8px;
+    justify-content:center;margin-top:10px;
+  }
+  .brand{
+    display:block;
+    font-size:clamp(.62rem, .55rem + .2vw, .74rem);
+    letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+    color:var(--accent);
+    margin-bottom:1px;
+  }
+  h1{
+    font-family:var(--hand);font-weight:700;
+    font-size:clamp(1.9rem, 1.3rem + 2vw, 2.9rem);
+    margin:0;line-height:1.05;
+  }
+  /* ===== QR ===== A white quiet zone is not decoration: a code printed
+     straight onto black will not scan. */
+  .qr-box{
+    position:absolute;
+    left:clamp(14px,4vw,28px);top:14px;
+    background:#fff;padding:5px;border-radius:8px;line-height:0;
+    box-shadow:0 2px 10px rgba(0,0,0,.5);
+  }
+  .qr-box img{width:54px;height:54px;display:block}
+
+  /* ===== FOOTER ===== */
+  .foot{
+    max-width:1180px;margin:0 auto;width:100%;
+    padding:8px clamp(14px,4vw,28px) 12px;
+    display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;
+    border-top:1px solid rgba(255,255,255,.08);
+    font-size:.78rem;color:var(--faint);
+  }
+  /* bottom-left: the way back to the rest of the games */
+  .foot-brand{
+    letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+    color:var(--muted);margin-right:auto;
+    text-decoration:none;
+    display:inline-flex;align-items:baseline;gap:6px;
+    transition:color .15s ease;
+  }
+  .foot-brand:hover,.foot-brand:focus-visible{color:var(--accent)}
+  .foot-brand:hover .foot-arrow{transform:translateX(3px)}
+  .foot-brand:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  .foot-arrow{transition:transform .15s ease;display:inline-block}
+  .btn{
+    font-family:inherit;font-size:.85rem;font-weight:700;
+    border:1px solid var(--line);background:rgba(255,255,255,.06);
+    color:var(--ink);border-radius:999px;padding:7px 16px;cursor:pointer;
+    transition:background .15s ease,border-color .15s ease;
+  }
+  .btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.4)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .hint{
+    max-width:1180px;margin:0 auto;width:100%;
+    padding:0 clamp(14px,4vw,28px) 6px;
+    font-size:.92rem;color:var(--muted);font-style:italic;
+    text-align:center;
+  }
+
+  /* ===== SCOREBOARD ===== */
+  .scoreboard{
+    max-width:1180px;margin:0 auto;width:100%;
+    padding:2px clamp(14px,4vw,28px) 8px;
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+    justify-content:center;
+  }
+  .chip{
+    display:flex;align-items:baseline;gap:8px;
+    border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-size:.9rem;
+    background:rgba(255,255,255,.04);
+    transition:border-color .2s ease,background .2s ease;
+  }
+  .chip .who{font-weight:600;color:var(--muted)}
+  .chip .pts{font-weight:700;font-size:1.05rem}
+  .chip.turn{
+    border-color:var(--accent);
+    background:rgba(255,93,143,.14);
+    box-shadow:0 0 0 1px rgba(255,93,143,.35);
+  }
+  .chip.turn .who{color:var(--ink)}
+  /* Between games the old scores fade out before the new ones fade in, so
+     the reset is something you watch happen rather than a number that
+     quietly changes while nobody is looking. */
+  .chip{opacity:1;transition:opacity .24s ease,border-color .2s ease,background .2s ease}
+  .scoreboard.wipe .chip,
+  .scoreboard.wipe .turn-label{opacity:0}
+  .turn-label{transition:opacity .24s ease}
+  .turn-label{font-size:.85rem;color:var(--faint);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+  /* ===== THE FIELD OF HEARTS ===== */
+  .field{
+    position:relative;
+    max-width:1180px;margin:0 auto;width:100%;
+    flex:1 1 auto;min-height:min(440px,55vh);
+    overflow:hidden;touch-action:manipulation;
+  }
+  .heart{
+    position:absolute;top:0;left:0;
+    padding:0;border:0;background:none;cursor:pointer;
+    will-change:transform;transition:opacity .35s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .heart svg{display:block;width:100%;height:100%;overflow:visible;transition:filter .18s ease}
+  /* DEPTH. Two drop shadows on the whole balloon rather than on each of its
+     seven pieces: a dark one cast down and to the right so it sits above the
+     page, and a soft halo in the balloon's own colour so it also glows a
+     little, the way a lit envelope would. --glow is set per balloon in the
+     script from the colour it was dealt. Both grow on hover. */
+  .heart{
+    filter:
+      drop-shadow(0 6px 7px rgba(0,0,0,.42))
+      drop-shadow(0 0 13px var(--glow, rgba(255,255,255,.3)));
+    transition:opacity .35s ease, filter .18s ease;
+  }
+  .heart:hover,
+  .heart:focus-visible{
+    filter:
+      drop-shadow(0 10px 14px rgba(0,0,0,.5))
+      drop-shadow(0 0 22px var(--glow-strong, rgba(255,255,255,.55)));
+  }
+  .heart:hover svg,
+  .heart:focus-visible svg{filter:brightness(1.08)}
+  .heart:focus-visible{outline:3px solid #fff;outline-offset:4px;border-radius:8px}
+  /* A heart that has been played is taken off the board for good, not
+     greyed out. The board empties as the game goes, and when the last one
+     goes the game is over. */
+  .heart.hidden{opacity:0;pointer-events:none}
+
+  /* ===== THE CARD THAT TURNS OVER ===== */
+  .stage{position:fixed;inset:0;z-index:40;perspective:1400px;pointer-events:none}
+  .veil{position:absolute;inset:0;background:rgba(0,0,0,.78);opacity:0;transition:opacity .45s ease}
+  .stage.open{pointer-events:auto}
+  .stage.open .veil{opacity:1}
+  .card{
+    position:absolute;left:0;top:0;
+    width:min(460px,90vw);
+    height:min(540px,84vh);
+    transform-style:preserve-3d;
+    transition:transform .62s cubic-bezier(.22,.75,.3,1);
+    will-change:transform;
+  }
+  /* on the way back the card shrinks onto the heart's old spot and puffs
+     out, so you see the heart leave rather than just find it missing */
+  .card.vanish{
+    opacity:0;
+    transition:transform .62s cubic-bezier(.22,.75,.3,1), opacity .26s ease .36s;
+  }
+  .face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:16px;display:flex;
+  }
+  .face-front{background:none;align-items:center;justify-content:center}
+  .face-front svg{
+    width:100%;height:100%;overflow:visible;
+    filter:
+      drop-shadow(0 10px 18px rgba(0,0,0,.5))
+      drop-shadow(0 0 26px var(--glow, rgba(255,255,255,.3)));
+  }
+  .face-back{
+    transform:rotateY(180deg);
+    background:var(--card-bg);color:var(--card-ink);
+    box-shadow:0 24px 70px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.08);
+    flex-direction:column;gap:14px;
+    padding:clamp(18px,4vw,28px);
+    overflow:auto;
+  }
+  .q-kicker{
+    display:block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--card-faint);font-weight:700;
+  }
+  .topic{
+    font-family:var(--hand);
+    font-size:clamp(2.2rem, 1.4rem + 3.4vw, 3.4rem);
+    font-weight:700;line-height:1.08;margin:2px 0 0;
+  }
+  .bonus-note{font-size:.9rem;color:var(--card-muted);margin:0}
+
+  /* ===== TIMER ===== */
+  .timer{margin-top:auto}
+  .clock{
+    font-family:var(--hand);font-size:3.2rem;font-weight:700;
+    line-height:1;margin-bottom:6px;
+    font-variant-numeric:tabular-nums;
+  }
+  .clock.live{color:#d6336c}
+  .track{
+    position:relative;height:10px;border-radius:999px;
+    background:rgba(31,36,48,.12);overflow:hidden;
+  }
+  .fill{
+    position:absolute;left:0;top:0;bottom:0;width:0%;
+    background:linear-gradient(90deg,#ff8fab,#d6336c);
+    transition:width .12s linear;
+  }
+  .mark{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.9)}
+  .tiers{
+    display:flex;justify-content:space-between;
+    font-size:.74rem;color:var(--card-faint);font-weight:700;
+    letter-spacing:.04em;margin-top:5px;
+  }
+  .tiers b{color:var(--card-ink)}
+
+  /* ===== BUTTONS ON THE CARD ===== */
+  .card-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .btn-primary{
+    font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+    background:#d6336c;color:#fff;border:0;border-radius:999px;
+    padding:11px 26px;transition:filter .15s ease;
+  }
+  .btn-primary:hover{filter:brightness(1.1)}
+  .btn-primary:focus-visible{outline:2px solid var(--card-ink);outline-offset:2px}
+  .btn-quiet{
+    font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;
+    background:none;border:0;color:var(--card-muted);
+    text-decoration:underline;text-underline-offset:3px;padding:9px 4px;
+  }
+  .btn-quiet:hover{color:var(--card-ink)}
+  [hidden]{display:none !important}
+
+  /* ===== PEER JUDGEMENT ===== */
+  .verdict{margin:0;font-size:1.02rem;line-height:1.45}
+  .verdict b{font-size:1.15rem}
+  .judge-note{margin:0;font-size:.84rem;color:var(--card-faint);font-style:italic}
+  .stepper{display:flex;align-items:center;gap:10px}
+  .step{
+    font-family:inherit;font-size:1.3rem;font-weight:700;line-height:1;cursor:pointer;
+    width:40px;height:40px;border-radius:999px;
+    border:1px solid var(--card-line);background:#fff;color:var(--card-ink);
+  }
+  .step:hover{border-color:var(--card-ink)}
+  .step:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .ptsVal{font-family:var(--hand);font-size:2.2rem;font-weight:700;min-width:1.6ch;text-align:center}
+  .ptsUnit{font-size:.86rem;color:var(--card-muted);font-weight:600}
+
+  /* ===== SETUP ===== */
+  .setup{
+    position:fixed;inset:0;z-index:60;
+    background:rgba(0,0,0,.92);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .setup form,.setup .panel{
+    background:var(--card-bg);color:var(--card-ink);
+    border-radius:16px;padding:clamp(22px,4vw,32px);
+    width:min(430px,94vw);max-height:92vh;overflow:auto;
+  }
+  .setup h2{font-family:var(--hand);font-size:2.2rem;margin:0 0 2px;font-weight:700}
+  .setup p{margin:0 0 16px;font-size:.94rem;color:var(--card-muted)}
+  .pcount{display:flex;gap:8px;margin-bottom:16px}
+  .pcount button{
+    flex:1;font-family:inherit;font-size:1.1rem;font-weight:700;cursor:pointer;
+    padding:12px 0;border-radius:10px;
+    border:1px solid var(--card-line);background:#fff;color:var(--card-ink);
+  }
+  .pcount button[aria-pressed="true"]{background:#d6336c;color:#fff;border-color:#d6336c}
+  .pcount button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .names{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+  .names input{
+    font-family:inherit;font-size:1rem;color:var(--card-ink);
+    border:1px solid var(--card-line);border-radius:8px;padding:9px 12px;background:#fff;
+  }
+  .names input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+
+  /* ===== RULES =====
+     The panel is a column: the rules scroll, the button does not. Pinned
+     to the bottom it is always in view — unpinned it fell below the fold
+     on every screen but the widest, and a first-time player had to scroll
+     to find out how to start. */
+  .rules-panel{
+    display:flex;flex-direction:column;
+    max-height:92vh;padding-bottom:16px;
+  }
+  .rules-body{overflow:auto;min-height:0;padding-right:2px}
+  .rules-panel #rulesGo{
+    flex:0 0 auto;align-self:flex-start;
+    margin-top:14px;
+  }
+  .rules-brand{
+    display:block;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:700;color:#d6336c;margin-bottom:2px;
+  }
+  .rules-sub{margin:0 0 16px;font-size:.95rem;color:var(--card-muted)}
+  .rules-list{margin:0 0 16px;padding-left:20px;font-size:.95rem;line-height:1.5}
+  .rules-list li{margin-bottom:9px}
+  .rules-list li b{font-weight:700}
+  .rules-plain{list-style:disc}
+  .rules-h3{
+    font-family:var(--hand);font-size:1.5rem;font-weight:700;
+    margin:18px 0 6px;color:var(--card-ink);
+  }
+  .scoretab{
+    width:100%;border-collapse:collapse;margin:0 0 8px;font-size:.95rem;
+  }
+  .scoretab th{
+    text-align:left;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--card-faint);font-weight:700;padding:0 0 4px;
+  }
+  .scoretab td{padding:5px 0;border-top:1px solid var(--card-line)}
+  .scoretab td:last-child{text-align:right;font-weight:700}
+  .rules-note{margin:0 0 4px;font-size:.86rem;color:var(--card-muted);font-style:italic}
+
+  /* ===== FINAL SCORES ===== */
+  .final{list-style:none;margin:0 0 20px;padding:0}
+  .final li{
+    display:flex;align-items:baseline;gap:10px;
+    padding:8px 0;border-bottom:1px solid var(--card-line);
+    font-size:1.05rem;
+  }
+  .final li:last-child{border-bottom:0}
+  .final .rank{color:var(--card-faint);font-weight:700;min-width:1.4ch}
+  .final .nm{font-weight:600;margin-right:auto}
+  .final .sc{font-family:var(--hand);font-size:1.9rem;font-weight:700;line-height:1}
+  .final li.win .nm{color:#d6336c}
+  .final li.win .sc{color:#d6336c}
+  .winner{font-family:var(--hand);font-size:1.9rem;font-weight:700;line-height:1.15;margin:0 0 14px;color:var(--card-ink)}
+
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+
+  /* Too narrow for a corner: the QR would sit on top of the centred title,
+     so it comes back into the flow above it. */
+  @media (max-width:620px){
+    .qr-box{position:static;margin-bottom:6px}
+  }
+  /* On a narrow phone the header was eating 437px of a 653px screen and
+     pushing most of the hearts below the fold. The rules are in the Rules
+     window anyway. */
+  @media (max-width:430px){
+    .hint{display:none}
+    .chip{padding:3px 10px;font-size:.82rem;gap:6px}
+    .chip .pts{font-size:.98rem}
+    .scoreboard{gap:6px;padding-bottom:6px}
+    .turn-label{font-size:.72rem}
+    .scoreboard .turn-label:last-child{display:none}  /* "hearts left" */
+    .field{min-height:min(380px,46vh)}
+  }
+  @media (max-width:370px){
+    .btn{padding:6px 12px;font-size:.78rem}
+    .bar{gap:6px 10px}
+    .qr-box img{width:44px;height:44px}
+  }
+  /* A phone held sideways has very little height. Without this the card's
+     own contents overflow it and the Start button ends up below the bottom
+     edge of the card, out of reach. */
+  @media (max-height:560px){
+    h1{font-size:1.4rem}
+    .bar{padding-top:9px;padding-bottom:0}
+    .hint{display:none}
+    .card{height:min(540px,94vh)}
+    .face-back{gap:7px;padding:14px 18px}
+    .topic{font-size:clamp(1.5rem, 1rem + 2.2vw, 2.1rem)}
+    .clock{font-size:2.1rem;margin-bottom:3px}
+    .btn-primary{padding:9px 20px;font-size:.92rem}
+    .timer{margin-top:6px}
+    .judge-note{display:none}
+    .ptsVal{font-size:1.7rem}
+    .step{width:34px;height:34px}
+    /* the final scores have to fit too, or Play again sits below the fold */
+    .foot{display:none}
+    .qr-box img{width:42px;height:42px}
+    .setup h2{font-size:1.5rem}
+    .setup form,.setup .panel{padding:16px 20px}
+    .winner{font-size:1.3rem;margin-bottom:8px}
+    .rules-list{font-size:.86rem;margin-bottom:10px}
+    .rules-list li{margin-bottom:5px}
+    .rules-sub{margin-bottom:10px;font-size:.86rem}
+    .rules-h3{font-size:1.2rem;margin:10px 0 4px}
+    .scoretab{font-size:.86rem}
+    .final{margin-bottom:12px}
+    .final li{padding:4px 0;font-size:.95rem}
+    .final .sc{font-size:1.4rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .card,.veil,.fill{transition-duration:.001s}
+  }
+</style>
+</head>
+<body>
+
+<!-- the background film; see BACKGROUND_VIDEO in the script -->
+<video class="bg-video" id="bgVideo" muted loop playsinline preload="auto" hidden></video>
+<div class="bg-dim" id="bgDim" hidden></div>
+
+<header class="bar">
+  <div class="qr-box" id="qrBox" hidden>
+    <img id="qrIcon" alt="QR code — scan to open this game on a phone">
+  </div>
+  <div class="titles">
+    <span class="brand">Koalaspies Games</span>
+    <h1>What matters most</h1>
+  </div>
+  <div class="controls">
+    <button class="btn" id="rulesBtn" type="button">Rules</button>
+    <button class="btn" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
+    <button class="btn" id="stillBtn" type="button" aria-pressed="false">Hold still</button>
+    <button class="btn" id="shuffleBtn" type="button">Shuffle</button>
+    <button class="btn" id="resetBtn" type="button">New game</button>
+  </div>
+</header>
+
+<div class="scoreboard" id="scoreboard"></div>
+
+
+<div class="field" id="field" aria-label="Floating balloons, each hiding a topic"></div>
+
+<footer class="foot">
+  <a class="foot-brand" href="http://koalaspiessydney.site/" target="_blank" rel="noopener">More Koalaspies games<span class="foot-arrow" aria-hidden="true">&rarr;</span></a>
+  <span>© Justine Leigh Kelly 2026</span>
+</footer>
+
+<p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+<!-- the card that flips -->
+<div class="stage" id="stage" aria-hidden="true">
+  <div class="veil" id="veil"></div>
+  <div class="card" id="card">
+    <div class="face face-front" id="faceFront"></div>
+    <div class="face face-back">
+      <div>
+        <span class="q-kicker" id="qKicker">Topic</span>
+        <p class="topic" id="topicText"></p>
+        <p class="bonus-note" id="bonusNote"></p>
+      </div>
+
+      <div class="timer">
+        <div class="clock" id="clock">0s</div>
+        <div class="track">
+          <div class="fill" id="fill"></div>
+          <span class="mark" style="left:33.333%"></span>
+          <span class="mark" style="left:66.666%"></span>
+        </div>
+        <div class="tiers">
+          <span>10s · 1</span><span>20s · 2</span><span>30s · <b id="bonusTier">3</b></span>
+        </div>
+      </div>
+
+      <div class="card-actions" id="preActions">
+        <button class="btn-primary" type="button" id="startBtn">Start talking</button>
+        <button class="btn-quiet" type="button" id="skipBtn">Skip — no points</button>
+      </div>
+
+      <div class="card-actions" id="runActions" hidden>
+        <button class="btn-primary" type="button" id="stopBtn">Stop</button>
+      </div>
+
+      <div id="awardPanel" hidden>
+        <p class="verdict" id="verdict"></p>
+        <p class="judge-note">The room decides. Change the number if the talking was not up to it.</p>
+        <div class="stepper">
+          <button class="step" type="button" id="minusBtn" aria-label="One point fewer">−</button>
+          <span class="ptsVal" id="ptsVal">0</span>
+          <span class="ptsUnit">points</span>
+          <button class="step" type="button" id="plusBtn" aria-label="One point more">+</button>
+        </div>
+        <div class="card-actions" style="margin-top:12px">
+          <button class="btn-primary" type="button" id="giveBtn">Award</button>
+          <button class="btn-quiet" type="button" id="zeroBtn">Nothing this time</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- the rules, shown when the page is first opened -->
+<div class="setup" id="rules">
+  <div class="panel rules-panel">
+   <div class="rules-body">
+    <span class="rules-brand">Koalaspies Games</span>
+    <h2>What matters most</h2>
+    <p class="rules-sub">A talking game for one to four players.</p>
+
+    <ol class="rules-list">
+      <li><b>Pick a balloon.</b> It turns over and shows a topic — anything from <i>dogs</i> to <i>the rule of law</i>.</li>
+      <li><b>Talk about it.</b> Press <i>Start talking</i> and keep going.</li>
+      <li><b>Watch the clock.</b> It counts to thirty seconds and stops itself.</li>
+      <li><b>The room decides.</b> The clock counts the seconds; the players judge whether the talking counted. Nudge the points up or down before awarding.</li>
+      <li><b>The balloon is spent.</b> It leaves the board. When the last one goes, the game is over.</li>
+    </ol>
+
+    <table class="scoretab">
+      <tr><th>Keep going for</th><th>and you earn</th></tr>
+      <tr><td>10 seconds</td><td>1 point</td></tr>
+      <tr><td>20 seconds</td><td>2 points</td></tr>
+      <tr><td>30 seconds</td><td>the bonus, 3&ndash;7</td></tr>
+    </table>
+    <p class="rules-note">Harder topics pay more. It is the mark you reach, not the marks added up — 25 seconds is 2 points.</p>
+
+    <h3 class="rules-h3">Playing fair</h3>
+    <ul class="rules-list rules-plain">
+      <li>Take it in turns — the scoreboard shows whose go it is.</li>
+      <li>A long silence ends the turn; the others say when.</li>
+      <li>Counting, listing the alphabet or repeating yourself is not talking.</li>
+      <li>Stuck? Press <i>Skip</i> — the balloon still goes, but nobody scores.</li>
+    </ul>
+   </div>
+   <button class="btn-primary" type="button" id="rulesGo">Let’s play</button>
+  </div>
+</div>
+
+<!-- the end of the game -->
+<div class="setup" id="gameover" hidden>
+  <div class="panel">
+    <h2 id="overTitle">Every balloon is gone</h2>
+    <p class="winner" id="winnerLine"></p>
+    <ol class="final" id="finalScores"></ol>
+    <div class="card-actions">
+      <button class="btn-primary" type="button" id="againBtn">Play again</button>
+    </div>
+  </div>
+</div>
+
+<!-- who is playing -->
+<div class="setup" id="setup" hidden>
+  <form id="setupForm">
+    <h2>Who is playing?</h2>
+    <p>One to four. On your own is fine — it is good practice.</p>
+    <div class="pcount" id="pcount">
+      <button type="button" data-n="1" aria-pressed="false">1</button>
+      <button type="button" data-n="2" aria-pressed="true">2</button>
+      <button type="button" data-n="3" aria-pressed="false">3</button>
+      <button type="button" data-n="4" aria-pressed="false">4</button>
+    </div>
+    <div class="names" id="names"></div>
+    <h2 style="font-size:1.6rem;margin-top:18px">How many balloons?</h2>
+    <p>A fresh set is dealt from <span id="poolSize">81</span> topics, so no two games are alike.</p>
+    <div class="pcount" id="hcount">
+      <button type="button" data-h="20" aria-pressed="false">20</button>
+      <button type="button" data-h="35" aria-pressed="true">35</button>
+      <button type="button" data-h="50" aria-pressed="false">50</button>
+      <button type="button" data-h="999" aria-pressed="false">All</button>
+    </div>
+    <button class="btn-primary" type="submit">Start</button>
+  </form>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   THE TOPICS
+   Grouped by how hard they are to talk about. The group number is
+   also what a full 30 seconds on that topic pays: 3 is an easy
+   one, 7 is a hard one.
+   ══════════════════════════════════════════════════════════════ */
+const EASY_3 = [
+  "Dogs matter", "Cats matter", "Coffee matters", "Bubble tea matters",
+  "Cozy socks matter", "Koalas matter", "Birds matter", "Trees matter",
+  "Sleep matters", "Friends matter", "Family matters", "Play matters",
+  "Laughter matters", "Golf matters", "Fashion matters", "Homework matters",
+  "Teachers matter", "Your appearance matters", "Hygiene matters",
+  "Riding a bicycle matters", "Saving money matters"
+];
+const STEADY_4 = [
+  "Happiness matters", "Kindness matters", "Gratitude matters", "Patience matters",
+  "Trust matters", "Respect matters", "Politeness matters", "Confidence matters",
+  "Curiosity matters", "Creativity matters", "Dreams matter", "Mothers matter",
+  "Your dad matters", "Old people matter", "You matter", "Work matters",
+  "Education matters", "Listening to others matters", "Artists matter",
+  "Influencers matter", "Community matters", "Generosity matters"
+];
+const DEEPER_5 = [
+  "Love matters", "Life matters", "Truth matters", "Peace matters",
+  "Compassion matters", "Loyalty matters", "Forgiveness matters", "Freedom matters",
+  "Faith matters", "Purpose matters", "Connection matters", "Resilience matters",
+  "Wisdom matters", "Mental health matters", "Equality matters", "Science matters",
+  "AI matters", "Clean water matters", "Public health matters"
+];
+const HARDER_6 = [
+  "Integrity matters", "Human rights matter", "Cultural diversity matters",
+  "Biodiversity matters", "Child welfare matters", "Youth empowerment matters",
+  "Fair wages matter", "Fair trade matters", "Innovation matters",
+  "Media literacy matters", "Protecting oceans matters", "Food security matters",
+  "Gender equity matters", "The police matter"
+];
+const HARDEST_7 = [
+  "Sustainable development matters", "Rule of law matters",
+  "International law matters", "Indigenous rights matter",
+  "Disaster preparedness matters"
+];
+
+/* every topic with what 30 seconds on it is worth */
+const POOL = [].concat(
+  EASY_3.map(w => [w, 3]),
+  STEADY_4.map(w => [w, 4]),
+  DEEPER_5.map(w => [w, 5]),
+  HARDER_6.map(w => [w, 6]),
+  HARDEST_7.map(w => [w, 7])
+);
+
+/* How many hearts go on the board. The rest of the pool sits out, so a
+   second game deals a different handful. Chosen at the start of a game;
+   trimmed automatically if the screen cannot fit that many fairly. */
+let heartsWanted = 35;
+
+/* ══════════════════════════════════════════════════════════════
+   THE BACKGROUND VIDEO
+   Set below to "heartbg.mp4". That file must sit in the SAME
+   folder as this page, spelled exactly the same way — heartbg.mp4
+   is not the same as HeartBG.mp4 or heartbg.MP4 on a web server.
+   Set it to "" for plain black instead. A full web address works
+   too. Things worth knowing:
+     • MP4 (H.264) plays everywhere; WebM is fine on most.
+     • It plays silently. Browsers refuse to auto-play sound, and
+       the game has its own sounds anyway — any soundtrack on the
+       file is ignored.
+     • It loops, and it is cropped to fill the screen, so the
+       middle of the frame is what people see.
+     • Keep it small — a minute of quiet footage under about 5MB.
+       It reloads every time someone opens the game.
+     • If the file is missing or will not play, the game falls
+       back to black on its own. Nothing breaks.
+
+   BACKGROUND_DIM is how much black is laid over the footage:
+   0 is the raw video, 1 is solid black. Below about 0.4 the
+   scoreboard starts to get lost on busy footage.
+
+   BACKGROUND_STILL is an optional picture shown instead of the
+   video for anyone whose device is set to reduce motion.
+   ══════════════════════════════════════════════════════════════ */
+const BACKGROUND_VIDEO = "heartbg.mp4";
+const BACKGROUND_DIM   = 0.55;
+const BACKGROUND_STILL = "";
+
+/* ══════════════════════════════════════════════════════════════
+   THE QR CODE in the top corner.
+   >>> CHANGE THIS to the game's own web address once it is uploaded,
+   e.g. "https://modernenglish.au/whatmatters.html". It is set to the
+   site's front door for now so the code always scans to somewhere
+   real, but that is a stand-in, not the game itself.
+
+   Set it to "" instead and the code points at whatever address the
+   page is open at. That is right on a website, but from a USB stick
+   or a Downloads folder there is nothing a phone could reach, so in
+   that case no code is drawn at all.
+   ══════════════════════════════════════════════════════════════ */
+const SHARE_URL = "https://modernenglish.au";
+
+/* Set to true to add the tiers up instead: 10s earns 1, reaching 20s
+   earns another 2 on top, and 30s earns the bonus on top of that.
+   Left false, it is the tier reached and nothing more. */
+const CUMULATIVE = false;
+
+/* ══════════════════════════════════════════════════════════════
+   THE COLOURS. Pinks come up most often; the rest are sprinkled
+   through so every colour appears. Colour says nothing about how
+   hard a topic is — that is on the card, once it is turned over.
+   ══════════════════════════════════════════════════════════════ */
+const PINKS = ["#ff5d8f","#ff8fab","#e8365d","#d6336c","#f25c78","#ffb3c6","#e05780","#ff7aa2"];
+const OTHERS = [
+  "#ffd23f", // yellow
+  "#4cc9f0", // blue
+  "#57cc99", // green
+  "#ff8c42", // orange
+  "#a9714b", // brown
+  "#f8f9fa"  // white
+];
+const PINK_SHARE = 0.55;
+
+/* THE BALLOON, drawn in seven pieces inside a 100x100 box: the envelope
+   in the topic's colour, a light side and a dark side so it reads as
+   round rather than flat, two ropes, and the basket. Everything is a
+   path so the hover glow and the drop shadow reach all of it. */
+const BALLOON = {
+  envelope: "M50 5 C 29 5, 15 21, 15 39 C 15 51, 25 60, 33 66 L 67 66 " +
+            "C 75 60, 85 51, 85 39 C 85 21, 71 5, 50 5 Z",
+  light:    "M50 5 C 39 5, 32 21, 32 39 C 32 51, 37 60, 42 66 L 33 66 " +
+            "C 25 60, 15 51, 15 39 C 15 21, 29 5, 50 5 Z",
+  dark:     "M50 5 C 61 5, 68 21, 68 39 C 68 51, 63 60, 58 66 L 67 66 " +
+            "C 75 60, 85 51, 85 39 C 85 21, 71 5, 50 5 Z",
+  rope1:    "M37 66 L 41 74",
+  rope2:    "M63 66 L 59 74",
+  rim:      "M38 73 L 62 73 L 62 78 L 38 78 Z",
+  basket:   "M40 78 L 60 78 L 58 92 L 42 92 Z"
+};
+
+/* the three gates, in seconds: 10s earns 1, 20s earns 2, 30s earns the
+   topic's own bonus. FULL is also where the clock stops itself. */
+const TIER1 = 10, TIER2 = 20, FULL = 30;
+
+const $ = id => document.getElementById(id);
+const field=$("field"), stage=$("stage"), card=$("card"), faceFront=$("faceFront");
+const topicText=$("topicText"), qKicker=$("qKicker"), bonusNote=$("bonusNote"), bonusTier=$("bonusTier");
+const clock=$("clock"), fill=$("fill"), live=$("live");
+const preActions=$("preActions"), runActions=$("runActions"), awardPanel=$("awardPanel");
+const verdict=$("verdict"), ptsVal=$("ptsVal");
+const scoreboard=$("scoreboard");
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let hearts=[], players=[], turn=0, turnsPlayed=0;
+let running=true, motionOn=true, soundOn=true;
+let activeIndex=null;
+let closeToken=0;    // so a stale tidy-up cannot disturb a newer card
+let gameOver=false;
+let t0=0, elapsed=0, ticker=null, awardPts=0, awardMax=0;
+
+/* ══════════════════════════════════════════════════════════════
+   SOUND — built in the browser rather than loaded from files, so
+   this stays one page with nothing to upload alongside it.
+   ══════════════════════════════════════════════════════════════ */
+let audioCtx=null;
+function ctx(){
+  if (!soundOn) return null;
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    audioCtx = audioCtx || new AC();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }catch(e){ return null; }
+}
+function tone(freq, at, dur, type, vol){
+  const a = ctx(); if (!a) return;
+  const t = a.currentTime + at;
+  const osc = a.createOscillator(), g = a.createGain();
+  osc.type = type || "sine";
+  osc.frequency.setValueAtTime(freq, t);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol || .12, t + .012);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  osc.connect(g); g.connect(a.destination);
+  osc.start(t); osc.stop(t + dur + .02);
+}
+/* the refusal: two low notes, the second lower — a game show buzzer */
+function buzz(){
+  const a = ctx(); if (!a) return;
+  const filter = a.createBiquadFilter();
+  filter.type = "lowpass"; filter.frequency.value = 1100;
+  filter.connect(a.destination);
+  [[196,0],[147,.2]].forEach(([f,at]) => {
+    const t = a.currentTime + at;
+    const osc = a.createOscillator(), g = a.createGain();
+    osc.type = "square"; osc.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(.13, t + .014);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + .18);
+    osc.connect(g); g.connect(filter);
+    osc.start(t); osc.stop(t + .2);
+  });
+}
+const blip  = () => tone(880, 0, .16, "sine", .1);
+const chime = () => { tone(659,0,.22,"sine",.11); tone(880,.13,.22,"sine",.11); tone(1175,.26,.42,"sine",.12); };
+
+/* Hearts now leave the board when they are played, so there is nothing to
+   pick twice. The buzzer earns its keep as the "no points" sound instead. */
+
+/* ---- scoring ---- */
+function pointsFor(sec, bonus){
+  if (CUMULATIVE){
+    let p = 0;
+    if (sec >= TIER1) p += 1;
+    if (sec >= TIER2) p += 2;
+    if (sec >= FULL) p += bonus;
+    return p;
+  }
+  if (sec >= FULL) return bonus;
+  if (sec >= TIER2) return 2;
+  if (sec >= TIER1) return 1;
+  return 0;
+}
+
+/* ---- colours, sizes, scatter ---- */
+function dealColours(n){
+  const list = [];
+  const pinkCount = Math.max(1, Math.round(n * PINK_SHARE));
+  for (let i = 0; i < pinkCount; i++) list.push(PINKS[i % PINKS.length]);
+  for (let i = 0; list.length < n; i++) list.push(OTHERS[i % OTHERS.length]);
+  for (let i = list.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]];
+  }
+  return list;
+}
+function cellSize(n){
+  const w = field.clientWidth, h = field.clientHeight;
+  return Math.sqrt((w * h) / Math.max(1, n));
+}
+
+/* ---- deal a fresh handful of topics ----
+   The pool is far bigger than the board, so every game is a different
+   set and the same topic rarely comes round twice in a session. If the
+   screen is too small to hold the wanted number at a fair size, fewer
+   are dealt rather than cramming them in on top of each other. */
+function drawDeck(){
+  const w = field.clientWidth || 900, h = field.clientHeight || 520;
+  const roomFor = Math.floor((w * h) / 4600);   // ~4600px² keeps a heart tappable
+  const n = Math.max(10, Math.min(heartsWanted, POOL.length, roomFor));
+  const bag = POOL.slice();
+  for (let i = bag.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [bag[i], bag[j]] = [bag[j], bag[i]];
+  }
+  return bag.slice(0, n);
+}
+/* A cell each with a random spot inside it, plus a nudge that crosses the
+   cell line. Pure random placement clumps and buries hearts; a plain grid
+   looks like a spreadsheet. */
+function scatter(){
+  const w = field.clientWidth, h = field.clientHeight;
+  const n = hearts.filter(x => !x.gone).length;
+  if (!n) return;
+  const cols = Math.max(1, Math.round(Math.sqrt(n * w / Math.max(1, h))));
+  const rows = Math.ceil(n / cols);
+  const cellW = w / cols, cellH = h / rows;
+  const live_ = hearts.filter(h => !h.gone);
+  const order = live_.map((_, i) => i).sort(() => Math.random() - .5);
+  order.forEach((slot, k) => {
+    const ht = live_[k];
+    const cx = (slot % cols) * cellW, cy = Math.floor(slot / cols) * cellH;
+    const px = cx + Math.random() * Math.max(0, cellW - ht.size) + (Math.random() - .5) * cellW * .34;
+    const py = cy + Math.random() * Math.max(0, cellH - ht.size) + (Math.random() - .5) * cellH * .34;
+    ht.x = Math.min(Math.max(0, w - ht.size), Math.max(0, px));
+    ht.y = Math.min(Math.max(0, h - ht.size), Math.max(0, py));
+  });
+}
+function heartSVG(colour){
+  const rope = ' stroke="rgba(0,0,0,.45)" stroke-width="2" stroke-linecap="round" fill="none"';
+  return '<svg viewBox="0 0 100 100" aria-hidden="true">' +
+    '<path d="' + BALLOON.rope1 + '"' + rope + '/>' +
+    '<path d="' + BALLOON.rope2 + '"' + rope + '/>' +
+    '<path d="' + BALLOON.envelope + '" fill="' + colour + '"/>' +
+    '<path d="' + BALLOON.light + '" fill="rgba(255,255,255,.18)"/>' +
+    '<path d="' + BALLOON.dark + '" fill="rgba(0,0,0,.16)"/>' +
+    /* the catchlight: a soft white smear high on the left, which is what
+       stops the envelope reading as a flat disc */
+    '<ellipse cx="36" cy="23" rx="8" ry="12" fill="rgba(255,255,255,.34)" ' +
+      'transform="rotate(-22 36 23)"/>' +
+    '<path d="' + BALLOON.rim + '" fill="#6d4520"/>' +
+    '<path d="' + BALLOON.basket + '" fill="#8a5a2b"/>' +
+  '</svg>';
+}
+
+/* the balloon's own colour, softened, is what it glows with */
+function glowFrom(hex, alpha){
+  const h = hex.replace('#', '');
+  const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+  return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+}
+function paintGlow(el, colour){
+  el.style.setProperty('--glow', glowFrom(colour, .55));
+  el.style.setProperty('--glow-strong', glowFrom(colour, .9));
+}
+function newSize(cell){
+  return Math.round(Math.max(40, Math.min(120, cell * (0.42 + Math.random() * 0.32))));
+}
+
+function build(){
+  field.innerHTML = "";
+  hearts = [];
+  const deck = drawDeck();
+  const colours = dealColours(deck.length);
+  const cell = cellSize(deck.length);
+
+  deck.forEach(([word, bonus], i) => {
+    const size = newSize(cell);
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = "heart";
+    el.style.width = size + "px";
+    el.style.height = size + "px";
+    el.innerHTML = heartSVG(colours[i]);
+    paintGlow(el, colours[i]);
+    el.setAttribute("aria-label", "Balloon " + (i + 1) + " of " + deck.length + " — turn it over for a topic");
+    el.addEventListener("click", () => openHeart(i));
+    field.appendChild(el);
+
+    const slow = Math.max(.35, 1 - size / 160);
+    hearts.push({
+      el, size, colour: colours[i], word, bonus, index: i, gone: false, x: 0, y: 0,
+      vx: (Math.random() - .5) * 32 * slow,
+      vy: (Math.random() - .5) * 32 * slow
+    });
+  });
+  scatter(); draw();
+}
+
+function draw(){
+  hearts.forEach(ht => { if (ht.gone) return; ht.el.style.transform = "translate3d(" + ht.x + "px," + ht.y + "px,0)"; });
+}
+
+/* ---- drift, and bounce off the edges ---- */
+let last = performance.now();
+function loop(now){
+  const dt = Math.min(0.05, (now - last) / 1000);
+  last = now;
+  if (running && motionOn && !reduceMotion){
+    const w = field.clientWidth, h = field.clientHeight;
+    hearts.forEach(ht => {
+      if (ht.gone) return;
+      ht.x += ht.vx * dt; ht.y += ht.vy * dt;
+      if (ht.x <= 0)           { ht.x = 0;           ht.vx = Math.abs(ht.vx); }
+      if (ht.x >= w - ht.size) { ht.x = w - ht.size; ht.vx = -Math.abs(ht.vx); }
+      if (ht.y <= 0)           { ht.y = 0;           ht.vy = Math.abs(ht.vy); }
+      if (ht.y >= h - ht.size) { ht.y = h - ht.size; ht.vy = -Math.abs(ht.vy); }
+    });
+    draw();
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* ---- opening a heart ---- */
+function openHeart(i){
+  if (activeIndex !== null) return;
+  const ht = hearts[i];
+  if (ht.gone) return;
+
+  activeIndex = i;
+  running = false;
+  closeToken++;            // cancel the last card's pending tidy-up
+
+  const r = ht.el.getBoundingClientRect();
+  faceFront.innerHTML = heartSVG(ht.colour);
+  paintGlow(faceFront, ht.colour);
+  const cw = card.offsetWidth, ch = card.offsetHeight;
+  const scale = r.width / cw;
+  const cx = window.innerWidth / 2 - cw / 2, cy = window.innerHeight / 2 - ch / 2;
+  const dx = (r.left + r.width / 2) - (cx + cw / 2);
+  const dy = (r.top + r.height / 2) - (cy + ch / 2);
+
+  card.classList.remove("vanish");
+  card.style.left = cx + "px"; card.style.top = cy + "px";
+  card.style.transition = "none";
+  card.style.transform = "translate(" + dx + "px," + dy + "px) scale(" + scale + ") rotateY(0deg)";
+
+  topicText.textContent = ht.word;
+  qKicker.textContent = players[turn].name + " — talk about";
+  bonusNote.textContent = "A full " + FULL + " seconds on this one is worth " + ht.bonus + " points.";
+  bonusTier.textContent = ht.bonus;
+  resetTimerUI();
+
+  ht.el.classList.add("hidden");
+  stage.classList.add("open");
+  stage.setAttribute("aria-hidden", "false");
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    card.style.transition = "";
+    card.style.transform = "translate(0,0) scale(1) rotateY(180deg)";
+  }));
+}
+
+/* ---- the clock ---- */
+function resetTimerUI(){
+  stopTicker();
+  elapsed = 0;
+  clock.textContent = "0s";
+  clock.classList.remove("live");
+  fill.style.width = "0%";
+  preActions.hidden = false;
+  runActions.hidden = true;
+  awardPanel.hidden = true;
+}
+function stopTicker(){ if (ticker){ clearInterval(ticker); ticker = null; } }
+
+function startTalking(){
+  t0 = performance.now();
+  elapsed = 0;
+  let hit1 = false, hit2 = false;
+  clock.classList.add("live");
+  preActions.hidden = true;
+  runActions.hidden = false;
+  ctx(); // wake the audio on this tap, so the later cues are allowed to play
+
+  ticker = setInterval(() => {
+    elapsed = (performance.now() - t0) / 1000;
+    if (elapsed >= FULL){ elapsed = FULL; stopTalking(true); return; }
+    clock.textContent = Math.floor(elapsed) + "s";
+    fill.style.width = (elapsed / FULL * 100) + "%";
+    if (!hit1 && elapsed >= TIER1){ hit1 = true; blip(); live.textContent = TIER1 + " seconds — 1 point"; }
+    if (!hit2 && elapsed >= TIER2){ hit2 = true; blip(); live.textContent = TIER2 + " seconds — 2 points"; }
+  }, 100);
+}
+
+function stopTalking(auto){
+  stopTicker();
+  clock.classList.remove("live");
+  const sec = Math.floor(elapsed);
+  clock.textContent = sec + "s";
+  fill.style.width = (elapsed / FULL * 100) + "%";
+  if (auto) chime();
+
+  const ht = hearts[activeIndex];
+  awardMax = Math.max(ht.bonus, 2);
+  awardPts = pointsFor(sec, ht.bonus);
+
+  verdict.innerHTML = sec >= FULL
+    ? "The full " + FULL + " seconds. <b>" + ht.bonus + " points</b> if the room agrees."
+    : "Talked for " + sec + " seconds. <b>" + awardPts + (awardPts === 1 ? " point" : " points") + "</b> on the clock.";
+  live.textContent = "Stopped at " + sec + " seconds, " + awardPts + " points suggested";
+
+  runActions.hidden = true;
+  awardPanel.hidden = false;
+  paintPoints();
+}
+
+function paintPoints(){
+  ptsVal.textContent = awardPts;
+  $("giveBtn").textContent = awardPts === 0 ? "Award nothing"
+    : "Award " + awardPts + (awardPts === 1 ? " point" : " points");
+}
+
+/* ---- finishing a turn ---- */
+function resolve(points){
+  /* A second tap on Award used to land here with the turn already finished
+     and throw on an undefined heart, killing the rest of the handler. */
+  if (activeIndex === null) return;
+  const who = players[turn];
+  who.score += points;
+  if (points === 0) buzz();     // the only place the buzzer is heard now
+  turnsPlayed++;
+  closeCard();
+  turn = (turn + 1) % players.length;
+  renderScores();
+}
+
+function closeCard(){
+  if (activeIndex === null) return;
+  stopTicker();
+  const ht = hearts[activeIndex];
+  const idx = activeIndex;
+  activeIndex = null;
+
+  const cw = card.offsetWidth, ch = card.offsetHeight;
+  const cx = parseFloat(card.style.left), cy = parseFloat(card.style.top);
+  const r = ht.el.getBoundingClientRect();
+  const scale = r.width / cw;
+  const dx = (r.left + r.width / 2) - (cx + cw / 2);
+  const dy = (r.top + r.height / 2) - (cy + ch / 2);
+
+  card.classList.add("vanish");
+  card.style.transform = "translate(" + dx + "px," + dy + "px) scale(" + scale + ") rotateY(0deg)";
+  stage.classList.remove("open");
+  stage.setAttribute("aria-hidden", "true");
+
+  /* THE HEART GOES NOW, in the same breath as the award.
+     It used to be removed by a 640ms timer so it left as the card landed.
+     But the heart is already invisible from the moment it was tapped, so
+     the timer bought nothing visually and put the one thing that must
+     always happen behind a delay that a second tap, a backgrounded tab or
+     a stalled animation could interfere with. The card still flies home:
+     dx and dy above are plain numbers, worked out before this line. */
+  hearts[idx].gone = true;
+  ht.el.remove();
+
+  /* The rest is only tidying, and a newer card must win it. */
+  const token = ++closeToken;
+  setTimeout(() => {
+    if (token !== closeToken) return;   // another heart was opened meanwhile
+    card.classList.remove("vanish");
+    running = true;
+    last = performance.now();
+  }, reduceMotion ? 10 : 660);
+
+  if (!gameOver && hearts.every(h => h.gone)){
+    gameOver = true;
+    setTimeout(endGame, reduceMotion ? 20 : 700);
+  }
+}
+
+/* ---- scoreboard ---- */
+function renderScores(){
+  scoreboard.innerHTML = "";
+  const label = document.createElement("span");
+  label.className = "turn-label";
+  label.textContent = players.length > 1 ? "Turn" : "Score";
+  scoreboard.appendChild(label);
+
+  players.forEach((p, i) => {
+    const chip = document.createElement("div");
+    chip.className = "chip" + (i === turn ? " turn" : "");
+    const who = document.createElement("span");
+    who.className = "who"; who.textContent = p.name;
+    const pts = document.createElement("span");
+    pts.className = "pts"; pts.textContent = p.score;
+    chip.append(who, pts);
+    scoreboard.appendChild(chip);
+  });
+
+  const left = hearts.filter(h => !h.gone).length;
+  const rest = document.createElement("span");
+  rest.className = "turn-label";
+  rest.textContent = left + " balloons left";
+  scoreboard.appendChild(rest);
+}
+
+/* ---- the end of the game ---- */
+function endGame(){
+  const ranked = players.map(p => ({ ...p })).sort((a, b) => b.score - a.score);
+  const top = ranked[0].score;
+  const winners = ranked.filter(p => p.score === top);
+
+  $("overTitle").textContent = "Every balloon is gone";
+  if (players.length === 1){
+    const turns = turnsPlayed;
+    $("winnerLine").textContent =
+      ranked[0].score + (ranked[0].score === 1 ? " point" : " points") +
+      " from " + turns + (turns === 1 ? " topic" : " topics") + ".";
+  } else if (top === 0){
+    $("winnerLine").textContent = "Nobody troubled the scorers. Another go?";
+  } else if (winners.length > 1){
+    const names = winners.map(w => w.name);
+    $("winnerLine").textContent = "A tie — " +
+      names.slice(0, -1).join(", ") + " and " + names[names.length - 1] +
+      ", on " + top + ".";
+  } else {
+    $("winnerLine").textContent = winners[0].name + " wins with " + top +
+      (top === 1 ? " point" : " points") + ".";
+  }
+
+  const list = $("finalScores");
+  list.innerHTML = "";
+  ranked.forEach((p, i) => {
+    const li = document.createElement("li");
+    if (p.score === top && top > 0) li.className = "win";
+    const rank = document.createElement("span");
+    rank.className = "rank"; rank.textContent = (i + 1) + ".";
+    const nm = document.createElement("span");
+    nm.className = "nm"; nm.textContent = p.name;
+    const sc = document.createElement("span");
+    sc.className = "sc"; sc.textContent = p.score;
+    li.append(rank, nm, sc);
+    list.appendChild(li);
+  });
+
+  live.textContent = "Game over. " + $("winnerLine").textContent;
+  chime();
+  $("gameover").hidden = false;
+}
+$("againBtn").addEventListener("click", () => {
+  $("gameover").hidden = true;
+  turnsPlayed = 0;
+  $("setup").hidden = false;
+});
+
+/* ---- card buttons ---- */
+$("startBtn").addEventListener("click", startTalking);
+$("stopBtn").addEventListener("click", () => stopTalking(false));
+$("skipBtn").addEventListener("click", () => resolve(0));
+$("minusBtn").addEventListener("click", () => { awardPts = Math.max(0, awardPts - 1); paintPoints(); });
+$("plusBtn").addEventListener("click", () => { awardPts = Math.min(awardMax, awardPts + 1); paintPoints(); });
+$("giveBtn").addEventListener("click", () => resolve(awardPts));
+$("zeroBtn").addEventListener("click", () => resolve(0));
+
+/* Escape and the backdrop: stop the clock if it is running, otherwise
+   end the turn with nothing. Never silently lose a turn mid-sentence. */
+function backOut(){
+  if (activeIndex === null) return;
+  if (ticker){ stopTalking(false); return; }
+  resolve(awardPanel.hidden ? 0 : awardPts);
+}
+$("veil").addEventListener("click", backOut);
+document.addEventListener("keydown", e => { if (e.key === "Escape") backOut(); });
+
+/* ---- top bar ---- */
+const soundBtn = $("soundBtn");
+soundBtn.addEventListener("click", () => {
+  soundOn = !soundOn;
+  soundBtn.textContent = soundOn ? "Sound on" : "Sound off";
+  soundBtn.setAttribute("aria-pressed", String(soundOn));
+  if (soundOn) blip();
+});
+const stillBtn = $("stillBtn");
+stillBtn.addEventListener("click", () => {
+  motionOn = !motionOn;
+  last = performance.now();
+  stillBtn.textContent = motionOn ? "Hold still" : "Let them drift";
+  stillBtn.setAttribute("aria-pressed", String(!motionOn));
+});
+$("shuffleBtn").addEventListener("click", () => {
+  hearts.forEach(ht => { if (ht.gone) return; ht.vx = (Math.random() - .5) * 32; ht.vy = (Math.random() - .5) * 32; });
+  scatter(); draw();
+});
+$("resetBtn").addEventListener("click", () => {
+  turnsPlayed = 0;
+  $("setup").hidden = false;
+});
+
+/* ---- re-fit when the field changes shape ---- */
+function refit(){
+  if (activeIndex !== null) return;
+  const cell = cellSize(hearts.filter(h => !h.gone).length);
+  hearts.forEach(ht => {
+    if (ht.gone) return;
+    ht.size = newSize(cell);
+    ht.el.style.width = ht.size + "px";
+    ht.el.style.height = ht.size + "px";
+  });
+  scatter(); draw();
+}
+let rt, lastW = 0, lastH = 0;
+if (window.ResizeObserver){
+  new ResizeObserver(() => {
+    const w = field.clientWidth, h = field.clientHeight;
+    if (Math.abs(w - lastW) < 3 && Math.abs(h - lastH) < 3) return;
+    lastW = w; lastH = h;
+    clearTimeout(rt); rt = setTimeout(refit, 140);
+  }).observe(field);
+} else {
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(refit, 140); });
+}
+
+/* ---- who is playing ---- */
+let playerCount = 2;
+const nameWrap = $("names");
+function paintNames(){
+  nameWrap.innerHTML = "";
+  for (let i = 0; i < playerCount; i++){
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = (players[i] && players[i].name) || ("Player " + (i + 1));
+    input.setAttribute("aria-label", "Name of player " + (i + 1));
+    input.maxLength = 18;
+    nameWrap.appendChild(input);
+  }
+}
+$("pcount").addEventListener("click", e => {
+  const b = e.target.closest("button[data-n]");
+  if (!b) return;
+  playerCount = Number(b.dataset.n);
+  [...e.currentTarget.querySelectorAll("button")].forEach(x =>
+    x.setAttribute("aria-pressed", String(x === b)));
+  paintNames();
+});
+
+/* ---- the background video ---- */
+(function setUpBackground(){
+  const vid = $("bgVideo"), dim = $("bgDim");
+  if (!BACKGROUND_VIDEO && !BACKGROUND_STILL) return;      // plain black
+
+  dim.style.opacity = Math.max(0, Math.min(1, BACKGROUND_DIM));
+
+  /* Someone who has asked their device to reduce motion should not be
+     handed a looping film. Show the still if there is one, black if not. */
+  if (reduceMotion){
+    if (BACKGROUND_STILL){
+      vid.poster = BACKGROUND_STILL;
+      vid.hidden = false; dim.hidden = false;
+      document.body.classList.add("has-video");
+    }
+    return;
+  }
+
+  vid.addEventListener("error", fallBackToBlack);
+  vid.addEventListener("loadeddata", () => {
+    vid.hidden = false; dim.hidden = false;
+    document.body.classList.add("has-video");
+  });
+  if (BACKGROUND_STILL) vid.poster = BACKGROUND_STILL;
+  vid.muted = true;                 // autoplay is refused otherwise
+  vid.src = BACKGROUND_VIDEO;
+  const started = vid.play();
+  if (started && started.catch) started.catch(fallBackToBlack);
+
+  function fallBackToBlack(){
+    vid.hidden = true; dim.hidden = true;
+    document.body.classList.remove("has-video");
+  }
+})();
+
+/* ---- the QR code ---- */
+(function setUpQR(){
+  const onTheWeb = /^https?:$/.test(location.protocol);
+  const target = SHARE_URL || (onTheWeb ? location.href : "");
+  if (!target) return;                        // nothing a phone could open
+  const img = $("qrIcon");
+  img.addEventListener("load", () => { $("qrBox").hidden = false; });
+  img.addEventListener("error", () => { $("qrBox").hidden = true; });
+  img.src = "https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=" +
+            encodeURIComponent(target);
+})();
+
+$("poolSize").textContent = POOL.length;
+$("hcount").addEventListener("click", e => {
+  const b = e.target.closest("button[data-h]");
+  if (!b) return;
+  heartsWanted = Number(b.dataset.h);
+  [...e.currentTarget.querySelectorAll("button")].forEach(x =>
+    x.setAttribute("aria-pressed", String(x === b)));
+});
+
+$("setupForm").addEventListener("submit", e => {
+  e.preventDefault();
+  players = [...nameWrap.querySelectorAll("input")].map((inp, i) => ({
+    name: inp.value.trim() || ("Player " + (i + 1)), score: 0
+  }));
+  turn = 0;
+  gameOver = false;
+  turnsPlayed = 0;
+  $("gameover").hidden = true;
+  $("setup").hidden = true;
+  build();
+  wipeThenShowScores();
+});
+
+/* The old scores fade out, then the new ones fade in at nil. Swapping the
+   numbers in place reads as a glitch; watching them clear reads as a new
+   game starting. */
+function wipeThenShowScores(){
+  const board = scoreboard;
+  const restart = () => {
+    renderScores();
+    requestAnimationFrame(() => board.classList.remove("wipe"));
+  };
+  if (!board.children.length){ restart(); return; }   // first game, nothing to clear
+  board.classList.add("wipe");
+  setTimeout(restart, reduceMotion ? 10 : 260);
+}
+
+paintNames();
+
+/* ---- the rules ----
+   Shown once when the page is opened, ahead of the player names, and
+   available from the Rules button at any point after that. Closing it the
+   first time hands over to "Who is playing?"; closing it mid-game just
+   puts it away and leaves the game where it was. */
+let rulesSeen = false;
+function showRules(){ $("rules").hidden = false; }
+function closeRules(){
+  $("rules").hidden = true;
+  if (!rulesSeen){
+    rulesSeen = true;
+    $("setup").hidden = false;      // straight on to who is playing
+  }
+}
+$("rulesGo").addEventListener("click", closeRules);
+$("rulesBtn").addEventListener("click", showRules);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !$("rules").hidden && rulesSeen) closeRules();
+});
+</script>
+</body>
+</html>
