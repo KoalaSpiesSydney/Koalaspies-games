@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Why sport is important — Koalaspies Games</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- The same three faces as the game: Michroma for the title, Caveat for the
+     warm headings, Source Sans 3 for everything you actually read. -->
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Michroma&family=Orbitron:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     THE HOUSE STYLE — the same block as What matters most, so the
+     two pages sit together. Change a colour here, change it there.
+     ══════════════════════════════════════════════════════════════ */
+  :root{
+    --bg:transparent;
+    --ink:#f6f3f0;
+    --muted:#b3aca6;
+    --faint:#7d766f;
+    --line:rgba(255,255,255,.18);
+    --accent:#ff5d8f;
+    --card-bg:#fffdf8;
+    --card-ink:#1f2430;
+    --card-muted:#57534e;
+    --card-faint:#a8a29e;
+    --card-line:rgba(31,36,48,.16);
+    --ok:#1d6a41;
+    --ok-bg:#e8f6ee;
+    --no:#a4232f;
+    --no-bg:#fdeef0;
+    --sans:"Source Sans 3",system-ui,sans-serif;
+    --hand:"Caveat","Bradley Hand","Segoe Script",cursive;
+    /* THE TITLE FACE. Michroma is wide, quiet and cinematic. For something
+       more overtly sci-fi, swap the two names round.                      */
+    --title:"Michroma","Orbitron","Eurostile","Trebuchet MS",sans-serif;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  /* the film, and the black laid over it */
+  .bg-video{
+    position:fixed;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:-2;pointer-events:none;
+  }
+  .bg-dim{position:fixed;inset:0;background:#000;z-index:-1;pointer-events:none}
+
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    line-height:1.6;
+    background:#05070d;
+    min-height:100vh;min-height:100dvh;
+    display:flex;flex-direction:column;
+    padding:0 0 28px;
+  }
+  /* pale text over footage needs a shadow or it disappears on a bright frame */
+  .bar,.foot,.step-label{text-shadow:0 1px 6px rgba(0,0,0,.9)}
+
+  /* ═════════ TOP BAR ═════════ */
+  .bar{
+    max-width:1180px;margin:0 auto;width:100%;
+    padding:18px clamp(14px,4vw,28px) 4px;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;gap:2px;
+  }
+  .brand{
+    display:block;
+    font-size:clamp(.62rem,.55rem + .2vw,.74rem);
+    letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+    color:var(--accent);
+    margin-bottom:1px;
+  }
+  h1{
+    font-family:var(--title);font-weight:400;
+    font-size:clamp(1.05rem,.62rem + 1.7vw,1.95rem);
+    letter-spacing:.055em;
+    margin:0;line-height:1.18;
+    text-shadow:0 0 18px rgba(120,180,255,.35), 0 0 40px rgba(120,180,255,.18);
+  }
+  .sub{
+    color:var(--muted);
+    font-size:clamp(.85rem,.8rem + .2vw,.98rem);
+    margin-top:8px;
+  }
+
+  /* ═════════ THE LESSON CARD ═════════ */
+  .sheet{
+    width:min(780px,94vw);
+    margin:22px auto 0;
+    background:var(--card-bg);color:var(--card-ink);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 18px 50px rgba(0,0,0,.5);
+  }
+  .step-label{
+    display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+    padding:16px clamp(18px,4vw,26px) 10px;
+    font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);
+    text-shadow:none;
+    border-bottom:1px solid var(--card-line);
+  }
+  .pill{
+    background:#d6336c;color:#fff;border-radius:999px;
+    padding:2px 11px;font-size:.64rem;letter-spacing:.1em;
+  }
+  .pad{padding:20px clamp(18px,4vw,26px) 26px}
+  .lead{font-size:.95rem;color:var(--card-muted);line-height:1.6;margin-bottom:16px}
+  .divider{border:none;border-top:1px solid var(--card-line)}
+
+  /* ═════════ VIDEO ═════════ */
+  .video-wrap{
+    position:relative;padding-bottom:56.25%;height:0;
+    border-radius:10px;overflow:hidden;
+    box-shadow:0 4px 18px rgba(0,0,0,.25);
+  }
+  .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+  /* ═════════ QUESTIONS ═════════ */
+  .q{
+    background:#fbf8f2;
+    border:1px solid var(--card-line);
+    border-radius:12px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .q:last-of-type{margin-bottom:0}
+  .q-num{
+    font-family:var(--hand);
+    font-size:1.45rem;font-weight:700;line-height:1;
+    color:#d6336c;
+    margin-bottom:4px;
+  }
+  .q-text{font-size:1rem;font-weight:600;line-height:1.5;margin-bottom:14px}
+  .options{display:flex;flex-direction:column;gap:8px}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    background:var(--card-bg);
+    border:1.5px solid var(--card-line);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:.94rem;line-height:1.45;
+    cursor:pointer;
+    transition:border-color .15s ease,background .15s ease;
+    -webkit-user-select:none;user-select:none;
+  }
+  .option:hover{border-color:var(--accent);background:#fff5f8}
+  .option input{display:none}
+  .dot{
+    width:18px;height:18px;flex-shrink:0;margin-top:2px;
+    border:2px solid #c9c3bb;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .option:has(input:checked){border-color:var(--accent);background:#fff1f5}
+  .option:has(input:checked) .dot{border-color:#d6336c;background:#d6336c}
+  .option:has(input:checked) .dot::after{
+    content:'';width:6px;height:6px;background:#fff;border-radius:50%;
+  }
+  .option.right{border-color:var(--ok)!important;background:var(--ok-bg)!important}
+  .option.wrong{border-color:var(--no)!important;background:var(--no-bg)!important}
+
+  .feedback{
+    display:none;margin-top:11px;padding:9px 13px;
+    border-radius:8px;font-size:.88rem;font-weight:600;
+  }
+  .feedback.show{display:block}
+  .feedback.correct{background:var(--ok-bg);color:var(--ok);border:1px solid rgba(29,106,65,.25)}
+  .feedback.incorrect{background:var(--no-bg);color:var(--no);border:1px solid rgba(164,35,47,.25)}
+
+  /* ═════════ BUTTONS ═════════ */
+  .actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:24px}
+  .btn-primary{
+    font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
+    background:#d6336c;color:#fff;border:0;border-radius:999px;
+    padding:11px 26px;transition:filter .15s ease;
+  }
+  .btn-primary:hover{filter:brightness(1.1)}
+  .btn-primary:focus-visible{outline:2px solid var(--card-ink);outline-offset:2px}
+  .btn-quiet{
+    font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;
+    background:none;border:0;color:var(--card-muted);
+    text-decoration:underline;text-underline-offset:3px;padding:9px 4px;
+  }
+  .btn-quiet:hover{color:var(--card-ink)}
+
+  .score{
+    display:none;margin-top:20px;
+    background:#1f2430;color:#fff;
+    border-radius:12px;padding:16px 20px;text-align:center;
+  }
+  .score.show{display:block}
+  .score .n{font-family:var(--hand);font-size:2.1rem;font-weight:700;line-height:1;display:block}
+  .score .say{font-size:.92rem;color:#d8d4cf;margin-top:4px}
+
+  /* ═════════ SPEAKING TASK ═════════ */
+  .ask{font-size:1rem;font-weight:600;line-height:1.5;margin-bottom:10px}
+  .ask-note{font-size:.94rem;color:var(--card-muted);line-height:1.6}
+  .to-game{
+    display:inline-block;margin-top:18px;
+    font-family:inherit;font-size:.95rem;font-weight:700;
+    background:#d6336c;color:#fff;text-decoration:none;
+    border-radius:999px;padding:11px 24px;
+    transition:filter .15s ease;
+  }
+  .to-game:hover{filter:brightness(1.1)}
+
+  /* ═════════ FOOTER ═════════ */
+  .foot{
+    max-width:1180px;margin:26px auto 0;width:100%;
+    padding:14px clamp(14px,4vw,28px) 0;
+    border-top:1px solid rgba(255,255,255,.16);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    font-size:.78rem;color:var(--faint);
+  }
+  .foot-brand{
+    color:var(--muted);text-decoration:none;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;
+  }
+  .foot-brand:hover{color:var(--accent)}
+  .foot-arrow{margin-left:6px}
+
+  @media (prefers-reduced-motion:reduce){
+    .option,.btn-primary,.to-game{transition:none}
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     ▶▶▶  BACKGROUND VIDEO — same clip as the game  ◀◀◀
+     Put the file in the SAME folder as this page. Named in the script at
+     the bottom: BACKGROUND_VIDEO. Set it to "" for plain black.
+     ══════════════════════════════════════════════════════════════════════ -->
+<video class="bg-video" id="bgVideo" muted loop playsinline preload="auto" hidden></video>
+<div class="bg-dim" id="bgDim" hidden></div>
+
+<header class="bar">
+  <span class="brand">Koalaspies Games</span>
+  <h1>Why sport is important</h1>
+  <p class="sub">A Nelson Mandela speech — watch it, answer three questions, then say what you think.</p>
+</header>
+
+<main class="sheet">
+
+  <!-- ═════════ STEP 1 ═════════ -->
+  <div class="step-label"><span aria-hidden="true">▶</span> Watch the speech <span class="pill">Step 1</span></div>
+  <div class="pad">
+    <p class="lead">
+      Watch it in full. Mandela explains the power sport has to bring people together and
+      change what they believe is possible. Take notes — the questions below ask about the
+      ideas in the speech, not the facts around it.
+    </p>
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/ZTH771HIhpg?rel=0"
+        title="Nelson Mandela – Why Sport Is Important"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ═════════ STEP 2 ═════════ -->
+  <div class="step-label"><span aria-hidden="true">✎</span> Three questions <span class="pill">Step 2</span></div>
+  <div class="pad">
+    <p class="lead">
+      Choose the best answer for each one, then press <strong>Check answers</strong>.
+    </p>
+
+    <!-- Question 1 -->
+    <div class="q" data-correct="b">
+      <div class="q-num">One</div>
+      <div class="q-text">
+        According to Mandela, what does sport create “where once there was only despair”?
+      </div>
+      <div class="options" role="radiogroup" aria-label="Question 1">
+        <label class="option"><input type="radio" name="q1" value="a" /><span class="dot"></span>Wealth and economic opportunity.</label>
+        <label class="option"><input type="radio" name="q1" value="b" /><span class="dot"></span>Hope.</label>
+        <label class="option"><input type="radio" name="q1" value="c" /><span class="dot"></span>Champions and role models.</label>
+        <label class="option"><input type="radio" name="q1" value="d" /><span class="dot"></span>Peace between rival governments.</label>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="q" data-correct="a">
+      <div class="q-num">Two</div>
+      <div class="q-text">
+        Mandela repeats the phrase <em>“It has the power to…”</em> three times in a row. Why does he do this?
+      </div>
+      <div class="options" role="radiogroup" aria-label="Question 2">
+        <label class="option"><input type="radio" name="q2" value="a" /><span class="dot"></span>To create a strong rhythm and build emphasis — making the listener feel the weight of each idea.</label>
+        <label class="option"><input type="radio" name="q2" value="b" /><span class="dot"></span>Because he forgot what he wanted to say next and needed time to think.</label>
+        <label class="option"><input type="radio" name="q2" value="c" /><span class="dot"></span>To make the speech longer so it would fill the time.</label>
+        <label class="option"><input type="radio" name="q2" value="d" /><span class="dot"></span>Because his speechwriter made a mistake and repeated the line by accident.</label>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="q" data-correct="d">
+      <div class="q-num">Three</div>
+      <div class="q-text">
+        Mandela says sport “speaks to youth in a language they understand.” What does he most likely mean by this?
+      </div>
+      <div class="options" role="radiogroup" aria-label="Question 3">
+        <label class="option"><input type="radio" name="q3" value="a" /><span class="dot"></span>Sport uses simple vocabulary that young people can read and write easily.</label>
+        <label class="option"><input type="radio" name="q3" value="b" /><span class="dot"></span>Only young people are able to truly understand the rules of sport.</label>
+        <label class="option"><input type="radio" name="q3" value="c" /><span class="dot"></span>Sport teaches young people foreign languages through international competition.</label>
+        <label class="option"><input type="radio" name="q3" value="d" /><span class="dot"></span>Sport connects with young people in a natural, powerful way that other messages cannot.</label>
+      </div>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" type="button" id="checkBtn">Check answers</button>
+      <button class="btn-quiet" type="button" id="againBtn">Try again</button>
+    </div>
+
+    <div class="score" id="score" role="status" aria-live="polite"></div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ═════════ STEP 3 ═════════ -->
+  <div class="step-label"><span aria-hidden="true">🗣</span> Now say it out loud <span class="pill">Step 3</span></div>
+  <div class="pad">
+    <p class="ask">
+      Do you <strong>agree or disagree</strong> with Mandela that sport has the power to change the world?
+    </p>
+    <p class="ask-note">
+      Tell a <strong>friend</strong>, a <strong>family member</strong> or your <strong>teacher</strong> what you
+      think — and give <strong>two reasons</strong> for it. Keep going for thirty seconds if you can.
+    </p>
+    <a class="to-game" href="what-matters-most.html">Play What matters most →</a>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <a class="foot-brand" href="http://koalaspiessydney.site/" target="_blank" rel="noopener">More Koalaspies games<span class="foot-arrow" aria-hidden="true">&rarr;</span></a>
+  <span>© Justine Leigh Kelly 2026</span>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   THE BACKGROUND VIDEO — the same clip as the game.
+   Name the file here; it must sit in this folder. "" for black.
+   BACKGROUND_DIM is the black laid over it: 0 is the raw video,
+   1 is solid black. If the file is missing the page falls back to
+   black on its own and nothing breaks.
+   ══════════════════════════════════════════════════════════════ */
+const BACKGROUND_VIDEO = "heartbg.mp4";
+const BACKGROUND_DIM   = 0.55;   /* higher than the game's — there is reading to do */
+
+(function setUpBackground(){
+  const vid = document.getElementById("bgVideo"), dim = document.getElementById("bgDim");
+  if (!BACKGROUND_VIDEO) return;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
+
+  dim.style.opacity = Math.max(0, Math.min(1, BACKGROUND_DIM));
+  vid.addEventListener("error", hide);
+  vid.addEventListener("loadeddata", () => { vid.hidden = false; dim.hidden = false; });
+  vid.muted = true;                 // autoplay is refused otherwise
+  vid.src = BACKGROUND_VIDEO;
+  const started = vid.play();
+  if (started && started.catch) started.catch(hide);
+
+  function hide(){ vid.hidden = true; dim.hidden = true; }
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   THE QUESTIONS
+   ══════════════════════════════════════════════════════════════ */
+const SAY = {
+  3: "All three. You listened closely.",
+  2: "Two out of three. Watch the part you missed once more.",
+  1: "One out of three. Give the speech another watch — the answers are all in what he says.",
+  0: "None yet. Watch it again and read each choice slowly."
+};
+
+function checkAnswers(){
+  const blocks = document.querySelectorAll(".q");
+  let score = 0, unanswered = 0;
+
+  blocks.forEach(block => {
+    const correct  = block.dataset.correct;
+    const chosen   = block.querySelector('input[type="radio"]:checked');
+    const feedback = block.querySelector(".feedback");
+    const options  = block.querySelectorAll(".option");
+
+    options.forEach(o => o.classList.remove("right", "wrong"));
+
+    if (!chosen){
+      unanswered++;
+      feedback.textContent = "Choose an answer first.";
+      feedback.className = "feedback incorrect show";
+      return;
+    }
+
+    options.forEach(o => {
+      if (o.querySelector("input").value === correct) o.classList.add("right");
+    });
+
+    if (chosen.value === correct){
+      score++;
+      feedback.textContent = "✔ Correct.";
+      feedback.className = "feedback correct show";
+    } else {
+      chosen.closest(".option").classList.add("wrong");
+      feedback.textContent = "✘ Not quite — the right answer is the one in green.";
+      feedback.className = "feedback incorrect show";
+    }
+  });
+
+  const banner = document.getElementById("score");
+  banner.innerHTML = '<span class="n">' + score + " / " + blocks.length + "</span>" +
+                     '<span class="say">' + (unanswered ? "Some questions are still blank." : SAY[score]) + "</span>";
+  banner.className = "score show";
+  banner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function resetQuiz(){
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll(".feedback").forEach(f => f.className = "feedback");
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("right", "wrong"));
+  document.getElementById("score").className = "score";
+}
+
+document.getElementById("checkBtn").addEventListener("click", checkAnswers);
+document.getElementById("againBtn").addEventListener("click", resetQuiz);
+</script>
+
+</body>
+</html>
