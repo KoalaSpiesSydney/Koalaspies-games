@@ -37,6 +37,10 @@
       --line: rgba(31,36,48,.14);
       --accent: #2563eb;
       --header: #14161c;
+      /* the house green: the same #64ec98 the page background is painted in */
+      --green: #64ec98;
+      --green-deep: #105734;
+      --green-bright: #64ec98;
       --sans: "Source Sans 3", system-ui, sans-serif;
       --serif: "Source Serif 4", Georgia, serif;
       /* Headings and link titles are written by hand; the paragraphs stay in
@@ -64,6 +68,7 @@
         radial-gradient(90% 60% at 50% 108%, rgba(176,150,102,.16) 0%, rgba(176,150,102,0) 60%),
         linear-gradient(175deg, #fdfaf1 0%, #faf4e6 55%, #f3ead6 100%);
       background-attachment: fixed;
+      overflow-x: hidden; /* so the headings can start off-stage without a scrollbar */
     }
     body::after {
       content: "";
@@ -75,7 +80,7 @@
       mix-blend-mode: multiply;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E");
       background-size: 170px 170px;
-      
+
     }
 
     .wrap {
@@ -167,6 +172,10 @@
     /* ===== INTRO ===== */
     main.wrap { padding-block: 30px 60px; }
 
+    /* ===== THE H1s =====
+       Green, and they slide in from the left when the page opens. The
+       little script at the bottom gives each one a slightly later start so
+       they arrive one after another rather than all at once. */
     h1 {
       font-family: var(--hand);
       font-weight: 700;
@@ -174,8 +183,18 @@
       margin: 0 0 6px;
       line-height: 1.05;
       text-align: left;
+      color: var(--green-deep);
+      /* a whisper of a darker edge in the same green, so #64ec98 still holds
+         its shape against the pale paper */
+      text-shadow: 0 1px 0 rgba(16,87,52,.30);
+      animation: slide-in-left 1.7s cubic-bezier(.16,.84,.34,1) both;
+      animation-delay: var(--slide-delay, 0s);
     }
-    
+    @keyframes slide-in-left {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
     .intro {
       font-size: clamp(1.02rem, .98rem + .3vw, 1.15rem);
       color: var(--muted);
@@ -202,6 +221,7 @@
       margin: 0 0 2px;
       line-height: 1.2;
       text-align: left;
+      color: var(--green);
     }
     .lead {
       margin: 0 0 20px;
@@ -383,6 +403,8 @@
       .brand-top, header::before { animation: none; }
       .brand-top { -webkit-text-fill-color: #f8fafc; color: #f8fafc; }
       a.row::after { transition: none; }
+      /* headings arrive in place, no travel */
+      h1 { animation: none; opacity: 1; transform: none; }
     }
     /* ===== HOUSE AD ===== */
 .house-ad {
@@ -477,7 +499,7 @@
 </i>
 <br>
    <br>
-<section class="group-center">   
+<section class="group-center">
 
   <p class="lead">
     <b>Free matching games.</b> Nothing is timed, nothing is scored,
@@ -490,7 +512,7 @@
   </section>
 
 <main class="wrap">
-    <h1>Revise & Memories</h1>
+    <h1>Revise &amp; Memories</h1>
     <i letter-spacing:0.5 px;">Warmer, Social games and speaking practice</i>
     </p>
     </main>
@@ -516,7 +538,7 @@
       </li>
 
       <li>
-        <a class="row" href="http://modernenglish.au/interactivegames.html">
+        <a class="row" href="https://modernenglish.au/vocabularygames.html">
           <span class="name">  English Idioms</span>
           <span class="note">Weather idioms, colour idioms, body idiom, and other idioms.</span>
         </a>
@@ -534,7 +556,7 @@
     <ul class="list">
       <li>
         <a class="row" href="smalltalktictactoe.html">
-          <span class="name">Small Talk Noughts & Crosses</span>
+          <span class="name">Small Talk Noughts &amp; Crosses</span>
           <span class="note">Symbols, what each element is used for, the ore it comes out of,
             everyday names and formulas, what is inside a formula, what a reaction makes — and
             the hazard signs on the bottles.</span>
@@ -593,7 +615,7 @@
         <a class="row mail"
            href="mailto:KoalaSpiesSydney@outlook.com?subject=Koalaspies%3A%20a%20game%20suggestion">
           <span class="kicker">Free</span>
-          <span class="name">Suggest a game</span>
+          <span class="name"><h2>Suggest a game</h2></span>
           <span class="note">
             Tell me the set your students keep forgetting — irregular verbs, bones of the hand,
             the ten districts of somewhere. If it is a list worth learning, it can probably be a game.
@@ -604,7 +626,7 @@
         <a class="row mail"
            href="mailto:KoalaSpiesSydney@outlook.com?subject=Koalaspies%3A%20commission%20enquiry">
           <span class="kicker">Commission</span>
-          <span class="name">A game built for your course</span>
+          <span class="name"> <h2>A game built for your course</h2></span>
           <span class="note">
             Your content, your branding, your colours, delivered as a single HTML file you own outright —
             drop it into Moodle, Canvas, a website or a USB stick. Tell me the syllabus and I will quote.
@@ -634,6 +656,12 @@
     qrIcon.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" +
                  encodeURIComponent(window.location.href);
   }
+
+  /* Stagger the headings so they slide in one after another. If this script
+     never runs, they all still slide in together — nothing breaks. */
+  document.querySelectorAll("h1").forEach(function (h, i) {
+    h.style.setProperty("--slide-delay", (i * 0.45) + "s");
+  });
 </script>
 
 </body>
