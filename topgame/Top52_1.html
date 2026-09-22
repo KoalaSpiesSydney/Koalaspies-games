@@ -1,0 +1,1705 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ask the AI oracle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Karla:wght@300;400;500;700&display=swap">
+
+<style>
+:root{
+  --white:#fff8e7;
+  --ice:#f7e9d7;
+  --mist:#e7d4b5;
+  --sky:#d9a066;
+  --azure:#c4753a;
+
+  --blue:#8c4f2b;       /* retro brown-orange */
+  --navy:#5a3a2e;       /* deep walnut */
+  --ink:#3b2a22;        /* dark chocolate */
+  --muted:#b08f6f;      /* soft tan */
+
+  --t0:#d9822b;         /* burnt orange */
+  --t1:#e4b02a;         /* mustard gold */
+  --t2:#7aa37a;         /* avocado green */
+  --t3:#5a3a2e;         /* walnut brown */
+
+  --display:"Shrikhand", "Cinzel", serif;
+  --body:"Karla", "Figtree", sans-serif;
+
+  --bg-image:none;
+  --arena-image:none;
+  color-scheme: light;
+}
+
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--white);color:var(--ink);font:16px/1.5 var(--body)}
+.bg{position:fixed;inset:0;z-index:0;background:var(--bg-image) center/cover no-repeat;pointer-events:none}
+.bg svg{width:100%;height:100%;display:block}
+.bg.has-image svg{display:none}
+.page-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+body.in-game .bg{display:none}
+body.in-game .veil{background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.62))}
+body.in-game .log,body.in-game .note{background:rgba(255,255,255,.82);border-radius:12px;padding:8px 12px}
+body.in-game .log:empty{display:none}
+.veil{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.45) 45%,rgba(255,255,255,.55))}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:18px 56px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.logo{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;gap:10px}
+.eye{width:34px;height:34px;flex:none}
+.hdr-right{display:flex;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:99px;background:rgba(255,255,255,.8);border:1px solid var(--mist);color:var(--muted)}
+.pill.live{color:var(--azure)} .pill.off{color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 20%,transparent)}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.12;color:var(--navy);letter-spacing:.02em}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(21px,3.4vw,30px);line-height:1.2;color:var(--navy)}
+h3{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+p{margin:0}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.panel{background:rgba(255,255,255,.88);border:1px solid var(--mist);border-radius:18px;padding:20px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 16px;font-weight:700;color:var(--navy);background:var(--ice)}
+button:hover{filter:brightness(.97)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--azure);outline-offset:2px}
+button:disabled{opacity:.4;cursor:not-allowed;filter:none}
+.btn-main{background:var(--blue);color:#fff;font-size:17px;padding:13px 24px;box-shadow:0 6px 18px -8px rgba(21,82,168,.7)}
+.btn-main:hover{background:var(--azure);filter:none}
+.btn-ghost{background:rgba(255,255,255,.7);border:1.5px solid var(--sky);color:var(--blue)}
+.btn-small{padding:6px 12px;font-size:14px}
+input[type=text],input[type=password]{font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--sky);border-radius:12px;padding:10px 12px;width:100%;min-width:0}
+input.big{font-size:20px;padding:13px 14px}
+label.lbl{font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+.qlist{display:flex;flex-direction:column;gap:8px}
+.qitem{display:flex;gap:10px;align-items:center;background:var(--ice);border-radius:12px;padding:8px 10px;text-align:left;width:100%;font-weight:600}
+.qitem .txt{flex:1;min-width:0}
+.qitem .count{font-size:12px;color:var(--muted);flex:none;font-weight:700}
+.x{background:transparent;color:var(--muted);padding:4px 8px}
+.teamrow{display:flex;gap:8px;align-items:center}
+.swatch{width:14px;height:14px;border-radius:4px;flex:none}
+.seg{display:inline-flex;background:var(--ice);border-radius:12px;padding:3px}
+.seg button{background:transparent;padding:7px 14px;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--blue);color:#fff}
+.qcard{position:relative;background:rgba(255,255,255,.55);color:var(--navy);border:1px solid rgba(255,255,255,.85);border-radius:20px;padding:24px 26px;box-shadow:0 10px 30px -20px rgba(11,42,85,.45),inset 0 1px 0 rgba(255,255,255,.9);backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);overflow:hidden}
+.qcard::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(47,125,225,.14);box-shadow:0 0 0 24px rgba(47,125,225,.04),0 0 0 48px rgba(47,125,225,.025);pointer-events:none}
+.qcard h2{color:var(--navy);position:relative;min-height:1.3em;font-size:clamp(22px,3.6vw,32px);line-height:1.25}
+.qtop{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.qtopic{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.4vw,40px);letter-spacing:.14em;text-transform:uppercase;color:var(--navy);
+  background:linear-gradient(180deg,var(--blue),var(--navy));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.qtools{display:flex;gap:8px;align-items:center}
+.qbtn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:50%;background:rgba(255,255,255,.7);border:1px solid var(--sky);color:var(--blue)}
+.qbtn:hover{background:#fff;filter:none}
+.caret{display:inline-block;width:.08em;height:1em;margin-left:3px;vertical-align:-.12em;background:var(--azure)}
+@media (prefers-reduced-motion:no-preference){.caret{animation:blink .8s steps(1) infinite}}
+@keyframes blink{50%{opacity:0}}
+.qcard .eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;position:relative}
+.cover{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.bigteam{font-family:var(--display);font-weight:700;font-size:clamp(32px,7vw,58px);line-height:1.05}
+.orb{width:128px;height:128px}
+@media (prefers-reduced-motion:no-preference){
+  .orb .ring{animation:spin 8s linear infinite;transform-origin:60px 60px}
+  .orb .iris{animation:pulse 1.8s ease-in-out infinite;transform-origin:60px 60px}
+  .flip{animation:flip .55s cubic-bezier(.2,.8,.3,1.2)}
+  .pop{animation:pop .45s ease-out}
+  .bigx{animation:xhit 1.1s ease-out forwards}
+  .glow{animation:glow 3s ease-in-out infinite}
+  .tile{transition:transform .18s, box-shadow .18s}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{transform:scale(.82)}}
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{from{transform:translateY(8px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+@keyframes xhit{0%{transform:scale(2.2);opacity:0}15%{transform:scale(1);opacity:1}75%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes glow{50%{opacity:.55}}
+.xover{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
+.bigx{font-family:var(--display);font-weight:700;font-size:min(40vw,260px);color:var(--navy);text-shadow:0 0 40px rgba(47,125,225,.6);opacity:0}
+.board{display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:640px){.board.two{grid-template-columns:1fr 1fr;grid-auto-flow:column}}
+.bslot{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;border-radius:14px;padding:10px 14px;min-height:62px;background:linear-gradient(135deg,var(--navy),#123e7c);border:1px solid #1d4a8a;color:#fff}
+.bslot .rank{font-family:var(--display);font-weight:700;font-size:22px;color:var(--sky)}
+.bslot.hidden .name{color:rgba(156,195,236,.45);letter-spacing:.3em;font-weight:800}
+.bslot.shown{background:#fff;color:var(--ink);border-color:var(--sky)}
+.bslot.shown .rank{color:var(--azure)}
+.bslot.unclaimed{background:var(--ice);border-style:dashed}
+.bslot .name{font-weight:800;font-size:18px;line-height:1.25}
+.bslot .why{font-size:14px;color:var(--muted);margin-top:2px;font-weight:500}
+.bslot .val{font-family:var(--display);font-weight:700;font-size:24px;font-variant-numeric:tabular-nums;min-width:40px;text-align:right;color:var(--blue)}
+.bslot.hidden .val{color:rgba(156,195,236,.4)}
+.who{display:inline-block;font-size:12px;font-weight:800;border-radius:6px;padding:1px 8px;color:#fff;margin-top:4px}
+.scorebar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.team{border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.9);border:1px solid var(--mist);border-top:5px solid var(--c)}
+.team.active{box-shadow:0 0 0 2px var(--c),0 10px 24px -14px var(--c)}
+.team.out{opacity:.45}
+.team .nm{font-weight:800;display:flex;justify-content:space-between;gap:6px;color:var(--navy)}
+.team .pts{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--c)}
+.strikes{display:flex;gap:4px;margin-top:4px;min-height:18px}
+.strike{font-weight:800;font-size:15px;line-height:1;color:var(--mist)}
+.strike.on{color:var(--navy)}
+.turn{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.log{font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.log b{color:var(--ink)}
+.callout{border-radius:14px;padding:14px 16px;background:var(--navy);color:#fff;border:1px solid var(--navy)}
+.callout b{color:#fff}
+.callout.good{background:var(--ice);color:var(--ink);border-color:var(--sky)}
+.callout.good b{color:var(--blue)}
+.callout .btn-ghost{background:transparent;color:inherit;border-color:currentColor}
+.callout .note{color:inherit;opacity:.8}
+.note{font-size:13px;color:var(--muted)}
+.picklist{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{background:#fff;color:var(--blue);border:1.5px solid var(--sky);border-radius:99px;padding:8px 14px;font-weight:700}
+.podium{display:flex;flex-direction:column;gap:10px}
+.podium .team{display:flex;justify-content:space-between;align-items:center}
+.rules{font-size:14px;color:var(--muted);display:grid;gap:6px}
+.rules b{color:var(--ink)}
+.err{color:var(--navy);font-weight:700}
+.guessrow{display:flex;gap:10px}
+.guessrow input{flex:1}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:820px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:170px;padding:22px;border-radius:20px;background:linear-gradient(160deg,#fff 0%,var(--ice) 100%);border:1.5px solid var(--sky);color:var(--navy);text-align:center;box-shadow:0 12px 26px -18px rgba(11,42,85,.7);overflow:hidden}
+.tile::before{content:"";position:absolute;inset:10px;border:1px solid var(--mist);border-radius:14px;pointer-events:none}
+.tile::after{content:"";position:absolute;left:50%;top:-70px;width:140px;height:140px;margin-left:-70px;border-radius:50%;background:radial-gradient(circle,rgba(47,125,225,.18),transparent 70%)}
+.tile:hover{transform:translateY(-4px);box-shadow:0 18px 30px -18px rgba(21,82,168,.9);filter:none}
+.tile .hint{position:relative;font-family:var(--display);font-weight:700;font-size:clamp(24px,3.6vw,32px);letter-spacing:.08em;text-transform:uppercase;overflow-wrap:anywhere}
+.hintbadge{display:inline-block;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:2px 10px;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;position:relative}
+.qitem .hintbadge{background:var(--blue);border-color:var(--blue)}
+.qcard .hintbadge{background:rgba(255,255,255,.7);color:var(--blue);border-color:var(--sky)}
+.twofield{display:grid;grid-template-columns:minmax(90px,1fr) 3fr auto;gap:8px}
+@media (max-width:520px){.twofield{grid-template-columns:1fr}}
+/* Round timer — minimal bar fixed to the bottom of the screen */
+.timer{position:fixed;left:0;right:0;bottom:0;z-index:4;display:flex;align-items:center;gap:14px;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.tbar{flex:1;height:3px;border-radius:99px;background:rgba(11,42,85,.12);overflow:hidden}
+.tfill{display:block;height:100%;border-radius:inherit;background:var(--blue);transition:width .2s linear}
+.tval{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.08em;font-variant-numeric:tabular-nums;color:var(--navy);
+  background:rgba(255,255,255,.75);padding:2px 10px;border-radius:99px;min-width:4.2ch;text-align:center}
+.timer.low .tfill{background:var(--navy)}
+@media (prefers-reduced-motion:no-preference){.timer.low .tval{animation:tpulse 1s ease-in-out infinite}}
+@keyframes tpulse{50%{opacity:.4}}
+/* Crystal balls */
+.arena-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.ball{z-index:1}
+.arena{position:relative;width:100%;aspect-ratio:16/9;max-height:560px;border-radius:28px;overflow:hidden;
+  background:var(--arena-image) center/cover no-repeat,
+    radial-gradient(ellipse at 50% 115%,rgba(47,125,225,.22),transparent 60%),
+    linear-gradient(180deg,#f7fbff,#e6f0fb);
+  border:1.5px solid var(--mist);box-shadow:inset 0 0 60px rgba(156,195,236,.3)}
+@media (max-width:700px){.arena{aspect-ratio:auto;height:500px}}
+/* Crystal balls, each tinted with its own colour (--bot, set in renderChoose; list in BOT_COLORS) */
+.ball{position:absolute;left:0;top:0;width:clamp(78px,11vw,118px);aspect-ratio:1;max-width:100%;padding:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:transform;--bot:#3a86c8;
+  background:
+    radial-gradient(circle at 30% 24%,#fff 0 6%,rgba(255,255,255,0) 16%),
+    radial-gradient(ellipse at 68% 82%,rgba(255,255,255,.9) 0 5%,rgba(255,255,255,0) 18%),
+    radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--bot) 18%,rgba(255,255,255,.75)) 0,color-mix(in srgb,var(--bot) 38%,rgba(244,248,252,.62)) 48%,color-mix(in srgb,var(--bot) 65%,rgba(205,216,228,.72)) 76%,color-mix(in srgb,var(--bot) 85%,rgba(60,70,90,.85)) 100%);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--bot) 55%,transparent),0 20px 28px -14px rgba(40,60,90,.45),0 0 28px color-mix(in srgb,var(--bot) 35%,rgba(255,255,255,.9)),
+    inset 0 -14px 22px color-mix(in srgb,var(--bot) 55%,rgba(120,138,160,.35)),inset 0 10px 18px rgba(255,255,255,.9);
+  backdrop-filter:blur(3px) saturate(1.3);-webkit-backdrop-filter:blur(3px) saturate(1.3);
+  cursor:pointer;touch-action:manipulation}
+.ball::after{content:"";position:absolute;left:18%;right:18%;top:7%;height:26%;border-radius:50%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,0))}
+.ball:hover{filter:brightness(1.05)}
+.ball .mist{position:absolute;inset:-20%;border-radius:50%;opacity:.5;pointer-events:none;
+  background:conic-gradient(from 0deg,transparent 0 18%,rgba(255,255,255,.9) 26%,transparent 38%,color-mix(in srgb,var(--bot) 45%,rgba(190,205,222,.55)) 58%,transparent 70%,rgba(255,255,255,.7) 84%,transparent 92%)}
+.ball .word{position:relative;z-index:1;font-family:var(--display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);
+  font-size:clamp(11px,1.5vw,15px);text-shadow:0 0 8px #fff,0 0 4px #fff,0 0 2px #fff;padding-inline:10px;text-align:center;overflow-wrap:anywhere;line-height:1.1}
+.ball .word.long{font-size:clamp(9px,1.15vw,12px);letter-spacing:.03em;overflow-wrap:normal;padding-inline:6px}
+.ball .beyes{position:absolute;z-index:1;left:22%;width:56%;top:18%;overflow:visible;pointer-events:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.18))}
+.ball .word{margin-top:34%}
+.ball .beye,.ball .bpupil{transform-box:fill-box;transform-origin:center}
+.ball .bpupil{transition:transform .25s ease}
+.ball:hover .bpupil{transform:scale(1.2)}
+.ball.caught .beye{animation:none!important;transform:scaleY(.3)}
+.ball.fade{opacity:.15;transition:opacity .4s;pointer-events:none}
+.ball.caught{z-index:2;box-shadow:0 0 0 3px #fff,0 0 0 6px color-mix(in srgb,var(--bot) 50%,#c9d4e2),0 0 60px 10px rgba(255,255,255,1),0 0 90px color-mix(in srgb,var(--bot) 70%,transparent)}
+@media (prefers-reduced-motion:no-preference){
+  .ball .mist{animation:swirl 7s linear infinite}
+  .ball .beye{animation:eyeblink 4.2s infinite;animation-delay:var(--d,0s)}
+  .ball .blook{animation:eyelook 6s ease-in-out infinite;animation-delay:var(--d,0s)}
+  .ball.caught{animation:catch .7s ease-out forwards}
+}
+@keyframes swirl{to{transform:rotate(360deg)}}
+@keyframes eyeblink{0%,90%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}96%{transform:scaleY(1)}98%{transform:scaleY(.1)}}
+@keyframes eyelook{0%,12%{transform:translate(0,0)}20%,34%{transform:translate(3.5px,-1.5px)}42%,56%{transform:translate(-3.5px,-1px)}64%,78%{transform:translate(1px,2.5px)}86%,100%{transform:translate(0,0)}}
+@keyframes catch{40%{filter:brightness(1.35)}100%{filter:brightness(1.12)}}
+@media (prefers-reduced-motion:reduce){.arena{aspect-ratio:auto;height:auto;display:flex;flex-wrap:wrap;gap:16px;justify-content:center;padding:20px}.ball{position:relative;transform:none!important}}
+/* Intro + instructions */
+.splash{min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;cursor:pointer;user-select:none}
+.splash h1{font-size:clamp(40px,9vw,88px);letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.splash .sub{font-size:clamp(16px,2.4vw,20px);color:var(--muted);max-width:40ch}
+.splash .tap{font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--azure)}
+.rulecard{max-width:640px;margin:0 auto;background:rgba(255,255,255,.94);border:1.5px solid var(--sky);border-radius:24px;padding:clamp(22px,4vw,36px);box-shadow:0 30px 60px -30px rgba(11,42,85,.55);display:flex;flex-direction:column;gap:18px}
+.rulecard h2{text-align:center;letter-spacing:.06em}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s,upper-roman);font-family:var(--display);font-weight:700;color:var(--azure);font-size:17px;text-align:center;border:1.5px solid var(--sky);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.steps b{color:var(--navy)}
+.readrow{display:flex;gap:10px;align-items:center}
+.readrow input{text-transform:uppercase;letter-spacing:.3em;text-align:center;font-family:var(--display);font-weight:700;font-size:20px}
+.meander{height:14px;background:
+  linear-gradient(90deg,var(--sky) 2px,transparent 2px) 0 0/14px 14px,
+  linear-gradient(0deg,var(--sky) 2px,transparent 2px) 0 0/14px 14px;opacity:.5;border-radius:2px}
+.fmtable th,.fmtable td{padding:8px 10px;border-bottom:1px solid var(--mist);vertical-align:top}
+.fmtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.fmtile{display:flex;flex-direction:column;gap:6px;padding:14px;border:1.5px solid var(--sky);border-radius:14px;background:rgba(255,255,255,.7)}
+.fmtile>b{font-family:var(--display);font-size:32px;line-height:1;color:var(--azure)}
+</style>
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+
+<audio id="bgAudio" src="Numberoneprimetime.mp3" loop preload="auto"></audio>
+<audio id="welcomeAudio" src="Welcome.mp3" loop preload="auto"></audio>
+
+<div class="bg" id="bg" aria-hidden="true">
+  <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <defs><radialGradient id="halo" cx="50%" cy="37%" r="45%"><stop offset="0" stop-color="#cfe2f8"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>
+    <!-- Subtle pastel marble swirl (was plain white). Soften/strengthen it with the opacity on the <g> below -->
+    <defs>
+      <linearGradient id="marbleTint" x1="0" y1="0" x2=".35" y2=".3" spreadMethod="reflect">
+        <stop offset="0" stop-color="#fbe3ec"/><stop offset=".22" stop-color="#e6e1fb"/><stop offset=".45" stop-color="#dcf1f6"/>
+        <stop offset=".68" stop-color="#e3f5e4"/><stop offset=".86" stop-color="#fdefdc"/><stop offset="1" stop-color="#fbe3ec"/>
+      </linearGradient>
+      <filter id="marbleSwirl" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0018 0.0032" numOctaves="3" seed="11" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="520" xChannelSelector="R" yChannelSelector="G"/>
+        <feGaussianBlur stdDeviation="6"/>
+      </filter>
+      <filter id="marbleVeins" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="turbulence" baseFrequency="0.0035 0.006" numOctaves="4" seed="4"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -9 0 0 0 1.25"/>
+      </filter>
+    </defs>
+    <rect width="1200" height="800" fill="#fff"/>
+    <g opacity=".85">
+      <rect x="-300" y="-300" width="1800" height="1400" fill="url(#marbleTint)" filter="url(#marbleSwirl)"/>
+      <rect width="1200" height="800" filter="url(#marbleVeins)" opacity=".55"/>
+    </g>
+    <rect width="1200" height="800" fill="url(#halo)"/>
+    <g stroke="#e3eefa" stroke-width="1"><line x1="600" y1="300" x2="1060" y2="300"/><line x1="600" y1="300" x2="1044" y2="419"/><line x1="600" y1="300" x2="998" y2="530"/><line x1="600" y1="300" x2="925" y2="625"/><line x1="600" y1="300" x2="830" y2="698"/><line x1="600" y1="300" x2="719" y2="744"/><line x1="600" y1="300" x2="600" y2="760"/><line x1="600" y1="300" x2="481" y2="744"/><line x1="600" y1="300" x2="370" y2="698"/><line x1="600" y1="300" x2="275" y2="625"/><line x1="600" y1="300" x2="202" y2="530"/><line x1="600" y1="300" x2="156" y2="419"/><line x1="600" y1="300" x2="140" y2="300"/><line x1="600" y1="300" x2="156" y2="181"/><line x1="600" y1="300" x2="202" y2="70"/><line x1="600" y1="300" x2="275" y2="-25"/><line x1="600" y1="300" x2="370" y2="-98"/><line x1="600" y1="300" x2="481" y2="-144"/><line x1="600" y1="300" x2="600" y2="-160"/><line x1="600" y1="300" x2="719" y2="-144"/><line x1="600" y1="300" x2="830" y2="-98"/><line x1="600" y1="300" x2="925" y2="-25"/><line x1="600" y1="300" x2="998" y2="70"/><line x1="600" y1="300" x2="1044" y2="181"/></g>
+    <g fill="none" stroke="#c6dbf3" stroke-width="1.5"><circle cx="600" cy="300" r="90"/><circle cx="600" cy="300" r="150" stroke-dasharray="4 10"/><circle cx="600" cy="300" r="230"/><circle cx="600" cy="300" r="320" stroke-dasharray="1 8"/></g>
+    <g fill="#f6faff" stroke="#c6dbf3" stroke-width="1.5"><g><rect x="112" y="226" width="76" height="16" rx="2"/><rect x="118" y="242" width="64" height="8"/><rect x="120" y="250" width="60" height="450"/><line x1="130" y1="250" x2="130" y2="700"/><line x1="140" y1="250" x2="140" y2="700"/><line x1="150" y1="250" x2="150" y2="700"/><line x1="160" y1="250" x2="160" y2="700"/><line x1="170" y1="250" x2="170" y2="700"/><rect x="112" y="700" width="76" height="14" rx="2"/></g><g><rect x="1012" y="226" width="76" height="16" rx="2"/><rect x="1018" y="242" width="64" height="8"/><rect x="1020" y="250" width="60" height="450"/><line x1="1030" y1="250" x2="1030" y2="700"/><line x1="1040" y1="250" x2="1040" y2="700"/><line x1="1050" y1="250" x2="1050" y2="700"/><line x1="1060" y1="250" x2="1060" y2="700"/><line x1="1070" y1="250" x2="1070" y2="700"/><rect x="1012" y="700" width="76" height="14" rx="2"/></g></g>
+    <path d="M60 760 H1140" stroke="#c6dbf3" stroke-width="1.5"/>
+  </svg>
+</div>
+<video class="page-video" id="pageVideo" muted loop playsinline preload="auto" aria-hidden="true" hidden></video>
+<div class="veil" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="logo">
+      TOP 5
+    </div>
+    <div class="hdr-right"><button class="btn-ghost btn-small" id="sfxBtn" aria-pressed="true">Sound on</button><button class="btn-ghost btn-small" id="voiceBtn" aria-pressed="true">Voice on</button><button class="btn-ghost btn-small" id="settingsBtn" hidden>Teams &amp; topics</button><span id="modePill" class="pill" hidden></span></div>
+  </header>
+  <main id="app"></main>
+</div>
+<div class="xover" id="xover" aria-hidden="true"></div>
+
+<script>
+(function(){
+/* ===== VIDEO BEHIND THE CRYSTAL BALLS =====
+   Put your mp4 in the same folder as this HTML file and set its file name here.
+   Leave it as "" for no video. */
+const ARENA_VIDEO="host3.mp4";
+/* Each team gets its own song (instead of Welcome.mp3) while they pick a crystal ball.
+   The host3.mp4 video always plays behind the balls.
+   Songs play through a hidden player; the arena video itself stays silent. Names must match the team names (capitals don't matter). */
+const TEAM_SONG={ nerds:"nerds.mp3", fools:"Welcome.mp3" }; // note: host3.mp4 has no sound of its own
+/* Full-screen video for the game part (from the AI oracle building its board to the end of each round) */
+const GAME_VIDEO="dance.mp4";
+
+/* ===== SOUND EFFECTS =====
+   All sounds are generated in the browser. To use your own recordings instead,
+   put the audio file next to this HTML and type its name below, e.g. hum:"ommm.mp3". */
+const SOUND_FILES={
+  hum:"",      // (the crystal-ball music is now the <audio id="welcomeAudio"> tag near the top of <body>)
+  catch:"",    // a crystal ball is caught
+  summon:"",   // new crystal balls are summoned
+  right:"",    // right answer
+  wrong:"",    // wrong answer
+  takeover:"", // a team takes over
+  cleared:"",  // board cleared / game over
+  start:""     // Start button
+};
+
+/* Demo boards: used only when Claude isn't available (e.g. the downloaded file),
+   so the game can still be played. Inside Claude, every board is answered live. */
+const DEMO={
+ "Name the 5 oceans of the world":[
+  ["Pacific",["Pacific Ocean"],0,"The biggest and deepest."],
+  ["Atlantic",["Atlantic Ocean"],0,""],
+  ["Indian",["Indian Ocean"],0,""],
+  ["Southern",["Southern Ocean", "Antarctic", "Antarctic Ocean"],0,"Circles Antarctica."],
+  ["Arctic",["Arctic Ocean"],0,"The smallest."]],
+ "Name the 5 colours of the Olympic rings":[
+  ["Blue",[],0,""],
+  ["Yellow",[],0,""],
+  ["Black",[],0,""],
+  ["Green",[],0,""],
+  ["Red",[],0,""]],
+ "Name the 6 states of Australia":[
+  ["New South Wales",["NSW"],0,""],
+  ["Victoria",["VIC"],0,""],
+  ["Queensland",["QLD"],0,""],
+  ["Western Australia",["WA"],0,"The biggest state."],
+  ["South Australia",["SA"],0,""],
+  ["Tasmania",["TAS", "Tassie"],0,"The island state."]],
+ "Name the 6 main characters in the TV show Friends":[
+  ["Rachel",["Rachel Green"],0,""],
+  ["Monica",["Monica Geller"],0,""],
+  ["Phoebe",["Phoebe Buffay"],0,""],
+  ["Joey",["Joey Tribbiani"],0,""],
+  ["Chandler",["Chandler Bing"],0,""],
+  ["Ross",["Ross Geller"],0,""]],
+ "Name the 8 planets of our solar system":[
+  ["Mercury",[],0,""],
+  ["Venus",[],0,""],
+  ["Earth",[],0,""],
+  ["Mars",[],0,""],
+  ["Jupiter",[],0,""],
+  ["Saturn",[],0,""],
+  ["Uranus",[],0,""],
+  ["Neptune",[],0,""]],
+ "Name 6 Australian marsupials":{need:6,accept:[["Kangaroo",["Roo", "Red kangaroo", "Grey kangaroo"]],["Koala",["Koala bear"]],["Wombat",[]],["Wallaby",[]],["Possum",["Brushtail possum", "Ringtail possum"]],["Tasmanian devil",["Devil"]],["Quokka",[]],["Bandicoot",[]],["Bilby",[]],["Numbat",[]],["Quoll",[]],["Sugar glider",["Glider"]],["Pademelon",[]],["Potoroo",[]],["Bettong",[]],["Dunnart",[]],["Thylacine",["Tasmanian tiger"]],["Tree kangaroo",[]],["Wallaroo",[]],["Antechinus",[]],["Cuscus",[]],["Rock-wallaby",["Rock wallaby"]],["Kowari",[]],["Mulgara",[]],["Honey possum",[]]]},
+ "Name the 3 Hemsworth brothers":[
+  ["Chris",["Chris Hemsworth"],0,"Thor himself."],
+  ["Liam",["Liam Hemsworth"],0,"The Hunger Games."],
+  ["Luke",["Luke Hemsworth"],0,"The eldest, from Neighbours and Westworld."]],
+ "Name the 4 main types of football played in Australia":[
+  ["Australian rules football",["AFL", "Aussie rules", "Australian rules", "Footy", "Aussie rules football"],0,"The AFL."],
+  ["Rugby league",["League", "NRL"],0,"The NRL."],
+  ["Rugby union",["Union", "Wallabies"],0,"The Wallabies."],
+  ["Soccer",["Football", "Association football", "A-League", "Socceroos", "Matildas"],0,"The Socceroos and Matildas."]],
+ "Name 5 Australian prime ministers":{need:5,accept:[["Edmund Barton",["Barton"]],["Alfred Deakin",["Deakin"]],["Chris Watson",["Watson"]],["George Reid",["Reid"]],["Andrew Fisher",["Fisher"]],["Joseph Cook",["Cook"]],["Billy Hughes",["Hughes"]],["Stanley Bruce",["Bruce"]],["James Scullin",["Scullin"]],["Joseph Lyons",["Lyons"]],["Earle Page",["Page"]],["Robert Menzies",["Menzies"]],["Arthur Fadden",["Fadden"]],["John Curtin",["Curtin"]],["Frank Forde",["Forde"]],["Ben Chifley",["Chifley"]],["Harold Holt",["Holt"]],["John McEwen",["McEwen"]],["John Gorton",["Gorton"]],["William McMahon",["McMahon"]],["Gough Whitlam",["Whitlam"]],["Malcolm Fraser",["Fraser"]],["Bob Hawke",["Hawke"]],["Paul Keating",["Keating"]],["John Howard",["Howard"]],["Kevin Rudd",["Rudd"]],["Julia Gillard",["Gillard"]],["Tony Abbott",["Abbott"]],["Malcolm Turnbull",["Turnbull"]],["Scott Morrison",["Morrison"]],["Anthony Albanese",["Albanese"]]]},
+ "Name 5 famous footballers from Brazil":{need:5,accept:[["Pel\u00e9",["Pele"]],["Ronaldo",["R9", "Ronaldo Nazario"]],["Ronaldinho",[]],["Neymar",[]],["Kak\u00e1",["Kaka"]],["Rom\u00e1rio",["Romario"]],["Rivaldo",[]],["Zico",[]],["Garrincha",[]],["S\u00f3crates",["Socrates"]],["Cafu",[]],["Roberto Carlos",[]],["Vin\u00edcius J\u00fanior",["Vinicius Junior", "Vini Jr", "Vinicius"]],["Marcelo",[]],["Casemiro",[]],["Alisson",["Alisson Becker"]],["Thiago Silva",[]],["Bebeto",[]],["Dani Alves",["Daniel Alves"]],["Richarlison",[]],["Raphinha",[]],["Rodrygo",[]],["Ederson",[]],["Jairzinho",[]],["Carlos Alberto",[]],["Adriano",[]],["Robinho",[]],["Gabriel Jesus",[]],["Roberto Firmino",["Firmino"]],["Philippe Coutinho",["Coutinho"]],["Endrick",[]],["Marta",[]],["Formiga",[]]]},
+ "Name 6 animals that live in the Amazon rainforest":{need:6,accept:[["Jaguar",[]],["Anaconda",["Green anaconda"]],["Sloth",[]],["Piranha",[]],["Toucan",[]],["Macaw",["Parrot", "Scarlet macaw"]],["Capybara",[]],["Pink river dolphin",["River dolphin", "Amazon river dolphin", "Boto", "Pink dolphin"]],["Poison dart frog",["Poison frog", "Dart frog"]],["Caiman",["Black caiman"]],["Tapir",[]],["Howler monkey",[]],["Spider monkey",[]],["Harpy eagle",[]],["Electric eel",[]],["Giant otter",["Otter", "River otter"]],["Ocelot",[]],["Squirrel monkey",[]],["Tamarin",["Golden lion tamarin"]],["Armadillo",[]],["Anteater",["Giant anteater"]],["Boa constrictor",["Boa"]],["Tarantula",[]],["Arapaima",["Pirarucu"]],["Manatee",["Amazonian manatee"]],["Hoatzin",[]],["Leafcutter ant",["Leaf-cutter ant", "Ants"]],["Morpho butterfly",["Blue morpho"]],["Glass frog",[]],["Marmoset",[]]]},
+ "Name the 4 Beatles":[
+  ["John Lennon",["Lennon", "John"],0,""],
+  ["Paul McCartney",["McCartney", "Paul"],0,""],
+  ["George Harrison",["Harrison", "George"],0,""],
+  ["Ringo Starr",["Ringo", "Starr"],0,""]],
+ "Name the 5 members of the Simpson family":[
+  ["Homer",[],0,""],
+  ["Marge",[],0,""],
+  ["Bart",[],0,""],
+  ["Lisa",[],0,""],
+  ["Maggie",[],0,""]],
+ "Name 8 things you can order at McDonald's":{need:8,accept:[["Big Mac",[]],["Quarter Pounder",[]],["McChicken",[]],["Filet-O-Fish",["Fillet o fish", "Fish burger"]],["Chicken McNuggets",["Nuggets", "McNuggets"]],["Happy Meal",[]],["McFlurry",[]],["Fries",["Chips", "French fries"]],["Hash brown",[]],["Egg McMuffin",["McMuffin"]],["Sundae",["Ice cream"]],["Apple pie",[]],["Cheeseburger",[]],["Hamburger",[]],["Double Cheeseburger",[]],["Big Breakfast",[]],["Hotcakes",["Pancakes"]],["Frozen Coke",[]],["Thickshake",["Milkshake", "Shake"]],["Coffee",["McCafe", "Latte", "Cappuccino"]],["Soft serve",["Cone"]],["Coke",["Coca-Cola"]]]},
+ "Name the 5 Great Lakes of North America":[
+  ["Superior",["Lake Superior"],0,"The largest of the five."],
+  ["Michigan",["Lake Michigan"],0,"The only one entirely inside the USA."],
+  ["Huron",["Lake Huron"],0,""],
+  ["Erie",["Lake Erie"],0,""],
+  ["Ontario",["Lake Ontario"],0,""]],
+ "Name the 5 Spice Girls (nickname or real name)":[
+  ["Scary Spice",["Scary", "Mel B", "Melanie Brown"],0,""],
+  ["Sporty Spice",["Sporty", "Mel C", "Melanie Chisholm"],0,""],
+  ["Baby Spice",["Baby", "Emma Bunton", "Emma"],0,""],
+  ["Ginger Spice",["Ginger", "Geri Halliwell", "Geri"],0,""],
+  ["Posh Spice",["Posh", "Victoria Beckham", "Victoria Adams"],0,""]],
+ "Name the 6 heroes who team up in The Avengers movie (2012)":[
+  ["Iron Man",["Tony Stark"],0,""],
+  ["Captain America",["Steve Rogers", "Cap"],0,""],
+  ["Thor",[],0,""],
+  ["Hulk",["Bruce Banner", "The Hulk"],0,""],
+  ["Black Widow",["Natasha Romanoff", "Natasha"],0,""],
+  ["Hawkeye",["Clint Barton"],0,""]],
+ "Name the 7 dwarfs in Disney's Snow White (1937)":[
+  ["Doc",[],0,""],
+  ["Grumpy",[],0,""],
+  ["Happy",[],0,""],
+  ["Sleepy",[],0,""],
+  ["Bashful",[],0,""],
+  ["Sneezy",[],0,""],
+  ["Dopey",[],0,""]],
+ "Name the 7 Harry Potter books":[
+  ["Philosopher's Stone",["Sorcerer's Stone", "Philosophers Stone", "Sorcerers Stone"],0,""],
+  ["Chamber of Secrets",[],0,""],
+  ["Prisoner of Azkaban",[],0,""],
+  ["Goblet of Fire",[],0,""],
+  ["Order of the Phoenix",[],0,""],
+  ["Half-Blood Prince",["Half Blood Prince"],0,""],
+  ["Deathly Hallows",[],0,""]],
+ "Name every Australian prime minister from 2000 to 2025":[
+  ["John Howard",["Howard"],0,""],
+  ["Kevin Rudd",["Rudd"],0,"PM twice."],
+  ["Julia Gillard",["Gillard"],0,"Australia's first female PM."],
+  ["Tony Abbott",["Abbott"],0,""],
+  ["Malcolm Turnbull",["Turnbull"],0,""],
+  ["Scott Morrison",["Morrison", "ScoMo"],0,""],
+  ["Anthony Albanese",["Albanese", "Albo"],0,""]],
+ "Name the 12 signs of the Western zodiac":[
+  ["Aries",[],0,""],
+  ["Taurus",[],0,""],
+  ["Gemini",[],0,""],
+  ["Cancer",[],0,""],
+  ["Leo",[],0,""],
+  ["Virgo",[],0,""],
+  ["Libra",[],0,""],
+  ["Scorpio",[],0,""],
+  ["Sagittarius",[],0,""],
+  ["Capricorn",[],0,""],
+  ["Aquarius",[],0,""],
+  ["Pisces",[],0,""]],
+ "Name 5 islands that are part of Australia":{need:5,accept:[["Tasmania",["Tassie"]],["Christmas Island",["Christmas"]],["Norfolk Island",["Norfolk"]],["Lord Howe Island",["Lord Howe"]],["Kangaroo Island",["Kangaroo"]],["K'gari",["Fraser Island", "Fraser"]],["Rottnest Island",["Rottnest", "Rotto"]],["Heard Island",["Heard"]],["Macquarie Island",["Macquarie"]],["Cocos (Keeling) Islands",["Cocos Islands", "Cocos", "Keeling Islands", "Cocos (Keeling)"]],["Thursday Island",["Thursday"]],["Melville Island",["Melville"]],["Bathurst Island",["Bathurst"]],["Tiwi Islands",["Tiwi"]],["Magnetic Island",["Maggie Island", "Magnetic"]],["Phillip Island",["Phillip"]],["Whitsunday Island",["Whitsundays", "Whitsunday Islands", "Whitsunday"]],["Hamilton Island",["Hamilton"]],["Groote Eylandt",["Groote"]],["King Island",["King"]],["Flinders Island",["Flinders"]],["Moreton Island",["Moreton"]],["Stradbroke Island",["North Stradbroke", "Straddie", "Minjerribah", "Stradbroke"]],["Bruny Island",["Bruny"]],["Hinchinbrook Island",["Hinchinbrook"]],["Dunk Island",["Dunk"]],["Heron Island",["Heron"]],["Lady Elliot Island",["Lady Elliot"]],["Daydream Island",["Daydream"]],["Hayman Island",["Hayman"]],["Ashmore Reef",["Ashmore and Cartier Islands"]],["Maria Island",["Maria"]],["Bribie Island",["Bribie"]],["French Island",["French"]],["Mornington Island",["Mornington"]],["Barrow Island",["Barrow"]],["Dirk Hartog Island",["Dirk Hartog"]]]},
+ "Name 5 K-pop groups that have had international hits":{need:5,accept:[["BTS",["Bangtan Boys", "Bangtan"]],["Blackpink",["Black Pink"]],["Twice",[]],["EXO",[]],["Stray Kids",[]],["NewJeans",["New Jeans"]],["Seventeen",[]],["Big Bang",["Bigbang"]],["Girls' Generation",["Girls Generation", "SNSD"]],["Red Velvet",[]],["ATEEZ",[]],["TXT",["Tomorrow X Together"]],["aespa",[]],["ITZY",[]],["(G)I-DLE",["GIDLE", "G-IDLE", "I-DLE"]],["2NE1",[]],["Wonder Girls",[]],["Super Junior",[]],["SHINee",["Shinee"]],["NCT",["NCT 127", "NCT Dream"]],["ENHYPEN",[]],["LE SSERAFIM",["Le Sserafim"]],["IVE",[]],["Monsta X",[]],["Mamamoo",[]],["BIGBANG",[]],["HUNTR/X",["Huntrix"]],["Saja Boys",[]],["KATSEYE",["Kats Eye"]]]},
+ "Name 5 types of Thai curry":{need:5,accept:[["Green curry",["Green", "Gaeng keow wan", "Kaeng khiao wan"]],["Red curry",["Red", "Gaeng daeng"]],["Yellow curry",["Yellow", "Gaeng karee"]],["Massaman curry",["Massaman", "Matsaman"]],["Panang curry",["Panang", "Phanaeng", "Penang curry"]],["Jungle curry",["Jungle", "Gaeng pa", "Kaeng pa"]],["Khao soi",["Khao soy"]],["Sour curry",["Gaeng som", "Kaeng som"]],["Hung lay curry",["Gaeng hung lay", "Hang le"]],["Choo chee curry",["Choo chee", "Chu chee"]],["Fish kidney curry",["Gaeng tai pla", "Kaeng tai pla"]]]},
+ "Name 10 cities in India":{need:10,accept:[["Mumbai",["Bombay"]],["Delhi",["New Delhi"]],["Bengaluru",["Bangalore"]],["Hyderabad",[]],["Chennai",["Madras"]],["Kolkata",["Calcutta"]],["Ahmedabad",[]],["Pune",["Poona"]],["Surat",[]],["Jaipur",[]],["Lucknow",[]],["Kanpur",[]],["Nagpur",[]],["Indore",[]],["Bhopal",[]],["Patna",[]],["Varanasi",["Benares", "Banaras"]],["Agra",[]],["Amritsar",[]],["Chandigarh",[]],["Kochi",["Cochin"]],["Panaji",["Panjim"]],["Mysuru",["Mysore"]],["Udaipur",[]],["Jodhpur",[]],["Visakhapatnam",["Vizag"]],["Coimbatore",[]],["Madurai",[]],["Thiruvananthapuram",["Trivandrum"]],["Guwahati",[]],["Srinagar",[]],["Shimla",[]],["Darjeeling",[]],["Rishikesh",[]],["Ludhiana",[]],["Vadodara",["Baroda"]],["Nashik",[]],["Ranchi",[]],["Raipur",[]],["Bhubaneswar",[]],["Dehradun",[]],["Prayagraj",["Allahabad"]],["Meerut",[]],["Rajkot",[]],["Kozhikode",["Calicut"]],["Puducherry",["Pondicherry", "Pondy"]],["Leh",[]],["Manali",[]],["Jaisalmer",[]],["Haridwar",[]],["Gurugram",["Gurgaon"]],["Noida",[]]]},
+ "Name the 3 countries that border Vietnam":[
+  ["China",[],0,"To the north."],
+  ["Laos",[],0,"The longest border."],
+  ["Cambodia",[],0,"To the south-west."]],
+ "Name the Big Five safari animals":[
+  ["Lion",[],0,""],
+  ["Leopard",[],0,""],
+  ["Elephant",["African elephant"],0,""],
+  ["Rhinoceros",["Rhino"],0,""],
+  ["Cape buffalo",["Buffalo", "African buffalo"],0,""]],
+ "Name the 4 Hogwarts houses":[
+  ["Gryffindor",[],0,""],
+  ["Hufflepuff",[],0,""],
+  ["Ravenclaw",[],0,""],
+  ["Slytherin",[],0,""]],
+ "Name the 4 Teenage Mutant Ninja Turtles":[
+  ["Leonardo",["Leo"],0,""],
+  ["Donatello",["Donnie", "Donny"],0,""],
+  ["Michelangelo",["Mikey"],0,""],
+  ["Raphael",["Raph"],0,""]],
+ "Name the 4 main characters in Seinfeld":[
+  ["Jerry",["Jerry Seinfeld"],0,""],
+  ["George",["George Costanza", "Costanza"],0,""],
+  ["Elaine",["Elaine Benes"],0,""],
+  ["Kramer",["Cosmo Kramer"],0,""]],
+ "Name the 4 tennis Grand Slam tournaments":[
+  ["Australian Open",["Aus Open", "Australian"],0,""],
+  ["French Open",["Roland Garros", "French"],0,""],
+  ["Wimbledon",[],0,""],
+  ["US Open",["U.S. Open"],0,""]],
+ "Name 8 Pixar movies":{need:8,accept:[["Toy Story",[]],["Toy Story 2",[]],["Toy Story 3",[]],["Toy Story 4",[]],["A Bug's Life",[]],["Finding Nemo",[]],["The Incredibles",[]],["Incredibles 2",[]],["Cars",[]],["Cars 2",[]],["Cars 3",[]],["Ratatouille",[]],["WALL-E",[]],["Up",[]],["Brave",[]],["Monsters University",[]],["Inside Out",[]],["Inside Out 2",[]],["The Good Dinosaur",[]],["Finding Dory",[]],["Coco",[]],["Onward",[]],["Soul",[]],["Luca",[]],["Turning Red",[]],["Lightyear",[]],["Elemental",[]],["Elio",[]],["Monsters, Inc.",["Monsters Inc"]]]},
+ "Name 8 AFL clubs":{need:8,accept:[["Adelaide Crows",["Adelaide", "Crows"]],["Brisbane Lions",["Brisbane", "Lions"]],["Carlton",["Blues"]],["Collingwood",["Magpies", "Pies"]],["Essendon",["Bombers"]],["Fremantle",["Dockers", "Freo"]],["Geelong",["Cats"]],["Gold Coast Suns",["Suns", "Gold Coast"]],["GWS Giants",["Giants", "GWS", "Greater Western Sydney"]],["Hawthorn",["Hawks"]],["Melbourne",["Demons", "Dees"]],["North Melbourne",["Kangaroos", "North"]],["Port Adelaide",["Power", "Port"]],["Richmond",["Tigers"]],["St Kilda",["Saints"]],["Sydney Swans",["Swans", "Sydney"]],["West Coast Eagles",["Eagles", "West Coast"]],["Western Bulldogs",["Bulldogs", "Doggies", "Footscray"]]]},
+ "Name 6 characters from Bluey":{need:6,accept:[["Bluey",[]],["Bingo",[]],["Muffin",[]],["Socks",[]],["Stripe",[]],["Trixie",[]],["Nana",[]],["Rusty",[]],["Indy",[]],["Chloe",[]],["Mackenzie",[]],["Coco",[]],["Honey",[]],["Snickers",[]],["Judo",[]],["Lucky",[]],["Calypso",[]],["Pom Pom",[]],["Jack",[]],["Winton",[]],["Uncle Rad",[]],["Frisky",[]],["Unicorse",[]],["Bentley",[]],["Lila",[]],["Missy",[]],["Bandit",["Dad"]],["Chilli",["Mum", "Chili"]]]},
+ "Name 5 Japanese car brands":{need:5,accept:[["Toyota",[]],["Honda",[]],["Nissan",[]],["Mazda",[]],["Subaru",[]],["Mitsubishi",[]],["Suzuki",[]],["Lexus",[]],["Isuzu",[]],["Daihatsu",[]],["Infiniti",[]],["Acura",[]],["Datsun",[]]]},
+ "Name 6 characters from The Lion King":{need:6,accept:[["Simba",[]],["Mufasa",[]],["Nala",[]],["Scar",[]],["Timon",[]],["Pumbaa",[]],["Rafiki",[]],["Zazu",[]],["Sarabi",[]],["Shenzi",[]],["Banzai",[]],["Ed",[]],["Kiara",[]],["Kovu",[]],["Zira",[]],["Sarafina",[]],["Kion",[]]]},
+ "Name the 6 wives of Henry VIII":[
+  ["Catherine of Aragon",["Katherine of Aragon", "Aragon"],0,"Wife number one: married 1509, annulled 1533."],
+  ["Anne Boleyn",["Boleyn", "Ann Boleyn"],0,"Mother of Elizabeth I, beheaded in 1536."],
+  ["Jane Seymour",["Seymour"],0,"Gave Henry his son, Edward VI."],
+  ["Anne of Cleves",["Cleves", "Ann of Cleves"],0,"The marriage lasted about six months."],
+  ["Catherine Howard",["Katherine Howard", "Howard"],0,"Beheaded in 1542."],
+  ["Catherine Parr",["Katherine Parr", "Parr"],0,"She outlived him."]],
+ "Name the 6 actors who played James Bond in the official films, up to 2021":[
+  ["Sean Connery",["Connery"],0,"The first, in Dr. No (1962)."],
+  ["George Lazenby",["Lazenby"],0,"Just one film."],
+  ["Roger Moore",["Moore"],0,"Seven films."],
+  ["Timothy Dalton",["Dalton"],0,""],
+  ["Pierce Brosnan",["Brosnan"],0,""],
+  ["Daniel Craig",["Craig"],0,"Last seen in No Time to Die (2021)."]],
+ "Name the 8 US states that start with A or W":[
+  ["Alabama",[],0,""],
+  ["Alaska",[],0,""],
+  ["Arizona",[],0,""],
+  ["Arkansas",[],0,""],
+  ["Washington",[],0,""],
+  ["West Virginia",[],0,""],
+  ["Wisconsin",[],0,""],
+  ["Wyoming",[],0,""]],
+ "Name the New Seven Wonders of the World (chosen in 2007)":[
+  ["Great Wall of China",["Great Wall"],0,""],
+  ["Petra",[],0,""],
+  ["Christ the Redeemer",["Cristo Redentor"],0,""],
+  ["Machu Picchu",[],0,""],
+  ["Chichen Itza",["Chich\u00e9n Itz\u00e1"],0,""],
+  ["Colosseum",["Coliseum", "Roman Colosseum"],0,""],
+  ["Taj Mahal",[],0,""]],
+ "Name the 9 films in the Star Wars Skywalker saga":[
+  ["The Phantom Menace",["Phantom Menace", "Episode 1"],0,""],
+  ["Attack of the Clones",["Episode 2"],0,""],
+  ["Revenge of the Sith",["Episode 3"],0,""],
+  ["A New Hope",["New Hope", "Star Wars", "Episode 4"],0,""],
+  ["The Empire Strikes Back",["Empire Strikes Back", "Episode 5"],0,""],
+  ["Return of the Jedi",["Episode 6"],0,""],
+  ["The Force Awakens",["Force Awakens", "Episode 7"],0,""],
+  ["The Last Jedi",["Last Jedi", "Episode 8"],0,""],
+  ["The Rise of Skywalker",["Rise of Skywalker", "Episode 9"],0,""]],
+ "Name the 8 countries that won the FIFA World Cup, up to 2022":[
+  ["Brazil",[],0,"Five titles."],
+  ["Germany",["West Germany"],0,""],
+  ["Italy",[],0,""],
+  ["Argentina",[],0,"Champions in 2022."],
+  ["France",[],0,""],
+  ["Uruguay",[],0,"The first winner, 1930."],
+  ["England",[],0,"1966."],
+  ["Spain",[],0,"2010."]],
+ "Name the 12 animals of the Chinese zodiac":[
+  ["Rat",["Mouse"],0,""],
+  ["Ox",["Cow", "Buffalo"],0,""],
+  ["Tiger",[],0,""],
+  ["Rabbit",["Hare"],0,""],
+  ["Dragon",[],0,""],
+  ["Snake",[],0,""],
+  ["Horse",[],0,""],
+  ["Goat",["Sheep", "Ram"],0,""],
+  ["Monkey",[],0,""],
+  ["Rooster",["Chicken"],0,""],
+  ["Dog",[],0,""],
+  ["Pig",["Boar"],0,""]],
+ "Name 5 important Australian inventions":{need:5,accept:[["Wi-Fi",["Wifi", "Wireless internet"]],["Black box flight recorder",["Black box", "Flight recorder"]],["Cochlear implant",["Bionic ear", "Cochlear"]],["Refrigerator",["Fridge", "Refrigeration"]],["Pacemaker",["Heart pacemaker"]],["Google Maps",[]],["Hills Hoist",["Rotary clothesline", "Clothesline"]],["Ute",["Utility vehicle"]],["Notepad",["Note pad"]],["Electric drill",["Power drill", "Drill"]],["Polymer banknotes",["Plastic money", "Plastic banknotes", "Polymer notes"]],["Spray-on skin",["Spray on skin"]],["Cervical cancer vaccine",["Gardasil", "HPV vaccine"]],["Wine cask",["Goon bag", "Goon", "Cask wine"]],["Stump-jump plough",["Stump jump plough"]],["Ultrasound",["Ultrasound scanner"]],["Penicillin",[]],["Totalisator",["Tote"]],["Box kite",[]],["Coolgardie safe",[]],["Dual flush toilet",["Dual-flush toilet"]],["Vegemite",[]],["Victa lawnmower",["Lawn mower", "Lawnmower", "Victa"]],["Relenza",["Flu drug"]],["Feature film",["First feature film"]],["Plastic spectacle lenses",["Plastic lenses"]],["Esky",[]],["Zinc cream",[]]]},
+ "Name 5 things invented by Aboriginal Australians":{need:5,accept:[["Boomerang",[]],["Woomera",["Spear thrower", "Spear-thrower"]],["Didgeridoo",["Yidaki", "Didge"]],["Fire-stick farming",["Fire stick farming", "Cultural burning", "Controlled burning"]],["Ground-edge stone axe",["Stone axe", "Axe", "Ground edge axe"]],["Fish traps",["Fish trap", "Eel traps", "Eel trap", "Stone fish traps"]],["Bark canoe",["Canoe"]],["Possum-skin cloak",["Possum skin cloak", "Cloak"]],["Message stick",["Message sticks"]],["Grinding stones",["Seed grinding", "Grindstone", "Bread", "Damper"]],["Spear",[]],["Shield",[]],["Coolamon",[]],["Dilly bag",[]],["Bush medicine",[]]]},
+ "Name 5 of Australia's biggest exports":{need:5,accept:[["Iron ore",["Iron"]],["Coal",[]],["Natural gas",["LNG", "Gas", "Liquefied natural gas"]],["Gold",[]],["Education",["International students", "International education"]],["Beef",["Meat", "Cattle"]],["Wheat",["Grain"]],["Crude oil",["Oil", "Petroleum"]],["Copper",[]],["Aluminium",["Alumina", "Bauxite", "Aluminum"]],["Lithium",[]],["Wool",[]],["Tourism",[]],["Wine",[]],["Barley",[]],["Canola",[]],["Lamb",["Sheep meat", "Mutton"]],["Nickel",[]],["Zinc",[]],["Uranium",[]],["Dairy",["Milk"]],["Sugar",[]],["Cotton",[]]]},
+ "Name 10 cities in China":{need:10,accept:[["Beijing",["Peking"]],["Shanghai",[]],["Guangzhou",["Canton"]],["Shenzhen",[]],["Chongqing",[]],["Tianjin",[]],["Chengdu",[]],["Wuhan",[]],["Xi'an",["Xian"]],["Hangzhou",[]],["Nanjing",["Nanking"]],["Suzhou",[]],["Harbin",[]],["Shenyang",[]],["Qingdao",["Tsingtao"]],["Dalian",[]],["Kunming",[]],["Xiamen",["Amoy"]],["Changsha",[]],["Zhengzhou",[]],["Jinan",[]],["Hefei",[]],["Fuzhou",[]],["Nanning",[]],["Guilin",[]],["Lhasa",[]],["Urumqi",[]],["Lanzhou",[]],["Hong Kong",[]],["Macau",["Macao"]],["Ningbo",[]],["Dongguan",[]],["Foshan",[]],["Shijiazhuang",[]],["Taiyuan",[]],["Hohhot",[]],["Changchun",[]],["Nanchang",[]],["Guiyang",[]],["Haikou",[]],["Sanya",[]],["Xining",[]],["Yinchuan",[]],["Luoyang",[]],["Kaifeng",[]],["Datong",[]],["Wuxi",[]]]},
+ "Name 7 islands in Indonesia":{need:7,accept:[["Java",["Jawa"]],["Sumatra",[]],["Borneo",["Kalimantan"]],["Sulawesi",["Celebes"]],["Bali",[]],["Lombok",[]],["New Guinea",["Papua", "West Papua", "Irian Jaya"]],["Flores",[]],["Timor",["West Timor"]],["Sumbawa",[]],["Komodo",[]],["Madura",[]],["Bangka",[]],["Belitung",["Billiton"]],["Halmahera",[]],["Seram",["Ceram"]],["Buru",[]],["Sumba",[]],["Nias",[]],["Batam",[]],["Bintan",[]],["Ambon",[]],["Ternate",[]],["Rinca",[]],["Gili Islands",["Gili", "Gili Trawangan"]],["Nusa Penida",[]],["Alor",[]],["Wetar",[]],["Siberut",["Mentawai"]],["Biak",[]],["Morotai",[]],["Buton",[]],["Muna",[]],["Tidore",[]],["Banda Islands",["Banda"]],["Nusa Lembongan",["Lembongan"]]]},
+ "Name 5 Vietnamese dishes":{need:5,accept:[["Pho",["Ph\u1edf"]],["Banh mi",["B\u00e1nh m\u00ec"]],["Bun cha",[]],["Fresh spring rolls",["Rice paper rolls", "Goi cuon", "Summer rolls"]],["Fried spring rolls",["Cha gio", "Nem ran", "Spring rolls"]],["Banh xeo",["Vietnamese pancake"]],["Com tam",["Broken rice"]],["Bun bo Hue",[]],["Cao lau",[]],["Mi quang",[]],["Bun rieu",[]],["Banh cuon",[]],["Bun thit nuong",[]],["Ca kho to",["Caramelised fish"]],["Che",[]],["Hot pot",["Lau"]]]},
+ "Name the 5 members of One Direction":[
+  ["Harry Styles",["Harry", "Styles"],0,""],
+  ["Niall Horan",["Niall", "Horan"],0,""],
+  ["Liam Payne",["Liam", "Payne"],0,""],
+  ["Louis Tomlinson",["Louis", "Tomlinson"],0,""],
+  ["Zayn Malik",["Zayn", "Malik"],0,""]],
+ "Name the 5 Kardashian-Jenner sisters":[
+  ["Kourtney",["Kourtney Kardashian", "Courtney"],0,""],
+  ["Kim",["Kim Kardashian"],0,""],
+  ["Khlo\u00e9",["Khloe", "Chloe"],0,""],
+  ["Kendall",["Kendall Jenner"],0,""],
+  ["Kylie",["Kylie Jenner"],0,""]],
+ "Name 10 Disney princesses":{need:10,accept:[["Snow White",[]],["Cinderella",[]],["Belle",[]],["Ariel",[]],["Jasmine",[]],["Pocahontas",[]],["Mulan",[]],["Tiana",[]],["Rapunzel",[]],["Merida",[]],["Moana",[]],["Raya",[]],["Elsa",[]],["Anna",[]],["Aurora",["Sleeping Beauty"]]]},
+ "Name 8 NRL clubs":{need:8,accept:[["Brisbane Broncos",["Broncos"]],["Canberra Raiders",["Raiders"]],["Canterbury-Bankstown Bulldogs",["Bulldogs", "Canterbury"]],["Cronulla Sharks",["Sharks", "Cronulla"]],["Dolphins",["The Dolphins", "Redcliffe Dolphins"]],["Gold Coast Titans",["Titans"]],["Manly Sea Eagles",["Manly", "Sea Eagles"]],["Melbourne Storm",["Storm"]],["Newcastle Knights",["Knights"]],["North Queensland Cowboys",["Cowboys"]],["Parramatta Eels",["Eels", "Parramatta"]],["Penrith Panthers",["Panthers", "Penrith"]],["South Sydney Rabbitohs",["Rabbitohs", "Souths"]],["St George Illawarra Dragons",["Dragons", "St George"]],["Sydney Roosters",["Roosters"]],["New Zealand Warriors",["Warriors"]],["Wests Tigers",["Tigers"]]]},
+ "Name 5 anime series or films":{need:5,accept:[["Naruto",[]],["One Piece",[]],["Pok\u00e9mon",[]],["Attack on Titan",[]],["Death Note",[]],["Demon Slayer",[]],["My Hero Academia",[]],["Sailor Moon",[]],["Jujutsu Kaisen",[]],["Spy x Family",[]],["Fullmetal Alchemist",[]],["Cowboy Bebop",[]],["Neon Genesis Evangelion",[]],["Bleach",[]],["Hunter x Hunter",[]],["One Punch Man",[]],["Chainsaw Man",[]],["Spirited Away",[]],["My Neighbor Totoro",[]],["Princess Mononoke",[]],["Akira",[]],["Your Name",[]],["Howl's Moving Castle",[]],["Frieren",[]],["Solo Leveling",[]],["Haikyuu",[]],["Tokyo Ghoul",[]],["Fairy Tail",[]],["Yu-Gi-Oh",[]],["Digimon",[]],["Doraemon",[]],["Detective Conan",[]],["Astro Boy",[]],["Sword Art Online",[]],["Blue Lock",[]],["Dandadan",[]],["Kiki's Delivery Service",[]],["Ponyo",[]],["Dragon Ball",["Dragon Ball Z", "DBZ"]]]},
+ "Name 5 African foods or dishes":{need:5,accept:[["Jollof rice",["Jollof"]],["Bobotie",[]],["Injera",[]],["Tagine",["Tajine"]],["Couscous",[]],["Biltong",[]],["Bunny chow",[]],["Fufu",[]],["Piri piri chicken",["Peri peri chicken", "Peri-peri", "Piri piri"]],["Shakshuka",[]],["Boerewors",[]],["Ugali",[]],["Suya",[]],["Egusi soup",["Egusi"]],["Falafel",[]],["Ful medames",["Ful"]],["Koshari",["Kushari"]],["Chakalaka",[]],["Pap",["Mealie pap"]],["Doro wat",[]],["Malva pudding",[]],["Samosa",["Sambusa"]],["Nyama choma",[]],["Kenkey",[]],["Plantain",["Fried plantain", "Dodo"]]]},
+ "Name 5 famous sports stars from Africa":{need:5,accept:[["Mohamed Salah",["Salah", "Mo Salah"]],["Didier Drogba",["Drogba"]],["Sadio Man\u00e9",["Mane", "Sadio Mane"]],["Samuel Eto'o",["Eto'o", "Etoo"]],["George Weah",["Weah"]],["Yaya Tour\u00e9",["Yaya Toure"]],["Achraf Hakimi",["Hakimi"]],["Riyad Mahrez",["Mahrez"]],["Victor Osimhen",["Osimhen"]],["Eliud Kipchoge",["Kipchoge"]],["Haile Gebrselassie",["Gebrselassie", "Haile"]],["Caster Semenya",["Semenya"]],["Wayde van Niekerk",["Van Niekerk"]],["Siya Kolisi",["Kolisi"]],["Francis Ngannou",["Ngannou"]],["Kamaru Usman",["Usman"]],["Israel Adesanya",["Adesanya"]],["Hakeem Olajuwon",["Olajuwon"]],["Joel Embiid",["Embiid"]],["Faith Kipyegon",["Kipyegon"]],["David Rudisha",["Rudisha"]],["Kenenisa Bekele",["Bekele"]],["Roger Milla",["Milla"]],["Jay-Jay Okocha",["Okocha"]],["Nwankwo Kanu",["Kanu"]],["Michael Essien",["Essien"]],["Pierre-Emerick Aubameyang",["Aubameyang"]],["Ernie Els",["Els"]],["Gary Player",["Player"]],["Tatjana Smith",["Tatjana Schoenmaker", "Schoenmaker"]]]},
+ "Name 5 foods or drinks from South America":{need:5,accept:[["Empanada",["Empanadas"]],["Ceviche",["Cebiche"]],["Arepa",["Arepas"]],["Feijoada",[]],["Churrasco",[]],["Chimichurri",[]],["Dulce de leche",[]],["P\u00e3o de queijo",["Pao de queijo", "Cheese bread"]],["A\u00e7a\u00ed",["Acai", "Acai bowl"]],["Brigadeiro",[]],["Asado",[]],["Alfajores",["Alfajor"]],["Pisco sour",["Pisco"]],["Caipirinha",[]],["Lomo saltado",[]],["Chorip\u00e1n",["Choripan"]],["Mate",["Yerba mate"]],["Coxinha",[]],["Teque\u00f1os",["Tequenos"]],["Guinea pig",["Cuy"]],["Milanesa",[]],["Quinoa",[]],["Churros",["Churro"]]]},
+ "Name the 10 cities that hosted the Summer Olympics from 1988 to 2024":[
+  ["Seoul",[],0,"1988"],
+  ["Barcelona",[],0,"1992"],
+  ["Atlanta",[],0,"1996"],
+  ["Sydney",[],0,"2000"],
+  ["Athens",[],0,"2004"],
+  ["Beijing",[],0,"2008"],
+  ["London",[],0,"2012"],
+  ["Rio de Janeiro",["Rio"],0,"2016"],
+  ["Tokyo",[],0,"2020, held in 2021"],
+  ["Paris",[],0,"2024"]],
+ "Name Taylor Swift's 12 studio albums, up to 2025":[
+  ["Taylor Swift",["Debut", "Self-titled"],0,"2006"],
+  ["Fearless",[],0,"2008"],
+  ["Speak Now",[],0,"2010"],
+  ["Red",[],0,"2012"],
+  ["1989",["Nineteen Eighty-Nine"],0,"2014"],
+  ["Reputation",[],0,"2017"],
+  ["Lover",[],0,"2019"],
+  ["Folklore",[],0,"2020"],
+  ["Evermore",[],0,"2020"],
+  ["Midnights",[],0,"2022"],
+  ["The Tortured Poets Department",["Tortured Poets Department", "TTPD"],0,"2024"],
+  ["The Life of a Showgirl",["Life of a Showgirl", "Showgirl"],0,"2025"]],
+ "Name Australia's 5 oldest state capital cities":[
+  ["Sydney",[],0,"Founded 1788."],
+  ["Hobart",[],0,"1804."],
+  ["Brisbane",[],0,"1825."],
+  ["Perth",[],0,"1829."],
+  ["Melbourne",[],0,"1835. Adelaide came next, in 1836."]],
+ "Name the 6 Infinity Stones from the Marvel movies":[
+  ["Space Stone",["Space", "Tesseract"],0,""],
+  ["Mind Stone",["Mind"],0,""],
+  ["Reality Stone",["Reality", "Aether"],0,""],
+  ["Power Stone",["Power"],0,""],
+  ["Time Stone",["Time"],0,""],
+  ["Soul Stone",["Soul"],0,""]],
+ "Name Santa's 8 reindeer (not counting Rudolph)":[
+  ["Dasher",[],0,""],
+  ["Dancer",[],0,""],
+  ["Prancer",[],0,""],
+  ["Vixen",[],0,""],
+  ["Comet",[],0,""],
+  ["Cupid",[],0,""],
+  ["Donner",["Donder"],0,""],
+  ["Blitzen",[],0,""]],
+ "Name the 7 deadly sins":[
+  ["Pride",[],0,""],
+  ["Greed",["Avarice"],0,""],
+  ["Lust",[],0,""],
+  ["Envy",["Jealousy"],0,""],
+  ["Gluttony",[],0,""],
+  ["Wrath",["Anger"],0,""],
+  ["Sloth",["Laziness"],0,""]],
+ "Name the 4 members of ABBA":[
+  ["Agnetha F\u00e4ltskog",["Agnetha", "Agnetha Faltskog"],0,""],
+  ["Bj\u00f6rn Ulvaeus",["Bjorn", "Bj\u00f6rn"],0,""],
+  ["Benny Andersson",["Benny"],0,""],
+  ["Anni-Frid Lyngstad",["Frida", "Anni-Frid", "Annifrid"],0,""]],
+ "Name the 6 actors who starred in Friends":[
+  ["Jennifer Aniston",["Aniston", "Jennifer"],0,""],
+  ["Courteney Cox",["Courtney Cox", "Cox", "Courteney"],0,""],
+  ["Lisa Kudrow",["Kudrow"],0,""],
+  ["Matt LeBlanc",["LeBlanc", "Matt Le Blanc"],0,""],
+  ["Matthew Perry",["Perry"],0,""],
+  ["David Schwimmer",["Schwimmer"],0,""]],
+ "Name the 6 suspects in the board game Cluedo":[
+  ["Miss Scarlett",["Scarlett", "Miss Scarlet", "Scarlet"],0,""],
+  ["Colonel Mustard",["Mustard"],0,""],
+  ["Mrs White",["White"],0,""],
+  ["Reverend Green",["Green", "Mr Green", "Rev Green"],0,""],
+  ["Mrs Peacock",["Peacock"],0,""],
+  ["Professor Plum",["Plum"],0,""]],
+ "Name the 4 original Wiggles":[
+  ["Anthony Field",["Anthony", "Blue Wiggle"],0,""],
+  ["Murray Cook",["Murray", "Red Wiggle"],0,""],
+  ["Jeff Fatt",["Jeff", "Purple Wiggle"],0,""],
+  ["Greg Page",["Greg", "Yellow Wiggle"],0,""]],
+ "Name 5 famous singers or musicians from Africa":{need:5,accept:[["Burna Boy",[]],["Wizkid",[]],["Tems",[]],["Davido",[]],["Tyla",[]],["Rema",[]],["Asake",[]],["Ayra Starr",[]],["Miriam Makeba",["Makeba"]],["Fela Kuti",["Fela"]],["Youssou N'Dour",["Youssou Ndour"]],["Ang\u00e9lique Kidjo",["Angelique Kidjo", "Kidjo"]],["Ladysmith Black Mambazo",[]],["Master KG",[]],["Black Coffee",[]],["Hugh Masekela",["Masekela"]],["Salif Keita",[]],["Ali Farka Tour\u00e9",["Ali Farka Toure"]],["Brenda Fassie",[]],["Yemi Alade",[]],["Diamond Platnumz",[]],["Amaarae",[]],["Oumou Sangar\u00e9",["Oumou Sangare"]],["Johnny Clegg",[]],["Sade",[]],["Akon",[]],["Dave Matthews",[]]]},
+ "Name 5 famous singers from South America":{need:5,accept:[["Shakira",[]],["Karol G",[]],["J Balvin",["J. Balvin"]],["Maluma",[]],["Anitta",[]],["Carlos Vives",[]],["Juanes",[]],["Sebasti\u00e1n Yatra",["Sebastian Yatra"]],["Nicki Nicole",[]],["Bizarrap",[]],["Tini",[]],["Paulo Londra",[]],["Feid",[]],["Camilo",[]],["Gilberto Gil",[]],["Caetano Veloso",[]],["Sergio Mendes",[]],["Astrud Gilberto",[]],["Jo\u00e3o Gilberto",["Joao Gilberto"]],["Tom Jobim",["Antonio Carlos Jobim", "Jobim"]],["Carlos Gardel",["Gardel"]],["Mercedes Sosa",[]],["Emilia",["Emilia Mernes"]],["Duki",[]],["Mar\u00eda Becerra",["Maria Becerra"]],["Ivete Sangalo",[]],["Pabllo Vittar",[]],["Luan Santana",[]],["Soda Stereo",[]],["Gustavo Cerati",["Cerati"]]]},
+ "Name 5 dances or music styles from South America":{need:5,accept:[["Tango",[]],["Samba",[]],["Bossa nova",[]],["Cumbia",[]],["Lambada",[]],["Forr\u00f3",["Forro"]],["Vallenato",[]],["Capoeira",[]],["Milonga",[]],["Cueca",[]],["Marinera",[]],["Ax\u00e9",["Axe"]],["Baile funk",["Funk carioca", "Brazilian funk"]],["Joropo",[]],["Candombe",[]],["Chamam\u00e9",["Chamame"]],["Sertanejo",[]],["Frevo",[]],["Salsa choke",[]],["Champeta",[]]]},
+ "Name the 12 countries that hosted the FIFA World Cup from 1982 to 2022":[
+  ["Spain",[],0,"1982"],
+  ["Mexico",[],0,"1986"],
+  ["Italy",[],0,"1990"],
+  ["United States",["USA", "US", "America"],0,"1994"],
+  ["France",[],0,"1998"],
+  ["South Korea",["Korea"],0,"2002, shared"],
+  ["Japan",[],0,"2002, shared"],
+  ["Germany",[],0,"2006"],
+  ["South Africa",[],0,"2010"],
+  ["Brazil",[],0,"2014"],
+  ["Russia",[],0,"2018"],
+  ["Qatar",[],0,"2022"]],
+ "Name the top 5 songs in triple j's Hottest 100 of Australian Songs (2025)":[
+  ["Never Tear Us Apart",["INXS"],0,"Number one: INXS, 1987."],
+  ["The Nosebleed Section",["Nosebleed Section", "Hilltop Hoods"],0,"Hilltop Hoods, 2003."],
+  ["Untouched",["The Veronicas", "Veronicas"],0,"The Veronicas, 2007."],
+  ["Scar",["Missy Higgins"],0,"Missy Higgins, 2004."],
+  ["Don't Dream It's Over",["Dont Dream Its Over", "Crowded House"],0,"Crowded House, 1986."]],
+ "Name 5 of the Philippines' biggest exports":{need:5,accept:[["Electronics",["Electronic products", "Semiconductors", "Integrated circuits", "Microchips", "Computer chips", "Chips"]],["Machinery",["Machines"]],["Copper",["Copper cathodes"]],["Nickel",["Nickel ore"]],["Coconut oil",["Coconut", "Coconuts", "Copra", "Desiccated coconut"]],["Bananas",["Banana"]],["Pineapples",["Pineapple"]],["Gold",[]],["Garments",["Clothing", "Clothes", "Apparel"]],["Wiring sets",["Ignition wiring", "Wiring", "Wire harnesses"]],["Tuna",["Fish", "Canned tuna"]],["Seaweed",["Carrageenan"]],["Sugar",[]],["Dried mangoes",["Mangoes", "Mango"]],["Abaca",["Manila hemp"]],["Business process outsourcing",["BPO", "Call centres", "Call centers", "Outsourcing"]],["Furniture",[]],["Solar panels",["Solar cells"]]]},
+ "Name the 5 Backstreet Boys":[
+  ["AJ McLean",["AJ", "A.J."],0,""],
+  ["Howie Dorough",["Howie", "Howie D"],0,""],
+  ["Nick Carter",["Nick"],0,""],
+  ["Kevin Richardson",["Kevin"],0,""],
+  ["Brian Littrell",["Brian"],0,""]],
+ "Name the 6 original weapons in the board game Cluedo":[
+  ["Candlestick",[],0,""],
+  ["Dagger",["Knife"],0,""],
+  ["Lead pipe",["Lead piping", "Pipe"],0,""],
+  ["Revolver",["Gun", "Pistol"],0,""],
+  ["Rope",[],0,""],
+  ["Spanner",["Wrench"],0,""]],
+ "Name all 7 Weasley children in Harry Potter":[
+  ["Bill",[],0,""],
+  ["Charlie",[],0,""],
+  ["Percy",[],0,""],
+  ["Fred",[],0,""],
+  ["George",[],0,""],
+  ["Ron",["Ronald"],0,""],
+  ["Ginny",["Ginevra"],0,""]]
+};
+
+
+const TEAM_COLORS=["var(--t0)","var(--t1)","var(--t2)","var(--t3)"];
+const TEAM_NAMES=["Fools","Nerds"];
+
+/* ===== DIFFICULTY =====
+   Every question has a difficulty from 1 (easiest) to 5 (hardest); the list below is sorted easy to hard.
+   Difficulty 1-3 = easy (tier 1): used in every round except the last 2, 10 points per answer.
+   Difficulty 4-5 = very hard (tier 3): used in the LAST 2 ROUNDS only, DOUBLE points (20 per answer). */
+const TIER_POINTS={1:10,3:20};
+const HARD_ROUNDS=2;
+function roundTier(){ const tr=Math.max(1,state.totalRounds||6); return (state.round||0)>=Math.max(1,tr-HARD_ROUNDS)?3:1; }
+function qTier(q){ return (q&&q.tier)||roundTier(); }
+function qCount(q){ const d=DEMO[q.text]; return d?(d.need||d.length):countFrom(q.text); }
+const DEFAULT_QS=[
+ {hint:"Oceans",diff:1,tier:1,text:"Name the 5 oceans of the world"},
+ {hint:"Rings",diff:1,tier:1,text:"Name the 5 colours of the Olympic rings"},
+ {hint:"Aussie",diff:1,tier:1,text:"Name the 6 states of Australia"},
+ {hint:"Friends",diff:1,tier:1,text:"Name the 6 main characters in the TV show Friends"},
+ {hint:"Planets",diff:1,tier:1,text:"Name the 8 planets of our solar system"},
+ {hint:"Marsupial",diff:1,tier:1,text:"Name 6 Australian marsupials"},
+ {hint:"Hemsworth",diff:1,tier:1,text:"Name the 3 Hemsworth brothers"},
+ {hint:"Footy",diff:1,tier:1,text:"Name the 4 main types of football played in Australia"},
+ {hint:"PMs",diff:1,tier:1,text:"Name 5 Australian prime ministers"},
+ {hint:"Footballers",diff:1,tier:1,text:"Name 5 famous footballers from Brazil"},
+ {hint:"Amazon",diff:1,tier:1,text:"Name 6 animals that live in the Amazon rainforest"},
+ {hint:"Beatles",diff:1,tier:1,text:"Name the 4 Beatles"},
+ {hint:"Simpsons",diff:1,tier:1,text:"Name the 5 members of the Simpson family"},
+ {hint:"Maccas",diff:1,tier:1,text:"Name 8 things you can order at McDonald's"},
+ {hint:"Lakes",diff:2,tier:1,text:"Name the 5 Great Lakes of North America"},
+ {hint:"Spice",diff:2,tier:1,text:"Name the 5 Spice Girls (nickname or real name)"},
+ {hint:"Avengers",diff:2,tier:1,text:"Name the 6 heroes who team up in The Avengers movie (2012)"},
+ {hint:"Dwarfs",diff:2,tier:1,text:"Name the 7 dwarfs in Disney's Snow White (1937)"},
+ {hint:"Potter",diff:2,tier:1,text:"Name the 7 Harry Potter books"},
+ {hint:"AussiePM",diff:2,tier:1,text:"Name every Australian prime minister from 2000 to 2025"},
+ {hint:"Zodiac",diff:2,tier:1,text:"Name the 12 signs of the Western zodiac"},
+ {hint:"Islands",diff:2,tier:1,text:"Name 5 islands that are part of Australia"},
+ {hint:"K-pop",diff:2,tier:1,text:"Name 5 K-pop groups that have had international hits"},
+ {hint:"Curry",diff:2,tier:1,text:"Name 5 types of Thai curry"},
+ {hint:"India",diff:2,tier:1,text:"Name 10 cities in India"},
+ {hint:"Vietnam",diff:2,tier:1,text:"Name the 3 countries that border Vietnam"},
+ {hint:"Safari",diff:2,tier:1,text:"Name the Big Five safari animals"},
+ {hint:"Hogwarts",diff:2,tier:1,text:"Name the 4 Hogwarts houses"},
+ {hint:"Turtles",diff:2,tier:1,text:"Name the 4 Teenage Mutant Ninja Turtles"},
+ {hint:"Seinfeld",diff:2,tier:1,text:"Name the 4 main characters in Seinfeld"},
+ {hint:"Tennis",diff:2,tier:1,text:"Name the 4 tennis Grand Slam tournaments"},
+ {hint:"Pixar",diff:2,tier:1,text:"Name 8 Pixar movies"},
+ {hint:"AFL",diff:2,tier:1,text:"Name 8 AFL clubs"},
+ {hint:"Bluey",diff:2,tier:1,text:"Name 6 characters from Bluey"},
+ {hint:"Cars",diff:2,tier:1,text:"Name 5 Japanese car brands"},
+ {hint:"LionKing",diff:2,tier:1,text:"Name 6 characters from The Lion King"},
+ {hint:"Tudors",diff:3,tier:1,text:"Name the 6 wives of Henry VIII"},
+ {hint:"Bond",diff:3,tier:1,text:"Name the 6 actors who played James Bond in the official films, up to 2021"},
+ {hint:"States",diff:3,tier:1,text:"Name the 8 US states that start with A or W"},
+ {hint:"Wonders",diff:3,tier:1,text:"Name the New Seven Wonders of the World (chosen in 2007)"},
+ {hint:"StarWars",diff:3,tier:1,text:"Name the 9 films in the Star Wars Skywalker saga"},
+ {hint:"WorldCup",diff:3,tier:1,text:"Name the 8 countries that won the FIFA World Cup, up to 2022"},
+ {hint:"Chinese",diff:3,tier:1,text:"Name the 12 animals of the Chinese zodiac"},
+ {hint:"Invented",diff:3,tier:1,text:"Name 5 important Australian inventions"},
+ {hint:"First",diff:3,tier:1,text:"Name 5 things invented by Aboriginal Australians"},
+ {hint:"Exports",diff:3,tier:1,text:"Name 5 of Australia's biggest exports"},
+ {hint:"China",diff:3,tier:1,text:"Name 10 cities in China"},
+ {hint:"Indonesia",diff:3,tier:1,text:"Name 7 islands in Indonesia"},
+ {hint:"Pho",diff:3,tier:1,text:"Name 5 Vietnamese dishes"},
+ {hint:"1D",diff:3,tier:1,text:"Name the 5 members of One Direction"},
+ {hint:"Kardashian",diff:3,tier:1,text:"Name the 5 Kardashian-Jenner sisters"},
+ {hint:"Princess",diff:3,tier:1,text:"Name 10 Disney princesses"},
+ {hint:"NRL",diff:3,tier:1,text:"Name 8 NRL clubs"},
+ {hint:"Anime",diff:3,tier:1,text:"Name 5 anime series or films"},
+ {hint:"AfroFood",diff:3,tier:1,text:"Name 5 African foods or dishes"},
+ {hint:"AfroSport",diff:3,tier:1,text:"Name 5 famous sports stars from Africa"},
+ {hint:"LatinFood",diff:3,tier:1,text:"Name 5 foods or drinks from South America"},
+ {hint:"Olympics",diff:4,tier:3,text:"Name the 10 cities that hosted the Summer Olympics from 1988 to 2024"},
+ {hint:"Swift",diff:4,tier:3,text:"Name Taylor Swift's 12 studio albums, up to 2025"},
+ {hint:"Oldest",diff:4,tier:3,text:"Name Australia's 5 oldest state capital cities"},
+ {hint:"Infinity",diff:4,tier:3,text:"Name the 6 Infinity Stones from the Marvel movies"},
+ {hint:"Reindeer",diff:4,tier:3,text:"Name Santa's 8 reindeer (not counting Rudolph)"},
+ {hint:"Sins",diff:4,tier:3,text:"Name the 7 deadly sins"},
+ {hint:"ABBA",diff:4,tier:3,text:"Name the 4 members of ABBA"},
+ {hint:"Cast",diff:4,tier:3,text:"Name the 6 actors who starred in Friends"},
+ {hint:"Cluedo",diff:4,tier:3,text:"Name the 6 suspects in the board game Cluedo"},
+ {hint:"Wiggles",diff:4,tier:3,text:"Name the 4 original Wiggles"},
+ {hint:"AfroMusic",diff:4,tier:3,text:"Name 5 famous singers or musicians from Africa"},
+ {hint:"LatinPop",diff:4,tier:3,text:"Name 5 famous singers from South America"},
+ {hint:"Dance",diff:4,tier:3,text:"Name 5 dances or music styles from South America"},
+ {hint:"Hosts",diff:5,tier:3,text:"Name the 12 countries that hosted the FIFA World Cup from 1982 to 2022"},
+ {hint:"triple j",diff:5,tier:3,text:"Name the top 5 songs in triple j's Hottest 100 of Australian Songs (2025)"},
+ {hint:"Philippines",diff:5,tier:3,text:"Name 5 of the Philippines' biggest exports"},
+ {hint:"BSB",diff:5,tier:3,text:"Name the 5 Backstreet Boys"},
+ {hint:"Weapons",diff:5,tier:3,text:"Name the 6 original weapons in the board game Cluedo"},
+ {hint:"Weasley",diff:5,tier:3,text:"Name all 7 Weasley children in Harry Potter"}
+];
+const asItem=q=>typeof q==="string"?{hint:"Mystery",text:q}:q;
+const MAX_STRIKES=2;
+const ROUND_SECONDS=90; // 90 seconds to find the answers each round
+
+let state = (window.claude && window.claude.hot && window.claude.hot.data && window.claude.hot.data.phase) ? window.claude.hot.data : freshState();
+function freshState(){
+  return {phase:"rules",
+    teams:TEAM_NAMES.slice(0,3).map(name=>({name,score:0})),
+    bank:DEFAULT_QS.map(q=>({...q})), item:null, roundsEach:3,
+    round:0, totalRounds:0, chooser:0, q:null, board:null, error:null,
+    control:0, strikes:[], claimed:[], log:[], lastResult:null, roundPts:[]};
+}
+if(state.phase==="intro") state.phase="rules";
+state.bank=(state.bank||[]).map(asItem);
+if(["intro","rules","setup"].includes(state.phase)){ DEFAULT_QS.forEach(q=>{ if(!state.bank.some(b=>b.text===q.text)) state.bank.push({...q}); }); }
+{const OLD={Kookaburras:"Pluckenbergs",Wombats:"Bez-offs",Galahs:"Muskonites"}; (state.teams||[]).forEach(t=>{if(OLD[t.name]) t.name=OLD[t.name];});}
+try{ window.claude?.hot?.snapshot?.(()=>state); }catch(e){}
+
+const SFX={ctx:null,master:null,hum:null,humFile:null};
+let sample=null, sampleChecked=false, ctl=null, rafId=0, caught=false, gvBroken=false, typing=null, voicePick=null;
+const app=document.getElementById("app");
+(()=>{const vb=document.getElementById("voiceBtn");
+  if(!canSpeakEarly()){vb.hidden=true;return;}
+  const sync=()=>{vb.textContent=state.voiceOff?"Voice off":"Voice on";vb.setAttribute("aria-pressed",String(!state.voiceOff));};
+  vb.onclick=()=>{state.voiceOff=!state.voiceOff; if(state.voiceOff){try{speechSynthesis.cancel();}catch(e){}} sync();}; sync();})();
+(()=>{const b=document.getElementById("sfxBtn");
+  const sync=()=>{b.textContent=state.sfxOff?"Sound off":"Sound on";b.setAttribute("aria-pressed",String(!state.sfxOff));};
+  b.onclick=()=>{state.sfxOff=!state.sfxOff; if(state.sfxOff) humStop(); else if(state.phase==="choose") humStart(); bgMusic(state.phase==="play"); sync();}; sync();})();
+function canSpeakEarly(){ return "speechSynthesis" in window; }
+document.getElementById("settingsBtn").onclick=()=>{ if(state.phase==="setup") return; if(state.phase==="play"&&state.deadline){ state.pausedLeft=timeLeft(); } state.returnTo=state.phase==="consult"?"choose":state.phase; if(state.phase==="consult"){ ctl?.abort(); if(state.item&&!state.bank.includes(state.item)) state.bank.unshift(state.item); } state.phase="setup"; render(); };
+// Background art: set --bg-image in the stylesheet (or here) to the AI oracle gif
+(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue("--bg-image").trim(); if(v&&v!=="none") document.getElementById("bg").classList.add("has-image");})();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/^the\s+/,"").replace(/[^a-z0-9]/g,"");
+
+(async()=>{
+  try{ sample = window.claude ? await window.claude.use("sample") : null; }catch(e){ sample=null; }
+  sampleChecked=true; render();
+})();
+
+function drawOffer(avoid){
+  avoid=avoid||[];
+  const t=roundTier(), fit=q=>!q.tier||q.tier===t;
+  const fresh=shuffle(state.bank.filter(q=>fit(q)&&!avoid.includes(q.text))).concat(shuffle(state.bank.filter(q=>!fit(q)&&!avoid.includes(q.text))));
+  const rest=shuffle(state.bank.filter(q=>avoid.includes(q.text)));
+  state.offer=fresh.concat(rest).slice(0,8).map(q=>q.text);
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function countFrom(text){const m=String(text).match(/\b(\d{1,2})\b/);return Math.min(12,Math.max(3,m?+m[1]:5));}
+
+/* ---------- Guess matching ---------- */
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let prev=Array.from({length:n+1},(_,j)=>j);for(let i=1;i<=m;i++){const cur=[i];for(let j=1;j<=n;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[n];}
+function close(g,t){
+  if(!g||!t) return false;
+  if(g===t) return true;
+  if(g.length>=4 && t.length>=4 && (t.includes(g)||g.includes(t))) return true;
+  const tol=t.length<=4?0:t.length<=7?1:2;
+  return lev(g,t)<=tol;
+}
+function matchGuess(guess){
+  const g=norm(guess); if(!g) return -1;
+  if(state.openQ&&state.accept){
+    let ai=state.accept.findIndex(([n,al])=>[n,...al].map(norm).includes(g));
+    // stricter fuzzy match for open lists: a short guess must cover most of the answer ("chris" is not "Christmas Island")
+    const near=(g,t)=>{ if(!g||!t) return false; if(g===t) return true;
+      if(g.length>=4&&t.length>=4&&((t.includes(g)&&g.length>=t.length*0.6)||g.includes(t))) return true;
+      return lev(g,t)<=(t.length<=4?0:t.length<=7?1:2); };
+    if(ai<0) ai=state.accept.findIndex(([n,al])=>[n,...al].some(x=>near(g,norm(x))));
+    if(ai<0) return -1;
+    if(state.acceptUsed[ai]!=null) return state.acceptUsed[ai];
+    const k=state.board.findIndex((b,i)=>!b.name&&state.claimed[i]===null); if(k<0) return -1;
+    state.board[k]={...state.board[k],name:state.accept[ai][0],aliases:state.accept[ai][1]}; state.acceptUsed[ai]=k; return k;
+  }
+  const exact=[], fuzzy=[];
+  state.board.forEach((a,i)=>{ const keys=[a.name,...(a.aliases||[])].map(norm);
+    if(keys.includes(g)) exact.push(i); else if(keys.some(x=>close(g,x))) fuzzy.push(i); });
+  const pick=list=>{ const open=list.find(i=>!state.claimed||state.claimed[i]===null); return open!==undefined?open:list[0]; };
+  if(exact.length) return pick(exact);
+  if(fuzzy.length) return pick(fuzzy);
+  return -1;
+}
+
+/* ---------- The AI oracle ---------- */
+function prompt(q,n){
+  const today=new Date().toLocaleDateString("en-AU",{day:"numeric",month:"long",year:"numeric"});
+  return `You are "The AI oracle" in a party game played like Family Feud. Teams try to guess the answers on YOUR board, so give your own honest best judgement from what you know (today is ${today}). Commit to one ranking — don't hedge.
+
+Question: "${q}"
+
+Give exactly ${n} answers ranked from #1 (top) down. For each:
+- "name": short (max 4 words)
+- "aliases": up to 4 other ways players might say it (nicknames, short forms, other spellings, e.g. "USA", "United States", "America")
+- "points": how strongly you back this answer; integers that go down the list and add up to 100
+- "reason": a punchy one-sentence reason (max 18 words) read aloud when it's revealed
+Keep it family-friendly.
+
+Reply with only JSON in this shape:
+{"answers":[{"name":"...","aliases":["..."],"points":38,"reason":"..."}]}`;
+}
+
+/* Ask the AI oracle (only for questions you add yourself, and only inside Claude). */
+async function askBoard(q,n,signal){
+  const d=await sample.json(prompt(q,n),{cache:false,signal});
+  let ans=(d&&Array.isArray(d.answers)?d.answers:[]).filter(a=>a&&a.name).slice(0,n).map(a=>({
+    name:String(a.name), reason:String(a.reason||""),
+    aliases:Array.isArray(a.aliases)?a.aliases.map(String).slice(0,6):[],
+    points:Math.max(1,Math.round(Number(a.points)||0))}));
+  if(ans.length<3) throw {code:"invalid_json"};
+  if(ans.some(a=>!a.points||a.points<1)) ans.forEach((a,i)=>a.points=(ans.length-i)*10);
+  ans.sort((a,b)=>b.points-a.points);
+  return ans;
+}
+async function consult(){
+  state.phase="consult"; state.error=null; state.board=null;
+  if(!typing||typing.q!==state.q) revealQuestion();
+  render();
+  const pts=TIER_POINTS[qTier(state.item)];
+  const known=DEMO[state.q];
+  state.openQ=false; state.accept=null;
+  if(known&&known.need){ // "name any N" question: any accepted answer fills the next slot
+    state.openQ=true; state.accept=known.accept; state.acceptUsed={};
+    state.board=Array.from({length:known.need},()=>({name:"",aliases:[],points:pts,reason:""}));
+    state.demo=true; setTimeout(()=>{if(state.phase==="consult"&&state.demo)startPlay();},1600); return; }
+  if(known){ state.demo=true; state.board=known.map(([name,aliases,points,reason])=>({name,aliases,points:pts,reason})); setTimeout(()=>{if(state.phase==="consult"&&state.demo)startPlay();},1600); return; }
+  if(!sample){
+    const d=DEMO[state.q];
+    if(d){ state.demo=true; state.board=d.map(([name,aliases,points,reason])=>({name,aliases,points,reason})); setTimeout(()=>{if(state.phase==="consult"&&state.demo)startPlay();},1600); return; }
+    state.demo=false;
+    state.error="The AI oracle is offline, so it can only answer the built-in topics. Pick one of the built-in topics instead.";
+    render(); return;
+  }
+  state.demo=false;
+  const n=countFrom(state.q);
+  ctl=new AbortController();
+  try{
+    state.board=(await askBoard(state.q,n,ctl.signal)).map(a=>({...a,points:pts})); startPlay();
+  }catch(e){
+    if(e&&e.code==="cancelled") return;
+    if(e&&e.code==="not_granted"){ sample=null; state.error="Claude access wasn't allowed, so the AI oracle can't answer. Reload the page and allow it to play."; }
+    else if(e&&e.code==="rate_limited") state.error="The AI oracle is getting too many questions right now. Wait a minute and try again.";
+    else state.error="The AI oracle didn't give a usable answer. Try asking again.";
+    render();
+  }
+}
+
+function modePill(){
+  const el=document.getElementById("modePill"); el.hidden=true;
+  if(sample){el.className="pill live";el.innerHTML='<span class="dot"></span>AI oracle online';}
+  else{el.className="pill off";el.innerHTML='<span class="dot"></span>'+(sampleChecked?'Demo mode':'Connecting…');}
+}
+
+function scoreBar(showTurn){
+  return `<div class="scorebar">${state.teams.map((t,i)=>{
+    const out=showTurn&&state.strikes[i]>=MAX_STRIKES, active=showTurn&&state.control===i&&!out;
+    return `<div class="team ${active?"active":""} ${out?"out":""}" style="--c:${TEAM_COLORS[i]}">
+      <div class="nm"><span>${esc(t.name)}</span>${active?'<span class="turn">Guessing</span>':out?'<span class="turn" style="color:var(--muted)">Out</span>':""}</div>
+      <div class="pts">${t.score}</div>
+      ${showTurn?`<div class="strikes" aria-label="${state.strikes[i]} of ${MAX_STRIKES} misses">${Array.from({length:MAX_STRIKES},(_,k)=>`<span class="strike ${k<state.strikes[i]?"on":""}">✕</span>`).join("")}</div>`:""}
+    </div>`}).join("")}</div>`;
+}
+
+function render(){
+  stopBalls();
+  if(state.phase!=="choose") humStop();
+  setTimeout(()=>{const r=document.getElementById("replay"); if(r) r.onclick=()=>{ if(state.voiceOff){state.voiceOff=false;} speak(state.q); };},0);
+  gameVideo(["consult","play","roundEnd"].includes(state.phase));
+  if(state.phase!=="fmPlay") bgMusic(state.phase==="play");
+  if(!["consult","play","fmPlay"].includes(state.phase) && canSpeak()){ try{speechSynthesis.cancel();}catch(e){} }
+  modePill();
+  document.getElementById("settingsBtn").hidden=true;
+  ({intro:renderIntro,fmPlay:renderFmPlay,rules:renderRules,setup:renderSetup,choose:renderChoose,consult:renderConsult,play:renderPlay,roundEnd:renderRoundEnd,final:renderFinal})[state.phase]();
+}
+
+function startGame(){
+  state.teams.forEach(t=>t.score=0);
+  state.round=0; state.totalRounds=state.teams.length*state.roundsEach; state.chooser=0;
+  state.bank=state.bank.length?state.bank:DEFAULT_QS.map(q=>({...q}));
+  drawOffer(); state.refreshUsed=false; state.peek=false; state.phase="choose"; render();
+}
+
+/* ---------- SOUND ---------- */
+function ac(){
+  if(state.sfxOff) return null;
+  try{
+    if(!SFX.ctx){const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return null;
+      SFX.ctx=new AC(); SFX.master=SFX.ctx.createGain(); SFX.master.gain.value=.9; SFX.master.connect(SFX.ctx.destination);}
+    if(SFX.ctx.state==="suspended") SFX.ctx.resume();
+    return SFX.ctx;
+  }catch(e){return null;}
+}
+function fileSound(name,loop){
+  const f=SOUND_FILES[name]; if(!f||state.sfxOff) return null;
+  try{const a=new Audio(f); a.loop=!!loop; a.volume=loop?.5:.9; const p=a.play(); if(p&&p.catch)p.catch(()=>{}); return a;}catch(e){return null;}
+}
+function tone(f,t,dur,{type="sine",vol=.2,attack=.01,to=null,dest=null}={}){
+  const c=SFX.ctx, o=c.createOscillator(), g=c.createGain();
+  o.type=type; o.frequency.setValueAtTime(f,t); if(to) o.frequency.exponentialRampToValueAtTime(to,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+attack); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g); g.connect(dest||SFX.master); o.start(t); o.stop(t+dur+.05);
+}
+function noise(t,dur,{vol=.2,from=400,to=3000,q=1.2}={}){
+  const c=SFX.ctx, n=Math.floor(c.sampleRate*dur), buf=c.createBuffer(1,n,c.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<n;i++) d[i]=Math.random()*2-1;
+  const src=c.createBufferSource(), bp=c.createBiquadFilter(), g=c.createGain();
+  src.buffer=buf; bp.type="bandpass"; bp.Q.value=q; bp.frequency.setValueAtTime(from,t); bp.frequency.exponentialRampToValueAtTime(to,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+dur*.4); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  src.connect(bp); bp.connect(g); g.connect(SFX.master); src.start(t); src.stop(t+dur);
+}
+const sfx={
+  catch(){ if(fileSound("catch")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [1318.5,1760,2217.5,2637].forEach((f,i)=>{tone(f,t+i*.07,1.4,{vol:.12});tone(f*2,t+i*.07,.6,{vol:.03,type:"triangle"});});
+    noise(t,.5,{vol:.05,from:3000,to:9000,q:.7}); },
+  summon(){ if(fileSound("summon")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    noise(t,.9,{vol:.18,from:300,to:4000,q:1}); [880,1175,1568].forEach((f,i)=>tone(f,t+.35+i*.08,.9,{vol:.06})); },
+  right(){ if(fileSound("right")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [784,1046.5,1568].forEach((f,i)=>{tone(f,t+i*.09,.7,{vol:.16,type:"triangle"});tone(f*2,t+i*.09,.35,{vol:.04});});
+    [2637,3136].forEach((f,i)=>tone(f,t+.3+i*.06,.5,{vol:.04})); },
+  wrong(){ if(fileSound("wrong")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=900; lp.connect(SFX.master);
+    tone(116,t,.75,{type:"sawtooth",vol:.22,attack:.005,to:92,dest:lp}); tone(123,t,.75,{type:"sawtooth",vol:.18,attack:.005,to:97,dest:lp});
+    tone(58,t,.6,{type:"square",vol:.08,attack:.005,dest:lp}); },
+  takeover(){ if(fileSound("takeover")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [523.25,659.25,783.99].forEach((f,i)=>tone(f,t+i*.06,.4,{vol:.12,type:"triangle"})); },
+  blip(){ const c=ac(); if(!c) return; tone(660,c.currentTime,.18,{vol:.08}); },
+  cleared(){ if(fileSound("cleared")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [523.25,659.25,783.99,1046.5,1318.5].forEach((f,i)=>{tone(f,t+i*.11,.9,{vol:.14,type:"triangle"});});
+    tone(1046.5,t+.6,1.6,{vol:.1}); tone(1568,t+.6,1.6,{vol:.07}); noise(t+.55,.8,{vol:.05,from:4000,to:10000,q:.6}); },
+  start(){ if(fileSound("start")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [[98,.28],[98*2.76,.1],[98*5.4,.05],[196,.08]].forEach(([f,v])=>tone(f,t,3.2,{vol:v,attack:.004})); },
+  tick(sec){ const c=ac(); if(!c) return; const t=c.currentTime; tone(sec<=3?1760:1320,t,.09,{vol:sec<=3?.14:.08,type:"square",attack:.002}); },
+  timeup(){ const c=ac(); if(!c) return; const t=c.currentTime;
+    [[98,.3],[98*2.76,.12],[98*5.4,.06],[196,.1]].forEach(([f,v])=>tone(f,t,3,{vol:v,attack:.004}));
+    const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=1200; lp.connect(SFX.master);
+    tone(220,t,1.1,{type:"sawtooth",vol:.12,to:110,dest:lp}); },
+  enter(){ const c=ac(); if(!c) return; const t=c.currentTime; [1568,2093,2637].forEach((f,i)=>tone(f,t+i*.05,1,{vol:.07})); }
+};
+/* The "Ommm" hum: a low voice-like drone that opens ("ooo") then closes to a hum ("mmm") */
+/* Welcome.mp3: plays while the bouncing crystal balls are on screen, fades out when a ball is caught */
+function teamArena(){
+  if(!state.teams) return "";
+  const n=((state.teams[state.chooser]||{}).name||"").trim().toLowerCase();
+  return TEAM_SONG[n]||"";
+}
+/* Sound of the team's arena video: on while choosing, fades out when a ball is caught */
+function arenaSound(on){
+  const v=document.getElementById("arenaVideo"); if(!v||!v.dataset.team) return;
+  clearInterval(SFX.arenaFade);
+  if(on&&!state.sfxOff){
+    v.volume=1; v.muted=false;
+    const p=v.play();
+    if(p&&p.catch) p.catch(()=>{ // browser blocked sound: play muted, add sound on next click/tap
+      v.muted=true; v.play().catch(()=>{});
+      const retry=()=>{ document.removeEventListener("pointerdown",retry,true); if(state.phase==="choose"&&!caught&&!state.sfxOff){ v.muted=false; v.play().catch(()=>{}); } };
+      document.addEventListener("pointerdown",retry,true);
+    });
+  } else {
+    if(v.muted) return;
+    SFX.arenaFade=setInterval(()=>{ const x=v.volume-.1;
+      if(x<=0){ clearInterval(SFX.arenaFade); v.muted=true; v.volume=1; } else v.volume=x; },60);
+  }
+}
+function welcomeStart(){
+  const song=teamArena();
+  if(song==="video"){ arenaSound(true); return; } // this team's song is the video's own sound
+  let a=document.getElementById("welcomeAudio");
+  const other=document.getElementById("teamAudio");
+  if(song){ // this team has its own song file
+    if(!other){ // hidden video player: plays the soundtrack of any mp4/mp3
+      const el=document.createElement("video"); el.id="teamAudio"; el.loop=true; el.preload="auto"; el.playsInline=true;
+      el.setAttribute("aria-hidden","true"); el.style.cssText="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:0;top:0";
+      el.addEventListener("error",()=>{ // file not found / can't play: try other spellings, then show a note
+        const tries=el._tries||[]; const nx=tries.shift();
+        if(nx){ el.setAttribute("src",nx); if(state.phase==="choose"&&!caught&&!state.sfxOff) el.play().catch(()=>{}); }
+        else { const ar=document.getElementById("arena"); if(ar&&!document.getElementById("songNote")) ar.insertAdjacentHTML("beforeend",`<p id="songNote" class="note" style="position:absolute;left:12px;bottom:8px;z-index:3;margin:0;background:rgba(255,255,255,.85);padding:4px 10px;border-radius:8px">Can’t play <b>${esc(el._want)}</b>: check it’s in the same folder as this game file.</p>`); }
+      });
+      document.body.appendChild(el);
+    }
+    const t=document.getElementById("teamAudio");
+    if(t._want!==song){ t.pause(); t._want=song;
+      const base=song.replace(/\.[^.]+$/,""), cap=base.charAt(0).toUpperCase()+base.slice(1);
+      t._tries=[...new Set([cap+".mp4",base+".mp3",cap+".mp3",base+".m4a",base.toUpperCase()+".mp4"])].filter(x=>x!==song);
+      t.setAttribute("src",song); }
+    if(a&&!a.paused) a.pause();
+    a=t;
+  } else if(other&&!other.paused) other.pause();
+  if(!a||state.sfxOff) return;
+  clearInterval(SFX.welcomeFade); a.volume=1;
+  if(!a.paused) return;
+  try{ const av=document.getElementById("arenaVideo");
+    a.currentTime=(song&&av&&song===av.getAttribute("src"))?av.currentTime:0; }catch(e){}
+  const p=a.play();
+  if(p&&p.catch) p.catch(()=>{ // browser blocked it: try again on the next click/tap
+    const retry=()=>{ document.removeEventListener("pointerdown",retry,true); if(state.phase==="choose"&&!caught&&!state.sfxOff) a.play().catch(()=>{}); };
+    document.addEventListener("pointerdown",retry,true);
+  });
+}
+function welcomeStop(){
+  arenaSound(false);
+  const t=document.getElementById("teamAudio"), w=document.getElementById("welcomeAudio");
+  const a=(t&&!t.paused)?t:w; if(!a||a.paused) return;
+  clearInterval(SFX.welcomeFade);
+  SFX.welcomeFade=setInterval(()=>{ const v=a.volume-.1;
+    if(v<=0){ clearInterval(SFX.welcomeFade); a.pause(); a.volume=1; } else a.volume=v; },60);
+}
+function humStart(){
+  welcomeStart();
+  if(document.getElementById("welcomeAudio")) return; // Welcome.mp3 replaces the synth "Ommm"
+  if(SFX.hum||SFX.humFile) return;
+  if(SOUND_FILES.hum){ SFX.humFile=fileSound("hum",true); return; }
+  const c=ac(); if(!c) return;
+  const out=c.createGain(); out.gain.value=0; out.connect(SFX.master);
+  const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=350; lp.Q.value=4; lp.connect(out);
+  const f1=c.createBiquadFilter(); f1.type="bandpass"; f1.frequency.value=480; f1.Q.value=5;
+  const f2=c.createBiquadFilter(); f2.type="bandpass"; f2.frequency.value=820; f2.Q.value=7;
+  const mix=c.createGain(); mix.gain.value=1.4; f1.connect(lp); f2.connect(lp);
+  const oscs=[[110,.5],[110.6,.45],[164.8,.18],[55,.25]].map(([f,v])=>{const o=c.createOscillator(),g=c.createGain();o.type="sawtooth";o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(f1);g.connect(f2);g.connect(mix);o.start();return o;});
+  mix.connect(lp);
+  const vib=c.createOscillator(), vg=c.createGain(); vib.frequency.value=4.5; vg.gain.value=1.2; vib.connect(vg); oscs.forEach(o=>vg.connect(o.frequency)); vib.start();
+  const cycle=()=>{ const t=c.currentTime;
+    out.gain.cancelScheduledValues(t); out.gain.setValueAtTime(out.gain.value,t);
+    out.gain.linearRampToValueAtTime(.09,t+1.4); out.gain.setValueAtTime(.09,t+4.2); out.gain.linearRampToValueAtTime(0.0,t+6.2);
+    lp.frequency.cancelScheduledValues(t); lp.frequency.setValueAtTime(350,t); lp.frequency.linearRampToValueAtTime(1200,t+1.2);
+    lp.frequency.setValueAtTime(1200,t+2.8); lp.frequency.linearRampToValueAtTime(300,t+3.5); };
+  cycle();
+  SFX.hum={out,oscs:[...oscs,vib],timer:setInterval(cycle,7000)};
+}
+function humStop(){
+  welcomeStop();
+  if(SFX.humFile){ try{SFX.humFile.pause();}catch(e){} SFX.humFile=null; }
+  const h=SFX.hum; if(!h) return; SFX.hum=null; clearInterval(h.timer);
+  try{ const t=SFX.ctx.currentTime; h.out.gain.cancelScheduledValues(t); h.out.gain.setValueAtTime(h.out.gain.value,t); h.out.gain.linearRampToValueAtTime(0,t+.4); h.oscs.forEach(o=>o.stop(t+.5)); }catch(e){}
+}
+
+/* ---------- BACKGROUND MUSIC (runs with the round timer) ----------
+   Starts from the beginning when the 90-second timer starts, pauses when the timer
+   is paused (Teams & topics), and stops when the timer runs out or the round ends. */
+function bgMusic(on){
+  const a=document.getElementById("bgAudio"); if(!a) return;
+  const running=on && !!state.deadline && state.pausedLeft==null && !state.sfxOff;
+  if(running){
+    if(a.paused){
+      // line the track up with the time already used on the clock
+      const elapsed=Math.max(0,(ROUND_SECONDS*1000-timeLeft())/1000);
+      try{ a.currentTime=(isFinite(a.duration)&&a.duration>0)?elapsed%a.duration:elapsed; }catch(e){}
+      const p=a.play(); if(p&&p.catch) p.catch(()=>{});
+    }
+  } else { try{a.pause();}catch(e){} }
+}
+
+/* ---------- GAME VIDEO ---------- */
+function gameVideo(on){
+  const v=document.getElementById("pageVideo");
+  document.body.classList.toggle("in-game",on&&!gvBroken&&!!GAME_VIDEO);
+  if(!v||gvBroken||!GAME_VIDEO) return;
+  if(on){
+    if(!v.getAttribute("src")){ v.onerror=()=>{gvBroken=true;v.hidden=true;document.body.classList.remove("in-game");}; v.src=GAME_VIDEO; }
+    v.hidden=false; const p=v.play(); if(p&&p.catch) p.catch(()=>{});
+  } else { v.hidden=true; try{v.pause();}catch(e){} }
+}
+
+/* ---------- CRYSTAL BALLS (colours cycle through BOT_COLORS) ---------- */
+/* Cute bot eyes on each crystal ball: they glance around, blink, and squint happily when caught */
+const BALL_EYES=`<svg class="beyes" viewBox="0 0 60 26" aria-hidden="true">
+  <g class="beye"><circle cx="16" cy="13" r="11" fill="#fff" stroke="#1d2b3f" stroke-width="1.8"/>
+    <g class="blook"><g class="bpupil"><circle cx="16" cy="14" r="6.3" fill="#1d2b3f"/><circle cx="13.7" cy="11.3" r="2.3" fill="#fff"/><circle cx="18.2" cy="16.3" r="1" fill="#fff"/></g></g></g>
+  <g class="beye"><circle cx="44" cy="13" r="11" fill="#fff" stroke="#1d2b3f" stroke-width="1.8"/>
+    <g class="blook"><g class="bpupil"><circle cx="44" cy="14" r="6.3" fill="#1d2b3f"/><circle cx="41.7" cy="11.3" r="2.3" fill="#fff"/><circle cx="46.2" cy="16.3" r="1" fill="#fff"/></g></g></g>
+</svg>`;
+const BOT_COLORS=["#e8553d","#f2b134","#2a9d8f","#3a86c8","#e76f9a","#6cc57c","#8a5cc2","#f28c28"];
+function stopBalls(){ if(rafId) cancelAnimationFrame(rafId); rafId=0; }
+function startBalls(){
+  stopBalls();
+  const arena=document.getElementById("arena"); if(!arena) return;
+  const els=[...arena.querySelectorAll(".ball")];
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W=arena.clientWidth, H=arena.clientHeight;
+  const size=els[0]?els[0].offsetWidth:140;
+  // start spread across the arena
+  const balls=els.map((el,i)=>{
+    const cols=Math.min(els.length,Math.max(2,Math.floor(W/(size*1.15))));
+    const cx=((i%cols)+.5)*(W/cols), cy=(Math.floor(i/cols)+.5)*(H/Math.ceil(els.length/cols));
+    const ang=Math.random()*Math.PI*2, sp=(reduce?0:1)*(95+Math.random()*70); // px per second
+    return {el,x:Math.min(W-size,Math.max(0,cx-size/2)),y:Math.min(H-size,Math.max(0,cy-size/2)),vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,wob:Math.random()*6};
+  });
+  const place=b=>{b.el.style.transform=`translate(${b.x}px,${b.y}px)`;};
+  balls.forEach(place);
+  if(reduce) return;
+  let last=performance.now(), t0=last;
+  const step=now=>{
+    const dt=Math.min(.05,(now-last)/1000); last=now;
+    W=arena.clientWidth; H=arena.clientHeight;
+    const boost=1+Math.min(.8,(now-t0)/20000); // they speed up slowly the longer you wait
+    for(const b of balls){
+      b.x+=b.vx*dt*boost; b.y+=b.vy*dt*boost + Math.sin((now/600)+b.wob)*0.25;
+      if(b.x<0){b.x=0;b.vx=Math.abs(b.vx);} if(b.x>W-size){b.x=W-size;b.vx=-Math.abs(b.vx);}
+      if(b.y<0){b.y=0;b.vy=Math.abs(b.vy);} if(b.y>H-size){b.y=H-size;b.vy=-Math.abs(b.vy);}
+    }
+    for(let i=0;i<balls.length;i++)for(let j=i+1;j<balls.length;j++){
+      const a=balls[i],c=balls[j],dx=c.x-a.x,dy=c.y-a.y,d=Math.hypot(dx,dy);
+      if(d>0&&d<size){const nx=dx/d,ny=dy/d,ov=(size-d)/2;a.x-=nx*ov;a.y-=ny*ov;c.x+=nx*ov;c.y+=ny*ov;
+        const p=(a.vx-c.vx)*nx+(a.vy-c.vy)*ny; if(p>0){a.vx-=p*nx;a.vy-=p*ny;c.vx+=p*nx;c.vy+=p*ny;}}
+    }
+    balls.forEach(place);
+    rafId=requestAnimationFrame(step);
+  };
+  rafId=requestAnimationFrame(step);
+}
+
+/* ---------- INTRO + INSTRUCTIONS ---------- */
+function renderIntro(){
+  app.innerHTML=`<div class="splash" id="splash" role="button" tabindex="0" aria-label="Enter the game">
+    <h1>Ask the AI oracle</h1>
+    <p class="sub">The party game where teams try to read the mind of the machine.</p>
+    <div class="meander" style="width:180px"></div>
+    <p class="tap glow">Tap anywhere to enter</p>
+  </div>`;
+  const go=()=>{sfx.enter(); state.phase="rules";render();};
+  const sp=document.getElementById("splash");
+  sp.onclick=go; sp.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};
+  sp.focus({preventScroll:true});
+}
+function renderRules(){
+  app.innerHTML=`<div class="rulecard pop">
+    <h3 style="text-align:center">Before you play</h3>
+    <h2>The AI oracle’s Rules</h2>
+    <div class="meander"></div>
+    <ol class="steps">
+      <li><span>Split into teams. You’re playing as <b>${state.teams.map(t=>esc(t.name)).join(", ")}</b>.</span></li>
+      <li><span>On your turn, <b>catch one of eight crystal balls</b> as they float past. Each holds a one-word topic hiding a secret question.</span></li>
+      <li><span>The AI oracle hides every answer on a board, 10 points each. <b>The last 2 rounds are very hard and worth double points</b> (20 per answer).</span></li>
+      <li><span>The team that chose guesses first, and keeps guessing while they’re right. <b>Every round has a 90-second timer</b>: when it runs out, the round is over.</span></li>
+      <li><span>A wrong guess is a <b>strike</b>. The board opens, and the first team to shout <b>“We’ll take it!”</b> takes over. Two strikes and you’re out for that round.</span></li>
+      <li><span><b>Fast Money:</b> the hardest questions, all or nothing. Find <b>every</b> answer to win 100%, pass and win 200% if the other team fails, or steal a missed question for 300%.</span></li>
+      <li><span><b>Strict rule:</b> no phones, no asking AI, no looking it up during the game.</span></li>
+      <li><span>The team with the most points at the end wins.</span></li>
+    </ol>
+    <div class="row" style="justify-content:center"><button class="btn-main" id="begin" style="min-width:200px;font-size:19px">Start</button></div>
+  </div>`;
+  const btn=document.getElementById("begin");
+  btn.onclick=()=>{sfx.start(); startGame();};
+  btn.focus({preventScroll:true});
+}
+
+/* ---------- SETUP ---------- */
+function renderSetup(){
+  app.innerHTML=`<div class="stack">
+    <div><h1>Can your team think like the AI?</h1><p class="muted" style="margin-top:8px;max-width:62ch">Teams take turns choosing a topic. The question behind it stays secret until it’s picked. The AI oracle secretly builds its answer board, then teams guess what's on it. Get one wrong and another team can take over.</p></div>
+    <div class="grid2">
+      <div class="panel stack">
+        <h3>Teams</h3>
+        <div class="stack" style="gap:8px">${state.teams.map((t,i)=>`<div class="teamrow"><span class="swatch" style="background:${TEAM_COLORS[i]}"></span><input type="text" id="team${i}" value="${esc(t.name)}" aria-label="Team ${i+1} name" data-team="${i}">${state.teams.length>2?`<button class="x" data-rmteam="${i}" aria-label="Remove team">✕</button>`:""}</div>`).join("")}</div>
+        ${state.teams.length<4?`<div class="row"><button class="btn-ghost" id="addTeam">+ Add team</button></div>`:""}
+        <div><label class="lbl">Questions each team chooses</label><div class="seg">${[1,2,3].map(n=>`<button aria-pressed="${state.roundsEach===n}" data-re="${n}">${n}</button>`).join("")}</div>
+          <p class="note" style="margin-top:6px">${state.teams.length*state.roundsEach} rounds in total.</p></div>
+        <div class="rules"><b>How it plays</b>
+          <span>The team that chose the question guesses first. Each right answer flips over and scores its points.</span>
+          <span>A wrong guess is a <b>strike</b> and the board opens up: the first other team to call “We’ll take it!” gets control and keeps guessing until they miss. Two strikes and your team is out for that question.</span>
+          <span>The round ends when the board is cleared or every team is out.</span></div>
+      </div>
+      <div class="panel stack">
+        <h3>Topics (${state.bank.length})</h3>
+        <div class="qlist">${state.bank.map((q,i)=>`<div class="qitem"><span class="hintbadge" style="margin:0;flex:none">${esc(q.hint)}</span><span class="txt">${state.peek?esc(q.text):'<span class="muted">Question hidden</span>'}</span><span class="count">${qCount(q)} answers · ${q.tier===3?"very hard":"easy"}</span><button class="x" data-rmq="${i}" aria-label="Remove question">✕</button></div>`).join("")}</div>
+        <div class="row"><button class="btn-ghost btn-small" id="peek">${state.peek?"Hide the questions":"Show the questions (host only)"}</button></div>
+        <div><label class="lbl" for="newq">Add a topic and its secret question</label>
+          <div class="twofield"><input type="text" id="newhint" placeholder="One word, e.g. Aussies" aria-label="Topic (one word)" maxlength="20"><input type="text" id="newq" placeholder="Name the 5 most famous Australians" aria-label="Question"><button id="addq">Add</button></div>
+          <p class="note" style="margin-top:6px">Topics are one word. Players only see the topic, and the question is revealed after a team chooses it.</p></div>
+      </div>
+    </div>
+    <p class="note">${sample?"Claude answers each question live when it's chosen, so the board can change from game to game. The first question asks you to allow Claude to answer.":(sampleChecked?"Demo mode: Claude isn’t available here, so the built-in topics use ready-made demo boards. Open the game in Claude for live answers.":"Connecting to the AI oracle…")}</p>
+    <div class="row"><button class="btn-main" id="start">${state.returnTo==="rules"?"Done":"Start a new game"}</button>${state.returnTo&&state.returnTo!=="rules"?'<button class="btn-ghost" id="backBtn">Back to the game</button>':""}</div>
+  </div>`;
+  app.querySelectorAll("[data-team]").forEach(inp=>inp.oninput=()=>{state.teams[+inp.dataset.team].name=inp.value||`Team ${+inp.dataset.team+1}`;});
+  app.querySelectorAll("[data-rmteam]").forEach(b=>b.onclick=()=>{state.teams.splice(+b.dataset.rmteam,1);render();});
+  const add=document.getElementById("addTeam"); if(add) add.onclick=()=>{state.teams.push({name:TEAM_NAMES.find(n=>!state.teams.some(t=>t.name===n))||"Team "+(state.teams.length+1),score:0});render();};
+  app.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>{state.roundsEach=+b.dataset.re;render();});
+  app.querySelectorAll("[data-rmq]").forEach(b=>b.onclick=()=>{state.bank.splice(+b.dataset.rmq,1);render();});
+  document.getElementById("peek").onclick=()=>{state.peek=!state.peek;render();};
+  const addq=()=>{const v=document.getElementById("newq").value.trim(), h=(document.getElementById("newhint").value.trim().split(/\s+/)[0]||""); if(v){state.bank.push({hint:h||"Mystery",text:v});document.getElementById("newq").value="";render();}};
+  document.getElementById("addq").onclick=addq;
+  document.getElementById("newq").onkeydown=e=>{if(e.key==="Enter")addq();};
+  document.getElementById("start").onclick=()=>{ if(state.returnTo==="rules"){state.returnTo=null;state.phase="rules";render();} else startGame(); };
+  const bk=document.getElementById("backBtn"); if(bk) bk.onclick=()=>{const r=state.returnTo; state.returnTo=null; if(state.pausedLeft!=null){ state.deadline=Date.now()+state.pausedLeft; state.pausedLeft=null; state.clockWaiting=false; } state.phase=r||"rules"; render();};
+}
+
+/* ---------- CHOOSE ---------- */
+function renderChoose(){
+  const t=state.teams[state.chooser];
+  let offer=(state.offer||[]).map(x=>state.bank.find(q=>q.text===x)).filter(Boolean);
+  if(!offer.length && state.bank.length){ drawOffer(); offer=state.offer.map(x=>state.bank.find(q=>q.text===x)); }
+  const canRefresh=!state.refreshUsed && state.bank.length>offer.length;
+  const tv=teamArena()==="video", vsrc=ARENA_VIDEO;
+  const oldV=document.getElementById("arenaVideo"), keepT=(oldV&&oldV.getAttribute("src")===vsrc)?oldV.currentTime:0;
+  app.innerHTML=`<div class="stack">
+    ${scoreBar(false)}
+    <div class="stack" style="gap:6px"><p class="muted">Round ${state.round+1} of ${state.totalRounds}</p>
+      <h1><span style="color:${TEAM_COLORS[state.chooser]}">${esc(t.name)}</span>, choose a topic</h1>
+      <p class="muted">Catch a crystal ball to reveal its secret question. You’ll guess first.</p></div>
+    ${offer.length?`<div class="arena" id="arena">${vsrc?`<video class="arena-video" id="arenaVideo" src="${esc(vsrc)}"${tv?' data-team="1"':""} autoplay muted loop playsinline aria-hidden="true" onerror="this.remove()"></video>`:""}${offer.map((q,k)=>`<button class="ball" style="--bot:${BOT_COLORS[k%BOT_COLORS.length]};--d:-${(k*1.37)%6}s" data-pick="${state.bank.indexOf(q)}" aria-label="Topic: ${esc(q.hint)}"><span class="mist"></span>${BALL_EYES}<span class="word${q.hint.length>7?" long":""}">${esc(q.hint)}</span></button>`).join("")}</div>
+    <div class="row"><button class="btn-ghost" id="refresh" ${canRefresh?"":"disabled"}>↻ Summon 8 new crystal balls</button><span class="note">${state.refreshUsed?"You’ve used your refresh this turn.":"One refresh per turn."}</span></div>`:'<p class="muted">No topics left. Add more under Teams &amp; topics.</p>'}
+  </div>`;
+  const rf=document.getElementById("refresh"); if(rf) rf.onclick=()=>{sfx.summon(); drawOffer(state.offer); state.refreshUsed=true; render();};
+  app.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{
+    if(caught) return; caught=true; stopBalls();
+    humStop(); sfx.catch();
+    b.classList.add("caught"); app.querySelectorAll(".ball").forEach(o=>{if(o!==b)o.classList.add("fade");});
+    const idx=+b.dataset.pick;
+    setTimeout(()=>{state.item=state.bank.splice(idx,1)[0];state.q=state.item.text;consult();},matchMedia("(prefers-reduced-motion: reduce)").matches?50:750);
+  });
+  const nv=document.getElementById("arenaVideo"); if(nv&&keepT){ try{nv.currentTime=keepT;}catch(e){} }
+  caught=false; startBalls(); humStart();
+}
+
+function qHeader(){
+  const typingNow=typing&&typing.q===state.q&&typing.i<state.q.length;
+  const shown=typingNow?esc(state.q.slice(0,typing.i))+'<span class="caret"></span>':esc(state.q);
+  return `<div class="qcard">
+    <div class="qtop">
+      <span class="qtopic">${esc(state.item?state.item.hint:"Wildcard")}</span>
+      <span class="qtools">${canSpeak()?`<button class="qbtn" id="replay" aria-label="Read the question aloud" title="Read the question aloud"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>`:""}</span>
+    </div>
+    <div class="eyebrow">${state.phase==="fmPlay"?"Fast Money · all or nothing":`Round ${state.round+1} of ${state.totalRounds} · Chosen by ${esc(state.teams[state.chooser].name)} · According to the AI oracle…`}</div>
+    <h2 id="qtext" aria-label="${esc(state.q)}">${shown}</h2>
+  </div>`;
+}
+/* ---------- THE AI ORACLE'S VOICE + TYPED QUESTION ---------- */
+function canSpeak(){ return "speechSynthesis" in window && typeof SpeechSynthesisUtterance!=="undefined"; }
+function pickVoice(){
+  if(!canSpeak()) return null;
+  const vs=speechSynthesis.getVoices(); if(!vs.length) return null;
+  const female=/(female|woman|karen|catherine|natasha|samantha|victoria|serena|moira|tessa|fiona|allison|ava|susan|zira|hazel|libby|sonia|aria|jenny|google uk english female|google us english)/i;
+  const en=vs.filter(v=>/^en[-_]/i.test(v.lang)||/^en$/i.test(v.lang));
+  return en.find(v=>/en[-_]AU/i.test(v.lang)&&female.test(v.name))
+      || en.find(v=>/en[-_]GB/i.test(v.lang)&&female.test(v.name))
+      || en.find(v=>female.test(v.name))
+      || en[0] || vs[0];
+}
+if(canSpeak()){ try{ speechSynthesis.onvoiceschanged=()=>{voicePick=pickVoice();}; voicePick=pickVoice(); }catch(e){} }
+function speak(text,onDone){
+  if(canSpeak()&&!state.voiceOff){ try{speechSynthesis.cancel();}catch(e){} }
+  say(text,onDone);
+}
+/* Speak without cancelling what's already queued; onDone runs once the words finish
+   (or straight away if the voice is off, with a safety timeout in case the browser never reports "finished"). */
+function say(text,onDone){
+  let done=false; const fin=()=>{ if(done) return; done=true; clearTimeout(fb); if(onDone) onDone(); };
+  let fb=null;
+  if(!canSpeak()||state.voiceOff){ fin(); return; }
+  try{
+    const u=new SpeechSynthesisUtterance(text);
+    voicePick=voicePick||pickVoice(); if(voicePick) u.voice=voicePick;
+    u.rate=.92; u.pitch=1.08; u.volume=1;
+    u.onboundary=e=>{ if(typing&&typing.q===text&&e.charIndex!=null) typing.i=Math.max(typing.i,Math.min(text.length,e.charIndex)); };
+    u.onend=fin; u.onerror=fin;
+    fb=setTimeout(fin,2500+text.length*110);
+    speechSynthesis.speak(u);
+  }catch(e){ fin(); }
+}
+function revealQuestion(){
+  const q=state.q;
+  if(typing&&typing.timer) clearInterval(typing.timer);
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  typing={q,i:reduce?q.length:0,timer:null};
+  state.questionRead=false;
+  speak(q,()=>{ if(state.q!==q) return; state.questionRead=true; tryStartClock(); });
+  if(reduce) return;
+  typing.timer=setInterval(()=>{
+    if(!typing||typing.q!==q){return;}
+    typing.i++;
+    const el=document.getElementById("qtext");
+    if(el) el.innerHTML=typing.i<q.length?esc(q.slice(0,typing.i))+'<span class="caret"></span>':esc(q);
+    if(typing.i>=q.length){clearInterval(typing.timer);typing.timer=null;}
+  },58);
+}
+
+function renderConsult(){
+  if(state.error){
+    app.innerHTML=`<div class="stack">${qHeader()}<div class="panel stack"><p class="err">${esc(state.error)}</p>
+      <div class="row">${sample?'<button class="btn-main" id="retry">Ask the AI oracle again</button>':''}<button class="btn-ghost" id="other">Choose a different question</button></div></div></div>`;
+    const r=document.getElementById("retry"); if(r) r.onclick=consult;
+    document.getElementById("other").onclick=()=>{if(state.item&&!state.bank.includes(state.item)) state.bank.unshift(state.item); state.phase="choose"; render();};
+    return;
+  }
+  app.innerHTML=`<div class="stack">${qHeader()}<div class="cover">
+    <h2>The AI oracle is building its board…</h2>
+    <p class="muted" style="max-width:46ch">${sample?"Claude is answering this question right now. It usually takes 10–40 seconds. If a permission box appears, allow it so the AI oracle can answer.":"Consulting the demo board…"}</p>
+    <button class="btn-ghost" id="cancel">Cancel and choose again</button></div></div>`;
+  document.getElementById("cancel").onclick=()=>{ctl?.abort(); if(state.item&&!state.bank.includes(state.item)) state.bank.unshift(state.item); state.phase="choose"; render();};
+}
+
+/* ---------- PLAY ---------- */
+function startPlay(){
+  state.phase="play"; state.control=state.chooser;
+  state.strikes=state.teams.map(()=>0); state.claimed=state.board.map(()=>null);
+  state.log=[]; state.lastResult=null; state.roundPts=state.teams.map(()=>0);
+  // Clock waits at 3:00 until the question has been read, then "Your time starts now" starts clock + music
+  state.deadline=null; state.pausedLeft=ROUND_SECONDS*1000; state.lastTick=null;
+  state.clockWaiting=true; state.clockAnnounce=false;
+  render();
+  tryStartClock();
+}
+function tryStartClock(){
+  if(state.phase!=="play"||!state.clockWaiting||!state.questionRead||state.clockAnnounce) return;
+  state.clockAnnounce=true;
+  say("Your time starts now!",startClock);
+}
+function startClock(){
+  state.clockAnnounce=false;
+  if(state.phase!=="play"||!state.clockWaiting) return;
+  state.clockWaiting=false; state.pausedLeft=null; state.lastTick=null;
+  state.deadline=Date.now()+ROUND_SECONDS*1000;
+  bgMusic(true);
+}
+/* ---------- ROUND TIMER ---------- */
+function timeLeft(){ if(state.pausedLeft!=null) return state.pausedLeft; return Math.max(0,(state.deadline||0)-Date.now()); }
+function fmt(ms){ const s=Math.ceil(ms/1000); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
+function timerHTML(){
+  const ms=timeLeft(), pct=Math.max(0,Math.min(100,ms/(ROUND_SECONDS*1000)*100));
+  return `<div class="timer ${ms<=30000?"low":""}" id="timer" role="timer" aria-label="Time left">
+    <span class="tbar"><span class="tfill" id="tfill" style="width:${pct}%"></span></span>
+    <span class="tval" id="tval">${fmt(ms)}</span></div>`;
+}
+setInterval(()=>{
+  if(state.phase!=="play"||state.pausedLeft!=null||!state.deadline) return;
+  const ms=timeLeft();
+  const v=document.getElementById("tval"), f=document.getElementById("tfill"), t=document.getElementById("timer");
+  if(v) v.textContent=fmt(ms);
+  if(f) f.style.width=Math.max(0,ms/(ROUND_SECONDS*1000)*100)+"%";
+  if(t) t.classList.toggle("low",ms<=30000);
+  const sec=Math.ceil(ms/1000);
+  if(sec<=10&&sec>0&&state.lastTick!==sec){ state.lastTick=sec; sfx.tick(sec); }
+  if(ms<=0){ state.deadline=null; bgMusic(false); timeUp(); }
+},200);
+function timeUp(){
+  if(state.phase!=="play") return;
+  sfx.timeup();
+  state.timedOut=true;
+  endRound();
+}
+function takers(missTeam){
+  return state.teams.map((_,i)=>i).filter(i=>i!==missTeam && state.strikes[i]<MAX_STRIKES);
+}
+function boardHTML(finalView){
+  const two=state.board.length>=6;
+  // column-flow order so #1..#n read down the left column then the right
+  return `<div class="board ${two?"two":""}" style="${two?`grid-template-rows:repeat(${Math.ceil(state.board.length/2)},auto)`:""}">${state.board.map((a,i)=>{
+    const c=state.claimed[i];
+    if(c===null && !finalView) return `<div class="bslot hidden"><span class="rank">${i+1}</span><span class="name">? ? ?</span><span class="val">—</span></div>`;
+    const fresh=state.lastResult&&state.lastResult.slot===i;
+    const who=c!==null&&c>=0?`<span class="who" style="background:${TEAM_COLORS[c]}">${esc(state.teams[c].name)}</span>`:"";
+    return `<div class="bslot shown ${c===null||c<0?"unclaimed":""} ${fresh?"flip":""}"><span class="rank">${i+1}</span><div><div class="name">${esc(a.name)}</div><div class="why">${esc(a.reason)}</div>${who}</div><span class="val">${a.points}</span></div>`;
+  }).join("")}</div>`;
+}
+function renderPlay(){
+  const open=state.control<0;
+  const t=open?null:state.teams[state.control];
+  const res=state.lastResult?`<div class="callout ${state.lastResult.good?"good":""} pop">${state.lastResult.html}
+      ${state.lastResult.canFix?`<div style="margin-top:10px"><button class="btn-ghost btn-small" id="fix">That should count</button></div>
+      <div id="fixlist" hidden><p class="note" style="margin-top:8px">${state.openQ?"Count their answer?":"Which answer did they mean?"}</p><div class="picklist">${state.openQ?`<button class="chip" data-fix="${state.board.findIndex((b,i)=>state.claimed[i]===null)}">Yes, count it</button>`:state.board.map((a,i)=>state.claimed[i]===null?`<button class="chip" data-fix="${i}">${i+1}. ${esc(a.name)}</button>`:"").join("")}</div></div>`:""}</div>`:"";
+  app.innerHTML=`<div class="stack">${qHeader()}${scoreBar(true)}
+    <div class="grid2" style="align-items:start">
+      <div>${boardHTML(false)}</div>
+      <div class="stack">
+        ${res}
+        ${open?`<div class="panel stack pop" style="gap:10px">
+          <h2>Who wants to take over?</h2>
+          <p class="muted">First team to shout “We’ll take it!” gets control and guesses next.</p>
+          <div class="row">${takers(state.missTeam).map(i=>`<button class="btn-main" data-take="${i}" style="background:${TEAM_COLORS[i]};color:#fff">${esc(state.teams[i].name)}</button>`).join("")}</div>
+        </div>`:`<div class="panel stack" style="gap:10px">
+          <label class="lbl" for="guess" style="margin:0"><span style="color:${TEAM_COLORS[state.control]};font-size:16px">${esc(t.name)}</span>, what's on the board?</label>
+          <div class="guessrow"><input class="big" type="text" id="guess" autocomplete="off" placeholder="Type your guess"><button class="btn-main" id="go">Guess</button></div>
+          <p class="note">Say it out loud, then type it in. Close spellings count.</p>
+        </div>`}
+        ${state.log.length?`<div class="log"><h3>This round</h3>${state.log.slice().reverse().map(l=>`<span>${l}</span>`).join("")}</div>`:""}
+        <div><button class="btn-ghost btn-small" id="giveup">Reveal the rest and end the round</button></div>
+      </div>
+    </div></div>`;
+  app.insertAdjacentHTML("beforeend",timerHTML());
+  const inp=document.getElementById("guess");
+  if(inp){
+    const go=()=>{const v=inp.value.trim(); if(v) doGuess(v);};
+    document.getElementById("go").onclick=go;
+    inp.onkeydown=e=>{if(e.key==="Enter")go();};
+    if(!matchMedia("(pointer:coarse)").matches) inp.focus();
+  }
+  app.querySelectorAll("[data-take]").forEach(b=>b.onclick=()=>{sfx.takeover(); const i=+b.dataset.take; state.control=i; state.undo=null;
+    state.lastResult={good:true,html:`<p><b style="color:${TEAM_COLORS[i]}">${esc(state.teams[i].name)}</b> take over! Keep guessing until you miss.</p>`};
+    state.log.push(`<b>${esc(state.teams[i].name)}</b> took over`); render();});
+  const fix=document.getElementById("fix"); if(fix) fix.onclick=()=>{document.getElementById("fixlist").hidden=false;fix.hidden=true;};
+  app.querySelectorAll("[data-fix]").forEach(b=>b.onclick=()=>overrule(+b.dataset.fix));
+  document.getElementById("giveup").onclick=endRound;
+}
+
+function flash(){
+  sfx.wrong();
+  const o=document.getElementById("xover");
+  o.innerHTML=matchMedia("(prefers-reduced-motion: reduce)").matches?"":'<div class="bigx">✕</div>';
+  setTimeout(()=>{o.innerHTML="";},1200);
+}
+function award(team,slot,guess){
+  sfx.right();
+  const a=state.board[slot];
+  state.claimed[slot]=team; state.teams[team].score+=a.points; state.roundPts[team]+=a.points;
+  state.lastResult={good:true,slot,html:`<p><b>${esc(state.teams[team].name)}</b> found <b>#${slot+1} ${esc(a.name)}</b>: +${a.points}. Keep going!</p>`};
+  state.log.push(`<b>${esc(state.teams[team].name)}</b>: “${esc(guess)}” ✓ #${slot+1} +${a.points}`);
+  if(state.claimed.every(c=>c!==null)){ state.lastResult.html=`<p><b>${esc(state.teams[team].name)}</b> found <b>#${slot+1} ${esc(a.name)}</b> (+${a.points}) and cleared the board!</p>`; setTimeout(()=>sfx.cleared(),650); setTimeout(endRound,1400); }
+}
+function doGuess(guess){
+  const team=state.control, slot=matchGuess(guess);
+  state.undo=null;
+  if(slot>=0 && state.claimed[slot]!==null){
+    sfx.blip();
+    state.lastResult={good:false,html:`<p><b>${esc(state.board[slot].name)}</b> is already on the board. Guess again.</p>`};
+    render(); return;
+  }
+  if(slot>=0){ award(team,slot,guess); render(); return; }
+  // miss
+  state.strikes[team]++;
+  const elig=takers(team), teamOut=state.strikes[team]>=MAX_STRIKES;
+  state.log.push(`<b>${esc(state.teams[team].name)}</b>: “${esc(guess)}” ✕`);
+  state.undo={team,guess,prevControl:team};
+  flash();
+  const out=teamOut?` That's two strikes: <b>${esc(state.teams[team].name)}</b> is out this round.`:"";
+  if(!elig.length){
+    if(teamOut){ state.lastResult=null; render(); setTimeout(endRound,1300); return; }
+    state.lastResult={good:false,canFix:true,html:`<p>“${esc(guess)}” isn't on the board. Nobody else can take over, so <b>${esc(state.teams[team].name)}</b> keep guessing.</p>`};
+    render(); return;
+  }
+  state.control=-1; state.missTeam=team;
+  state.lastResult={good:false,canFix:true,html:`<p>“${esc(guess)}” isn't on the board.${out} The board is open!</p>`};
+  render();
+}
+function overrule(slot){
+  const u=state.undo; if(!u) return;
+  if(state.openQ&&slot>=0&&!state.board[slot].name) state.board[slot]={...state.board[slot],name:u.guess};
+  state.strikes[u.team]--; state.control=u.team; state.log.pop(); state.undo=null;
+  award(u.team,slot,u.guess);
+  state.lastResult.html=`<p>Host's call: it counts! `+state.lastResult.html.slice(3);
+  render();
+}
+
+/* ---------- ROUND END / FINAL ---------- */
+function endRound(){ if(state.phase!=="play") return;
+  if(state.openQ) state.board=state.board.map(b=>b.name?b:{...b,name:"(not found)"}); state.claimed=state.claimed.map(c=>c===null?-1:c); state.lastResult=null; state.phase="roundEnd"; render(); }
+function renderRoundEnd(){
+  const timedOut=state.timedOut; state.timedOut=false;
+  const last=state.round+1>=state.totalRounds, nextChooser=(state.chooser+1)%state.teams.length;
+  const left=state.claimed.filter(c=>c<0).length;
+  app.innerHTML=`<div class="stack">${qHeader()}
+    <div class="grid2" style="align-items:start">
+      <div class="stack"><h3>The AI oracle's full board</h3>${boardHTML(true)}
+        <p class="note">${timedOut?"<b>Time’s up!</b> ":""}${left?`${left} answer${left>1?"s":""} nobody found.`:"Every answer found!"} ${state.openQ?`Other answers that would have counted: ${esc(state.accept.filter((a,i)=>state.acceptUsed[i]==null).slice(0,14).map(a=>a[0]).join(", "))}${state.accept.length-Object.keys(state.acceptUsed).length>14?" and more.":"."}`:DEMO[state.q]?"":"Answered live by the AI oracle."}</p></div>
+      <div class="stack"><h3>Points this round</h3>
+        <div class="scorebar">${state.teams.map((t,i)=>`<div class="team" style="--c:${TEAM_COLORS[i]}"><div class="nm">${esc(t.name)}</div><div class="pts">+${state.roundPts[i]}</div></div>`).join("")}</div>
+        <h3>Overall</h3>${scoreBar(false)}
+        <div class="row"><button class="btn-main" id="next">${last?"On to Fast Money":`Next: ${esc(state.teams[nextChooser].name)} choose`}</button></div></div>
+    </div></div>`;
+  document.getElementById("next").onclick=()=>{
+    if(last){goFastMoney();return;}
+    state.round++; state.chooser=nextChooser; drawOffer(); state.refreshUsed=false; state.phase="choose"; render();
+  };
+}
+/* ---------- FAST MONEY (final round: all or nothing) ----------
+   The hardest questions left in the bank. Teams take turns being "on" (the team that's behind goes first).
+   For each question the team that's on sees the question and chooses:
+     PLAY: they must find 100% of the answers before time runs out to win the question's points (100%).
+           If they miss any, the other team can STEAL by finding every missing answer: steal = 300%.
+     PASS: the other team must play it. If they get 100% they win 100%.
+           If they don't, the team that passed wins 200%.
+   A question's value = number of answers × FM_POINTS. */
+const STRICT_RULE="Strict rule: no phones and no looking it up during the game.";
+const FM_QUESTIONS=4;      // questions in Fast Money (2 per team)
+const FM_POINTS=20;        // value of each answer on a Fast Money board
+const FM_SECS_PER_ANSWER=8, FM_MIN_SECS=30;       // time to play = answers × 8s (at least 30s)
+const FM_STEAL_PER_ANSWER=6, FM_STEAL_MIN=15;     // time to steal = missing answers × 6s (at least 15s)
+function strictHTML(){ return `<div class="callout" style="border-width:2px"><p><b>${esc(STRICT_RULE)}</b></p></div>`; }
+function fmRulesHTML(){
+  return `<div class="panel stack fmrules" style="gap:10px">
+    <h2 style="margin:0">Fast Money: all or nothing</h2>
+    <div class="fmtiles">
+      <div class="fmtile"><b>100%</b><span>Play the question and find <b>every</b> answer before time runs out. Miss one and you get nothing.</span></div>
+      <div class="fmtile"><b>200%</b><span>Too hard? <b>Pass</b> it to the other team. If they can’t find every answer, you win double.</span></div>
+      <div class="fmtile"><b>300%</b><span>If a team plays and misses, the other team can <b>steal</b> by finding every missing answer: triple points.</span></div>
+    </div>
+    <p class="note" style="margin:0">Each answer is worth ${FM_POINTS} points, so a 7-answer question is worth 140, or up to 420 on a steal. The team that’s behind goes first; teams take turns.</p>
+  </div>`;
+}
+function fmPickQuestions(){
+  const used=new Set((state.fmUsed||[])); // hardest first, shuffled within each difficulty
+  const pool=shuffle(state.bank.filter(q=>DEMO[q.text]&&!used.has(q.text))).sort((a,b)=>(b.diff||0)-(a.diff||0));
+  return pool.slice(0,FM_QUESTIONS);
+}
+function goFastMoney(){
+  const order=state.teams.map((t,i)=>({i,s:t.score})).sort((a,b)=>a.s-b.s);
+  const qs=fmPickQuestions();
+  state.fm={qs, qi:0, first:order[0].i, stage:"intro", log:[]};
+  state.phase="fmPlay"; render();
+}
+function fmOther(i){ return (i+1)%state.teams.length; }
+function fmOwner(){ const f=state.fm; return f.qi%2===0?f.first:fmOther(f.first); }
+function fmLoadQuestion(){
+  const f=state.fm, item=f.qs[f.qi], known=DEMO[item.text];
+  state.q=item.text; state.item=item; state.openQ=false; state.accept=null; state.lastResult=null;
+  if(known.need){ state.openQ=true; state.accept=known.accept; state.acceptUsed={};
+    state.board=Array.from({length:known.need},()=>({name:"",aliases:[],points:FM_POINTS,reason:""})); }
+  else state.board=known.map(([name,aliases,p,reason])=>({name,aliases,points:FM_POINTS,reason}));
+  state.claimed=state.board.map(()=>null);
+  f.value=state.board.length*FM_POINTS; f.passed=false; f.on=fmOwner(); f.msg="";
+  f.stage="decide"; revealQuestion();
+}
+function fmLeft(){ return Math.max(0,state.fm.deadline-Date.now()); }
+function fmStartClock(secs){ const f=state.fm; f.deadline=Date.now()+secs*1000; f.lastTick=null; f.running=true; fmMusic(true); }
+function fmMusic(on){ const a=document.getElementById("bgAudio"); if(!a) return;
+  if(on&&!state.sfxOff){ try{a.currentTime=0;}catch(e){} a.play().catch(()=>{}); } else { try{a.pause();}catch(e){} } }
+function fmMissing(){ return state.claimed.filter(c=>c===null).length; }
+function renderFmPlay(){
+  const f=state.fm, T=i=>`<b style="color:${TEAM_COLORS[i]}">${esc(state.teams[i].name)}</b>`;
+  if(f.stage==="intro"){
+    app.innerHTML=`<div class="stack">${scoreBar(false)}${fmRulesHTML()}${strictHTML()}
+      ${f.qs.length?`<div class="row"><button class="btn-main" id="fmgo">Start Fast Money</button></div>`:
+        `<p class="muted">There are no questions left in the bank for Fast Money.</p><div class="row"><button class="btn-main" id="fmend">Final scores</button></div>`}</div>`;
+    const g=document.getElementById("fmgo"); if(g) g.onclick=()=>{ fmLoadQuestion(); render(); };
+    const e=document.getElementById("fmend"); if(e) e.onclick=()=>{ state.phase="final"; render(); };
+    return;
+  }
+  const head=`<div class="row" style="justify-content:space-between;align-items:center">
+      <p class="pill" style="margin:0">Fast Money · Question ${f.qi+1} of ${f.qs.length} · worth ${f.value} points</p>
+      ${f.running?`<span class="bigteam" id="fmclock" style="font-size:clamp(36px,6vw,56px);color:${TEAM_COLORS[f.on]}">${Math.ceil(fmLeft()/1000)}</span>`:""}</div>`;
+  let side="";
+  if(f.stage==="decide"){
+    const other=fmOther(f.on);
+    side=`<div class="panel stack" style="gap:10px"><h2 style="margin:0">${T(f.on)}: play or pass?</h2>
+      <p class="muted" style="margin:0">Play: find all ${state.board.length} answers in ${Math.max(FM_MIN_SECS,state.board.length*FM_SECS_PER_ANSWER)} seconds to win ${f.value}.
+        Pass: if the ${esc(state.teams[other].name)} can’t find them all, you win ${f.value*2}.</p>
+      <div class="row"><button class="btn-main" id="fmplay" style="background:${TEAM_COLORS[f.on]};color:#fff">Play</button>
+        <button class="btn-ghost" id="fmpass">Pass to the ${esc(state.teams[other].name)}</button></div></div>`;
+  } else if(f.stage==="play"||f.stage==="steal"){
+    side=`<div class="panel stack" style="gap:10px">
+      <h2 style="margin:0">${T(f.on)} ${f.stage==="steal"?`can steal: find the ${fmMissing()} missing answer${fmMissing()>1?"s":""} for ${f.value*3}!`:`must find all ${state.board.length}!`}</h2>
+      <div class="guessrow"><input class="big" type="text" id="fmguess" autocomplete="off" placeholder="Type an answer"><button class="btn-main" id="fmok">Answer</button></div>
+      ${f.msg?`<p class="${f.msgGood?"":"err"} pop" style="margin:0">${f.msg}</p>`:""}
+      <div><button class="btn-ghost btn-small" id="fmstuck">We’re stuck: stop the clock</button></div></div>`;
+  } else if(f.stage==="result"){
+    const last=f.qi+1>=f.qs.length;
+    side=`<div class="panel stack" style="gap:10px"><div class="callout ${f.resultGood?"good":""} pop"><p>${f.result}</p></div>
+      <div class="row"><button class="btn-main" id="fmnext">${last?"Final scores":"Next question"}</button></div></div>`;
+  }
+  app.innerHTML=`<div class="stack">${qHeader()}${scoreBar(false)}${head}
+    <div class="grid2" style="align-items:start"><div>${boardHTML(f.stage==="result")}</div><div class="stack">${side}
+    ${f.log.length?`<div class="log"><h3>Fast Money so far</h3>${f.log.map(l=>`<span>${l}</span>`).join("")}</div>`:""}</div></div></div>`;
+  const $=id=>document.getElementById(id);
+  if($("fmplay")) $("fmplay").onclick=()=>{ f.stage="play"; fmStartClock(Math.max(FM_MIN_SECS,state.board.length*FM_SECS_PER_ANSWER)); render(); };
+  if($("fmpass")) $("fmpass").onclick=()=>{ f.passed=true; f.passer=f.on; f.on=fmOther(f.on); f.stage="play";
+    fmStartClock(Math.max(FM_MIN_SECS,state.board.length*FM_SECS_PER_ANSWER)); render(); };
+  if($("fmguess")){ const inp=$("fmguess"); inp.focus();
+    const go=()=>{ const v=inp.value.trim(); if(!v) return; fmGuess(v); };
+    $("fmok").onclick=go; inp.onkeydown=e=>{ if(e.key==="Enter") go(); };
+    $("fmstuck").onclick=()=>fmTimeUp(); }
+  if($("fmnext")) $("fmnext").onclick=()=>{ if(f.qi+1>=f.qs.length){ state.phase="final"; render(); return; } f.qi++; fmLoadQuestion(); render(); };
+}
+function fmGuess(v){
+  const f=state.fm, slot=matchGuess(v);
+  if(slot>=0&&state.claimed[slot]===null){ state.claimed[slot]=f.on; state.lastResult={slot}; sfx.right(); f.msg=`✓ ${esc(state.board[slot].name)}`; f.msgGood=true;
+    if(fmMissing()===0){ fmResolve(true); return; } }
+  else if(slot>=0){ sfx.blip(); f.msg=`${esc(state.board[slot].name)} is already on the board.`; f.msgGood=false; }
+  else { sfx.wrong(); f.msg=`“${esc(v)}” isn’t on the board. Keep going!`; f.msgGood=false; }
+  render();
+}
+function fmTimeUp(){ const f=state.fm; if(f.stage!=="play"&&f.stage!=="steal") return; fmResolve(false); }
+function fmResolve(allFound){
+  const f=state.fm, name=i=>`<b style="color:${TEAM_COLORS[i]}">${esc(state.teams[i].name)}</b>`;
+  f.running=false; fmMusic(false); try{speechSynthesis.cancel();}catch(e){}
+  const award=(i,mult,why)=>{ const pts=f.value*mult; state.teams[i].score+=pts;
+    f.result=`${name(i)} ${why}: <b>+${pts}</b> (${mult*100}%).`; f.resultGood=true; f.log.push(`Q${f.qi+1}: ${esc(state.teams[i].name)} +${pts} (${mult*100}%)`); sfx.cleared(); };
+  if(f.stage==="play"&&!f.passed){
+    if(allFound){ award(f.on,1,"found every answer"); }
+    else { // miss: other team may steal
+      sfx.timeup(); f.stage="steal"; f.on=fmOther(f.on); f.msg=""; f.lastResult=null;
+      fmStartClock(Math.max(FM_STEAL_MIN,fmMissing()*FM_STEAL_PER_ANSWER)); render(); return; }
+  } else if(f.stage==="play"&&f.passed){
+    if(allFound) award(f.on,1,"took the pass and found every answer");
+    else { sfx.timeup(); award(f.passer,2,"passed, and the other team couldn’t finish it"); }
+  } else if(f.stage==="steal"){
+    if(allFound) award(f.on,3,"stole it");
+    else { sfx.timeup(); f.result="Nobody found every answer. No points for this one."; f.resultGood=false; f.log.push(`Q${f.qi+1}: no points`); }
+  }
+  state.fmUsed=(state.fmUsed||[]).concat(state.q);
+  state.bank=state.bank.filter(q=>q.text!==state.q);
+  if(state.openQ) state.board=state.board.map(b=>b.name?b:{...b,name:"(not found)"});
+  state.claimed=state.claimed.map(c=>c===null?-1:c);
+  f.stage="result"; render();
+}
+setInterval(()=>{ const f=state.fm; if(state.phase!=="fmPlay"||!f||!f.running) return;
+  const ms=fmLeft(), el=document.getElementById("fmclock"); if(el) el.textContent=Math.ceil(ms/1000);
+  const sec=Math.ceil(ms/1000); if(sec<=5&&sec>0&&f.lastTick!==sec){ f.lastTick=sec; sfx.tick(sec); }
+  if(ms<=0) fmTimeUp(); },200);
+
+function renderFinal(){
+  sfx.cleared();
+  const order=state.teams.map((t,i)=>({...t,i})).sort((a,b)=>b.score-a.score);
+  const top=order[0], tie=order.filter(t=>t.score===top.score).length>1;
+  app.innerHTML=`<div class="stack"><div class="cover" style="min-height:auto;padding-block:20px">
+    <p class="pill">Game over</p>
+    <div class="bigteam pop" style="color:${tie?"var(--azure)":TEAM_COLORS[top.i]}">${tie?"It's a tie!":esc(top.name)+" win!"}</div>
+    <p class="muted">${tie?"The AI oracle refuses to pick a favourite.":"They think most like the machine."}</p></div>
+    <div class="podium">${order.map((t,k)=>`<div class="team" style="--c:${TEAM_COLORS[t.i]}"><span class="nm">${k+1}. ${esc(t.name)}</span><span class="pts">${t.score}</span></div>`).join("")}</div>
+    <div class="row"><button class="btn-main" id="again">New game</button></div></div>`;
+  document.getElementById("again").onclick=()=>{const teams=state.teams.map(t=>({name:t.name,score:0})); state=freshState(); state.teams=teams; state.phase="rules"; render();};
+}
+
+const start=()=>{ if(state.phase==="consult" && !state.board){ state.phase="choose"; } render(); };
+if(window.claude?.hot?.ready) window.claude.hot.ready(start); else start();
+})();
+</script>
+
+</body>
+</html>
