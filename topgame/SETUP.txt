@@ -1,0 +1,34 @@
+ASK THE AI ORACLE: putting the game on a public website
+=========================================================
+
+The game page can't hold your Anthropic API key (anyone could copy it from the page).
+So the AI answers come from a tiny free "worker" on Cloudflare that keeps the key secret.
+
+1. GET AN API KEY
+   - Go to console.anthropic.com, sign in, add some credit under Billing.
+   - Set a monthly spend limit there too (e.g. $10) so costs can never run away.
+   - API Keys > Create key. Copy it (starts with "sk-ant-").
+   Cost: each question the AI answers costs a fraction of a cent.
+
+2. CREATE THE WORKER (free Cloudflare account)
+   - dash.cloudflare.com > Workers & Pages > Create > Create Worker > Deploy.
+   - Click "Edit code", delete what's there, paste everything from oracle-worker.js, click Deploy.
+   - Settings > Variables and Secrets > Add:
+       ANTHROPIC_API_KEY   type: Secret   value: your key
+       ALLOWED_ORIGIN      type: Text     value: your website, e.g. https://www.yoursite.com
+                           (skip this one while testing from your computer)
+   - Copy the worker's address, e.g. https://ai-oracle.yourname.workers.dev
+
+3. CONNECT THE GAME
+   - Open the game HTML in a text editor (Notepad is fine).
+   - Near the top of the script find:   const ORACLE_URL="";
+   - Paste the worker address between the quotes and save.
+
+4. UPLOAD TO YOUR WEBSITE
+   Put these files in the same folder on your site:
+     the game HTML (you can rename it index.html)
+     host3.mp4   dance.mp4   Welcome.mp3   nerds.mp3   Numberoneprimetime.mp3
+
+If the AI stops answering with an "AI error" message, the model name may have been retired:
+add a Text variable MODEL on the worker with a current model id from
+docs.claude.com/en/docs/about-claude/models (a "Haiku" model is fast and cheap).
