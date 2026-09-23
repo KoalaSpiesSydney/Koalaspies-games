@@ -77,7 +77,7 @@
     :root {
       --ink: #1f2430;
       --muted: #57534e;
-      --faint: #a8a29e;
+      --faint: #ebe5e1;
       --line: rgba(31,36,48,.14);
       --accent: #2563eb;
       --header: #14161c;
@@ -103,7 +103,7 @@
       margin: 0;
       color: var(--ink);
       line-height: 1.75;
-      background-color: #fdfaf1;
+      background-color: #eaedf1;
       background-image:
         radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 55%),
         radial-gradient(90% 60% at 50% 108%, rgba(176,150,102,.16) 0%, rgba(176,150,102,0) 60%),
@@ -291,11 +291,39 @@ text-shadow:
       color: inherit;
       transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
-    .cat:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 24px rgba(31,36,48,.10);
-      border-color: var(--c);
-    }
+    .cat {
+  --c: var(--green-deep);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px 22px 20px;
+  background: rgba(255,255,255,.62);
+  border: 1px solid var(--line);
+  border-top: 6px solid var(--c);
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+
+  /* Impact upgrade */
+  box-shadow:
+    0 2px 2px rgba(0,0,0,.18),
+    0 4px 6px rgba(0,0,0,.14),
+    0 0 12px rgba(16,87,52,.28);
+
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+ .cat:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 4px 6px rgba(0,0,0,.22),
+    0 10px 18px rgba(0,0,0,.18),
+    0 0 18px rgba(16,87,52,.35);
+  border-color: var(--c);
+}
+;
+    
     .cat:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     .cat.party  { --c: var(--party); }
     .cat.family { --c: var(--family); }
