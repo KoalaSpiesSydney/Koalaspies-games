@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
+  <title>Free Classroom &amp; Party Games · No Sign-Up · Koalaspies</title>
+  <meta name="description" content="Free party, family, brain and K-12 revision games for classrooms and groups. One shared screen, no sign-up, no subscription.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#14161c">
+  <link rel="canonical" href="https://koalaspies-games.site/">
+
+  <!-- Link previews (Facebook, WhatsApp, Teams, Slack, LinkedIn, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Koalaspies">
+  <meta property="og:title" content="Koalaspies — Free Games Made to Play Together">
+  <meta property="og:description" content="Party, family, brain and revision games. One screen, no sign-up, no subscription. Just play.">
+  <meta property="og:url" content="https://koalaspies-games.site/">
+  <meta property="og:image" content="https://koalaspies-games.site/share-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Koalaspies — Free Games Made to Play Together">
+  <meta name="twitter:description" content="Party, family, brain and revision games. One screen, no sign-up. Just play.">
+  <meta name="twitter:image" content="https://koalaspies-games.site/share-home.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Koalaspies",
+        "url": "https://koalaspies-games.site/",
+        "description": "Free party, family, brain and revision games for groups and classrooms.",
+        "inLanguage": "en-AU",
+        "publisher": { "@type": "Person", "name": "Justine Kelly", "email": "KoalaSpiesSydney@outlook.com" }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Koalaspies game categories",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Party Games", "url": "https://koalaspies-games.site/party-games.html" },
+          { "@type": "ListItem", "position": 2, "name": "Family Games", "url": "https://koalaspies-games.site/family-games.html" },
+          { "@type": "ListItem", "position": 3, "name": "Brain Games", "url": "https://koalaspies-games.site/brain-games.html" },
+          { "@type": "ListItem", "position": 4, "name": "K-12 & Revision Games", "url": "https://koalaspies-games.site/k12-revision-games.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650;8..60,700;8..60,800&display=swap" rel="stylesheet">
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       TO DO
+       1. SHARE IMAGE: upload a 1200×630 "share-home.jpg" next to this page.
+       2. ADSENSE, once approved:
+          a) uncomment the <script> just below and put your ca-pub-… ID in it;
+          b) uncomment the <ins> inside each <div class="ad-slot"> and fill in
+             data-ad-client and data-ad-slot;
+          c) put ads.txt at the root of your domain:
+               google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+          d) in AdSense → Privacy & messaging, switch on Google's consent
+             message for Europe/UK (required for visitors there).
+          Until then the ad slots are invisible and take up no space.
+       ══════════════════════════════════════════════════════════════════ -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          crossorigin="anonymous"></script>
+  -->
+
+  <style>
+    :root {
+      --ink: #1f2430;
+      --muted: #57534e;
+      --faint: #a8a29e;
+      --line: rgba(31,36,48,.14);
+      --accent: #2563eb;
+      --header: #14161c;
+      --green: #64ec98;
+      --green-deep: #105734;
+      --sans: "Source Sans 3", system-ui, sans-serif;
+      --serif: "Source Serif 4", Georgia, serif;
+      --hand: "Caveat", "Bradley Hand", "Segoe Script", cursive;
+      --max: 1160px;
+      --col: 74ch;
+
+      /* one colour per category */
+      --party: #e11d74;
+      --family: #f59e0b;
+      --brain: #7c3aed;
+      --k12: #0e9f6e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.75;
+      background-color: #fdfaf1;
+      background-image:
+        radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(90% 60% at 50% 108%, rgba(176,150,102,.16) 0%, rgba(176,150,102,0) 60%),
+        linear-gradient(175deg, #fdfaf1 0%, #faf4e6 55%, #f3ead6 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .5;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E");
+      background-size: 170px 170px;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      background: var(--header);
+      background-image: linear-gradient(160deg, #1b1f28 0%, #14161c 55%, #0d0f14 100%);
+      overflow: hidden;
+      padding-block: clamp(22px, 4vw, 44px);
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: grid-drift 24s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes grid-drift {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(48px,48px); }
+    }
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 4px;
+      min-width: 0;
+    }
+    .brand-top {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 9vw, 8.4rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      text-decoration: none;
+      color: #f8fafc;
+      background: linear-gradient(100deg, #ffffff 0%, #ffffff 30%, #a5c4fd 42%, #ffffff 60%, #ffffff 100%);
+      background-size: 250% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3.5s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -50% center; }
+    }
+    .tagline {
+      color: rgba(248,250,252,.78);
+      font-size: clamp(.74rem, 2.4vw, 1rem);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .qr-box {
+      flex: 0 0 auto;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 8px;
+      line-height: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .qr-box img { width: 60px; height: 60px; display: block; }
+
+    main.wrap { padding-block: 30px 60px; }
+
+    /* ===== HEADINGS ===== */
+    h1 {
+      font-family: var(--hand);
+      font-weight: 700;
+      font-size: clamp(2.7rem, 1.4rem + 4.4vw, 4.8rem);
+      margin: 0 0 6px;
+      line-height: 1.05;
+      color: var(--green-deep);
+      text-shadow: 0 1px 0 rgba(16,87,52,.30);
+      animation: slide-in-left 1.7s cubic-bezier(.16,.84,.34,1) both;
+      animation-delay: var(--slide-delay, 0s);
+    }
+    @keyframes slide-in-left {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .sub {
+      display: block;
+      font-style: italic;
+      color: var(--muted);
+      font-size: clamp(1rem, .95rem + .3vw, 1.15rem);
+      margin: 0 0 26px;
+    }
+    h2 {
+      font-family: var(--hand);
+      font-size: clamp(1.6rem, 1.2rem + 1vw, 2.1rem);
+      font-weight: 700;
+      margin: 0 0 2px;
+      line-height: 1.2;
+      color: var(--green-deep);
+    }
+
+    section { max-width: var(--col); margin: 0 auto 54px; }
+    section.wide { max-width: var(--max); }
+
+    .intro { max-width: 62ch; margin: 0 0 38px; }
+    .lead { margin: 0 0 14px; color: var(--muted); }
+    .lead b { color: var(--ink); }
+
+    /* ===== THE FOUR CATEGORY CARDS ===== */
+    .cats {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .cat {
+      --c: var(--green-deep);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 22px 22px 20px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid var(--line);
+      border-top: 6px solid var(--c);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .cat:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(31,36,48,.10);
+      border-color: var(--c);
+    }
+    .cat:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .cat.party  { --c: var(--party); }
+    .cat.family { --c: var(--family); }
+    .cat.brain  { --c: var(--brain); }
+    .cat.k12    { --c: var(--k12); }
+
+    .cat .num {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--c);
+    }
+    .cat .icon { font-size: 2rem; line-height: 1; margin: 6px 0 4px; }
+    .cat .name {
+      font-family: var(--hand);
+      font-size: 2.1rem;
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .cat .note {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 14px;
+      flex: 1;
+    }
+    .cat .go {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--c);
+    }
+    .cat:hover .go { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ===== QUICK LIST ===== */
+    ul.list { list-style: none; margin: 0; padding: 0; }
+    ul.list li + li { margin-top: 22px; }
+    .row {
+      display: block;
+      padding: 0 34px 0 0;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+    .row .kicker {
+      display: block;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .row .name {
+      font-family: var(--hand);
+      font-size: 1.62rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .row .note {
+      display: block;
+      font-size: .93rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+    a.row::after {
+      content: "→";
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--faint);
+      font-size: 1.1rem;
+      transition: transform .15s ease, color .15s ease;
+    }
+    a.row:hover .name, a.row:focus-visible .name {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    a.row:hover::after { color: var(--accent); transform: translate(4px, -50%); }
+    a.row:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* grid spacing comes from "gap", so every item in a row lines up */
+    .quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px 40px; }
+    ul.list.quick li + li { margin-top: 0; }
+    .quick .row .name { font-size: 1.45rem; }
+
+    .address-line { margin: 0 0 18px; color: var(--muted); }
+    .address-line a { color: var(--accent); }
+
+    /* ===== HOUSE AD ===== */
+    .house-ad {
+      display: block;
+      max-width: var(--col);
+      margin: 0 auto 46px;
+      padding: 22px 22px 26px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .house-ad:hover { border-color: var(--ink); transform: translateY(-2px); }
+    .house-ad:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .ha-slot {
+      display: block;
+      font-size: .68rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .ha-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .ha-strip img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      border-radius: 3px;
+      background: var(--line);
+    }
+    .ha-pitch {
+      font-family: var(--hand);
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin: 0 0 6px;
+    }
+    .ha-who { margin: 0 0 16px; font-size: .92rem; color: var(--muted); line-height: 1.6; }
+    .ha-btn {
+      display: inline-block;
+      background: var(--header);
+      color: #f8fafc;
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      padding: 9px 22px;
+      border-radius: 999px;
+      transition: background .15s ease;
+    }
+    .house-ad:hover .ha-btn { background: var(--accent); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--header);
+      color: rgba(248,250,252,.75);
+      padding: 18px 0 22px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: clamp(16px, 4vw, 36px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .footer-nav a {
+      color: rgba(248,250,252,.9);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 1400px) { .brand-top { font-size: 8.8rem; } }
+    @media (max-width: 560px) {
+      .header-inner { flex-direction: column; align-items: center; gap: 10px; padding-inline: 14px; }
+      .brand-block { align-items: center; text-align: center; }
+      .brand-top { font-size: clamp(2rem, 11vw, 3rem); letter-spacing: 1px; }
+      .qr-box { align-self: flex-start; }
+      .qr-box img { width: 50px; height: 50px; }
+      main.wrap { padding-block: 20px 40px; }
+      header { padding-block: 20px; }
+      section { margin-bottom: 40px; }
+      .row { padding-right: 28px; }
+    }
+    @media (max-width: 460px) { .ha-pitch { font-size: 1.6rem; } }
+    @media (prefers-reduced-motion: reduce) {
+      .brand-top, header::before { animation: none; }
+      .brand-top { -webkit-text-fill-color: #f8fafc; color: #f8fafc; }
+      a.row::after, .cat, .house-ad { transition: none; }
+      h1 { animation: none; opacity: 1; transform: none; }
+    }
+
+    /* ===== ALL DEVICES ===== */
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    img { max-width: 100%; height: auto; }
+    /* minmax(0,…) stops the shop images pushing the page sideways on phones */
+    .ha-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cats { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+    .quick { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+    h2.big {
+      font-size: clamp(2.2rem, 1.3rem + 3vw, 3.6rem);
+      line-height: 1.05;
+      margin-bottom: 4px;
+    }
+    .footer-nav a { display: inline-block; padding: 6px 2px; }  /* easier to tap */
+    @media (max-width: 560px) {
+      .cat { padding: 18px 16px; }
+      .cat .name { font-size: 1.9rem; }
+      .house-ad { padding: 18px 14px 22px; }
+      .ha-strip { gap: 4px; }
+      .row { padding-block: 4px; }
+    }
+    @media (min-width: 1800px) {
+      :root { --max: 1320px; }
+      body { font-size: 1.12rem; }
+    }
+
+    /* ===== AD SLOTS =====
+       Hidden until an AdSense <ins> is pasted in; once live, the slot keeps
+       its height so the page doesn't jump while the ad loads. */
+    .ad-slot {
+      max-width: var(--col);
+      margin: 0 auto 54px;
+      text-align: center;
+      min-height: 280px;
+    }
+    .ad-slot:not(:has(ins)) { display: none; }
+    .ad-slot::before {
+      content: "Advertisement";
+      display: block;
+      font-size: .64rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .ad-slot ins { display: block; }
+    ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }
+    @media (min-width: 768px) { .ad-slot { min-height: 120px; } }
+
+    /* ===== FOOTER NOTICE ===== */
+    .footer-note {
+      max-width: 70ch;
+      font-size: .8rem;
+      line-height: 1.6;
+      color: rgba(248,250,252,.62);
+      margin: 6px 0 2px;
+    }
+    .footer-note a { color: rgba(248,250,252,.85); }
+
+    @media print {
+      header::before, .ad-slot, .house-ad, footer { display: none !important; }
+      body { background: #fff; }
+      h1 { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="qr-box">
+      <img id="qrIcon" width="60" height="60"
+           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fkoalaspies-games.site"
+           alt="QR code linking to this page">
+    </div>
+    <div class="brand-block">
+      <a href="index.html" class="brand-top">Koalaspies</a>
+      <div class="tagline">Party · Family · Brain · Revision</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== WELCOME ===== -->
+  <section class="wide">
+    <h1>Games Made to Play Together</h1>
+    <span class="sub">Warmers, old-school revision, social games and speaking practice — for kids and kids at heart.</span>
+
+    <div class="intro">
+      <p class="lead"><b>Free, always.</b> Nothing is timed, nothing is scored, and nothing asks you to sign up.</p>
+      <p class="lead"><b>Classes and groups:</b> project a game on the board or wall, or put a tablet in the middle of the table.</p>
+      <p class="lead"><b>Students and individuals:</b> almost every game works alone on a phone. Scan the QR code in the corner to share.</p>
+    </div>
+  </section>
+
+  <!-- ===== THE FOUR CATEGORIES ===== -->
+  <section class="wide" aria-labelledby="pick">
+    <h2 id="pick" class="big">Pick Your Games</h2>
+    <span class="sub">Four rooms. Walk into whichever suits the crowd.</span>
+
+    <ul class="cats">
+      <li>
+        <a class="cat party" href="party-games.html">
+          <span class="num">01</span>
+          <span class="icon" aria-hidden="true">🎉</span>
+          <span class="name">Party Games</span>
+          <span class="note">Icebreakers, small talk and speaking challenges for a room full of people — loud, silly and surprisingly deep.</span>
+          <span class="go">Play party games →</span>
+        </a>
+      </li>
+      <li>
+        <a class="cat family" href="family-games.html">
+          <span class="num">02</span>
+          <span class="icon" aria-hidden="true">🏡</span>
+          <span class="name">Family Games</span>
+          <span class="note">Games for the kitchen table or a long car trip, easy enough for little ones and still fun for grandparents.</span>
+          <span class="go">Play family games →</span>
+        </a>
+      </li>
+      <li>
+        <a class="cat brain" href="brain-games.html">
+          <span class="num">03</span>
+          <span class="icon" aria-hidden="true">🧠</span>
+          <span class="name">Brain Games</span>
+          <span class="note">Memory, matching, logic and word puzzles to keep a sharp mind sharp, alone or head-to-head.</span>
+          <span class="go">Play brain games →</span>
+        </a>
+      </li>
+      <li>
+        <a class="cat k12" href="k12-revision-games.html">
+          <span class="num">04</span>
+          <span class="icon" aria-hidden="true">📚</span>
+          <span class="name">K-12 &amp; Revision</span>
+          <span class="note">Chemistry and the periodic table, Japanese kanji, English idioms and more — revision that actually sticks.</span>
+          <span class="go">Start revising →</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== EXISTING GAMES, ONE CLICK AWAY ===== -->
+  <section class="wide" aria-labelledby="jump">
+    <h2 id="jump">Jump straight in</h2>
+    <p class="lead">Already know what you want? Here are the favourites.</p>
+
+    <ul class="list quick">
+      <li>
+        <a class="row" href="chemistry/table/index.html">
+          <span class="kicker">K-12 &amp; Revision</span>
+          <span class="name">Chemistry: The Periodic Table</span>
+          <span class="note">Symbols, uses, ores, formulas, reactions and hazard signs.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="kanjigame/index.html">
+          <span class="kicker">K-12 &amp; Revision</span>
+          <span class="name">Japanese: Your First 800 Kanji</span>
+          <span class="note">Eighty characters at a time, in the order Japanese schools teach them.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="https://modernenglish.au/vocabularygames.html">
+          <span class="kicker">K-12 &amp; Revision</span>
+          <span class="name">English Idioms</span>
+          <span class="note">Weather, colour, body and other everyday idioms.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="smalltalktictactoe.html">
+          <span class="kicker">Party</span>
+          <span class="name">Small Talk Noughts &amp; Crosses</span>
+          <span class="note">Answer a small-talk question to claim your square. Three in a row wins.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="misscongeniality.html">
+          <span class="kicker">Party</span>
+          <span class="name">What Would Miss Congeniality Say?</span>
+          <span class="note">Real Miss Universe questions, answered with beauty and grace. Harder than you think.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="matchinggame/whatmattersmost.html">
+          <span class="kicker">Party</span>
+          <span class="name">What Matters Most!</span>
+          <span class="note">Speak from the heart on a random topic — could be deep, could be silly.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== AD SLOT 1 — below the game lists, never between them ===== -->
+  <div class="ad-slot">
+    <!--
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="3333333333"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+  </div>
+
+  <!-- ===== HOUSE AD (our own shop — labelled so nobody mistakes it for a game) ===== -->
+  <a class="house-ad" href="https://justine.deco-apparel.com/" rel="noopener">
+    <span class="ha-slot">From the Koalaspies Shop · our own store</span>
+    <div class="ha-strip">
+      <img src="https://cdn.myportfolio.com/c930201a-c696-4b08-a062-486be8e0eeb3/2903d41e-81a9-4c68-9a5f-f914e4c2029b_carw_16x9x1280.jpg?h=2ca312dbd3a49520517f5e5675419fcf"
+           alt="Painting of a koala wearing a panda suit on a red background" loading="lazy" width="1280" height="720">
+      <img src="https://cdn.myportfolio.com/c930201a-c696-4b08-a062-486be8e0eeb3/5d66b8d2-bd58-4f05-9986-9932e9b32ed9_carw_16x9x1280.jpg?h=be3bccbb049469c5b91b413adb2edfc7"
+           alt="Painting of a panda wearing a koala suit on a green background" loading="lazy" width="1280" height="720">
+      <img src="https://cdn.myportfolio.com/c930201a-c696-4b08-a062-486be8e0eeb3/4c38762b-a89a-4c46-a42f-b2a9a0d44bad_carw_16x9x1280.png?h=5a9be5cba8ea5188b59af3484e24bfce"
+           alt="Painting of a koala in karate face paint" loading="lazy" width="1280" height="720">
+    </div>
+    <p class="ha-pitch">The koalas have a shop</p>
+    <p class="ha-who">Original paintings by Justine Kelly — koalas in panda suits, pandas in koala
+      suits, karate koalas — printed on tees, hoodies, onesies, bags and plush toys.</p>
+    <span class="ha-btn">Shop the koalas →</span>
+  </a>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <h2>Get in touch</h2>
+    <p class="lead">Anything at all — a broken link, a game you wish existed, or work.</p>
+    <p class="address-line">
+      Email <a href="mailto:KoalaSpiesSydney@outlook.com">KoalaSpiesSydney@outlook.com</a>
+    </p>
+    <ul class="list">
+      <li>
+        <a class="row" href="mailto:KoalaSpiesSydney@outlook.com?subject=Koalaspies%3A%20a%20game%20suggestion">
+          <span class="kicker">Free</span>
+          <span class="name">Suggest a game</span>
+          <span class="note">Tell me the set your students keep forgetting — irregular verbs, bones of the hand,
+            the ten districts of somewhere. If it is a list worth learning, it can probably be a game.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="mailto:KoalaSpiesSydney@outlook.com?subject=Koalaspies%3A%20commission%20enquiry">
+          <span class="kicker">Commission</span>
+          <span class="name">A game built for your course</span>
+          <span class="note">Your content, your branding, your colours, delivered as a single HTML file you own outright —
+            drop it into Moodle, Canvas, a website or a USB stick. Tell me the syllabus and I will quote.</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== AD SLOT 2 — end of page ===== -->
+  <div class="ad-slot">
+    <!--
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="4444444444"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="party-games.html">Party</a>
+      <a href="family-games.html">Family</a>
+      <a href="brain-games.html">Brain</a>
+      <a href="k12-revision-games.html">K-12 &amp; Revision</a>
+    </div>
+    <div class="footer-nav">
+      <a href="https://modernenglish.au/Microlessons%26Games.html">More Micro Lessons &amp; Games</a>
+      <a href="https://modernenglish.au/IELTSPTEPLUS.html">Practice Tests for IELTS &amp; PTE</a>
+    </div>
+    <div class="footer-nav">
+      <a href="privacy.html">Privacy &amp; Cookies</a>
+      <a href="privacy.html#disclaimer">Disclaimer</a>
+      <a href="mailto:KoalaSpiesSydney@outlook.com">Contact</a>
+    </div>
+    <p class="footer-note">Koalaspies is free to use and is supported by advertising. Ads may be served by
+      Google and its partners, who use cookies. See our <a href="privacy.html">Privacy &amp; Cookies</a> page for
+      details and how to opt out. Games are for education and entertainment; external links lead to sites we
+      don't control. Young players should use the site with a parent, carer or teacher.</p>
+    <div>© Justine Kelly 2026 · Sydney, Australia</div>
+  </div>
+</footer>
+
+<script>
+  /* QR code points at wherever this page is actually open. */
+  const qrIcon = document.getElementById("qrIcon");
+  if (qrIcon) {
+    qrIcon.src = "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" +
+                 encodeURIComponent(window.location.href);
+  }
+  /* Stagger the big headings so they slide in one after another. */
+  document.querySelectorAll("h1").forEach(function (h, i) {
+    h.style.setProperty("--slide-delay", (i * 0.45) + "s");
+  });
+</script>
+
+</body>
+</html>
