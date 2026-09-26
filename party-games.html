@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="ocean">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,11 +10,9 @@
   <meta name="theme-color" content="#14161c">
 
   <!-- ══════════════════════════════════════════════════════════════════
-       BEFORE YOU GO LIVE — three things to change
+       BEFORE YOU GO LIVE — two things to do
 
-       1. CANONICAL / SHARE ADDRESS. Every "https://modernenglish.au/party-games.html"
-          below is a guess. Replace it with the real address of this page
-          (search for  modernenglish.au/party-games  — 4 places).
+       1. (Done: every address now points to koalaspies-games.site.)
 
        2. SHARE IMAGE. og:image points at share-party.jpg next to this page.
           Make a 1200×630 image (the koala + "Free Party Games") and save it
@@ -43,16 +41,15 @@
   <meta property="og:site_name" content="Koalaspies">
   <meta property="og:title" content="Free Party Games — One Screen, One Host, No Sign-Up">
   <meta property="og:description" content="Game-show style speaking games for groups and classrooms. Put it on the big screen and let the room do the talking.">
-  <link rel="canonical" href="https://koalaspies-games.site/party-games.html">
-<meta property="og:url" content="https://koalaspies-games.site/party-games.html">
-  <meta property="og:image" content="share-party.jpg">
+  <meta property="og:url" content="https://koalaspies-games.site/party-games.html">
+  <meta property="og:image" content="https://koalaspies-games.site/share-party.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_AU">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free Party Games — One Screen, One Host, No Sign-Up">
   <meta name="twitter:description" content="Game-show style speaking games for groups and classrooms. No logins, no subscription. Just play.">
-  <meta name="twitter:image" content="share-party.jpg">
+  <meta name="twitter:image" content="https://koalaspies-games.site/share-party.jpg">
 
   <!-- Structured data: tells Google what the page is, lists the games,
        and makes the FAQ eligible to show directly in search results. -->
@@ -63,17 +60,18 @@
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Koalaspies", "item": "https://modernenglish.au/index.html" },
-          { "@type": "ListItem", "position": 2, "name": "Party Games", "item": "https://modernenglish.au/party-games.html" }
+          { "@type": "ListItem", "position": 1, "name": "Koalaspies", "item": "https://koalaspies-games.site/" },
+          { "@type": "ListItem", "position": 2, "name": "Party Games", "item": "https://koalaspies-games.site/party-games.html" }
         ]
       },
       {
         "@type": "ItemList",
         "name": "Free party games for groups and classrooms",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "What Would Miss Congeniality Say?", "url": "https://modernenglish.au/misscongeniality.html" },
-          { "@type": "ListItem", "position": 2, "name": "What Matters Most!", "url": "https://modernenglish.au/matchinggame/whatmattersmost.html" },
-          { "@type": "ListItem", "position": 3, "name": "Tops", "url": "https://modernenglish.au/tops.html" }
+          { "@type": "ListItem", "position": 1, "name": "What Would Miss Congeniality Say?", "url": "https://koalaspies-games.site/misscongeniality/game.html" },
+          { "@type": "ListItem", "position": 2, "name": "Small Talk Noughts & Crosses", "url": "https://koalaspies-games.site/game/smalltalktictactoe.html" },
+          { "@type": "ListItem", "position": 3, "name": "What Matters Most!", "url": "https://koalaspies-games.site/matchinggame/whatmattersmost.html" },
+          { "@type": "ListItem", "position": 4, "name": "Tops", "url": "https://koalaspies-games.site/topgame/index.html" }
         ]
       },
       {
@@ -97,30 +95,75 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650;8..60,700;8..60,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@700&family=Caveat:wght@600;700&family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650;8..60,700;8..60,800&display=swap" rel="stylesheet">
 
   
   <style>
+    /* ══════════════════════════════════════════════════════════════
+       THE COLOURS
+       Four ready-made colour schemes. Pick one by changing ONE word on the
+       <html> tag at the very top of this file:
+           <html lang="en" data-theme="violet">
+       The choices are:  violet · ocean · teal · graphite
+       Use the SAME word as on the home page (index.html) so the whole site
+       matches. Every colour on the page comes from here, so a scheme changes
+       the whole page at once. To fine-tune one, edit its block below.
+
+       --page-c is this page's own colour: the scheme's Party colour,
+       darkened so writing on it and in it stays easy to read.
+       ══════════════════════════════════════════════════════════════ */
     :root {
-      --ink: #1f2430;
-      --muted: #57534e;
-      --faint: #a8a29e;
-      --line: rgba(31,36,48,.14);
-      --accent: #2563eb;
-      --header: #14161c;
-      --green: #64ec98;
-      --green-deep: #105734;
       --sans: "Source Sans 3", system-ui, sans-serif;
       --serif: "Source Serif 4", Georgia, serif;
       --hand: "Caveat", "Bradley Hand", "Segoe Script", cursive;
       --max: 1160px;
       --col: 74ch;
+      --sparkle: .9;       /* the little diamond glints: 0 none, 1 full */
+      --paper-texture: .6; /* how strong the paper grain is: 0 none, .6 soft, 1 strong */
+      --line: rgba(31,36,48,.12);
+    }
 
-      /* one colour per category */
-      --party: #e11d74;
-      --family: #f59e0b;
-      --brain: #7c3aed;
-      --k12: #0e9f6e;
+    /* MIDNIGHT VIOLET — deep indigo with violet and teal (the default) */
+    :root, html[data-theme="violet"] {
+      --ink: #1b1d33;  --muted: #4d5068;  --faint: #7c7f96;
+      --paper: #f6f6fb; --paper-2: #f1f1f9; --paper-3: #e9e8f6; --paper-tint: rgba(110,100,200,.12);
+      --header: #1a1650; --header-2: #231d6b; --header-3: #0f0c33;
+      --heading: #1a1650; --accent: #4b3fd9; --shimmer: #b9b0ff;
+      --shadow-tint: rgba(35,29,107,.22);
+      --party: #d6246e; --family: #e9851c; --brain: #6a4cd9; --k12: #0e9f8e;
+      --page-c: #c01f62;
+    }
+    /* CLEAN OCEAN — crisp white, bright blue and coral */
+    html[data-theme="ocean"] {
+      --ink: #1b2430;  --muted: #4a5566;  --faint: #7b8696;
+      --paper: #f7f9fc; --paper-2: #f1f5fb; --paper-3: #e8eef8; --paper-tint: rgba(90,140,210,.12);
+      --header: #0b2545; --header-2: #12335d; --header-3: #071a33;
+      --heading: #0b2545; --accent: #1f6feb; --shimmer: #9cc3ff;
+      --shadow-tint: rgba(11,37,69,.22);
+      --party: #ff5a4e; --family: #6b3410; --brain: #7c5cfa; --k12: #12a37f;
+      --page-c: #d9362b;
+    }
+    /* SLATE TEAL — calm teal with warm amber */
+    html[data-theme="teal"] {
+      --ink: #102a2e;  --muted: #45595c;  --faint: #7a8c8e;
+      --paper: #f4f7f7; --paper-2: #eef3f3; --paper-3: #e4eded; --paper-tint: rgba(40,130,125,.12);
+      --header: #0b3b3c; --header-2: #10504f; --header-3: #072728;
+      --heading: #0b3b3c; --accent: #0f766e; --shimmer: #9fe3da;
+      --shadow-tint: rgba(11,59,60,.22);
+      --party: #d9467a; --family: #e8962e; --brain: #5b5bd6; --k12: #2f80c4;
+      --sparkle: .45;
+      --page-c: #c2335f;
+    }
+    /* GRAPHITE MAGENTA — charcoal with a bold magenta */
+    html[data-theme="graphite"] {
+      --ink: #1a1a22;  --muted: #4f4f5c;  --faint: #80808e;
+      --paper: #f8f8fa; --paper-2: #f3f3f6; --paper-3: #ebebf0; --paper-tint: rgba(120,120,140,.10);
+      --header: #1c1c24; --header-2: #26262f; --header-3: #111116;
+      --heading: #1c1c24; --accent: #c2185b; --shimmer: #ff9cc2;
+      --shadow-tint: rgba(28,28,36,.22);
+      --party: #e0457b; --family: #f59e0b; --brain: #6d5dfc; --k12: #0ea5a4;
+      --sparkle: .35;
+      --page-c: #c42a60;
     }
 
     * { box-sizing: border-box; }
@@ -130,11 +173,11 @@
       margin: 0;
       color: var(--ink);
       line-height: 1.75;
-      background-color: #fdfaf1;
+      background-color: var(--paper);
       background-image:
-        radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 55%),
-        radial-gradient(90% 60% at 50% 108%, rgba(176,150,102,.16) 0%, rgba(176,150,102,0) 60%),
-        linear-gradient(175deg, #fdfaf1 0%, #faf4e6 55%, #f3ead6 100%);
+        radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(90% 60% at 50% 108%, var(--paper-tint) 0%, transparent 60%),
+        linear-gradient(175deg, var(--paper) 0%, var(--paper-2) 55%, var(--paper-3) 100%);
       background-attachment: fixed;
       overflow-x: hidden;
     }
@@ -144,7 +187,7 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      opacity: .5;
+      opacity: var(--paper-texture);
       mix-blend-mode: multiply;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E");
       background-size: 170px 170px;
@@ -160,7 +203,7 @@
     header {
       position: relative;
       background: var(--header);
-      background-image: linear-gradient(160deg, #1b1f28 0%, #14161c 55%, #0d0f14 100%);
+      background-image: linear-gradient(160deg, var(--header-2) 0%, var(--header) 55%, var(--header-3) 100%);
       overflow: hidden;
       padding-block: clamp(22px, 4vw, 44px);
     }
@@ -207,7 +250,7 @@
       line-height: 1.05;
       text-decoration: none;
       color: #f8fafc;
-      background: linear-gradient(100deg, #ffffff 0%, #ffffff 30%, #a5c4fd 42%, #ffffff 60%, #ffffff 100%);
+      background: linear-gradient(100deg, #ffffff 0%, #ffffff 30%, var(--shimmer) 42%, #ffffff 60%, #ffffff 100%);
       background-size: 250% auto;
       background-clip: text;
       -webkit-background-clip: text;
@@ -239,13 +282,13 @@
 
     /* ===== HEADINGS ===== */
     h1 {
-      font-family: var(--hand);
+      font-family: "Oxygen", system-ui, sans-serif;
       font-weight: 700;
       font-size: clamp(2.7rem, 1.4rem + 4.4vw, 4.8rem);
       margin: 0 0 6px;
       line-height: 1.05;
-      color: var(--green-deep);
-      text-shadow: 0 1px 0 rgba(16,87,52,.30);
+      letter-spacing: -.01em;
+      color: var(--page-c);
       animation: slide-in-left 1.7s cubic-bezier(.16,.84,.34,1) both;
       animation-delay: var(--slide-delay, 0s);
     }
@@ -261,13 +304,15 @@
       margin: 0 0 26px;
     }
     h2 {
-      font-family: var(--hand);
-      font-size: clamp(1.6rem, 1.2rem + 1vw, 2.1rem);
+      font-family: "Oxygen", system-ui, sans-serif;
+      font-size: clamp(1.9rem, 1.2rem + 2.2vw, 2.9rem);
       font-weight: 700;
-      margin: 0 0 2px;
-      line-height: 1.2;
-      color: var(--green-deep);
+      margin: 0 0 4px;
+      line-height: 1.1;
+      letter-spacing: -.01em;
+      color: var(--page-c);
     }
+    h2 + .lead, h2 + .rules, h2 + .chips { margin-top: 10px; }
 
     section { max-width: var(--col); margin: 0 auto 54px; }
     section.wide { max-width: var(--max); }
@@ -286,7 +331,7 @@
       gap: 18px;
     }
     .cat {
-      --c: var(--green-deep);
+      --c: var(--accent);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -302,7 +347,7 @@
     }
     .cat:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 24px rgba(31,36,48,.10);
+      box-shadow: 0 2px 4px rgba(16,24,40,.08), 0 16px 30px -12px var(--shadow-tint);
       border-color: var(--c);
     }
     .cat:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -504,12 +549,13 @@
       h1 { animation: none; opacity: 1; transform: none; }
     }
 
-    /* ===== PARTY PAGE ===== */
-    :root { --page: var(--party); }
+    /* ===== CATEGORY PAGE ===== */
     .crumb { font-size: .9rem; margin: 0 0 18px; }
     .crumb a { color: var(--muted); text-decoration: none; }
     .crumb a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-    h1.party { color: var(--party); text-shadow: 0 1px 0 rgba(120,10,60,.25); }
+    .about-party .pitch-big { max-width: 80ch; margin-top: 12px; }
+    .intro-cols { display: grid; grid-template-columns: 1fr; gap: 0 40px; }
+    @media (min-width: 760px) { .intro-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     .pitch-big {
       font-family: var(--serif);
       font-size: clamp(1.15rem, 1rem + .6vw, 1.45rem);
@@ -528,10 +574,11 @@
       gap: 16px;
     }
     .rules li {
+      box-shadow: 0 1px 2px rgba(16,24,40,.06);
       counter-increment: r;
-      background: rgba(255,255,255,.62);
+      background: rgba(255,255,255,.72);
       border: 1px solid var(--line);
-      border-left: 5px solid var(--party);
+      border-left: 5px solid var(--page-c);
       border-radius: 6px;
       padding: 16px 18px 14px;
     }
@@ -541,7 +588,7 @@
       font-size: .72rem;
       letter-spacing: .14em;
       font-weight: 700;
-      color: var(--party);
+      color: var(--page-c);
     }
     .rules b {
       display: block;
@@ -553,7 +600,7 @@
     .rules span { font-size: .95rem; color: var(--muted); line-height: 1.6; display: block; }
     .games .row { padding-block: 4px; }
     .games .row .name { font-size: 1.9rem; }
-    .games .row .kicker { color: var(--party); }
+    .games .row .kicker { color: var(--page-c); }
     .tag-free {
       display: inline-block;
       background: var(--header);
@@ -572,7 +619,7 @@
     img { max-width: 100%; height: auto; }
     h2.big {
       font-size: clamp(2.2rem, 1.3rem + 3vw, 3.6rem);
-      color: var(--party);
+      color: var(--page-c);
       line-height: 1.05;
       margin-bottom: 4px;
     }
@@ -658,7 +705,7 @@
       top: 50%;
       transform: translateY(-50%);
       font-size: 1.4rem;
-      color: var(--party);
+      color: var(--page-c);
       font-weight: 400;
     }
     .faq details[open] summary::after { content: "–"; }
@@ -680,7 +727,7 @@
       cursor: pointer;
     }
     .share button.ghost { background: transparent; color: var(--ink); }
-    .share button:hover { background: var(--party); border-color: var(--party); color: #fff; }
+    .share button:hover { background: var(--page-c); border-color: var(--page-c); color: #fff; }
     .share button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     .share .share-link {
       display: inline-flex; align-items: center;
@@ -724,50 +771,48 @@
       grid-template-areas: "kicker play" "name play" "note play";
       column-gap: 24px;
       align-items: center;
-      padding: 22px 24px;
-      background: #fff;
-      border: 2px solid var(--party);
-      border-left-width: 10px;
+      padding: 20px 24px 22px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--line);
+      border-top: 8px solid var(--page-c);
       border-radius: 10px;
-      box-shadow: 0 4px 0 rgba(225,29,116,.25);
+      box-shadow: 0 1px 2px rgba(16,24,40,.06), 0 8px 20px -12px var(--shadow-tint);
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
     .games a.row::after { content: none; }
     .games .row .kicker { grid-area: kicker; }
+    .games h3.name { margin: 0; font-family: var(--hand); font-weight: 700; line-height: 1.15; color: var(--ink); }
     .games .row .name  { grid-area: name; font-size: 2.1rem; }
     .games .row .note  { grid-area: note; }
     .games a.row:hover, .games a.row:focus-visible {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 0 rgba(225,29,116,.3);
-      background: #fff5fa;
+      transform: translateY(-4px) rotate(-.2deg);
+      box-shadow: 0 2px 4px rgba(16,24,40,.08), 0 18px 32px -12px var(--shadow-tint);
+      background: #fff;
     }
-    .games a.row:hover .name, .games a.row:focus-visible .name { color: var(--party); text-decoration: none; }
-    .games a.row:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(225,29,116,.3); }
+    .games a.row:hover .name, .games a.row:focus-visible .name { color: var(--page-c); text-decoration: none; }
+    .games a.row:active { transform: translateY(1px); }
     .play {
       grid-area: play;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--party);
+      background: var(--page-c);
       color: #fff;
       font-weight: 800;
       font-size: 1rem;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      padding: 12px 22px;
-      min-height: 48px;
+      letter-spacing: .02em;
+      padding: 10px 24px;
+      min-height: 46px;
       border-radius: 999px;
       white-space: nowrap;
-      box-shadow: 0 3px 0 #9d1352;
       transition: transform .15s ease;
     }
-    .games a.row:hover .play { transform: scale(1.06); }
+    .games a.row:hover .play { filter: brightness(1.1); }
     @media (max-width: 640px) {
       .games a.row {
         grid-template-columns: 1fr;
         grid-template-areas: "kicker" "name" "note" "play";
         padding: 18px 16px;
-        border-left-width: 7px;
       }
       .games .row .name { font-size: 1.7rem; }
       .play { justify-self: stretch; justify-content: center; margin-top: 14px; }
@@ -775,6 +820,26 @@
     @media (prefers-reduced-motion: reduce) {
       .games a.row, .play { transition: none; }
     }
+
+    /* ===== "COMING SOON" CARD ===== */
+    .soon-card {
+      display: grid;
+      gap: 4px;
+      padding: 22px 24px;
+      border: 2px dashed color-mix(in srgb, var(--page-c) 45%, transparent);
+      border-radius: 10px;
+      background: rgba(255,255,255,.6);
+    }
+    .soon-card .kicker {
+      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      font-weight: 700; color: var(--page-c);
+    }
+    .soon-card .name {
+      font-family: var(--hand); font-size: 2rem; font-weight: 700; line-height: 1.1; color: var(--muted);
+    }
+    .soon-card p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; }
+    .soon-card a { color: var(--accent); font-weight: 700; }
+    @media (max-width: 640px) { .soon-card { padding: 18px 16px; } .soon-card .name { font-size: 1.7rem; } }
 
     /* ===== SHARE: LINK + QR CODE ===== */
     .share-box {
@@ -870,9 +935,8 @@
 <header>
   <div class="header-inner">
     <div class="qr-box">
-      <img id="qrIcon"
-  
-           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fmodernenglish.au"
+      <img id="qrIcon" width="60" height="60"
+           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fkoalaspies-games.site%2Fparty-games.html"
            alt="QR code linking to this page">
     </div>
     <div class="brand-block">
@@ -887,28 +951,16 @@
   <!-- ===== WELCOME ===== -->
   <section class="wide">
     <nav class="crumb" aria-label="Breadcrumb"><a href="index.html">← All games</a></nav>
-    <h1 class="party">Free Party Games</h1>
+    <h1>Free Party Games</h1>
     <span class="sub">One screen. One host. A room full of talk.</span>
 
     <span class="tag-free">Free · No sign-up · No subscription · Just play</span>
-
-    <p class="pitch-big">These games are a love letter to the old board games and TV game shows —
-      the ones where the fun was never really on the board, it was the arguing, the laughing and the
-      “wait, what would <em>you</em> say?” around it.</p>
-
-    <div class="intro">
-      <p class="lead">The screen is only the spark. It throws out a question, a topic or a challenge,
-        and then the real game happens <b>off screen</b>, between the people in the room. Nobody needs
-        their own device, nobody needs an account, and nobody is racing a clock.</p>
-      <p class="lead">They work at parties, in classrooms, at the pub, around the dinner table, or on a
-        video call with the host sharing their screen.</p>
-    </div>
   </section>
 
-  <!-- ===== THE GAMES (first, so visitors from other game sites find them fast) ===== -->
+  <!-- ===== THE GAMES: straight under the title, so they are the first thing people reach ===== -->
   <section class="wide" aria-labelledby="games">
     <h2 id="games" class="big">The Games</h2>
-    <span class="sub">Three to start with. More on the way.</span>
+    <span class="sub">Four to start with. More on the way.</span>
 
     <ul class="list games">
       <li>
@@ -919,6 +971,15 @@
           <span class="note">Real questions put to Miss Universe contestants, and they go well beyond world peace.
             The host reads the question, one player answers with all the beauty and grace they can muster,
             and the room decides whether they've earned the sash. Harder than you think.</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="game/smalltalktictactoe.html">
+          <span class="kicker">Team game · Speaking</span>
+          <span class="name">Small Talk Noughts &amp; Crosses</span>
+          <span class="play" aria-hidden="true">▶ Play</span>
+          <span class="note">Two teams, one board. Pick a square, listen to the small-talk question, then keep
+            talking until the clock runs out to claim it. Stop early and the square stays open. Four in a row wins.</span>
         </a>
       </li>
       <li>
@@ -938,6 +999,15 @@
           <span class="note">A crowd game for groups: the host puts up the round, and the room argues it out.
             Loud, quick, and best with a big group.</span>
         </a>
+      </li>
+      <li>
+        <div class="soon-card">
+          <span class="kicker">Coming soon</span>
+          <span class="name">More party games</span>
+          <p>New party games are on the way: more game-show rounds, speaking challenges and icebreakers for a
+            room full of people. Got an idea for one?
+            <a href="mailto:KoalaSpiesSydney@outlook.com?subject=Koalaspies%3A%20party%20game%20idea">Tell us</a>.</p>
+        </div>
       </li>
     </ul>
   </section>
@@ -1040,6 +1110,21 @@
     <span class="ha-btn">Shop the koalas →</span>
   </a>
 
+  <!-- ===== ABOUT: the longer text, moved down so the games come first ===== -->
+  <section class="wide about-party" aria-labelledby="about">
+    <h2 id="about">About these party games</h2>
+    <p class="pitch-big">These games are a love letter to the old board games and TV game shows —
+      the ones where the fun was never really on the board, it was the arguing, the laughing and the
+      “wait, what would <em>you</em> say?” around it.</p>
+    <div class="intro-cols">
+      <p class="lead">The screen is only the spark. It throws out a question, a topic or a challenge,
+        and then the real game happens <b>off screen</b>, between the people in the room. Nobody needs
+        their own device, nobody needs an account, and nobody is racing a clock.</p>
+      <p class="lead">They work at parties, in classrooms, at the pub, around the dinner table, or on a
+        video call with the host sharing their screen.</p>
+    </div>
+  </section>
+
   <!-- ===== FAQ (matches the FAQ in the structured data at the top — edit both together) ===== -->
   <section class="faq" aria-labelledby="faq">
     <h2 id="faq">Questions hosts ask</h2>
@@ -1089,12 +1174,12 @@
     <div class="share-box">
       <div class="share-qr">
         <img id="shareQr" width="132" height="132" alt="QR code for this page"
-           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fmodernenglish.au"
+           src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=https%3A%2F%2Fkoalaspies-games.site%2Fparty-games.html">
       </div>
       <div>
         <p>Scan the code to open this page on another phone or tablet, or copy the link to paste into an email,
           a class page or a newsletter.</p>
-        <span class="share-url" id="shareUrl">https://modernenglish.au</span>
+        <span class="share-url" id="shareUrl">https://koalaspies-games.site/party-games.html</span>
         <button type="button" class="copy-btn" id="copyBtn">Copy link</button>
         <span class="copy-msg" id="shareMsg" aria-live="polite"></span>
       </div>
