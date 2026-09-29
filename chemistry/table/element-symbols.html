@@ -12,7 +12,18 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Element Symbols – Periodic Table Matching Game | Modern English Australia</title>
+<title>Element Symbols – Periodic Table Matching Game | Koalaspies</title>
+<meta name="description" content="Match each chemical symbol to its element name. A free periodic table memory game: six new elements every round until you have covered all 118." />
+<link rel="canonical" href="https://koalaspies-games.site/chemistry/table/element-symbols.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Koalaspies" />
+<meta property="og:title" content="Element Symbols · Periodic Table Matching Game" />
+<meta property="og:description" content="Match each symbol to its element. Six new elements every round. Free, no sign-up." />
+<meta property="og:url" content="https://koalaspies-games.site/chemistry/table/element-symbols.html" />
+<meta property="og:image" content="https://koalaspies-games.site/share-revision.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <style>
 :root {
@@ -28,19 +39,6 @@
 }
 
 *, *::before, *::after { box-sizing:border-box; }
-
-/* ===== Background Video ===== */
-#bgVideo {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-1;
-  opacity:0.35;
-  pointer-events:none;
-}
 
 /* ===== Layout ===== */
 html { -webkit-text-size-adjust:100%; }
@@ -68,7 +66,11 @@ body {
   font-size:clamp(.68rem, 2.4vw, .9rem);
   color:var(--accent);
   text-transform:uppercase;
+  text-decoration:none;
+  display:inline-block;
+  padding:.35rem .5rem;      /* a comfortable tap target */
 }
+.brand:hover { color:var(--accent-dark); }
 
 main {
   flex:1;
@@ -112,17 +114,19 @@ p.intro {
   font-size:clamp(.82rem, 2.8vw, 1rem);
 }
 
-/* ===== 12-card board: 4 across, 3 down, always square ===== */
-@supports (height:1svh) {
-  #game { width:min(96vw, 640px, calc(56svh * 1.34)); }
-}
-
+/* ===== 12-card board: 4 across, 3 down, always square =====
+   --gw is the board's width. Newer browsers measure the screen with svh
+   (which ignores the address bar); older ones fall back to vh. */
 #game {
+  --gw:min(96vw, 640px, calc(56vh * 1.34));
   display:grid;
   grid-template-columns:repeat(4, 1fr);
   gap:clamp(5px, 1.4vw, 14px);
-  width:min(96vw, 640px, calc(56vh * 1.34));
+  width:var(--gw);
   margin:clamp(10px, 2vw, 20px) auto 0;
+}
+@supports (height:1svh) {
+  #game { --gw:min(96vw, 640px, calc(56svh * 1.34)); }
 }
 
 .card {
@@ -136,13 +140,19 @@ p.intro {
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  font-size:clamp(.6rem, 2.3vw, 1.05rem);
+  font-size:.9rem;
+  font-size:clamp(.8rem, calc(var(--gw) / 22), 1.05rem);  /* follows the size of the cards */
   line-height:1.18;
   text-align:center;
   min-width:0;                 /* a grid item will not shrink below its
                                   longest word without this */
-  overflow-wrap:anywhere;      /* ...and this lets that word break */
-  hyphens:none;
+  word-break:normal;           /* names break ONLY at the marked syllables; */
+  overflow-wrap:normal;        /* if one still does not fit, the script
+                                  eases its size down (see fitName) */
+  -webkit-hyphens:manual;      /* long names split only where the script
+                                  marks a syllable: Praseo-dymium, never
+                                  Praseodymiu-m. Works in every browser. */
+  hyphens:manual;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
   transition:background .3s, color .3s;
@@ -161,7 +171,7 @@ p.intro {
 
 .card.symbol .z {
   font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size:clamp(.5rem, 1.7vw, .78rem);
+  font-size:clamp(.58rem, 1.9vw, .78rem);
   font-weight:500;
   letter-spacing:.5px;
   color:var(--muted);
@@ -181,6 +191,9 @@ p.intro {
 }
 
 .card.matched .z { color:#000; }
+
+/* last resort, only if a name cannot fit even at the smallest size */
+.card.squeeze { word-break:break-word; overflow-wrap:anywhere; }
 
 /* ===== Button ===== */
 button.reset {
@@ -211,7 +224,21 @@ footer {
   padding:.8rem 0 calc(.8rem + env(safe-area-inset-bottom));
   border-top:1px solid var(--line);
   font-size:clamp(.68rem, 2.2vw, .9rem);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:.2rem 1.4rem;
 }
+footer .back {
+  color:var(--accent);
+  font-weight:600;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+}
+footer .back:hover { color:var(--accent-dark); text-decoration:underline; }
 
 /* ===== QR code: top-left, tap to enlarge for a classroom =====
    The code is built at runtime from location.href, so it points at
@@ -236,7 +263,7 @@ footer {
 
 .qr-overlay {
   position:fixed;
-  inset:0;
+  top:0; right:0; bottom:0; left:0;
   z-index:60;
   display:none;
   flex-direction:column;
@@ -260,6 +287,9 @@ footer {
 
 @media (max-width:480px) {
   .qr-mini { width:32px; height:32px; left:.4rem; top:.15rem; }
+}
+@media (max-width:420px) {
+  .brand-sub { display:none; }
 }
 
 
@@ -290,30 +320,33 @@ footer {
   button.reset { grid-area:btn; margin-top:.45rem; }
   #game {
     grid-area:board;
-    width:min(52vw, calc((100vh - 96px) * 4 / 3));
+    --gw:min(52vw, calc((100vh - 96px) * 4 / 3));
     margin:0;
   }
 }
 @supports (height:1svh) {
   @media (max-height:520px) and (orientation:landscape) {
-    #game { width:min(52vw, calc((100svh - 96px) * 4 / 3)); }
+    #game { --gw:min(52vw, calc((100svh - 96px) * 4 / 3)); }
   }
+}
+
+/* Older browsers without aspect-ratio (iPhones and iPads before iOS 15,
+   Chrome before 88, including the engine in WeChat and some Chinese
+   phone browsers): size the cards by hand so they stay square. */
+@supports not (aspect-ratio:1 / 1) {
+  #game { gap:8px; }
+  .card { height:calc((var(--gw) - 24px) / 4); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ===== Background Video ===== -->
-<video id="bgVideo" autoplay muted loop playsinline>
-  <source src="YOUR-VIDEO.mp4" type="video/mp4">
-</video>
-
 <div class="topbar" role="banner">
   <button class="qr-mini" id="qrMini" aria-label="Show a QR code for this game">
     <img id="qrMiniImg" alt="">
   </button>
-  <div class="brand">Modern English Australia</div>
+  <a class="brand" href="index.html">Koalaspies<span class="brand-sub"> · Chemistry games</span></a>
 </div>
 
 <main>
@@ -328,7 +361,8 @@ footer {
 </main>
 
 <footer>
-  © 2025 KoalaSpiesSydney. All rights reserved.
+  <a class="back" href="index.html">&larr; More chemistry games</a>
+  <span>© 2026 Justine Leigh Kelly</span>
 </footer>
 
 <div class="qr-overlay" id="qrOverlay">
@@ -375,6 +409,35 @@ const ELEMENTS = [
   [113,"Nh","Nihonium"],[114,"Fl","Flerovium"],[115,"Mc","Moscovium"],[116,"Lv","Livermorium"],
   [117,"Ts","Tennessine"],[118,"Og","Oganesson"]
 ];
+
+/* Where a long name may break onto a second line. The page shows a
+   hyphen there only if the name does not fit on one line. */
+const BREAKS = {};
+"Hydro|gen Lith|ium Beryl|lium Nitro|gen Fluo|rine Mag|ne|sium Alu|mi|nium Sili|con Phos|pho|rus Chlo|rine Po|tas|sium Cal|cium Scan|dium Tita|nium Vana|dium Chro|mium Man|ga|nese Gal|lium Ger|ma|nium Arse|nic Sele|nium Bro|mine Kryp|ton Rubi|dium Stron|tium Yt|trium Zir|co|nium Nio|bium Mo|lyb|de|num Tech|ne|tium Ruthe|nium Rho|dium Pal|la|dium Cad|mium Anti|mony Tel|lu|rium Cae|sium Lan|tha|num Praseo|dy|mium Neo|dy|mium Pro|me|thium Sama|rium Euro|pium Gado|li|nium Ter|bium Dys|pro|sium Hol|mium Thu|lium Ytter|bium Lute|tium Haf|nium Tanta|lum Tung|sten Rhe|nium Iri|dium Plati|num Mer|cury Thal|lium Bis|muth Polo|nium Asta|tine Fran|cium Acti|nium Tho|rium Prot|acti|nium Ura|nium Nep|tu|nium Plu|to|nium Ameri|cium Berke|lium Cali|for|nium Ein|stei|nium Fer|mium Mende|le|vium Nobe|lium Law|ren|cium Ruther|for|dium Dub|nium Sea|bor|gium Boh|rium Has|sium Meit|ne|rium Darm|stad|tium Roent|ge|nium Coper|ni|cium Niho|nium Fle|ro|vium Mos|co|vium Liver|mo|rium Ten|nes|sine Oga|nes|son".split(" ").forEach(w => { BREAKS[w.replace(/\|/g, "")] = w.split("|").join("\u00AD"); });
+function breakable(name) { return BREAKS[name] || name; }
+
+/* If a name is still too wide for its card (small phone, phone on its
+   side), ease the text down half a pixel at a time until it fits, but
+   never below 10px. */
+function fitName(card) {
+  card.style.fontSize = "";
+  card.classList.remove("squeeze");
+  if (!card.textContent) return;
+  const tooBig = () => card.scrollWidth > card.clientWidth + 1 ||
+                       card.scrollHeight > card.clientHeight + 1;
+  let size = parseFloat(getComputedStyle(card).fontSize);
+  while (tooBig() && size > 10) {
+    size -= 0.5;
+    card.style.fontSize = size + "px";
+  }
+  if (tooBig()) card.classList.add("squeeze");
+}
+let refitTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(refitTimer);
+  refitTimer = setTimeout(() =>
+    document.querySelectorAll(".card.word").forEach(fitName), 120);
+});
 
 const matchColors = [
   "#ffd166","#06d6a0","#4cc9f0","#f72585","#ffb703",
@@ -479,7 +542,8 @@ function startGame() {
           revealedWord.textContent = "";
         }
         div.classList.add("flipped");
-        div.textContent = data.text;
+        div.textContent = breakable(data.text);
+        fitName(div);
         revealedWord = div;
       }
 
@@ -534,6 +598,7 @@ function checkPair(status) {
   if (!mini) return;
   const api = "https://api.qrserver.com/v1/create-qr-code/?data=" +
               encodeURIComponent(location.href) + "&size=";
+  document.getElementById("qrMiniImg").onerror = () => { mini.hidden = true; };
   document.getElementById("qrMiniImg").src = api + "120x120";
   document.getElementById("qrBigImg").src  = api + "400x400";
   document.getElementById("qrUrl").textContent = location.href;
