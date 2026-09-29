@@ -13,6 +13,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Why sport is important — Koalaspies Games</title>
+<meta name="description" content="Watch Nelson Mandela's speech on the power of sport, answer three listening questions, then share your own view. A free English speaking lesson." />
+<link rel="canonical" href="https://koalaspies-games.site/matchinggame/mandela-lesson_1.html" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +51,7 @@
   }
 
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
   /* the film, and the black laid over it */
   .bg-video{
@@ -64,7 +67,9 @@
     background:#05070d;
     min-height:100vh;min-height:100dvh;
     display:flex;flex-direction:column;
-    padding:0 0 28px;
+    /* keeps everything clear of the notch and the home bar on iPhones */
+    padding:0 env(safe-area-inset-right) calc(28px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+    -webkit-tap-highlight-color:transparent;
   }
   /* pale text over footage needs a shadow or it disappears on a bright frame */
   .bar,.foot,.step-label{text-shadow:0 1px 6px rgba(0,0,0,.9)}
@@ -157,17 +162,29 @@
     transition:border-color .15s ease,background .15s ease;
     -webkit-user-select:none;user-select:none;
   }
-  .option:hover{border-color:var(--accent);background:#fff5f8}
-  .option input{display:none}
+  /* hover only on a mouse, so a tapped choice doesn't stay pink on a phone */
+  @media (hover:hover){
+    .option:hover{border-color:var(--accent);background:#fff5f8}
+  }
+  /* the real radio button, hidden from sight but still there for the
+     keyboard and screen readers (display:none removed it completely) */
+  .option input{
+    position:absolute;opacity:0;width:1px;height:1px;
+    margin:0;pointer-events:none;
+  }
+  .option{position:relative}
+  .option:has(input:focus-visible){outline:2px solid #d6336c;outline-offset:2px}
   .dot{
     width:18px;height:18px;flex-shrink:0;margin-top:2px;
     border:2px solid #c9c3bb;border-radius:50%;
     display:flex;align-items:center;justify-content:center;
     transition:border-color .15s ease,background .15s ease;
   }
-  .option:has(input:checked){border-color:var(--accent);background:#fff1f5}
-  .option:has(input:checked) .dot{border-color:#d6336c;background:#d6336c}
-  .option:has(input:checked) .dot::after{
+  /* .is-checked is set by the script as well, for older iPhones and
+     iPads (before iOS 15.4) and older Android browsers without :has() */
+  .option.is-checked{border-color:var(--accent);background:#fff1f5}
+  .option.is-checked .dot{border-color:#d6336c;background:#d6336c}
+  .option.is-checked .dot::after{
     content:'';width:6px;height:6px;background:#fff;border-radius:50%;
   }
   .option.right{border-color:var(--ok)!important;background:var(--ok-bg)!important}
@@ -186,14 +203,15 @@
   .btn-primary{
     font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;
     background:#d6336c;color:#fff;border:0;border-radius:999px;
-    padding:11px 26px;transition:filter .15s ease;
+    padding:11px 26px;min-height:44px;transition:filter .15s ease;
   }
   .btn-primary:hover{filter:brightness(1.1)}
   .btn-primary:focus-visible{outline:2px solid var(--card-ink);outline-offset:2px}
   .btn-quiet{
     font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;
     background:none;border:0;color:var(--card-muted);
-    text-decoration:underline;text-underline-offset:3px;padding:9px 4px;
+    text-decoration:underline;text-underline-offset:3px;padding:9px 8px;
+    min-height:44px;
   }
   .btn-quiet:hover{color:var(--card-ink)}
 
@@ -229,9 +247,36 @@
   .foot-brand{
     color:var(--muted);text-decoration:none;font-weight:700;
     letter-spacing:.14em;text-transform:uppercase;
+    display:inline-flex;align-items:center;min-height:44px;
   }
+  .foot > span{display:inline-flex;align-items:center;min-height:44px}
   .foot-brand:hover{color:var(--accent)}
   .foot-arrow{margin-left:6px}
+
+  /* ═════════ SMALL PHONES ═════════
+     Give the answer text more of the width. */
+  @media (max-width:420px){
+    .sheet{width:calc(100vw - 20px)}
+    .pad{padding:18px 14px 22px}
+    .step-label{padding:14px 14px 10px}
+    .q{padding:14px 12px}
+    .option{padding:11px 11px;gap:10px}
+    .actions{gap:8px}
+    .actions .btn-primary{flex:1 1 auto}
+    .to-game{display:block;text-align:center}
+  }
+  /* ═════════ PHONES ON THEIR SIDE ═════════
+     Keep the video small enough to watch without scrolling. */
+  @media (orientation:landscape) and (max-height:500px){
+    .bar{padding-top:10px}
+    .sheet{margin-top:12px}
+  }
+  @supports (aspect-ratio:16/9){
+    @media (orientation:landscape) and (max-height:500px){
+      .video-wrap{max-width:calc((100vh - 40px) * 16 / 9);margin:0 auto;
+                  padding-bottom:0;height:auto;aspect-ratio:16/9}
+    }
+  }
 
   @media (prefers-reduced-motion:reduce){
     .option,.btn-primary,.to-game{transition:none}
@@ -349,13 +394,13 @@
       Tell a <strong>friend</strong>, a <strong>family member</strong> or your <strong>teacher</strong> what you
       think — and give <strong>two reasons</strong> for it. Keep going for thirty seconds if you can.
     </p>
-    <a class="to-game" href="what-matters-most.html">Play What matters most →</a>
+    <a class="to-game" href="whatmattersmost.html">Play What matters most →</a>
   </div>
 
 </main>
 
 <footer class="foot">
-  <a class="foot-brand" href="http://koalaspiessydney.site/" target="_blank" rel="noopener">More Koalaspies games<span class="foot-arrow" aria-hidden="true">&rarr;</span></a>
+  <a class="foot-brand" href="https://koalaspies-games.site/">More Koalaspies games<span class="foot-arrow" aria-hidden="true">&rarr;</span></a>
   <span>© Justine Leigh Kelly 2026</span>
 </footer>
 
@@ -441,9 +486,16 @@ function checkAnswers(){
 function resetQuiz(){
   document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
   document.querySelectorAll(".feedback").forEach(f => f.className = "feedback");
-  document.querySelectorAll(".option").forEach(o => o.classList.remove("right", "wrong"));
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("right", "wrong", "is-checked"));
   document.getElementById("score").className = "score";
 }
+
+/* Marks the chosen answer, for browsers that cannot do it with CSS alone. */
+function markChosen(){
+  document.querySelectorAll(".option").forEach(o =>
+    o.classList.toggle("is-checked", o.querySelector("input").checked));
+}
+document.addEventListener("change", e => { if (e.target.matches('input[type="radio"]')) markChosen(); });
 
 document.getElementById("checkBtn").addEventListener("click", checkAnswers);
 document.getElementById("againBtn").addEventListener("click", resetQuiz);
