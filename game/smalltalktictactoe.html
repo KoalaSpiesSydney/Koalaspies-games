@@ -14,6 +14,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Small Talk Noughts &amp; Crosses | Koalaspies</title>
+<meta name="description" content="A free team speaking game: pick a square, hear a question, and keep talking until the timer runs out. Four in a row wins. For classrooms and English practice, no sign-up." />
+<link rel="canonical" href="https://koalaspies-games.site/game/smalltalktictactoe.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Small Talk Noughts &amp; Crosses · Free Team Speaking Game" />
+<meta property="og:description" content="Pick a square, hear a question, keep talking. Four in a row wins. Free, no sign-up." />
+<meta property="og:url" content="https://koalaspies-games.site/game/smalltalktictactoe.html" />
+<meta property="og:image" content="https://koalaspies-games.site/share-party.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <style>
 :root {
@@ -38,9 +48,16 @@
   --hard:#dfe6ef;        /* unchanged */
 
 
+  /* The height of the visible screen. Newer browsers use svh, which
+     ignores the address bar; older ones (iPhones before iOS 15.4, older
+     Android and many Chinese phone browsers) fall back to plain vh.  */
+  --svh:1vh;
+
   /* One width for the board AND the team boxes, so their edges line up. */
-  --boardw:min(96vw, 620px, 52svh);
+  --boardw:min(96vw, 620px, calc(52 * var(--svh)));
 }
+
+@supports (height:1svh) { :root { --svh:1svh; } }
 
 *, *::before, *::after { box-sizing:border-box; }
 
@@ -60,7 +77,8 @@ body {
   display:flex;
   flex-direction:column;
   align-items:center;
-  min-height:100svh;
+  min-height:100vh;
+  min-height:calc(100 * var(--svh));
   overflow-x:hidden;
   padding-left:env(safe-area-inset-left);
   padding-right:env(safe-area-inset-right);
@@ -398,7 +416,7 @@ button:focus-visible {
 
 /* ===== Topic panel ===== */
 #intro {
-  position:fixed; inset:0; z-index:20;
+  position:fixed; top:0; right:0; bottom:0; left:0; z-index:20;
   background:rgba(27,29,32,.62);
   display:none; align-items:center; justify-content:center;
   padding:1rem;
@@ -516,7 +534,7 @@ button:focus-visible {
 }
 
 #panel {
-  position:fixed; inset:0; z-index:10;
+  position:fixed; top:0; right:0; bottom:0; left:0; z-index:10;
   background:rgba(27,29,32,.6);
   display:none; align-items:center; justify-content:center;
   padding:1rem;
@@ -529,7 +547,7 @@ button:focus-visible {
   padding:clamp(1.1rem, 4.5vw, 2rem);
   text-align:center;
   box-shadow:0 18px 50px rgba(0,0,0,.3);
-  max-height:92svh; overflow-y:auto;
+  max-height:calc(92 * var(--svh)); overflow-y:auto;
 }
 
 .sheet .lvl {
@@ -699,12 +717,12 @@ footer {
   #hint { margin-top:.3rem; }
   #status { margin-top:.5rem; min-height:1.2em; }
   .actions { margin-top:.5rem; }
-  :root { --boardw:min(96vw, 620px, 46svh); }
+  :root { --boardw:min(96vw, 620px, calc(46 * var(--svh))); }
 }
 
 @media (max-height:660px) {
   p.intro { display:none; }
-  :root { --boardw:min(96vw, 52svh); }
+  :root { --boardw:min(96vw, calc(52 * var(--svh))); }
 }
 
 /* Phones held sideways: put the board beside the text instead of under it. */
@@ -725,7 +743,7 @@ footer {
   #scores  { grid-area:scores; width:min(100%, 330px); }
   #status  { grid-area:status; margin-top:.3rem; }
   .actions { grid-area:btn; margin-top:.3rem; }
-  #board   { grid-area:board; width:min(44vw, 88svh); margin:0; }
+  #board   { grid-area:board; width:min(44vw, calc(88 * var(--svh))); margin:0; }
   p.intro, #hint { display:none; }
 }
 
@@ -741,7 +759,7 @@ footer {
    independently. Change the 900px below to move the breakpoint. */
 @media (min-width:900px) and (min-height:561px) {
   /* the board can be bigger here — nothing is stacked above it now */
-  :root { --boardw:min(48vw, 700px, 70svh); }
+  :root { --boardw:min(48vw, 700px, calc(70 * var(--svh))); }
 
   #scores, .actions { display:contents; }
 
@@ -776,10 +794,32 @@ footer {
   .name  { font-size:.95rem; }
 }
 
+/* Phones held sideways: shrink the big title so the buttons stay on screen. */
+@media (max-height:560px) and (orientation:landscape) {
+  .gametitle { font-size:clamp(1rem, 3.2vw, 1.3rem); margin:.1rem 0 .3rem; row-gap:0; }
+  .gametitle .words:first-child { flex-basis:auto; }
+  .score { padding:.3rem .4rem; }
+}
+
+/* Older browsers without aspect-ratio (iPhones and iPads before iOS 15,
+   Chrome before 88 — which includes the engine inside WeChat and some
+   Chinese phone browsers): size the squares by hand so they stay square. */
+@supports not (aspect-ratio:1 / 1) {
+  #board { gap:6px; }
+  .sq { height:calc((var(--boardw) - 24px) / 5); }
+  .mini { width:150px; gap:4px; }
+  .mini i { height:26.8px; }
+}
+@supports not (aspect-ratio:1 / 1) {
+  @media (max-height:560px) and (orientation:landscape) {
+    .sq { height:calc((min(44vw, calc(88 * var(--svh))) - 24px) / 5); }
+  }
+}
+
 /* A wide but short window (a small laptop, a resized browser): keep the
    whole board on screen rather than making them scroll for the last row. */
 @media (min-width:900px) and (min-height:561px) and (max-height:700px) {
-  :root { --boardw:min(48vw, 700px, 58svh); }
+  :root { --boardw:min(48vw, 700px, calc(58 * var(--svh))); }
 }
 
 
@@ -790,7 +830,7 @@ footer {
 <body>
 
 <video id="bgVideo" autoplay muted loop playsinline>
-  <source src="YOUR-VIDEO.mp4" type="video/mp4">
+  <!-- <source src="YOUR-VIDEO.mp4" type="video/mp4"> -->
 </video>
 
 <div class="topbar" role="banner">
@@ -1215,7 +1255,7 @@ const QUESTIONS = [
   { topic:"Getting around", audio:"", sample:true,
     text:"How did you travel to school as a child?" },
   { topic:"Getting around", audio:"", sample:true,
-    text:"Do you prefer public transport or?" },
+    text:"Do you prefer public transport or driving?" },
   { topic:"Getting around", audio:"", sample:true,
     text:"Is public transport good in your city?" }
 
@@ -1782,7 +1822,9 @@ function stopTimer() { if (ticker) { clearInterval(ticker); ticker = null; } }
    files to upload with the page. */
 
 function audioReady() {
-  audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) throw new Error("no Web Audio");   /* callers catch this */
+  audioCtx = audioCtx || new AC();
   if (audioCtx.state === "suspended") { try { audioCtx.resume(); } catch (e) {} }
   return audioCtx;
 }
