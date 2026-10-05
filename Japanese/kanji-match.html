@@ -140,9 +140,29 @@
     .tile.kanji{font-size:1.45rem}
     .tile.reading{font-size:.95rem}
   }
+
+  /* ===== About this game + links (hidden when shown as a preview inside another page) ===== */
+  html:not(.embedded), html:not(.embedded) body{height:auto}
+  html:not(.embedded) body{min-height:100svh}
+  html:not(.embedded) .board{overflow:visible}
+  .about{
+    flex:0 0 auto; width:100%; max-width:640px; margin:0 auto;
+    padding:14px 16px 22px; text-align:center;
+    font-size:.9rem; line-height:1.5; border-top:1px solid var(--line);
+  }
+  .about h2{font-size:1.05rem; font-weight:700; margin:.4rem 0 .3rem}
+  .about p{margin:.35rem 0; color:var(--muted)}
+  .about nav{margin-top:.6rem}
+  .about nav a{
+    display:inline-block; margin:.2rem .45rem; padding:.3rem .2rem;
+    color:var(--accent); font-weight:600;
+  }
+  .about nav a[aria-current]{color:var(--ink); text-decoration:none}
+  html.embedded .about{display:none}
 </style>
 </head>
 <body>
+<script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
 
 <div class="bar">
   <button class="qr-mini" id="qrMini" title="Scan to open this game on a phone" aria-label="Show QR code for this game">
@@ -178,6 +198,26 @@
   <button class="btn" id="skipBtn">Skip round</button>
   <a class="btn" href="kanjigame.html" target="_top">All kanji games</a>
 </div>
+
+<section class="about">
+  <h2>About this game</h2>
+  <p>A free matching game for learners of Japanese. Tap a kanji, then tap its hiragana reading. Each round shows six pairs, and every correct match shows the meaning and an example word.</p>
+  <p>There are seven sets, from JLPT N5 up to N3. Play alone on a phone, or take turns on one shared screen as a class starter. Nothing is timed and there is no sign-up.</p>
+  <nav aria-label="Choose a set" id="setNav">
+    <a href="kanji-match.html?set=1">Set 1 &middot; N5</a>
+    <a href="kanji-match.html?set=2">Set 2 &middot; N4</a>
+    <a href="kanji-match.html?set=3">Set 3 &middot; N4</a>
+    <a href="kanji-match.html?set=4">Set 4 &middot; N4 to N3</a>
+    <a href="kanji-match.html?set=5">Set 5 &middot; N3</a>
+    <a href="kanji-match.html?set=6">Set 6 &middot; N3</a>
+    <a href="kanji-match.html?set=7">Set 7 &middot; N3 review</a>
+  </nav>
+  <nav aria-label="More games">
+    <a href="kanjigame.html" target="_top">All kanji games</a>
+    <a href="../k12-revision-games.html" target="_top">K-12 &amp; revision games</a>
+    <a href="../index.html" target="_top">All Koalaspies games</a>
+  </nav>
+</section>
 
 <div class="qr-overlay" id="qrOverlay">
   <img id="qrBigImg" alt="QR code for this game">
@@ -378,6 +418,9 @@
   }
 
   setUpQR();
+  // mark the set being played in the "Choose a set" links
+  var cur = document.querySelector('#setNav a[href$="set=' + setId + '"]');
+  if (cur) cur.setAttribute("aria-current", "page");
   el.board.addEventListener("click", onTileClick);
   el.again.addEventListener("click", start);
   el.skip.addEventListener("click", function () {
