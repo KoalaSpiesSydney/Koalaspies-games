@@ -1,0 +1,1229 @@
+<!doctype html>
+<!-- It’s Existential! © Koala Spies Sydney. All rights reserved. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>It’s Existential! | Koala Spies Sydney</title>
+<meta name="author" content="Koala Spies Sydney">
+<meta name="copyright" content="© Koala Spies Sydney. All rights reserved.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{
+--display:"Figtree",system-ui,sans-serif; --body:"Figtree",system-ui,sans-serif;
+/* Colours: charcoal text, dark blue + gold highlights. Change them here. */
+--white:#ffffff; --ice:#f7f5ef; --mist:#ebe3cd; --sky:#dcc68a; --azure:#c9982f;
+--blue:#14306b; --navy:#1d1f24; --ink:#1d1f24; --muted:#5a5f6a;
+--gold:#d4a72c; --gold-deep:#8a640c; --gold-pale:#f2d47a;
+--mango:#f7f3e8;
+--t0:#14306b; --t1:#a8770c; --t2:#4a78c8; --t3:#6b4a12;
+--glow:0 0 22px rgba(212,167,44,.45);
+--lift:0 12px 26px -14px rgba(20,48,107,.65);
+
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:#fffaf2;color:var(--ink);font:16px/1.5 var(--body)}
+[hidden]{display:none!important}
+.bg{position:fixed;inset:0;z-index:0;background:var(--bg-image) center/cover no-repeat;pointer-events:none}
+.bg svg{width:100%;height:100%;display:block}
+.bg.has-image svg{display:none}
+.page-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+body.in-game .bg{display:none}
+body.in-game .veil{background:linear-gradient(180deg,rgba(255,249,238,.45),rgba(255,255,255,.62))}
+.veil{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,249,238,.70),rgba(255,255,255,.86) 45%,rgba(255,255,255,.93))}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:18px 56px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.logo{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;gap:10px}
+.eye{width:34px;height:34px;flex:none}
+.hdr-right{display:flex;gap:8px;align-items:center}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.12;color:var(--navy);letter-spacing:.02em}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(21px,3.4vw,30px);line-height:1.2;color:var(--navy)}
+h3{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+p{margin:0}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.panel{background:rgba(255,255,255,.9);border:1px solid var(--mist);border-radius:18px;padding:20px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+button{font:inherit;cursor:pointer;border:0;border-radius:4px;padding:10px 16px;font-weight:700;color:var(--navy);background:var(--ice)}
+button:hover{filter:brightness(.97)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--azure);outline-offset:2px}
+button:disabled{opacity:.4;cursor:not-allowed;filter:none}
+.btn-main{background:var(--blue);color:#fff;font-size:17px;padding:13px 24px;box-shadow:var(--lift),var(--glow)}
+.btn-main:hover{background:var(--navy);filter:none}
+.btn-ghost{background:rgba(255,255,255,.7);border:1.5px solid var(--sky);color:var(--blue)}
+.btn-small{padding:6px 12px;font-size:14px}
+input[type=text]{font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--sky);border-radius:12px;padding:10px 12px;width:100%;min-width:0}
+.x{background:transparent;color:var(--muted);padding:4px 8px}
+.swatch{width:14px;height:14px;border-radius:4px;flex:none}
+.seg{display:inline-flex;background:var(--ice);border-radius:5px;padding:3px;flex-wrap:wrap}
+.seg button{background:transparent;padding:9px 16px;font-size:15px;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--blue);color:#fff}
+.seg button.no[aria-pressed=true]{background:var(--navy)}
+.note{font-size:13px;color:var(--muted)}
+
+/* Quote card */
+.qcard{position:relative;background:rgba(255,255,255,.62);color:var(--navy);border:1px solid rgba(255,255,255,.85);border-radius:20px;padding:24px 26px;box-shadow:0 10px 30px -20px rgba(90,42,12,.45),inset 0 1px 0 rgba(255,255,255,.9);backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);overflow:hidden}
+.qcard::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(232,120,42,.14);box-shadow:0 0 0 24px rgba(232,120,42,.04),0 0 0 48px rgba(232,120,42,.025);pointer-events:none}
+.qcard h2{position:relative;min-height:1.3em;font-size:clamp(22px,3.6vw,32px);line-height:1.3}
+.qtop{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.qtopic{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.4vw,40px);letter-spacing:.14em;text-transform:uppercase;
+  background:linear-gradient(180deg,var(--blue),var(--navy));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.qbtn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border-radius:50%;background:rgba(255,255,255,.7);border:1px solid var(--sky);color:var(--blue)}
+.qbtn:hover{background:#fff;filter:none}
+.qcard .eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;position:relative}
+.caret{position:relative;display:inline-block;width:0;height:1em;vertical-align:-.12em}
+.caret::after{content:"";position:absolute;left:2px;top:0;width:.1em;height:1em;background:var(--azure)}
+.untyped{visibility:hidden}
+/* Centred quote card: name and quote sit in the middle, the read-aloud button stays top right */
+.qcard{text-align:center}
+.qcard h2{text-wrap:balance}
+.qcard .qtop{justify-content:center;padding-inline:46px}
+.qcard .qtop .qbtn{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.task{font-size:17px;font-weight:600;color:var(--navy)}
+
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+.bigteam{font-family:var(--display);font-weight:700;font-size:clamp(32px,7vw,58px);line-height:1.05}
+.orb{width:110px;height:110px}
+
+@media (prefers-reduced-motion:no-preference){
+  .caret{animation:blink .8s steps(1) infinite}
+  .orb .ring{animation:spin 8s linear infinite;transform-origin:60px 60px}
+  .orb .iris{animation:pulse 1.8s ease-in-out infinite;transform-origin:60px 60px}
+  .pop{animation:pop .45s ease-out}
+  .glow{animation:glow 3s ease-in-out infinite}
+  .tier.hit{animation:tierhit .5s ease-out}
+}
+@keyframes blink{50%{opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{transform:scale(.82)}}
+@keyframes pop{from{transform:translateY(8px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+@keyframes glow{50%{opacity:.55}}
+@keyframes tierhit{0%{transform:scale(1.25)}100%{transform:none}}
+
+/* Scoreboard */
+.scorebar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.team{border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.92);border:1px solid var(--mist);border-top:5px solid var(--c)}
+.team.active{box-shadow:0 0 0 2px var(--c),0 10px 24px -14px var(--c)}
+.team .nm{font-weight:800;display:flex;justify-content:space-between;gap:6px;color:var(--navy)}
+.team .pts{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--c)}
+.team .stash{font-size:12px;font-weight:700;color:var(--muted)}
+.turn{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+
+/* Talk clock */
+.clock{position:relative;width:min(240px,64vw);aspect-ratio:1;margin:0 auto}
+.clock svg{width:100%;height:100%;display:block}
+.clock .track{fill:rgba(255,255,255,.9);stroke:var(--mist);stroke-width:8}
+.clock .prog{fill:none;stroke:var(--blue);stroke-width:8;stroke-linecap:round}
+.clock .mark{stroke:var(--navy);stroke-width:2.5;stroke-linecap:round}
+.clock-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.clock-num span{font-family:var(--display);font-weight:700;font-size:clamp(54px,11vw,80px);line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.clock-num small{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tiers{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tier{display:flex;flex-direction:column;align-items:center;min-width:86px;padding:8px 12px;border-radius:14px;border:1.5px solid var(--sky);background:rgba(255,255,255,.85);color:var(--muted);font-weight:700;font-size:13px}
+.tier b{font-family:var(--display);font-size:20px;color:var(--blue);line-height:1.2}
+.tier.hit{background:var(--blue);border-color:var(--blue);color:#fff}
+.tier.hit b{color:#fff}
+.result{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,40px);color:var(--navy);line-height:1.1}
+
+/* Bonus givers */
+.giver{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--ice);border-radius:12px;padding:8px 12px;border-left:5px solid var(--c)}
+.giver .who{font-weight:800;color:var(--navy)}
+.giver .left{font-size:12px;color:var(--muted);font-weight:700}
+.stepper{display:flex;align-items:center;gap:8px}
+.stepper button{width:38px;height:38px;padding:0;border-radius:50%;background:#fff;border:1.5px solid var(--sky);color:var(--blue);font-size:20px;line-height:1}
+.stepper .n{min-width:2ch;text-align:center;font-family:var(--display);font-weight:700;font-size:22px;color:var(--navy)}
+
+/* Final table */
+.tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tbl th{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 10px;border-bottom:1.5px solid var(--mist)}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl td{padding:10px;text-align:right;border-bottom:1px solid var(--mist);font-weight:600}
+.tbl td.fin{font-family:var(--display);font-weight:700;font-size:22px;color:var(--blue)}
+.tbl td.neg{color:var(--navy)}
+.tblwrap{overflow-x:auto}
+
+/* Crystal balls */
+.arena-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.arena{position:relative;width:100%;aspect-ratio:16/9;max-height:560px;border-radius:28px;overflow:hidden;
+  background:var(--arena-image) center/cover no-repeat,
+    radial-gradient(ellipse at 50% 115%,rgba(232,120,42,.22),transparent 60%),
+    linear-gradient(180deg,#fff9f0,#ffe7c4);
+  border:1.5px solid var(--mist);box-shadow:inset 0 0 60px rgba(246,198,138,.3)}
+@media (max-width:700px){.arena{aspect-ratio:auto;height:500px}}
+.ball{position:absolute;left:0;top:0;z-index:1;width:clamp(78px,11vw,118px);aspect-ratio:1;max-width:100%;padding:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:transform;
+  background:
+    radial-gradient(circle at 30% 24%,#fff 0 6%,rgba(255,255,255,0) 16%),
+    radial-gradient(ellipse at 68% 82%,rgba(255,255,255,.9) 0 5%,rgba(255,255,255,0) 18%),
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.72) 0,rgba(255,248,236,.62) 48%,rgba(248,222,186,.72) 76%,rgba(222,168,104,.85) 100%);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 0 0 1px rgba(232,190,140,.55),0 20px 28px -14px rgba(110,60,15,.45),0 0 28px rgba(255,255,255,.9),
+    inset 0 -14px 22px rgba(196,128,60,.35),inset 0 10px 18px rgba(255,255,255,.9);
+  backdrop-filter:blur(3px) saturate(1.3);-webkit-backdrop-filter:blur(3px) saturate(1.3);
+  cursor:pointer;touch-action:manipulation}
+.ball::after{content:"";position:absolute;left:18%;right:18%;top:7%;height:26%;border-radius:50%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,0))}
+.ball:hover{filter:brightness(1.05)}
+.ball .mist{position:absolute;inset:-20%;border-radius:50%;opacity:.5;pointer-events:none;
+  background:conic-gradient(from 0deg,transparent 0 18%,rgba(255,255,255,.9) 26%,transparent 38%,rgba(250,208,150,.55) 58%,transparent 70%,rgba(255,255,255,.7) 84%,transparent 92%)}
+.ball .word{position:relative;z-index:1;font-family:var(--display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);
+  font-size:clamp(11px,1.5vw,15px);text-shadow:0 0 8px #fff,0 0 2px #fff;padding-inline:10px;text-align:center;overflow-wrap:anywhere;line-height:1.1}
+.ball .word.long{font-size:clamp(9px,1.15vw,12px);letter-spacing:.03em;overflow-wrap:normal;padding-inline:6px}
+.ball .word.xlong{font-size:clamp(8px,.95vw,10px);letter-spacing:0}
+.ball.fade{opacity:.15;transition:opacity .4s;pointer-events:none}
+.ball.caught{z-index:2;box-shadow:0 0 0 3px #fff,0 0 0 6px #f2cfa0,0 0 60px 10px rgba(255,255,255,1),0 0 90px rgba(212,167,44,.75)}
+@media (prefers-reduced-motion:no-preference){
+  .ball .mist{animation:swirl 7s linear infinite}
+  .ball.caught{animation:catch .7s ease-out forwards}
+}
+@keyframes swirl{to{transform:rotate(360deg)}}
+@keyframes catch{40%{filter:brightness(1.35)}100%{filter:brightness(1.12)}}
+@media (prefers-reduced-motion:reduce){.arena{aspect-ratio:auto;height:auto;display:flex;flex-wrap:wrap;gap:16px;justify-content:center;padding:20px}.ball{position:relative;transform:none!important}}
+
+/* Intro */
+.rulecard{max-width:680px;margin:0 auto;background:rgba(255,255,255,.95);border:1.5px solid var(--sky);border-radius:24px;padding:clamp(22px,4vw,36px);box-shadow:0 30px 60px -30px rgba(90,42,12,.55);display:flex;flex-direction:column;gap:18px}
+.rulecard h1{text-align:center;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(30px,6vw,52px)}
+.rulecard .sub{text-align:center;color:var(--muted);font-size:17px}
+.players{display:flex;flex-direction:column;gap:8px}
+.prow{display:flex;gap:8px;align-items:center}
+.ball.deco{position:relative;margin:0 auto;width:112px;cursor:default;pointer-events:none}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s,upper-roman);font-family:var(--display);font-weight:700;color:var(--azure);border:1.5px solid var(--sky);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.steps b{color:var(--navy)}
+.meander{height:14px;background:
+  linear-gradient(90deg,var(--sky) 2px,transparent 2px) 0 0/14px 14px,
+  linear-gradient(0deg,var(--sky) 2px,transparent 2px) 0 0/14px 14px;opacity:.5;border-radius:2px}
+
+/* Minimal look: no card boxes */
+.panel,.qcard,.rulecard{background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0}
+.panel,.rulecard{padding:0}
+.qcard{padding:8px 0 0}
+.qcard::after{display:none}
+.team{background:transparent;border:0;border-radius:0;padding:4px 0 0}
+.team.active{box-shadow:none}
+.giver{background:transparent;border-radius:0;padding:6px 0;border-left:0}
+.clock .track{fill:transparent}
+.tbl td,.tbl th{padding-inline:4px}
+.tblwrap.panel{padding:0}
+.seg{background:transparent;border:1.5px solid var(--mist)}
+.qbtn,.btn-ghost{background:transparent}
+.stack>.seg,.seg{align-self:flex-start}
+.stack>.scorebar{margin-top:4px}
+.stack>.muted+.scorebar{margin-top:-8px}
+.tier{background:transparent;border:0;padding:4px 10px;opacity:.45}
+.tier.hit{background:transparent;border:0;opacity:1;color:var(--blue)}
+.tier.hit b{color:var(--blue)}
+
+/* Judge screen hierarchy */
+.judge{max-width:620px;margin:24px auto 0;display:flex;flex-direction:column;gap:30px}
+.qmini{text-align:center}
+.qmini-who{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.qmini-q{margin-top:6px;font-size:17px;font-weight:600;color:var(--muted);font-style:italic}
+.hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.hero-label{font-size:16px;font-weight:700;color:var(--muted)}
+.hero-big{font-family:var(--display);font-weight:800;font-size:clamp(44px,9vw,72px);line-height:1;color:var(--navy);letter-spacing:-.01em}
+.hero-pts{margin-top:6px;display:inline-block;background:var(--blue);color:#fff;font-weight:800;font-size:15px;border-radius:99px;padding:5px 16px}
+.linkbtn{background:transparent;padding:6px 8px;font-size:13px;font-weight:700;color:var(--muted)}
+.linkbtn:hover{color:var(--blue);filter:none}
+.step{display:flex;flex-direction:column;gap:12px}
+.step h3{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--navy)}
+.stepn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;letter-spacing:0}
+.opt{font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:lowercase}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{display:flex;flex-direction:column;align-items:center;gap:2px;padding:16px 12px;border-radius:16px;border:1.5px solid var(--sky);background:transparent;color:var(--navy)}
+.choice b{font-size:20px}
+.choice span{font-size:13px;font-weight:600;color:var(--muted)}
+.choice.yes[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.choice.no[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.choice[aria-pressed=true] span{color:rgba(255,255,255,.8)}
+.givers{display:flex;flex-direction:column;gap:6px}
+.nextbox{display:flex;flex-direction:column;align-items:center;gap:10px}
+.nextbox .btn-main{width:100%;max-width:420px}
+.tally{font-size:15px;color:var(--muted)}
+.tally b{color:var(--navy);font-size:18px}
+.scores-mini{opacity:.8;margin-top:6px}
+.scores-mini .team .pts{font-size:22px}
+
+/* Scoreboard in the top-right corner */
+header.top{flex-wrap:nowrap;align-items:flex-start}
+.hdr-right{flex-wrap:wrap;justify-content:flex-end}
+.hud{display:flex;gap:16px;margin-right:10px;align-items:flex-start}
+.hp{display:grid;grid-template-columns:auto auto;column-gap:8px;align-items:baseline;padding:2px 0 2px 10px;border-left:3px solid transparent;opacity:.75}
+.hp.on{border-left-color:var(--c);opacity:1}
+.hn{font-size:13px;font-weight:700;color:var(--navy);max-width:10ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs{font-size:22px;font-weight:800;color:var(--c);font-variant-numeric:tabular-nums;line-height:1}
+.hb{grid-column:1/-1;font-size:11px;font-weight:600;color:var(--muted)}
+@media (max-width:700px){header.top{flex-wrap:wrap}.hud{order:3;width:100%;margin:8px 0 0;justify-content:flex-end}}
+
+.hround{display:flex;flex-direction:column;align-items:flex-end;padding-right:14px;margin-right:2px;border-right:1px solid var(--mist)}
+.hround span{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hround b{font-size:22px;font-weight:800;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums}
+.hround small{font-size:13px;font-weight:700;color:var(--muted)}
+.hround{border-right:0}
+.hp,.hp.on{border-left:0;padding-left:0}
+.hp{opacity:.6}.hp.on{opacity:1}
+
+/* ===== Responsive header: logo · scores · buttons ===== */
+header.top{display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;row-gap:12px;flex-wrap:initial}
+.logo{white-space:nowrap}
+.hud{justify-self:end;display:grid;grid-template-columns:auto repeat(var(--n,2),auto);column-gap:18px;align-items:start;margin:0}
+.hdr-right{flex-wrap:nowrap;justify-content:flex-end;gap:8px}
+.tbtn{display:inline-flex;align-items:center;gap:6px}
+.tbtn .slash{display:none}
+.tbtn.off .slash{display:block}
+.tbtn.off .wave{display:none}
+.tbtn.off{color:var(--muted)}
+.hp{min-width:0}
+.hn{max-width:12ch}
+.hb{white-space:nowrap}
+@media (max-width:900px){
+  header.top{grid-template-columns:1fr auto}
+  .hud{grid-column:1/-1;grid-row:2;justify-self:stretch;grid-template-columns:auto repeat(var(--n,2),minmax(0,1fr));column-gap:12px}
+  .hn{max-width:100%}
+}
+@media (max-width:600px){
+  .logo{font-size:15px;letter-spacing:.1em}
+  .tbtn .lbl{display:none}
+  .tbtn{width:40px;height:40px;justify-content:center;padding:0;border-radius:50%}
+  .hs{font-size:19px}
+  .hround b{font-size:19px}
+  .hround span{font-size:10px}
+  .hb{font-size:10px}
+  .wrap{padding-block:12px 40px}
+  header.top{margin-bottom:16px}
+  /* crystal balls on phones */
+  .ball{width:84px}
+  .ball .word{font-size:10px;letter-spacing:.03em;padding-inline:5px;overflow-wrap:normal;word-break:keep-all}
+  .ball .word.long{font-size:9px;letter-spacing:.01em;padding-inline:4px}
+  .ball .word.xlong{font-size:7.5px;letter-spacing:0}
+  .arena{height:min(62vh,520px)}
+  h1{font-size:clamp(26px,7.5vw,34px)}
+  .qcard h2{font-size:clamp(20px,6vw,26px)}
+  .qtopic{font-size:clamp(22px,7vw,30px)}
+  .clock{width:min(210px,58vw)}
+  .tier{min-width:0;padding:4px 6px}
+  .step h3{flex-wrap:wrap;row-gap:4px}
+  .choice b{font-size:18px}
+  .tbl th{font-size:10px;letter-spacing:.06em}
+  .tbl td{font-size:14px}
+  .tbl td.fin{font-size:19px}
+}
+.ball .word{word-break:keep-all}
+header.top.hud-row{grid-template-columns:1fr auto}
+header.top.hud-row .hud{grid-column:1/-1;grid-row:2}
+@media (min-width:901px){header.top.hud-row .hud{justify-self:end;column-gap:26px}}
+
+/* ===== Celebration page ===== */
+body.celebrating .bg{display:none}
+body.celebrating .veil{background:linear-gradient(180deg,rgba(255,249,238,.10) 0%,rgba(255,255,255,.18) 45%,rgba(255,255,255,.82) 70%,rgba(255,255,255,.92) 100%)}
+.celebrate{position:relative;display:flex;flex-direction:column;gap:28px}
+.cele-hero{min-height:min(62vh,560px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 0}
+.cele-eyebrow{font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--navy)}
+.cele-name{font-family:var(--display);font-weight:900;font-size:clamp(44px,10vw,104px);line-height:1;letter-spacing:-.01em;color:var(--c,var(--navy));
+  text-shadow:0 2px 0 #fff,0 0 30px rgba(255,255,255,.95),0 0 60px rgba(255,255,255,.7)}
+.cele-sub{font-size:clamp(16px,2.4vw,20px);color:var(--navy);font-weight:600;text-shadow:0 0 12px #fff,0 0 4px #fff}
+.cele-sub b{font-weight:900}
+.cele-results{max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.cele-actions{justify-content:center}
+.tbl tr.win td{color:var(--navy);font-weight:800}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:6;overflow:hidden}
+.confetti i{position:absolute;top:-20px;border-radius:2px;opacity:.95;animation:fall linear forwards}
+@keyframes fall{0%{transform:translate(0,-20px) rotate(var(--r))}100%{transform:translate(var(--x),110vh) rotate(calc(var(--r) + 720deg));opacity:.9}}
+@media (max-width:600px){.cele-hero{min-height:52vh}}
+
+/* Pale mango instead of black while videos load or where they don't fill */
+video,.page-video,.arena-video{background-color:var(--mango)}
+body.in-game,body.celebrating{background:var(--mango)}
+
+/* ===== Koala Spies branding + title hierarchy ===== */
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;margin-bottom:14px}
+.brand{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);text-decoration:none;white-space:nowrap;padding:10px 0}
+.brand:hover{text-decoration:underline;text-underline-offset:4px}
+.brand:focus-visible{outline:3px solid var(--azure);outline-offset:2px}
+.gametitle{margin:0 0 18px;text-align:center;font-family:var(--display);font-weight:900;font-size:clamp(20px,3.2vw,28px);line-height:1.05;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);text-wrap:balance}
+body[data-phase=intro] .gametitle{display:none}
+.hud{width:fit-content;max-width:100%;margin:0 auto 18px;justify-content:center}
+.rulecard h1{font-weight:900;font-size:clamp(28px,8.5vw,64px);line-height:1;letter-spacing:.01em}
+.rulecard .sub{font-size:clamp(16px,2.2vw,19px);max-width:36ch;margin-inline:auto}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--mist);text-align:center;font-size:13px;font-weight:600;color:var(--navy)}
+.foot a{color:inherit}
+.qcard h2{font-size:clamp(25px,4.6vw,42px);line-height:1.25}
+/* ===== Hourglass timer ===== */
+.timer{display:flex;align-items:center;justify-content:center;gap:24px}
+.hglass{width:clamp(96px,24vw,136px);flex:none}
+.hglass svg{width:100%;height:auto;display:block;overflow:visible}
+#hgSpin{transform-box:view-box;transform-origin:60px 80px}
+.hg-glass{fill:rgba(255,255,255,.65);stroke:var(--navy);stroke-width:2.5;stroke-linejoin:round}
+.hg-sand{fill:var(--blue)}
+.hg-cap{fill:var(--navy)}
+.hg-num{display:flex;flex-direction:column;align-items:center}
+.hg-num span{min-width:2ch;text-align:center;font-family:var(--display);font-weight:700;font-size:clamp(54px,11vw,80px);line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.hg-num small{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* ===== Catch-a-ball screen: title > scoreboard > prompt > hint ===== */
+.hud{column-gap:8px;align-items:stretch;margin-bottom:22px}
+.hud .hround{align-items:center;justify-content:center;margin:0;padding:6px 14px;border-radius:12px;background:var(--navy)}
+.hud .hround span{font-size:10px;color:rgba(255,255,255,.85)}
+.hud .hround b{font-size:20px;color:#fff}
+.hud .hround small{color:rgba(255,255,255,.85)}
+.hud .hp{opacity:1;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:center;padding:6px 12px 6px 10px;border:1.5px solid var(--mist);border-left:5px solid var(--c);border-radius:12px;background:rgba(255,255,255,.55)}
+.hud .hp.on{background:#fff;border-color:var(--navy);border-left-color:var(--c);box-shadow:0 6px 16px -10px rgba(90,44,58,.6)}
+.hud .hn{grid-column:1;grid-row:1;font-size:14px;font-weight:700;color:var(--muted)}
+.hud .hp.on .hn{font-weight:800;color:var(--navy)}
+.hud .hb{grid-column:1;grid-row:2;font-size:11px}
+.hud .hs{grid-column:2;grid-row:1/span 2;font-size:26px;color:var(--navy)}
+.prompt{display:flex;flex-direction:column;gap:4px;text-align:center}
+.prompt h1{font-size:clamp(19px,2.4vw,24px);font-weight:700;letter-spacing:0;line-height:1.25}
+.prompt p{font-size:14px}
+@media (max-width:600px){
+  .hud{column-gap:6px}
+  .hud .hround{padding:4px 8px}
+  .hud .hp{column-gap:6px;padding:4px 8px 4px 6px;border-left-width:4px}
+  .hud .hn{font-size:12px}
+  .hud .hs{font-size:20px}
+  .hud .hb{font-size:10px}
+  /* 3 or 4 players on a phone: round on its own line, players two per row */
+  .hud[data-n="3"],.hud[data-n="4"]{width:100%;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:6px}
+  .hud[data-n="3"] .hround,.hud[data-n="4"] .hround{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:8px;padding:5px 8px}
+  .hud[data-n="3"] .hn,.hud[data-n="4"] .hn{font-size:13px}
+}
+/* ===== Shadows and glow ===== */
+.gametitle,.rulecard h1{text-shadow:0 1px 0 #fff,0 0 26px rgba(212,167,44,.55),0 10px 24px rgba(29,31,36,.14)}
+.brand{text-shadow:0 0 12px rgba(255,255,255,.9)}
+.btn-main{border:1.5px solid var(--gold)}
+.btn-main:hover{background:#0d2250;box-shadow:var(--lift),0 0 30px rgba(212,167,44,.75)}
+.btn-ghost,.qbtn{box-shadow:0 6px 14px -10px rgba(29,31,36,.5)}
+.btn-ghost:hover,.qbtn:hover{box-shadow:0 6px 14px -10px rgba(29,31,36,.5),var(--glow)}
+input[type=text]{box-shadow:inset 0 1px 3px rgba(29,31,36,.08)}
+input[type=text]:focus-visible{box-shadow:var(--glow)}
+.seg button[aria-pressed=true]{box-shadow:var(--lift),var(--glow)}
+.steps li::before{color:var(--gold-deep);border-color:var(--gold);background:rgba(255,255,255,.7);box-shadow:0 0 12px rgba(212,167,44,.3)}
+.hud .hround{background:var(--blue);box-shadow:var(--lift)}
+.hud .hround b{color:var(--gold-pale)}
+.hud .hp{box-shadow:0 8px 18px -14px rgba(29,31,36,.55)}
+.hud .hp.on{border-color:var(--gold);border-left-color:var(--c);box-shadow:var(--lift),var(--glow)}
+.prompt h1{text-shadow:0 1px 0 #fff,0 0 16px rgba(255,255,255,.9)}
+.arena{border-color:var(--sky);box-shadow:inset 0 0 60px rgba(212,167,44,.22),0 24px 40px -30px rgba(29,31,36,.5)}
+.ball:hover{filter:brightness(1.05) drop-shadow(0 0 14px rgba(212,167,44,.8))}
+.qtopic{background:linear-gradient(180deg,#b8860b,#7a5608);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 12px rgba(212,167,44,.45))}
+.qcard h2{text-shadow:0 1px 0 #fff,0 0 20px rgba(255,255,255,.95),0 8px 22px rgba(29,31,36,.12)}
+.hglass svg{filter:drop-shadow(0 12px 14px rgba(29,31,36,.22)) drop-shadow(0 0 16px rgba(212,167,44,.5))}
+.hg-sand{fill:var(--gold)}
+.hg-cap{fill:var(--blue)}
+.hg-num span{text-shadow:0 1px 0 #fff,0 8px 20px rgba(29,31,36,.16)}
+.tier.hit b{text-shadow:0 0 14px rgba(212,167,44,.8)}
+.hero-big{text-shadow:0 1px 0 #fff,0 10px 24px rgba(29,31,36,.16)}
+.hero-pts{box-shadow:var(--lift),var(--glow);border:1.5px solid var(--gold)}
+.choice{box-shadow:0 8px 18px -14px rgba(29,31,36,.5)}
+.choice[aria-pressed=true]{box-shadow:var(--lift),var(--glow)}
+.stepn{background:var(--blue)}
+.stepper button{box-shadow:0 6px 12px -8px rgba(29,31,36,.45)}
+.cele-name{text-shadow:0 2px 0 #fff,0 0 30px rgba(255,255,255,.95),0 0 60px rgba(212,167,44,.75)}
+.foot{border-top-color:var(--sky)}
+body.intro-video .bg{display:none}
+body.intro-video{background:var(--mango)}
+body.intro-video .veil{background:linear-gradient(180deg,rgba(255,249,238,.55),rgba(255,255,255,.74))}
+@media (max-width:600px){.brand{font-size:11px;letter-spacing:.12em}}
+/* ===== Minimal scoreboard: plain text on the page, no boxes or dividers ===== */
+#hud{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:8px 0;width:auto;max-width:100%;margin:0 auto 22px}
+#hud .hround,#hud .hp{background:none;border:0;border-radius:0;box-shadow:none;margin:0;padding:0 18px;opacity:1}
+#hud .hround{display:flex;flex-direction:row;align-items:baseline;gap:7px;line-height:24px}
+#hud .hround span{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#hud .hround b{font-size:15px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+#hud .hround small{font-size:inherit;font-weight:500;color:var(--muted)}
+#hud .hp{display:grid;grid-template-columns:auto auto;column-gap:8px;row-gap:1px;align-items:baseline;justify-content:start}
+#hud .hn{grid-column:1;grid-row:1;max-width:14ch;font-size:15px;font-weight:500;line-height:24px;color:var(--muted)}
+#hud .hs{grid-column:2;grid-row:1;font-size:15px;font-weight:700;line-height:24px;color:var(--navy)}
+#hud .hb{grid-column:1/-1;grid-row:2;font-size:11px;font-weight:500;color:var(--muted);opacity:.8}
+#hud .hp.on .hn{font-weight:700;color:var(--navy);box-shadow:0 2px 0 var(--c)}
+@media (max-width:600px){
+  #hud .hround,#hud .hp{padding:0 11px}
+  #hud .hn,#hud .hs,#hud .hround b{font-size:14px}
+  #hud[data-n="3"] .hround,#hud[data-n="4"] .hround{flex-basis:100%;justify-content:center}
+}
+/* Crystal-ball screen: two equal, centred buttons with the refresh note underneath */
+.ballbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:fit-content;max-width:100%;margin:0 auto}
+.ballbtns button{white-space:nowrap}
+.ballnote{text-align:center;margin-top:-6px}
+@media (max-width:480px){.ballbtns{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-phase="intro">
+
+<div class="bg" id="bg" aria-hidden="true">
+  <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <defs><radialGradient id="halo" cx="50%" cy="37%" r="45%"><stop offset="0" stop-color="#ffdcae"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>
+    <rect width="1200" height="800" fill="#fffaf2"/>
+    <rect width="1200" height="800" fill="url(#halo)"/>
+    <g stroke="#fbe8d2" stroke-width="1"><line x1="600" y1="300" x2="1060" y2="300"/><line x1="600" y1="300" x2="1044" y2="419"/><line x1="600" y1="300" x2="998" y2="530"/><line x1="600" y1="300" x2="925" y2="625"/><line x1="600" y1="300" x2="830" y2="698"/><line x1="600" y1="300" x2="719" y2="744"/><line x1="600" y1="300" x2="600" y2="760"/><line x1="600" y1="300" x2="481" y2="744"/><line x1="600" y1="300" x2="370" y2="698"/><line x1="600" y1="300" x2="275" y2="625"/><line x1="600" y1="300" x2="202" y2="530"/><line x1="600" y1="300" x2="156" y2="419"/><line x1="600" y1="300" x2="140" y2="300"/><line x1="600" y1="300" x2="156" y2="181"/><line x1="600" y1="300" x2="202" y2="70"/><line x1="600" y1="300" x2="275" y2="-25"/><line x1="600" y1="300" x2="370" y2="-98"/><line x1="600" y1="300" x2="481" y2="-144"/><line x1="600" y1="300" x2="600" y2="-160"/><line x1="600" y1="300" x2="719" y2="-144"/><line x1="600" y1="300" x2="830" y2="-98"/><line x1="600" y1="300" x2="925" y2="-25"/><line x1="600" y1="300" x2="998" y2="70"/><line x1="600" y1="300" x2="1044" y2="181"/></g>
+    <g fill="none" stroke="#f4d2a4" stroke-width="1.5"><circle cx="600" cy="300" r="90"/><circle cx="600" cy="300" r="150" stroke-dasharray="4 10"/><circle cx="600" cy="300" r="230"/><circle cx="600" cy="300" r="320" stroke-dasharray="1 8"/></g>
+    <g fill="#fff8ee" stroke="#f4d2a4" stroke-width="1.5"><g><rect x="112" y="226" width="76" height="16" rx="2"/><rect x="118" y="242" width="64" height="8"/><rect x="120" y="250" width="60" height="450"/><line x1="130" y1="250" x2="130" y2="700"/><line x1="140" y1="250" x2="140" y2="700"/><line x1="150" y1="250" x2="150" y2="700"/><line x1="160" y1="250" x2="160" y2="700"/><line x1="170" y1="250" x2="170" y2="700"/><rect x="112" y="700" width="76" height="14" rx="2"/></g><g><rect x="1012" y="226" width="76" height="16" rx="2"/><rect x="1018" y="242" width="64" height="8"/><rect x="1020" y="250" width="60" height="450"/><line x1="1030" y1="250" x2="1030" y2="700"/><line x1="1040" y1="250" x2="1040" y2="700"/><line x1="1050" y1="250" x2="1050" y2="700"/><line x1="1060" y1="250" x2="1060" y2="700"/><line x1="1070" y1="250" x2="1070" y2="700"/><rect x="1012" y="700" width="76" height="14" rx="2"/></g></g>
+    <path d="M60 760 H1140" stroke="#f4d2a4" stroke-width="1.5"/>
+  </svg>
+</div>
+<video class="page-video" id="pageVideo" muted loop playsinline preload="auto" aria-hidden="true" hidden></video>
+<div class="veil" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="https://koalaspiessydney.github.io/KoalaSpiesSyd/" target="_blank" rel="noopener">Koala Spies Sydney</a>
+    <div class="hdr-right"><button class="btn-ghost btn-small tbtn" id="sfxBtn" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="slash" d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="lbl">Sound on</span></button><button class="btn-ghost btn-small tbtn" id="voiceBtn" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M8 9h8M8 12h5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path class="slash" d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="lbl">Voice on</span></button></div>
+  </header>
+  <p class="gametitle">It’s Existential!</p>
+  <div class="hud" id="hud" aria-label="Round and scores" hidden></div>
+  <main id="app"></main>
+  <footer class="foot">© Koala Spies Sydney · All Rights Reserved</footer>
+</div>
+
+<script>
+(function(){
+/* ===== VIDEOS =====
+   Put the mp4s in the same folder as this HTML file. Leave as "" for no video. */
+const INTRO_VIDEO="intro.mp4";   // full screen behind the start screen (title, players and rules)
+const ARENA_VIDEO="oracle.mp4";  // behind the floating crystal balls
+const GAME_VIDEO="oracle2.mp4";  // full screen while a player is talking and being judged
+/* Celebration page at the end of the game: put your video next to this HTML and type its name here. */
+const CELEBRATION_VIDEO="celebration.mp4";
+const CELEBRATION_VIDEO_SOUND=true;   // play the celebration video with its sound (if "Sound" is on)
+const CELEBRATION_VIDEO_LOOP=true;
+const CELEBRATION_GONGS=true;         // three gongs and a shower of chimes when the final scores appear (if "Sound" is on)    // keep replaying it while the scores are on screen
+
+/* ===== SOUND EFFECTS =====
+   All sounds are generated in the browser. To use your own recordings instead,
+   put the audio file next to this HTML and type its name, e.g. hum:"ommm.mp3". */
+const SOUND_FILES={hum:"",catch:"",summon:"",start:"",milestone:"",done:"",full:"",cleared:"",celebrate:""};
+
+/* ===== MUSIC =====
+   Plays while the crystal balls float and while a player talks, picking up where it left off each time.
+   Put the mp3 next to this HTML file. Leave as "" for no music. */
+const TALK_MUSIC="talk.mp3";
+const TALK_MUSIC_VOLUME=0.45;   // 0 = silent, 1 = full volume
+
+/* ===== TYPEWRITER =====
+   Each quote is typed out letter by letter. Milliseconds per letter: lower = faster. */
+const TYPE_SPEED=55;
+
+/* ===== GAME SETTINGS ===== */
+const ROUNDS=5;           // rounds per game: in each round every player takes one turn
+const BONUS_POOL=10;      // bonus points each player can give away (unspent ones are deducted at the end)
+const MAX_TALK=30;        // the talk timer stops here
+const TIERS=[{s:10,p:1},{s:20,p:2},{s:30,p:5}];  // talk this long → earn these points
+
+/* ===== THE QUOTES =====
+   [name on the crystal ball, quote]. Add as many as you like.
+   Quotes a group has already seen are remembered on this device, so replays draw new ones first. */
+const QUOTES=[
+["Socrates","The unexamined life is not worth living."],
+["Plato","The beginning is the most important part of any work."],
+["Aristotle","One swallow does not make a summer, nor does one fine day."],
+["Aristotle","Man is by nature a political animal."],
+["Aristotle","All men by nature desire to know."],
+["Confucius","To know what you know and to know what you do not know, that is true knowledge."],
+["Confucius","What you do not wish for yourself, do not do to others."],
+["Confucius","When we see people of worth, we should think of equalling them."],
+["Laozi","A journey of a thousand miles begins with a single step."],
+["Laozi","To know others is wisdom; to know yourself is enlightenment."],
+["Buddha","All that we are is the result of what we have thought."],
+["Buddha","Hatred does not cease by hatred, but only by love. This is the eternal rule."],
+["Heraclitus","No man ever steps in the same river twice."],
+["Heraclitus","Character is destiny."],
+["the Beatles","Let it be."],
+["the Beatles","All you need is love."],
+["Delphi","Nothing in excess."],
+["Protagoras","Man is the measure of all things."],
+["Archimedes","Give me a place to stand, and I will move the earth."],
+["Hippocrates","Life is short, the art long."],
+["Epicurus","Do not spoil what you have by desiring what you have not."],
+["Epictetus","People are disturbed not by things, but by the views they take of them."],
+["Epictetus","No man is free who is not master of himself."],
+["Seneca","We are more often frightened than hurt; and we suffer more from imagination than from reality."],
+["Seneca","While we are postponing, life speeds by."],
+["Seneca","It is not that we have a short time to live, but that we waste a lot of it."],
+["Aurelius","Waste no more time arguing about what a good man should be. Be one."],
+["Aurelius","The impediment to action advances action. What stands in the way becomes the way."],
+["Aurelius","The universe is change; our life is what our thoughts make it."],
+["Horace","Seize the day, trusting as little as possible in tomorrow."],
+["Cicero","The safety of the people shall be the highest law."],
+["Sun Tzu","Know the enemy and know yourself; in a hundred battles you will never be in peril."],
+["Aesop","Slow and steady wins the race."],
+["Shakespeare","Love looks not with the eyes, but with the mind."],
+["Shakespeare","All the world’s a stage, and all the men and women merely players"],
+["Shakespeare","There is nothing either good or bad, but thinking makes it so."],
+["Shakespeare","We are such stuff as dreams are made of."],
+["Donne","No man is an island, entire of itself."],
+["Bacon","Knowledge itself is power."],
+["Descartes","I think, therefore I am."],
+["Descartes","It is not enough to have a good mind; the main thing is to use it well."],
+["Pascal","The heart has its reasons which reason knows nothing of."],
+["Pascal","All of humanity's problems stem from man's inability to sit quietly in a room alone."],
+["Montaigne","When I play with my cat, who knows if I am not a pastime to her more than she is to me?"],
+["Martin Luther King Jr","You don’t have to see the whole path to take the first step."],
+["Hobbes","The life of man: solitary, poor, nasty, brutish, and short."],
+["Newton","If I have seen further, it is by standing on the shoulders of giants."],
+["Franklin","Well done is better than well said."],
+["Pope","To err is human, to forgive divine."],
+["Steve Jobs","Stay hungry, stay foolish."],
+["Voltaire","The best is the enemy of the good."],
+["Voltaire","We must cultivate our garden."],
+["Rousseau","Man is born free, and everywhere he is in chains."],
+["Adam Smith","It is not from the benevolence of the butcher, the brewer, or the baker that we expect our dinner, but from their regard to their own interest."],
+["Hume","A wise man proportions his belief to the evidence."],
+["Hume","Reason is, and ought only to be, the slave of the passions."],
+["Kant","Have courage to use your own understanding."],
+["Kant","Out of the crooked timber of humanity, no straight thing was ever made."],
+["Kant","Two things fill the mind with ever-increasing awe: the starry heavens above me and the moral law within me."],
+["Wollstonecraft","I do not wish women to have power over men; but over themselves."],
+["Mill","It is better to be Socrates dissatisfied than a fool satisfied."],
+["Kierkegaard","Life must be understood backwards. But it must be lived forwards."],
+["Marx","The philosophers have only interpreted the world in various ways; the point is to change it."],
+["Emerson","Trust thyself: every heart vibrates to that iron string."],
+["Emerson","A foolish consistency is the hobgoblin of little minds."],
+["Emerson","Nothing great was ever achieved without enthusiasm."],
+["Thoreau","The mass of men lead lives of quiet desperation."],
+["Thoreau","Rather than love, than money, than fame, give me truth."],
+["Douglass","If there is no struggle, there is no progress."],
+["Lincoln","A house divided against itself cannot stand."],
+["Whitman","Do I contradict myself? Very well then, I contradict myself. I am large, I contain multitudes."],
+["Mary Shelley","Beware; for I am fearless, and therefore powerful."],
+["Dickens","It was the best of times, it was the worst of times."],
+["George Eliot","What do we live for, if it is not to make life less difficult to each other?"],
+["Twain","Courage is resistance to fear, mastery of fear, not absence of fear."],
+["Twain","If you tell the truth, you don’t have to remember anything."],
+["Twain","The fear of death follows from the fear of life. A man who lives fully is prepared to die at any time."],
+["Twain","It is better to keep your mouth closed and let people think you are a fool than to open it and remove all doubt."],
+["Twain","Never put off till tomorrow what may be done day after tomorrow just as well."],
+["Twain","Don’t wait. The time will never be just right."],
+["Twain","Twenty years from now you will be more disappointed by the things you didn’t do than by the ones you did do… Explore. Dream. Discover."],
+["Twain","Whenever you find yourself on the side of the majority, it is time to pause and reflect."],
+["Twain","We have the best government that money can buy."],
+["Twain","The man who does not read has no advantage over the man who cannot read."],
+["Twain","I have never let my schooling interfere with my education."],
+["Mae West","You only live once, but if you do it right, once is enough."],
+["Wilde","We are all in the gutter, but some of us are looking at the stars."],
+["Wilde","The truth is rarely pure and never simple."],
+["Wilde","To love oneself is the beginning of a lifelong romance."],
+["Wilde","To live is the rarest thing in the world. Most people exist, that is all."],
+["Wilde","I can resist everything except temptation."],
+["Wilde","Experience is simply the name we give our mistakes."],
+["Wilde","Be yourself; everyone else is already taken."],
+["Wilde","The only thing worse than being talked about is not being talked about."],
+["Wilde","A man who does not think for himself does not think at all."],
+["Nietzsche","He who has a why to live can bear almost any how."],
+["Nietzsche","That which does not kill us makes us stronger."],
+["Nietzsche","Without music, life would be a mistake."],
+["Tolstoy","All happy families are alike; each unhappy family is unhappy in its own way."],
+["Dostoevsky","Beauty will save the world."],
+["Darwin","A man who dares to waste one hour of time has not discovered the value of life."],
+["Nightingale","I attribute my success to this: I never gave or took any excuse."],
+["Mackellar","I love a sunburnt country, a land of sweeping plains."],
+["Einstein","Imagination is more important than knowledge."],
+["Einstein","Life is like riding a bicycle. To keep your balance you must keep moving."],
+["Keller","Life is either a daring adventure or nothing."],
+["Russell","The fundamental cause of the trouble is that in the modern world the stupid are cocksure while the intelligent are full of doubt."],
+["Wittgenstein","The limits of my language mean the limits of my world."],
+["Wittgenstein","Whereof one cannot speak, thereof one must be silent."],
+["Jung","Who looks outside, dreams; who looks inside, awakes."],
+["Virginia Woolf","A woman must have money and a room of her own if she is to write fiction."],
+["Churchill","We shape our buildings; thereafter they shape us."],
+["F. Roosevelt","The only thing we have to fear is fear itself."],
+["E. Roosevelt","You must do the thing you think you cannot do."],
+["Orwell","Who controls the past controls the future: who controls the present controls the past."],
+["Orwell","All animals are equal, but some animals are more equal than others."],
+["Orwell","If liberty means anything at all, it means the right to tell people what they do not want to hear."],
+["Tolkien","All we have to decide is what to do with the time that is given us."],
+["Sartre","Hell is other people."],
+["Beauvoir","One is not born, but rather becomes, a woman."],
+["Camus","One must imagine Sisyphus happy."],
+["Camus","In the depth of winter, I finally learned that within me there lay an invincible summer."],
+["Arendt","Most evil is done by people who never make up their minds to be either good or evil."],
+["Frankl","Everything can be taken from a man but one thing: the last of the human freedoms, to choose one's attitude in any given set of circumstances."],
+["Gandhi","The weak can never forgive. Forgiveness is the attribute of the strong."],
+["MLK","Injustice anywhere is a threat to justice everywhere."],
+["MLK","Darkness cannot drive out darkness; only light can do that."],
+["MLK","The arc of the moral universe is long, but it bends toward justice."],
+["Mandela","I learned that courage was not the absence of fear, but the triumph over it."],
+["Mandela","Education is the most powerful weapon which you can use to change the world."],
+["Mandela","To be free is not merely to cast off one's chains, but to live in a way that respects and enhances the freedom of others."],
+["Kennedy","Ask not what your country can do for you; ask what you can do for your country."],
+["Carson","The more clearly we can focus our attention on the wonders and realities of the universe about us, the less taste we shall have for destruction."],
+["Angelou","If you don't like something, change it. If you can't change it, change your attitude."],
+["Angelou","There is no greater agony than bearing an untold story inside you."],
+["Julius Caesar","It is easier to find men who will volunteer to die, than to find those who are willing to endure pain"],
+["Julius Caesar","If you must break the law, do it to seize power; in all other cases, observe it."],
+["Chomsky","If we don't believe in freedom of expression for people we despise, we don't believe in it at all."],
+["Morrison","If there's a book that you want to read, but it hasn't been written yet, then you must write it."],
+["Ginsburg","Fight for the things that you care about, but do it in a way that will lead others to join you."],
+["Goodall","What you do makes a difference, and you have to decide what kind of difference you want to make."],
+["Willink","Discipline equals freedom."],
+["Malala","One child, one teacher, one book, one pen can change the world."],
+/* Pop culture: things they said in interviews (not song lyrics) */
+["Marcus Aurelius","The soul becomes dyed with the colour of its thoughts."],
+["Marcus Aurelius","Poverty is the mother of crime."],
+["Marcus Aurelius","A man’s worth is no greater than the worth of his ambitions"],
+["Marcus Aurelius","Receive wealth or poverty without arrogance and without resentment"],
+["Paul Kelly","From little things big things grow."],
+["Beyoncé","Your self-worth is determined by you. You don’t have to depend on someone telling you who you are."],
+["Beyoncé","If I’m scared, be scared, allow it, release it, move on."],
+["Beyoncé","Vision and intention weren’t enough; I had to put in the work."],
+["Tupac","I’m not saying I’m gonna change the world, but I’ll spark the brain that will change the world."],
+["Tupac","Reality is wrong. Dreams are for real."],
+["Wuthering Heights- Emily Bronte","When the tyrant grinds down his slaves, and they don’t turn against him; they crush those beneath them."]
+].map(([who,q],id)=>({id,who,q}));
+
+const COLORS=["var(--t0)","var(--t1)","var(--t2)","var(--t3)"];
+const SEEN_KEY="wisdom-or-whackjob:seen";
+
+let state={phase:"intro",players:[{name:""},{name:""}],sfxOff:false,voiceOff:false};
+let rafId=0, caught=false, gvBroken=false, typing=null, voicePick=null, talkTimer=0;
+const SFX={ctx:null,master:null,hum:null,humFile:null};
+const app=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const multi=()=>state.players.length>1;
+const speaker=()=>state.round%state.players.length;
+const roundNo=()=>Math.floor(state.round/state.players.length)+1;          // 1..ROUNDS
+const totalTurns=()=>ROUNDS*state.players.length;
+const maxTalk=()=>ROUNDS*TIERS[TIERS.length-1].p;                          // e.g. 12 × 5 = 60
+const maxBonus=n=>BONUS_POOL*(n-1);                                        // 10 from each other player
+const total=p=>p.talk+p.recv;
+function pointsFor(sec){let p=0;TIERS.forEach(t=>{if(sec>=t.s)p=t.p;});return p;}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+
+/* ---------- Remember seen quotes on this device ---------- */
+function loadSeen(){try{return new Set(JSON.parse(localStorage.getItem(SEEN_KEY)||"[]"));}catch(e){return new Set();}}
+function saveSeen(){try{localStorage.setItem(SEEN_KEY,JSON.stringify([...seen]));}catch(e){}}
+let seen=loadSeen();
+function markSeen(item){
+  seen.add(item.q);
+  if(QUOTES.every(x=>seen.has(x.q))){ seen=new Set(state.used.map(id=>QUOTES[id].q)); } // everything seen: start a new cycle
+  saveSeen();
+}
+
+/* ---------- Header toggles ---------- */
+const canSpeak=()=>"speechSynthesis" in window && typeof SpeechSynthesisUtterance!=="undefined";
+(()=>{const vb=document.getElementById("voiceBtn");
+  if(!canSpeak()){vb.hidden=true;return;}
+  const sync=()=>{const t=state.voiceOff?"Voice off":"Voice on"; vb.querySelector(".lbl").textContent=t; vb.setAttribute("aria-label",t); vb.classList.toggle("off",!!state.voiceOff); vb.setAttribute("aria-pressed",String(!state.voiceOff));}; window.__syncVoice=sync;
+  vb.onclick=()=>{state.voiceOff=!state.voiceOff; if(state.voiceOff){try{speechSynthesis.cancel();}catch(e){}} sync();}; sync();})();
+(()=>{const b=document.getElementById("sfxBtn");
+  const sync=()=>{const t=state.sfxOff?"Sound off":"Sound on"; b.querySelector(".lbl").textContent=t; b.setAttribute("aria-label",t); b.classList.toggle("off",!!state.sfxOff); b.setAttribute("aria-pressed",String(!state.sfxOff));};
+  b.onclick=()=>{state.sfxOff=!state.sfxOff; if(SFX.master){ try{SFX.master.gain.setValueAtTime(state.sfxOff?0:.9,SFX.ctx.currentTime);}catch(e){} } if(state.sfxOff){ humStop(); musicStop(); } if(state.phase==="final") gameVideo(false); else if(state.phase==="choose") musicStart(); sync();}; sync();})();
+(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue("--bg-image").trim(); if(v&&v!=="none") document.getElementById("bg").classList.add("has-image");})();
+
+/* ---------- Crystal ball offer ---------- */
+function drawOffer(avoid){
+  avoid=avoid||[];
+  const pool=QUOTES.filter(x=>!state.used.includes(x.id));
+  const fresh=shuffle(pool.filter(x=>!seen.has(x.q)&&!avoid.includes(x.id)));
+  const stale=shuffle(pool.filter(x=>seen.has(x.q)&&!avoid.includes(x.id)));
+  const back=shuffle(pool.filter(x=>avoid.includes(x.id)));
+  const ordered=fresh.concat(stale,back), pick=[], names=new Set();
+  for(const x of ordered){ if(pick.length>=8) break; if(!names.has(x.who)){pick.push(x);names.add(x.who);} }
+  for(const x of ordered){ if(pick.length>=8) break; if(!pick.includes(x)) pick.push(x); }
+  state.offer=pick.map(x=>x.id);
+}
+
+/* ---------- Render ---------- */
+function render(){
+  document.body.dataset.phase=state.phase;
+  stopBalls();
+  if(state.phase!=="choose") humStop();
+  if(state.phase!=="choose" && !(state.phase==="talk"&&state.talk&&state.talk.running)) musicStop();
+  gameVideo(["talk","judge"].includes(state.phase));
+  if(!["talk"].includes(state.phase) && canSpeak()){ try{speechSynthesis.cancel();}catch(e){} }
+  updateHud();
+  ({intro:renderIntro,choose:renderChoose,talk:renderTalk,judge:renderJudge,final:renderFinal})[state.phase]();
+}
+
+function updateHud(){
+  const h=document.getElementById("hud");
+  const on=["choose","talk","judge"].includes(state.phase)&&state.players&&state.players[0]&&state.players[0].talk!==undefined;
+  h.hidden=!on; if(!on){h.innerHTML="";return;}
+  const s=speaker();
+  h.style.setProperty("--n",state.players.length); h.dataset.n=state.players.length; h.innerHTML=`<div class="hround"><span>Round</span><b>${roundNo()}<small>/${ROUNDS}</small></b></div>`+state.players.map((p,i)=>`<div class="hp ${i===s?"on":""}" style="--c:${COLORS[i]}">
+    <span class="hn">${esc(p.name)}</span><span class="hs">${total(p)}</span>
+    ${multi()?`<span class="hb" title="Bonus points left to give">${p.left} to give</span>`:""}
+  </div>`).join("");
+}
+function scoreBar(active){
+  return `<div class="scorebar">${state.players.map((p,i)=>`<div class="team ${active===i?"active":""}" style="--c:${COLORS[i]}">
+    <div class="nm"><span>${esc(p.name)}</span>${active===i?'<span class="turn">Up now</span>':""}</div>
+    <div class="pts">${total(p)}</div>
+    ${multi()?`<div class="stash">Bonus to give: ${p.left}</div>`:""}
+  </div>`).join("")}</div>`;
+}
+
+/* ---------- INTRO: name the players + rules ---------- */
+function renderIntro(){
+  const ps=state.players;
+  app.innerHTML=`<div class="rulecard pop">
+    <div class="ball deco" aria-hidden="true"><span class="mist"></span></div>
+    <h1>It’s Existential!</h1>
+    <p class="sub">Catch a crystal ball, face the quote inside, and say what you really think.</p>
+    <div class="stack" style="gap:10px">
+      <h3>How many players?</h3>
+      <div class="seg" role="group" aria-label="Number of players">${[1,2,3,4].map(n=>`<button data-n="${n}" aria-pressed="${ps.length===n}">${n}</button>`).join("")}</div>
+      <div class="players">${ps.map((p,i)=>`<div class="prow"><span class="swatch" style="background:${COLORS[i]}"></span><input type="text" data-p="${i}" value="${esc(p.name)}" placeholder="Player ${i+1} name" aria-label="Player ${i+1} name" maxlength="24"></div>`).join("")}</div>
+    </div>
+    <h3>How to play</h3>
+    <ol class="steps">
+      <li><span>Take turns to <b>catch a crystal ball</b>. Each one hides a quote.</span></li>
+      <li><span>Explain <b>what the quote means to you</b>, and <b>whether you agree</b>. Press start when you begin talking.</span></li>
+      <li><span><b>${ROUNDS} rounds.</b> Everyone takes one turn each round${ps.length>1?`, so that’s ${ROUNDS*ps.length} crystal balls in total`:""}.</span></li>
+      <li><span>Keep talking to score: <b>${TIERS.map(t=>`${t.s} seconds = ${t.p} point${t.p>1?"s":""}`).join(", ")}</b>.</span></li>
+      ${ps.length>1?`<li><span>Everyone else judges the answer. <b>Waffle doesn’t count</b>: if it was a whackjob answer, they can reject it.</span></li>
+      <li><span>Each player has <b>${BONUS_POOL} bonus points</b> to give to other players for answers they love.</span></li>`:""}
+      <li><span>The most you can score is <b>${maxTalk()} talk points</b> (${ROUNDS} rounds × ${TIERS[TIERS.length-1].p})${ps.length>1?` plus <b>${maxBonus(ps.length)} bonus points</b> (${ps.length===2?`${BONUS_POOL} from the other player`:`${BONUS_POOL} from each of the other ${ps.length-1} players`})`:""}. Most points wins.</span></li>
+      ${ps.length>1?`<li><span><b>Remember:</b> any of your ${BONUS_POOL} bonus points you don’t give away are <b>deducted from your score</b> at the end.</span></li>`:""}
+    </ol>
+    <div class="row" style="justify-content:center"><button class="btn-main" id="begin" style="min-width:200px;font-size:19px">Start</button></div>
+  </div>`;
+  app.querySelectorAll("[data-p]").forEach(inp=>inp.oninput=()=>{state.players[+inp.dataset.p].name=inp.value;});
+  app.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{const n=+b.dataset.n;
+    while(state.players.length<n) state.players.push({name:""});
+    state.players.length=n; render();});
+  document.getElementById("begin").onclick=()=>{ unlockSpeech(); sfx.start(); startGame(); };
+}
+
+function startGame(){
+  const m=state.players.length>1;
+  state.players=state.players.map((p,i)=>({name:(p.name||"").trim()||`Player ${i+1}`,talk:0,recv:0,left:m?BONUS_POOL:0}));
+  state.round=0; state.used=[]; state.refreshUsed=false;
+  drawOffer(); state.phase="choose"; render();
+}
+
+/* ---------- CHOOSE: catch a crystal ball ---------- */
+function renderChoose(){
+  const s=speaker(), p=state.players[s];
+  const offer=(state.offer||[]).map(id=>QUOTES[id]);
+  const canRefresh=!state.refreshUsed && QUOTES.length-state.used.length>offer.length;
+  app.innerHTML=`<div class="stack">
+    <div class="prompt">
+      <h1><span style="color:${COLORS[s]}">${esc(p.name)}</span>, catch a crystal ball</h1>
+      <p class="muted">Each ball holds a quote from the name inside it.</p></div>
+    <div class="arena" id="arena">${ARENA_VIDEO?`<video class="arena-video" src="${esc(ARENA_VIDEO)}" autoplay muted loop playsinline aria-hidden="true" onerror="this.remove()"></video>`:""}${offer.map(x=>`<button class="ball" data-pick="${x.id}" aria-label="Quote from ${esc(x.who)}"><span class="mist"></span><span class="word${x.who.length>11?" long xlong":x.who.length>7?" long":""}">${esc(x.who)}</span></button>`).join("")}</div>
+    <div class="ballbtns"><button class="btn-ghost btn-small" id="refresh" ${canRefresh?"":"disabled"}>↻ Summon 8 new crystal balls</button><button class="btn-ghost btn-small" id="endEarly">End the game now</button></div>
+    <p class="note ballnote">${state.refreshUsed?"You’ve used your refresh this turn.":"One refresh per turn."}</p>
+  </div>`;
+  document.getElementById("refresh").onclick=()=>{sfx.summon(); drawOffer(state.offer); state.refreshUsed=true; render();};
+  document.getElementById("endEarly").onclick=()=>{ if(confirm("End the game now and go to the final scores?")){ state.phase="final"; render(); } };
+  app.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{
+    if(caught) return; caught=true; stopBalls();
+    musicStop(); sfx.catch();
+    b.classList.add("caught"); app.querySelectorAll(".ball").forEach(o=>{if(o!==b)o.classList.add("fade");});
+    const item=QUOTES[+b.dataset.pick];
+    setTimeout(()=>{
+      state.item=item; state.used.push(item.id); markSeen(item);
+      state.talk={running:false,elapsed:0,pts:0};
+      state.phase="talk"; revealQuestion(); render();
+    },matchMedia("(prefers-reduced-motion: reduce)").matches?50:750);
+  });
+  caught=false; startBalls(); musicStart();
+}
+
+/* ---------- Quote card ---------- */
+/* The whole quote is laid out from the first letter (the untyped part is invisible),
+   so each letter is typed straight into its final, centred position and nothing jumps. */
+function qMarkup(q,i){
+  if(i>=q.length) return "“"+esc(q)+"”";
+  return "“"+esc(q.slice(0,i))+'<span class="caret"></span><span class="untyped">'+esc(q.slice(i))+"”</span>";
+}
+function qHeader(){
+  const q=state.item.q, s=speaker();
+  const shown=qMarkup(q,typing&&typing.q===q?typing.i:q.length);
+  return `<div class="qcard">
+    <div class="qtop"><span class="qtopic">${esc(state.item.who)}</span>
+      ${canSpeak()?`<button class="qbtn" id="replay" aria-label="Read the quote aloud" title="Read the quote aloud"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>`:""}</div>
+    <div class="eyebrow">${esc(state.players[s].name)}’s turn</div>
+    <h2 id="qtext" aria-label="${esc(q)}">${shown}</h2>
+  </div>`;
+}
+function wireReplay(){ const r=document.getElementById("replay"); if(r) r.onclick=()=>{ state.voiceOff=false; if(window.__syncVoice) window.__syncVoice(); speak(state.item.q); }; }
+
+/* ---------- TALK ---------- */
+const FLIP=TIERS[0].s;                       // the sand runs out in this many seconds, then the glass flips
+const FLIPS=Math.ceil(MAX_TALK/FLIP);        // 3 runs of sand = 30 seconds
+const HG_FLIP_MS=500;                        // how long the flip takes
+const HG_GLASS="M26 14H94C94 50 66 62 66 80C66 98 94 110 94 146H26C26 110 54 98 54 80C54 62 26 50 26 14Z";
+function hgFrac(elapsed){
+  const c=Math.min(Math.floor(elapsed/FLIP),FLIPS-1), lead=c>0?HG_FLIP_MS/1000:0;
+  return Math.max(0,Math.min(1,(elapsed-c*FLIP-lead)/(FLIP-lead)));
+}
+function hgLevels(fr){ const top=22+fr*58, bot=146-fr*58; return {top,bot}; }
+function hourglassSVG(){
+  const fr=hgFrac(state.talk.elapsed), L=hgLevels(fr), run=state.talk.running&&fr>0&&fr<1;
+  return `<svg viewBox="0 0 120 160" aria-hidden="true"><defs><clipPath id="hgclip"><path d="${HG_GLASS}"/></clipPath></defs>
+    <g id="hgSpin"><path class="hg-glass" d="${HG_GLASS}"/>
+      <g clip-path="url(#hgclip)"><rect class="hg-sand" id="hgTop" x="0" width="120" y="${L.top}" height="${80-L.top}"/>
+        <rect class="hg-sand" id="hgBot" x="0" width="120" y="${L.bot}" height="${146-L.bot}"/>
+        <rect class="hg-sand" id="hgStream" x="58.6" width="2.8" y="78" height="${L.bot-78}" ${run?"":'visibility="hidden"'}/></g>
+      <rect class="hg-cap" x="18" y="5" width="84" height="9" rx="3"/><rect class="hg-cap" x="18" y="146" width="84" height="9" rx="3"/></g></svg>`;
+}
+function hgPaint(fr,running){
+  const top=document.getElementById("hgTop"), bot=document.getElementById("hgBot"), st=document.getElementById("hgStream"); if(!top||!bot||!st) return;
+  const L=hgLevels(fr);
+  top.setAttribute("y",L.top); top.setAttribute("height",80-L.top);
+  bot.setAttribute("y",L.bot); bot.setAttribute("height",146-L.bot);
+  st.setAttribute("height",Math.max(0,L.bot-78)); st.setAttribute("visibility",running&&fr>0&&fr<1?"visible":"hidden");
+}
+function hgFlip(){
+  hgPaint(1,false);
+  const g=document.getElementById("hgSpin"); if(!g||matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  g.style.transition=`transform ${HG_FLIP_MS}ms ease-in-out`; g.style.transform="rotate(180deg)";
+}
+function hgUnflip(){ const g=document.getElementById("hgSpin"); if(g){ g.style.transition="none"; g.style.transform="none"; } }
+function tiersHTML(){
+  return `<div class="tiers">${TIERS.map(t=>`<span class="tier ${state.talk.elapsed>=t.s?"hit":""}" data-s="${t.s}">${t.s} seconds<b>${t.p} point${t.p>1?"s":""}</b></span>`).join("")}</div>`;
+}
+function renderTalk(){
+  const s=speaker(), t=state.talk;
+  app.innerHTML=`<div class="stack">${qHeader()}
+    <div class="panel stack" style="align-items:center;text-align:center">
+      <p class="task"><span style="color:${COLORS[s]}">${esc(state.players[s].name)}</span>: what does this quote mean to you, and do you agree?</p>
+      <div class="timer"><div class="hglass">${hourglassSVG()}</div><div class="hg-num"><span id="secs">${Math.floor(t.elapsed)}</span><small>seconds</small></div></div>
+      ${tiersHTML()}
+      ${t.running?'<button class="btn-main" id="stop" style="min-width:220px">I’m finished</button>':'<button class="btn-main" id="go" style="min-width:220px">Start talking</button>'}
+      <p class="note">${t.running?`The hourglass flips every ${FLIP} seconds and stops after ${FLIPS} runs (${MAX_TALK} seconds).`:"Take a moment to think, then press start as you begin."}</p>
+    </div>
+  </div>`;
+  wireReplay();
+  const go=document.getElementById("go"); if(go){ go.onclick=startTalk; go.focus({preventScroll:true}); }
+  const st=document.getElementById("stop"); if(st){ st.onclick=()=>stopTalk(false); st.focus({preventScroll:true}); }
+}
+function startTalk(){
+  try{speechSynthesis.cancel();}catch(e){}
+  finishTyping();
+  state.talk={running:true,start:performance.now(),elapsed:0,pts:0,lastTick:null};
+  sfx.start(); musicStart(); render();
+  clearInterval(talkTimer); talkTimer=setInterval(tickTalk,100);
+}
+function tickTalk(){
+  const t=state.talk; if(!t||!t.running){clearInterval(talkTimer);return;}
+  t.elapsed=Math.min(MAX_TALK,(performance.now()-t.start)/1000);
+  const secs=document.getElementById("secs");
+  if(secs) secs.textContent=Math.floor(t.elapsed);
+  const cyc=Math.min(Math.floor(t.elapsed/FLIP),FLIPS-1);
+  if(cyc!==(t.cyc||0)){ t.cyc=cyc; hgFlip(); t.flipEnd=performance.now()+HG_FLIP_MS; }
+  if(!t.flipEnd||performance.now()>=t.flipEnd){ if(t.flipEnd){ hgUnflip(); t.flipEnd=0; } hgPaint(hgFrac(t.elapsed),true); }
+  app.querySelectorAll(".tier").forEach(el=>el.classList.toggle("hit",t.elapsed>=+el.dataset.s));
+  if(t.elapsed>=MAX_TALK){ stopTalk(true); return; }
+  const p=pointsFor(t.elapsed); if(p>t.pts){ t.pts=p; sfx.milestone(); }
+  const sec=Math.floor(t.elapsed);
+  if(sec>=MAX_TALK-5 && t.lastTick!==sec){ t.lastTick=sec; sfx.tick(); }
+}
+function stopTalk(full){
+  clearInterval(talkTimer); talkTimer=0;
+  const t=state.talk; t.running=false; musicStop();
+  t.elapsed=full?MAX_TALK:Math.min(MAX_TALK,(performance.now()-t.start)/1000);
+  state.earned=pointsFor(t.elapsed);
+  state.verdict=(multi()&&state.earned>0)?null:true;
+  state.pending=state.players.map(()=>0);
+  if(full) sfx.full(); else sfx.done();
+  state.phase="judge"; render();
+}
+
+/* ---------- JUDGE + BONUS ---------- */
+function renderJudge(){
+  const s=speaker(), me=state.players[s], secs=Math.floor(state.talk.elapsed), e=state.earned;
+  const last=state.round+1>=totalTurns(), next=state.players[(state.round+1)%state.players.length];
+  const gave=state.pending.reduce((a,b)=>a+b,0);
+  const talkPts=state.verdict?e:0;
+  const needVerdict=multi()&&e>0;
+  let step=0;
+  app.innerHTML=`<div class="judge">
+    <div class="hero">
+      <p class="hero-big">${secs} second${secs===1?"":"s"}</p>
+      ${e?`<span class="hero-pts">${e} talk point${e>1?"s":""}</span>`:`<p class="muted">Under ${TIERS[0].s} seconds, so no talk points this time.</p>`}
+      <div><button class="linkbtn" id="again">↺ Time it again</button></div>
+    </div>
+
+    ${needVerdict?`<section class="step">
+      <h3><span class="stepn">${++step}</span>Judges: did it earn the points?</h3>
+      <div class="choices" role="group" aria-label="Judges’ verdict">
+        <button class="choice yes" data-v="1" aria-pressed="${state.verdict===true}"><b>Wisdom</b><span>It counts</span></button>
+        <button class="choice no" data-v="0" aria-pressed="${state.verdict===false}"><b>Whackjob</b><span>No points</span></button>
+      </div>
+    </section>`:""}
+
+    ${multi()?`<section class="step">
+      <h3><span class="stepn">${++step}</span>Bonus points for ${esc(me.name)} <span class="opt">optional</span></h3>
+      <p class="muted" style="font-size:14px">Loved the answer? Give from your stash. Unspent bonus comes off your score at the end.</p>
+      <div class="givers">${state.players.map((p,i)=>i===s?"":`<div class="giver" style="--c:${COLORS[i]}">
+        <div><div class="who">${esc(p.name)}</div><div class="left">${p.left-state.pending[i]} left</div></div>
+        <div class="stepper"><button data-minus="${i}" aria-label="${esc(p.name)} gives one less" ${state.pending[i]?"":"disabled"}>−</button><span class="n">${state.pending[i]}</span><button data-plus="${i}" aria-label="${esc(p.name)} gives one more" ${p.left-state.pending[i]>0?"":"disabled"}>+</button></div>
+      </div>`).join("")}</div>
+    </section>`:""}
+
+    <div class="nextbox">
+      <p class="tally">${state.verdict===null?"Waiting for the judges…":`${esc(me.name)} gets <b>+${talkPts+gave}</b> this round`}</p>
+      <button class="btn-main" id="next" ${state.verdict===null?"disabled":""}>${last?"See final scores":`Next: ${esc(next.name)} catches a ball`}</button>
+    </div>
+
+  </div>`;
+  app.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{state.verdict=b.dataset.v==="1"; if(state.verdict) sfx.milestone(); else sfx.wrong(); render();});
+  app.querySelectorAll("[data-plus]").forEach(b=>b.onclick=()=>{const i=+b.dataset.plus; if(state.players[i].left-state.pending[i]>0){state.pending[i]++; sfx.blip(); render();}});
+  app.querySelectorAll("[data-minus]").forEach(b=>b.onclick=()=>{const i=+b.dataset.minus; if(state.pending[i]>0){state.pending[i]--; render();}});
+  document.getElementById("again").onclick=()=>{state.talk={running:false,elapsed:0,pts:0}; state.phase="talk"; render();};
+  document.getElementById("next").onclick=()=>{
+    const me=state.players[s];
+    if(state.verdict) me.talk+=e;
+    state.players.forEach((p,i)=>{ if(state.pending[i]){ p.left-=state.pending[i]; me.recv+=state.pending[i]; } });
+    if(last){ state.phase="final"; render(); return; }
+    state.round++; state.refreshUsed=false; drawOffer(); state.phase="choose"; render();
+  };
+}
+
+/* ---------- FINAL ---------- */
+function renderFinal(){
+  const hasVideo=!!CELEBRATION_VIDEO&&!brokenVideos[CELEBRATION_VIDEO];
+  if(CELEBRATION_GONGS) sfx.celebrate(); else if(!hasVideo||!CELEBRATION_VIDEO_SOUND) sfx.cleared();
+  const rows=state.players.map((p,i)=>({...p,i,fin:total(p)-p.left})).sort((a,b)=>b.fin-a.fin);
+  const top=rows[0], winners=rows.filter(r=>r.fin===top.fin), tie=multi()&&winners.length>1;
+  const headline=!multi()?`${esc(top.name)}`:tie?"It’s a tie!":`${esc(top.name)} wins!`;
+  const sub=!multi()?`<b>${top.fin<0?"−"+Math.abs(top.fin):top.fin}</b> points out of a possible ${maxTalk()}`
+    :tie?`${winners.map(w=>esc(w.name)).join(" & ")} share the crown with <b>${top.fin<0?"−"+Math.abs(top.fin):top.fin}</b> points`
+    :`with <b>${top.fin<0?"−"+Math.abs(top.fin):top.fin}</b> points. The Oracle has spoken.`;
+  app.innerHTML=`<div class="celebrate">
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <section class="cele-hero">
+      <p class="cele-eyebrow">Game over</p>
+      <h1 class="cele-name pop" style="--c:${tie?"var(--azure)":COLORS[top.i]}">${headline}</h1>
+      <p class="cele-sub">${sub}</p>
+    </section>
+    <section class="cele-results">
+      <div class="tblwrap"><table class="tbl">
+        <thead><tr><th>Player</th><th>Talk points</th>${multi()?"<th>Bonus received</th><th>Unspent bonus</th>":""}<th>Final</th></tr></thead>
+        <tbody>${rows.map((r,k)=>`<tr class="${r.fin===top.fin?"win":""}"><td><span class="swatch" style="display:inline-block;background:${COLORS[r.i]};margin-right:8px;vertical-align:-1px"></span>${k+1}. ${esc(r.name)}</td><td>${r.talk}</td>${multi()?`<td>+${r.recv}</td><td class="neg">${r.left?"−"+r.left:"0"}</td>`:""}<td class="fin">${r.fin<0?"−"+Math.abs(r.fin):r.fin}</td></tr>`).join("")}</tbody>
+      </table></div>
+      <div class="row cele-actions"><button class="btn-main" id="replayGame">Play again</button><button class="btn-ghost" id="changeP">Change players</button></div>
+      <p class="note">Quotes you’ve already seen are saved on this device, so the next game brings new ones first.</p>
+    </section>
+  </div>`;
+  confettiBurst(document.getElementById("confetti"));
+  document.getElementById("replayGame").onclick=()=>{sfx.start(); startGame();};
+  document.getElementById("changeP").onclick=()=>{state.players=state.players.map(p=>({name:p.name})); state.phase="intro"; render();};
+}
+function confettiBurst(el){
+  if(!el||matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cols=["#d4a72c","#14306b","#f2d47a","#4a78c8","#ffffff","#a8770c","#1d1f24"];
+  let html="";
+  for(let i=0;i<90;i++){
+    const l=Math.random()*100, d=Math.random()*1.2, t=2.6+Math.random()*2.2, w=6+Math.random()*7, r=Math.random()*360, x=(Math.random()*2-1)*120;
+    html+=`<i style="left:${l}%;width:${w}px;height:${w*.45}px;background:${cols[i%cols.length]};animation-delay:${d}s;animation-duration:${t}s;--r:${r}deg;--x:${x}px"></i>`;
+  }
+  el.innerHTML=html;
+  setTimeout(()=>{ if(el.isConnected) el.innerHTML=""; },7000);
+}
+
+/* ---------- VOICE + TYPED QUOTE ---------- */
+function pickVoice(){
+  if(!canSpeak()) return null;
+  const vs=speechSynthesis.getVoices(); if(!vs.length) return null;
+  const female=/(female|woman|karen|catherine|natasha|samantha|victoria|serena|moira|tessa|fiona|allison|ava|susan|zira|hazel|libby|sonia|aria|jenny|google uk english female|google us english)/i;
+  const en=vs.filter(v=>/^en([-_]|$)/i.test(v.lang));
+  return en.find(v=>/en[-_]AU/i.test(v.lang)&&female.test(v.name))||en.find(v=>/en[-_]GB/i.test(v.lang)&&female.test(v.name))||en.find(v=>female.test(v.name))||en[0]||vs[0];
+}
+if(canSpeak()){ try{ speechSynthesis.onvoiceschanged=()=>{voicePick=pickVoice();}; voicePick=pickVoice(); }catch(e){} }
+/* iPhone/iPad only allow speech that starts from a tap: prime it once on Start */
+function unlockSpeech(){ if(!canSpeak()) return; try{ const u=new SpeechSynthesisUtterance(" "); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
+function speak(text){
+  if(!canSpeak()||state.voiceOff) return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    voicePick=voicePick||pickVoice(); if(voicePick) u.voice=voicePick;
+    u.rate=.92; u.pitch=1.08;
+    u.onboundary=e=>{ if(typing&&typing.q===text&&e.charIndex!=null) typing.i=Math.max(typing.i,Math.min(text.length,e.charIndex)); };
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function revealQuestion(){
+  const q=state.item.q;
+  if(typing&&typing.timer) clearInterval(typing.timer);
+  typing={q,i:0,timer:null};
+  speak(q);
+  typing.timer=setInterval(()=>{
+    if(!typing||typing.q!==q) return;
+    typing.i++;
+    const el=document.getElementById("qtext");
+    if(el) el.innerHTML=qMarkup(q,typing.i);
+    if(typing.i>=q.length){clearInterval(typing.timer);typing.timer=null;}
+  },TYPE_SPEED);
+}
+function finishTyping(){
+  if(!typing) return; if(typing.timer) clearInterval(typing.timer); typing.timer=null; typing.i=typing.q.length;
+}
+
+/* ---------- SOUND ---------- */
+function ac(){
+  if(state.sfxOff) return null;
+  try{
+    if(!SFX.ctx){const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return null;
+      SFX.ctx=new AC(); SFX.master=SFX.ctx.createGain(); SFX.master.gain.value=.9; SFX.master.connect(SFX.ctx.destination);}
+    if(SFX.ctx.state==="suspended") SFX.ctx.resume();
+    return SFX.ctx;
+  }catch(e){return null;}
+}
+function fileSound(name,loop){
+  const f=SOUND_FILES[name]; if(!f||state.sfxOff) return null;
+  try{const a=new Audio(f); a.loop=!!loop; a.volume=loop?.5:.9; const p=a.play(); if(p&&p.catch)p.catch(()=>{}); return a;}catch(e){return null;}
+}
+function tone(f,t,dur,{type="sine",vol=.2,attack=.01,to=null,dest=null}={}){
+  const c=SFX.ctx, o=c.createOscillator(), g=c.createGain();
+  o.type=type; o.frequency.setValueAtTime(f,t); if(to) o.frequency.exponentialRampToValueAtTime(to,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+attack); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g); g.connect(dest||SFX.master); o.start(t); o.stop(t+dur+.05);
+}
+function noise(t,dur,{vol=.2,from=400,to=3000,q=1.2}={}){
+  const c=SFX.ctx, n=Math.floor(c.sampleRate*dur), buf=c.createBuffer(1,n,c.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<n;i++) d[i]=Math.random()*2-1;
+  const src=c.createBufferSource(), bp=c.createBiquadFilter(), g=c.createGain();
+  src.buffer=buf; bp.type="bandpass"; bp.Q.value=q; bp.frequency.setValueAtTime(from,t); bp.frequency.exponentialRampToValueAtTime(to,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+dur*.4); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  src.connect(bp); bp.connect(g); g.connect(SFX.master); src.start(t); src.stop(t+dur);
+}
+const sfx={
+  catch(){ if(fileSound("catch")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [1318.5,1760,2217.5,2637].forEach((f,i)=>{tone(f,t+i*.07,1.4,{vol:.12});tone(f*2,t+i*.07,.6,{vol:.03,type:"triangle"});});
+    noise(t,.5,{vol:.05,from:3000,to:9000,q:.7}); },
+  summon(){ if(fileSound("summon")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    noise(t,.9,{vol:.18,from:300,to:4000,q:1}); [880,1175,1568].forEach((f,i)=>tone(f,t+.35+i*.08,.9,{vol:.06})); },
+  milestone(){ if(fileSound("milestone")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [784,1046.5,1568].forEach((f,i)=>{tone(f,t+i*.09,.7,{vol:.16,type:"triangle"});tone(f*2,t+i*.09,.35,{vol:.04});}); },
+  wrong(){ const c=ac(); if(!c) return; const t=c.currentTime;
+    const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=900; lp.connect(SFX.master);
+    tone(116,t,.75,{type:"sawtooth",vol:.22,attack:.005,to:92,dest:lp}); tone(123,t,.75,{type:"sawtooth",vol:.18,attack:.005,to:97,dest:lp}); },
+  blip(){ const c=ac(); if(!c) return; tone(660,c.currentTime,.18,{vol:.08}); },
+  tick(){ const c=ac(); if(!c) return; tone(1320,c.currentTime,.09,{vol:.08,type:"square",attack:.002}); },
+  done(){ if(fileSound("done")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [523.25,659.25,783.99].forEach((f,i)=>tone(f,t+i*.06,.4,{vol:.12,type:"triangle"})); },
+  full(){ if(fileSound("full")) return; this.cleared(true); },
+  cleared(skipFile){ if(!skipFile&&fileSound("cleared")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [523.25,659.25,783.99,1046.5,1318.5].forEach((f,i)=>{tone(f,t+i*.11,.9,{vol:.14,type:"triangle"});});
+    tone(1046.5,t+.6,1.6,{vol:.1}); tone(1568,t+.6,1.6,{vol:.07}); noise(t+.55,.8,{vol:.05,from:4000,to:10000,q:.6}); },
+  celebrate(){ if(fileSound("celebrate")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    const gong=(at,f,vol)=>{
+      [[1,1],[1.48,.55],[2.02,.42],[2.76,.36],[3.41,.22],[4.1,.16],[5.4,.1]].forEach(([r,v],i)=>tone(f*r,at,6.5-i*.55,{vol:vol*v,attack:.006}));
+      tone(f*.5,at,7,{vol:vol*.5,attack:.02}); noise(at,1.6,{vol:vol*.35,from:900,to:180,q:.6}); };
+    gong(t,73.4,.2); gong(t+2.6,98,.15); gong(t+5.2,65.4,.2);
+    const scale=[1046.5,1174.7,1318.5,1568,1760,2093,2349.3,2637];
+    for(let i=0;i<34;i++){ const at=t+.5+Math.random()*7.5, f=scale[Math.floor(Math.random()*scale.length)];
+      tone(f,at,1.6+Math.random()*1.2,{vol:.045+Math.random()*.035,attack:.004}); tone(f*2.76,at,.7,{vol:.016,attack:.003}); tone(f*5.4,at,.3,{vol:.007,attack:.002}); } },
+  start(){ if(fileSound("start")) return; const c=ac(); if(!c) return; const t=c.currentTime;
+    [[98,.28],[98*2.76,.1],[98*5.4,.05],[196,.08]].forEach(([f,v])=>tone(f,t,3.2,{vol:v,attack:.004})); }
+};
+function humStart(){
+  if(SFX.hum||SFX.humFile) return;
+  if(SOUND_FILES.hum){ SFX.humFile=fileSound("hum",true); return; }
+  const c=ac(); if(!c) return;
+  const out=c.createGain(); out.gain.value=0; out.connect(SFX.master);
+  const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=350; lp.Q.value=4; lp.connect(out);
+  const f1=c.createBiquadFilter(); f1.type="bandpass"; f1.frequency.value=480; f1.Q.value=5;
+  const f2=c.createBiquadFilter(); f2.type="bandpass"; f2.frequency.value=820; f2.Q.value=7;
+  const mix=c.createGain(); mix.gain.value=1.4; f1.connect(lp); f2.connect(lp);
+  const oscs=[[110,.5],[110.6,.45],[164.8,.18],[55,.25]].map(([f,v])=>{const o=c.createOscillator(),g=c.createGain();o.type="sawtooth";o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(f1);g.connect(f2);g.connect(mix);o.start();return o;});
+  mix.connect(lp);
+  const vib=c.createOscillator(), vg=c.createGain(); vib.frequency.value=4.5; vg.gain.value=1.2; vib.connect(vg); oscs.forEach(o=>vg.connect(o.frequency)); vib.start();
+  const cycle=()=>{ const t=c.currentTime;
+    out.gain.cancelScheduledValues(t); out.gain.setValueAtTime(out.gain.value,t);
+    out.gain.linearRampToValueAtTime(.09,t+1.4); out.gain.setValueAtTime(.09,t+4.2); out.gain.linearRampToValueAtTime(0.0,t+6.2);
+    lp.frequency.cancelScheduledValues(t); lp.frequency.setValueAtTime(350,t); lp.frequency.linearRampToValueAtTime(1200,t+1.2);
+    lp.frequency.setValueAtTime(1200,t+2.8); lp.frequency.linearRampToValueAtTime(300,t+3.5); };
+  cycle();
+  SFX.hum={out,oscs:[...oscs,vib],timer:setInterval(cycle,7000)};
+}
+function humStop(){
+  if(SFX.humFile){ try{SFX.humFile.pause();}catch(e){} SFX.humFile=null; }
+  const h=SFX.hum; if(!h) return; SFX.hum=null; clearInterval(h.timer);
+  try{ const t=SFX.ctx.currentTime; h.out.gain.cancelScheduledValues(t); h.out.gain.setValueAtTime(h.out.gain.value,t); h.out.gain.linearRampToValueAtTime(0,t+.4); h.oscs.forEach(o=>o.stop(t+.5)); }catch(e){}
+}
+
+/* ---------- TALK MUSIC ---------- */
+let music=null, musicFade=0;
+function fadeMusic(to,done){
+  clearInterval(musicFade); if(!music) return;
+  musicFade=setInterval(()=>{ if(!music){clearInterval(musicFade);return;}
+    const v=music.volume, step=.04;
+    if(Math.abs(v-to)<=step){ music.volume=to; clearInterval(musicFade); if(done) done(); }
+    else music.volume=v+(to>v?step:-step);
+  },40);
+}
+function musicStart(){
+  if(!TALK_MUSIC||state.sfxOff) return;
+  if(!music){ music=new Audio(TALK_MUSIC); music.loop=true; music.volume=0; music.onerror=()=>{music=null;}; }
+  const p=music.play(); if(p&&p.catch) p.catch(()=>{});
+  fadeMusic(TALK_MUSIC_VOLUME);
+}
+function musicStop(){ if(!music||music.paused) return; fadeMusic(0,()=>{ try{music.pause();}catch(e){} }); }
+
+/* ---------- GAME VIDEO ---------- */
+const brokenVideos={};
+function pageVideo(src,{sound=false,loop=true}={}){
+  const v=document.getElementById("pageVideo");
+  const ok=!!src&&!brokenVideos[src];
+  document.body.classList.toggle("in-game",ok&&src===GAME_VIDEO);
+  document.body.classList.toggle("celebrating",ok&&src===CELEBRATION_VIDEO);
+  document.body.classList.toggle("intro-video",ok&&src===INTRO_VIDEO);
+  if(!v) return;
+  if(!ok){ v.hidden=true; try{v.pause();}catch(e){} return; }
+  if(v.dataset.src!==src){
+    v.dataset.src=src;
+    v.onerror=()=>{ brokenVideos[src]=true; v.hidden=true; document.body.classList.remove("in-game","celebrating","intro-video"); };
+    v.src=src; try{v.currentTime=0;}catch(e){}
+  }
+  v.loop=loop; v.muted=!(sound&&!state.sfxOff); v.hidden=false;
+  const pl=v.play(); if(pl&&pl.catch) pl.catch(()=>{ v.muted=true; const p2=v.play(); if(p2&&p2.catch) p2.catch(()=>{}); });
+}
+function gameVideo(on){
+  if(state.phase==="final") pageVideo(CELEBRATION_VIDEO,{sound:CELEBRATION_VIDEO_SOUND,loop:CELEBRATION_VIDEO_LOOP});
+  else if(state.phase==="intro") pageVideo(INTRO_VIDEO);
+  else pageVideo(on?GAME_VIDEO:null);
+}
+
+/* ---------- CRYSTAL BALL PHYSICS ---------- */
+function stopBalls(){ if(rafId) cancelAnimationFrame(rafId); rafId=0; }
+function startBalls(){
+  stopBalls();
+  const arena=document.getElementById("arena"); if(!arena) return;
+  const els=[...arena.querySelectorAll(".ball")];
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W=arena.clientWidth, H=arena.clientHeight;
+  const size=els[0]?els[0].offsetWidth:118;
+  const cols=Math.min(els.length,Math.max(2,Math.floor(W/(size*1.15))));
+  const balls=els.map((el,i)=>{
+    const cx=((i%cols)+.5)*(W/cols), cy=(Math.floor(i/cols)+.5)*(H/Math.ceil(els.length/cols));
+    const ang=Math.random()*Math.PI*2, sp=(reduce?0:1)*(95+Math.random()*70);
+    return {el,x:Math.min(W-size,Math.max(0,cx-size/2)),y:Math.min(H-size,Math.max(0,cy-size/2)),vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,wob:Math.random()*6};
+  });
+  const place=b=>{b.el.style.transform=`translate(${b.x}px,${b.y}px)`;};
+  balls.forEach(place);
+  if(reduce) return;
+  let last=performance.now(); const t0=last;
+  const step=now=>{
+    const dt=Math.min(.05,(now-last)/1000); last=now;
+    W=arena.clientWidth; H=arena.clientHeight;
+    const boost=1+Math.min(.8,(now-t0)/20000);
+    for(const b of balls){
+      b.x+=b.vx*dt*boost; b.y+=b.vy*dt*boost+Math.sin((now/600)+b.wob)*0.25;
+      if(b.x<0){b.x=0;b.vx=Math.abs(b.vx);} if(b.x>W-size){b.x=W-size;b.vx=-Math.abs(b.vx);}
+      if(b.y<0){b.y=0;b.vy=Math.abs(b.vy);} if(b.y>H-size){b.y=H-size;b.vy=-Math.abs(b.vy);}
+    }
+    for(let i=0;i<balls.length;i++)for(let j=i+1;j<balls.length;j++){
+      const a=balls[i],c=balls[j],dx=c.x-a.x,dy=c.y-a.y,d=Math.hypot(dx,dy);
+      if(d>0&&d<size){const nx=dx/d,ny=dy/d,ov=(size-d)/2;a.x-=nx*ov;a.y-=ny*ov;c.x+=nx*ov;c.y+=ny*ov;
+        const p=(a.vx-c.vx)*nx+(a.vy-c.vy)*ny; if(p>0){a.vx-=p*nx;a.vy-=p*ny;c.vx+=p*nx;c.vy+=p*ny;}}
+    }
+    balls.forEach(place);
+    rafId=requestAnimationFrame(step);
+  };
+  rafId=requestAnimationFrame(step);
+}
+
+render();
+})();
+</script>
+</body>
+</html>
