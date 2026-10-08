@@ -14,7 +14,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Miss Congeniality · Pageant Speaking Game · Koalaspies</title>
-<meta name="description" content="Answer real Miss Universe questions like a finalist. A free team speaking game for classrooms and parties: four in a row wins. No sign-up.">
+<meta name="description" content="Answer real Miss Universe questions like a finalist. A free game-show speaking game for 2 to 5 teams: pick your country, flip a silver or gold tile, and score a point for every second you speak. No sign-up.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <!-- The canonical address must be the page's real address. The home page links to
      misscongeniality/game.html — if this file lives somewhere else, change it here
@@ -26,7 +26,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Koalaspies">
 <meta property="og:title" content="What Would Miss Congeniality Say? · Free Pageant Speaking Game">
-<meta property="og:description" content="Answer real Miss Universe questions like a finalist. Four in a row wins. Free, no sign-up.">
+<meta property="og:description" content="Answer real Miss Universe questions like a finalist. Pick your country, score points, take the crown. Free, no sign-up.">
 <meta property="og:url" content="https://koalaspies-games.site/misscongeniality/game.html">
 <meta property="og:image" content="https://koalaspies-games.site/share-misscongeniality.jpg">
 <meta property="og:image:width" content="1200">
@@ -1077,6 +1077,202 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
 
 /* ===== TINSEL on a win: a see-through layer over everything that taps pass through ===== */
 .tinsel { position:fixed; inset:0; width:100%; height:100%; z-index:9999; pointer-events:none; transition:opacity .6s ease; }
+
+/* ═════════════════════════════════════════════════════════════════
+   TOP 2 TO TOP 5: three more finalists, points and the setup screen
+   ═════════════════════════════════════════════════════════════════
+   Finalists 1 and 2 keep silver and gold. Finalists 3 to 5 wear rose,
+   emerald and amethyst, each with a light, mid and deep shade for the
+   polished squares and a dark ink for the mark on top.               */
+:root {
+  --p3:#e98fae; --p3-hi:#f8cad9; --p3-deep:#b5587b; --p3-ink:#3a0f1f;
+  --p4:#4cbf93; --p4-hi:#aeeace; --p4-deep:#23845f; --p4-ink:#06291c;
+  --p5:#ad90e2; --p5-hi:#dccdf7; --p5-deep:#7356b3; --p5-ink:#1f1238;
+}
+.score.p3 { --edge:var(--p3); }
+.score.p4 { --edge:var(--p4); }
+.score.p5 { --edge:var(--p5); }
+.score.p3 .chip { background:linear-gradient(160deg, var(--p3-hi), var(--p3) 55%, var(--p3-deep)); color:var(--p3-ink); box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 14px rgba(0,0,0,.35); }
+.score.p4 .chip { background:linear-gradient(160deg, var(--p4-hi), var(--p4) 55%, var(--p4-deep)); color:var(--p4-ink); box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 14px rgba(0,0,0,.35); }
+.score.p5 .chip { background:linear-gradient(160deg, var(--p5-hi), var(--p5) 55%, var(--p5-deep)); color:var(--p5-ink); box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 14px rgba(0,0,0,.35); }
+.sq.p3, .sq.p4, .sq.p5 {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 8px rgba(0,0,0,.22), 0 6px 18px rgba(0,0,0,.4);
+}
+.sq.p3 { background:linear-gradient(160deg, var(--p3-hi) 0%, var(--p3) 46%, var(--p3-deep) 100%); border-color:var(--p3-hi); color:var(--p3-ink); }
+.sq.p4 { background:linear-gradient(160deg, var(--p4-hi) 0%, var(--p4) 46%, var(--p4-deep) 100%); border-color:var(--p4-hi); color:var(--p4-ink); }
+.sq.p5 { background:linear-gradient(160deg, var(--p5-hi) 0%, var(--p5) 46%, var(--p5-deep) 100%); border-color:var(--p5-hi); color:var(--p5-ink); }
+.sq.p3.win, .sq.p4.win, .sq.p5.win {
+  box-shadow:0 0 0 3px #14318a inset, 0 0 0 2px rgba(255,255,255,.95), 0 0 28px rgba(255,255,255,.55), 0 8px 22px rgba(0,0,0,.5);
+}
+#panel[data-team="3"] { --metal:#fde3ec; --metal-mid:#e98fae; --metal-deep:#a9496c; }
+#panel[data-team="4"] { --metal:#d9f5e8; --metal-mid:#4cbf93; --metal-deep:#1f7a57; }
+#panel[data-team="5"] { --metal:#ece3fb; --metal-mid:#ad90e2; --metal-deep:#6a4ea8; }
+
+/* Points under each finalist's name */
+.ptsline {
+  display:block; margin-top:.18em;
+  font-size:clamp(.78rem, 2.8vw, 1rem); font-weight:700; color:var(--ink);
+  font-variant-numeric:tabular-nums; letter-spacing:.2px;
+}
+.ptsline small { font-size:.72em; font-weight:700; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-left:.25em; }
+
+/* Three or more finalists: each one stacks (mark, name, points) so five fit in a row on a phone. */
+body.many #scores { gap:clamp(2px, 1vw, 10px); }
+body.many .score {
+  flex:1 1 0; flex-direction:column; align-items:center; text-align:center;
+  gap:5px; padding:.4rem .15rem;
+}
+body.many .meta { text-align:center; }
+body.many .name { white-space:normal; overflow-wrap:anywhere; line-height:1.12; font-size:clamp(.64rem, 2.5vw, .9rem); }
+body.many .role, body.many .hintsline { justify-content:center; }
+body.many .chip { width:clamp(30px, 8.5vw, 44px); height:clamp(30px, 8.5vw, 44px); font-size:clamp(.95rem, 3.8vw, 1.35rem); }
+@media (max-width:600px) {
+  body.many .role { display:none; }
+  body.many .hintsline .htxt { display:none; }
+  body.many .score.active .name { color:var(--bright); text-decoration:underline 2px; text-underline-offset:3px; }
+}
+
+@media (min-width:900px) and (min-height:561px) {
+  body.many { --boardw:min(48vw, 640px, 56svh); }
+  body.many main { grid-template-rows:auto auto auto auto auto; }
+  body.many #scores { display:flex; grid-column:1 / -1; grid-row:2; width:min(100%, 860px); justify-self:center; margin:.1rem 0 .9rem; }
+  body.many #board   { grid-row:3; }
+  body.many #newgame, body.many #howto { grid-row:3; }
+  body.many #status  { grid-row:4; }
+  body.many #hint    { grid-row:5; }
+}
+
+/* Status after a game: who took the crown, and the runners-up */
+#status .crowned { display:block; font-weight:700; color:var(--bright); }
+#status .ranks { display:block; margin-top:.25em; color:var(--muted); font-size:.92em; }
+
+/* ===== The setup on the How to play screen ===== */
+.setup {
+  margin:0 0 1.05rem; padding:.85rem .8rem .9rem;
+  border:1px solid var(--line); border-radius:6px;
+  background:rgba(16,42,109,.35);
+}
+.setlbl {
+  font-size:clamp(.6rem, 2.1vw, .72rem); letter-spacing:1.2px; text-transform:uppercase;
+  font-weight:700; color:var(--muted); margin:0 0 .45rem;
+}
+.topn { display:flex; gap:4px; justify-content:center; flex-wrap:wrap; }
+.topn button {
+  min-height:38px; padding:.4rem .8rem; flex:1 1 0; min-width:4.2rem;
+  background:rgba(255,255,255,.04); color:var(--accent);
+  border:1px solid rgba(207,211,218,.45);
+}
+.topn button[aria-pressed="true"] {
+  background:linear-gradient(175deg, var(--bright-hi) 0%, var(--accent) 42%, var(--accent-dark) 100%);
+  color:#1b1c1f; border-color:var(--accent);
+}
+.winrule { margin:.5rem 0 .7rem; font-size:clamp(.78rem, 2.8vw, .92rem); color:var(--ink); }
+.finalists { display:grid; gap:6px; }
+.frow { display:flex; align-items:center; gap:.5rem; font-size:clamp(.8rem, 2.9vw, .95rem); text-align:left; }
+.frow .fmark { flex:none; display:inline-flex; padding:0; gap:0; }
+.frow .chip { width:30px; height:30px; font-size:1rem; border-radius:5px; }
+.frow .miss { font-weight:600; color:var(--ink); flex:none; }
+.frow select {
+  font-family:inherit; font-size:1em; font-weight:600; flex:1 1 auto; min-width:0;
+  padding:.38em .5em; border:1px solid var(--line); border-radius:4px;
+  background:var(--bg); color:var(--ink);
+}
+.setnote { margin:.6rem 0 0; font-size:clamp(.62rem, 2.1vw, .72rem); color:var(--muted); }
+
+/* The card: what this question is worth, and the encore count */
+#worth {
+  margin:-.55rem 0 1rem; min-height:1.3em;
+  font-size:clamp(.7rem, 2.5vw, .84rem); letter-spacing:1px; text-transform:uppercase;
+  font-weight:700; color:var(--pen-soft, var(--muted));
+}
+#worth b { color:var(--pen, var(--ink)); }
+#panel #clock.won { color:#1f7a3a; }
+
+/* ═════════════════════════════════════════════════════════════════
+   THE GAME-SHOW BOARD: twelve shiny tiles, silver and gold
+   ═════════════════════════════════════════════════════════════════ */
+#board { grid-template-columns:repeat(4, 1fr); width:min(96vw, calc(var(--boardw) * 1.18)); }
+@media (max-width:600px) { #board { grid-template-columns:repeat(3, 1fr); } }
+.hintsline { display:none !important; }
+
+.sq.tile {
+  aspect-ratio:4 / 3; font:inherit; color:inherit; text-transform:none; letter-spacing:0;
+  min-height:0; padding:clamp(4px, 1.2vw, 10px); border-radius:clamp(6px, 1.2vw, 12px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15em;
+}
+.sq.tile.silver {
+  background:linear-gradient(155deg, #ffffff 0%, #e4e8ef 22%, #b9c0cc 48%, #eef1f6 64%, #9aa2b0 100%);
+  border:1px solid #f4f6fa; color:#27303f;
+  box-shadow:inset 0 1px 0 #fff, inset 0 -4px 10px rgba(0,0,0,.22), 0 8px 20px rgba(0,0,0,.45);
+}
+.sq.tile.gold {
+  background:linear-gradient(155deg, #fff3c4 0%, #f6d37a 22%, #d8a32c 48%, #f9e19a 64%, #a8781a 100%);
+  border:1px solid #ffe9a8; color:#3a2a05;
+  box-shadow:inset 0 1px 0 #fff7d6, inset 0 -4px 10px rgba(0,0,0,.22), 0 8px 20px rgba(0,0,0,.45), 0 0 18px rgba(246,211,122,.25);
+}
+/* The tile's face: the bonus, a hairline, and the time, engraved into the metal. */
+.sq.tile { gap:0; }
+.sq.tile .tval, #panel .tileback .tval {
+  display:flex; align-items:flex-start; line-height:1;
+  font-weight:700; font-variant-numeric:lining-nums tabular-nums; letter-spacing:-.5px;
+  font-size:clamp(1.05rem, 3.9vw, 1.75rem);
+  text-shadow:0 1px 0 rgba(255,255,255,.7), 0 -1px 0 rgba(0,0,0,.15);
+}
+.sq.tile .tplus, #panel .tileback .tplus { font-size:.55em; font-weight:700; margin:.12em .06em 0 0; opacity:.8; }
+.sq.tile .trule, #panel .tileback .trule {
+  display:block; width:clamp(18px, 4.5vw, 34px); height:1px; margin:clamp(4px, .9vw, 7px) 0;
+  background:currentColor; opacity:.35;
+}
+.sq.tile .tsec, #panel .tileback .tsec {
+  font-size:clamp(.5rem, 1.55vw, .66rem); font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  opacity:.72; line-height:1;
+}
+/* a light sweeps across each tile now and then, like studio lights on metal */
+.sq.tile::after {
+  background:linear-gradient(105deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.75) 47%, rgba(255,255,255,0) 64%);
+  background-size:260% 100%; background-repeat:no-repeat; background-position:160% 0;
+  animation:tileshine 5.5s ease-in-out infinite; animation-delay:var(--shine-delay, 0s);
+}
+@keyframes tileshine { 0%, 62% { background-position:160% 0; } 82%, 100% { background-position:-60% 0; } }
+.sq.tile:hover:not(:disabled), .sq.tile:focus-visible {
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 0 0 2px #fff, 0 14px 28px rgba(0,0,0,.5), 0 0 26px rgba(255,255,255,.35);
+  outline:none;
+}
+.sq.tile:disabled { cursor:default; filter:saturate(.55) brightness(.75); }
+.sq.tile.deal { animation:deal .55s cubic-bezier(.2,.8,.3,1.2) both; }
+.sq.tile.deal::after { animation:tileshine 5.5s ease-in-out infinite; }
+@keyframes deal { 0% { transform:rotateY(90deg) scale(.7); opacity:0; } 100% { transform:none; opacity:1; } }
+
+/* The card turns over: it starts as the tile, spins, and lands as the question. */
+#panel { perspective:1400px; }
+#panel .tileback {
+  position:absolute; inset:0; z-index:5; border-radius:12px; pointer-events:none;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.2em;
+  opacity:0;
+}
+#panel .tileback.silver { background:linear-gradient(155deg, #ffffff 0%, #e4e8ef 22%, #b9c0cc 48%, #eef1f6 64%, #9aa2b0 100%); color:#27303f; }
+#panel .tileback.gold   { background:linear-gradient(155deg, #fff3c4 0%, #f6d37a 22%, #d8a32c 48%, #f9e19a 64%, #a8781a 100%); color:#3a2a05; }
+#panel .tileback { gap:0; }
+#panel .tileback > * { transform:scaleX(-1); }
+#panel .tileback .tval { font-size:clamp(2.2rem, 10vw, 3.6rem); }
+#panel .tileback .trule { width:56px; margin:12px 0; }
+#panel .tileback .tsec { font-size:clamp(.7rem, 2.6vw, .9rem); letter-spacing:3px; }
+#panel .cardwrap.flip { animation:cardflip .9s cubic-bezier(.3,.7,.25,1) both; }
+#panel .cardwrap.flip .tileback { animation:backface .9s linear both; }
+/* Two halves: the tile turns to edge-on (90deg), the metal face drops
+   away at exactly that moment, and the card turns the rest of the way. */
+@keyframes cardflip {
+  0%   { transform:rotateY(180deg) scale(.6); animation-timing-function:cubic-bezier(.5,0,1,1); }
+  45%  { transform:rotateY(90deg) scale(.85); animation-timing-function:cubic-bezier(0,0,.3,1); }
+  80%  { transform:rotateY(-8deg) scale(1.02); }
+  100% { transform:rotateY(0) scale(1); }
+}
+@keyframes backface { 0%, 44.9% { opacity:1; } 45%, 100% { opacity:0; } }
+@media (prefers-reduced-motion: reduce) {
+  .sq.tile::after, .sq.tile.deal, #panel .cardwrap.flip, #panel .cardwrap.flip .tileback { animation:none; }
+}
+#panel #clock.won { color:#9a6b0c; }
 </style>
 </head>
 
@@ -1131,7 +1327,7 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
 
 
   <div id="scores"></div>
-  <div id="hint">Tap a team name to rename</div>
+  <div id="hint">Tap a name to rename</div>
 
   <div id="board"></div>
   <div id="status"></div>
@@ -1178,14 +1374,29 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
   <div class="sheet">
     <h2 id="introTitle">How to play</h2>
     <div class="lead">Miss Congeniality</div>
+    <div class="setup" id="setup">
+      <div class="setlbl" id="topnLbl">How many finalists?</div>
+      <div class="topn" role="group" aria-labelledby="topnLbl">
+        <button type="button" data-n="2" aria-pressed="true">Top 2</button>
+        <button type="button" data-n="3" aria-pressed="false">Top 3</button>
+        <button type="button" data-n="4" aria-pressed="false">Top 4</button>
+        <button type="button" data-n="5" aria-pressed="false">Top 5</button>
+      </div>
+      <p class="winrule" id="winrule">Top 2 · three questions each</p>
+      <div class="setlbl">Choose your countries</div>
+      <div class="finalists" id="finalists"></div>
+      <p class="setnote" id="setnote">You can also tap a name on the scoreboard to type your own.</p>
+    </div>
 
     <ol class="rules">
-      <li><strong>Get four in a row to win.</strong> Across, down or diagonally &mdash; the first team to claim four squares in a line takes the game.</li>
-      <li><strong>Win a square by answering like a finalist.</strong> Listen to the question, then speak for the whole time on the clock &mdash; smile, take a breath, and keep going. Stop early and the square stays open.</li>
-      <li><strong>Three hints each.</strong> A team may press <em>Hint</em> to read the question on the screen &mdash; but only three times in the whole game, so save them for the hard ones.</li>
+      <li><strong>Pick a tile.</strong> Silver tiles are 20-second questions and gold tiles are 30-second questions. The tile turns over, the question appears, and the host reads it out.</li>
+      <li><strong>One point for every second you speak.</strong> The clock counts up as soon as the question has been read. Smile, take a breath, keep going, and press <em>Finished</em> when you stop.</li>
+      <li><strong>Reach the time on the tile for its bonus:</strong> <span id="ruleBonus">+5 on silver, +10 on gold</span>. Stop early and you keep your points but miss the bonus.</li>
+      <li id="ruleRounds"><strong>Three questions each.</strong> When everyone has answered, the finalist with the most points takes the crown.</li>
     </ol>
 
-    <div class="demo">
+
+    <div class="demo" hidden>
       <div class="mini" id="mini"></div>
       <div class="minicap" id="minicap">Across</div>
     </div>
@@ -1205,6 +1416,7 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
      block above if you want to change how it looks. -->
 <div id="panel" role="dialog" aria-modal="true" aria-labelledby="plvl">
   <div class="cardwrap">
+    <div class="tileback silver" id="tileback" aria-hidden="true"></div>
     <div class="sheet">
       <span class="lvl topic" id="plvl">Topic</span>
       <div id="turnline">Team 1</div>
@@ -1216,6 +1428,7 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
 
       <div id="topic"></div>
       <div id="clock">0:05</div>
+      <div id="worth"></div>
       <div class="row" id="controls"></div>
     </div>
   </div>
@@ -1229,8 +1442,9 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
    ██                                                                  ██
    ██████████████████████████████████████████████████████████████████████
 
-   The game: two teams, a 5 x 5 board, and the first team to claim four
-   squares in a row — horizontally, vertically or diagonally — wins.
+   The game: two to five finalists (Top 2 to Top 5), a 5 x 5 board, and
+   the first to claim a line wins: four in a row for Top 2, three in a
+   row for Top 3 to Top 5. Every square also scores points (see POINTS).
 
    ----------------------------------------------------------------------
    HOW TO ADD YOUR OWN QUESTIONS
@@ -1436,6 +1650,52 @@ const WIN_WHISTLES      = true;
 const HINTS_PER_TEAM = 3;
 
 /* ----------------------------------------------------------------------
+   POINTS
+   ----------------------------------------------------------------------
+   One point for every second a finalist speaks. The clock counts UP
+   from 0:00 and the points rise with it. Reach the target (20 or 30
+   seconds, set by the question) and the square is won; keep talking
+   and the points keep coming. Stop before the target and the team
+   still banks its points, but the square stays open.
+
+     MAX_SECONDS ...... the clock stops counting here (0 = no limit)     */
+const MAX_SECONDS  = 90;
+
+/* ----------------------------------------------------------------------
+   THE GAME-SHOW BOARD
+   ----------------------------------------------------------------------
+   Twelve tiles are on the board at all times. Silver tiles hold the
+   20-second questions and gold tiles the 30-second ones. When a tile
+   is played, a fresh one is dealt into its place.
+
+     TILE_BONUS_SILVER ... bonus for reaching the time on a silver tile
+     TILE_BONUS_GOLD ..... bonus for reaching the time on a gold tile
+     ROUNDS .............. questions each finalist answers before the
+                           crowning                                    */
+const TILE_BONUS_SILVER = 5;
+const TILE_BONUS_GOLD   = 10;
+const ROUNDS            = 3;
+const TILES             = 12;
+
+/* ----------------------------------------------------------------------
+   THE COUNTRIES
+   ----------------------------------------------------------------------
+   The list on the How to play screen. Add or remove any; the game puts
+   "Miss" in front. DEFAULT_COUNTRIES are the ones already picked for
+   finalists 1 to 5 when the page opens.                                 */
+const COUNTRIES = [
+  "Argentina","Australia","Brazil","Canada","Chile","China","Colombia",
+  "Costa Rica","Dominican Republic","Ecuador","Egypt","England","France",
+  "Germany","Ghana","Great Britain","Greece","India","Indonesia","Ireland",
+  "Italy","Jamaica","Japan","Kazakhstan","Kenya","Korea","Malaysia","Mexico",
+  "Nepal","Netherlands","New Zealand","Nigeria","Pakistan","Panama","Peru",
+  "Philippines","Poland","Portugal","Puerto Rico","Russia","Scotland",
+  "South Africa","Spain","Sri Lanka","Sweden","Thailand","Trinidad and Tobago",
+  "Turkey","Ukraine","USA","Uzbekistan","Venezuela","Vietnam","Wales"
+];
+const DEFAULT_COUNTRIES = ["Venezuela","Philippines","USA","Colombia","South Africa"];
+
+/* ----------------------------------------------------------------------
    MORE SOUNDS
    ----------------------------------------------------------------------
    TILE_TINKLE ...... a little sparkle of bells when a team turns over a
@@ -1461,7 +1721,7 @@ const CLOCK_TICK       = true;  /* game-show tick-tock while they speak */
 const CLOCK_TICK_LEVEL = 0.12;  /* its volume: .06 soft, .2 loud       */
 const BRAVO_SECONDS    = 4.5;   /* how long the clapping goes on */
 const BRAVO_LEVEL      = 3;     /* how loud: stays clean to about 4 */
-const INTRO_SONG       = WIN_SONG;
+const INTRO_SONG       = "";   /* no music on the How to play card; type a file name here to bring it back */
 const INTRO_SONG_START = WIN_SONG_START;
 const INTRO_SONG_LEVEL = 0.5;
 
@@ -1591,7 +1851,10 @@ const QUESTIONS = [
    ██   END OF THE BIT YOU EDIT — nothing below here needs changing     ██
    ██████████████████████████████████████████████████████████████████████ */
 
-const COLS = 5, ROWS = 5, WIN = 4;
+const COLS = 5, ROWS = 5;
+let WIN = 4;                       /* 4 in a row for Top 2, 3 for Top 3 to Top 5 */
+const winFor = n => (n <= 2 ? 4 : 3);
+const WORDS = ["", "one", "two", "three", "four", "five"];
 
 /* First word decides the time, unless the question sets seconds itself. */
 function secondsFor(q) {
@@ -1639,7 +1902,7 @@ function buildLines() {
   }
   return L;
 }
-const LINES = buildLines();
+let LINES = buildLines();
 
 /* ================= PLAYERS =================
    The two marks are drawn as small SVGs rather than letters, so a crown
@@ -1650,12 +1913,29 @@ const CROWN = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="
 
 const SASH = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 2h8.8v18.4l-4.4-4-4.4 4Z" transform="rotate(-26 12 12)"/></svg>';
 
-const DEFAULT_NAMES = ["Miss Universe", "Miss World"];
+/* Finalists 3 to 5 wear a star, a gem and a rose-heart. */
+const STAR  = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.8 6.2 6.7.7-5 4.5 1.4 6.6L12 17.2l-5.9 3.4 1.4-6.6-5-4.5 6.7-.7Z"/></svg>';
+const GEM   = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10l4.5 5.6L12 21 2.5 9.1Z"/></svg>';
+const HEART = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6s-8.6-5.2-8.6-11a4.9 4.9 0 0 1 8.6-3.2 4.9 4.9 0 0 1 8.6 3.2c0 5.8-8.6 11-8.6 11Z"/></svg>';
+const MARKS = [CROWN, SASH, STAR, GEM, HEART];
 
-const teams = [
-  { name:"Miss Universe", mark:CROWN },   /* a crown */
-  { name:"Miss World",    mark:SASH  }    /* a sash  */
-];
+/* What the How to play screen has chosen; it becomes the game on Ready. */
+let setupN = 2;
+let setupCountries = DEFAULT_COUNTRIES.slice();
+let appliedKey = "";
+
+const missOf = c => "Miss " + c;
+let teams = [];
+function buildTeams() {
+  teams = Array.from({length:setupN}, (_, i) => ({
+    name: missOf(setupCountries[i]), country: setupCountries[i], mark: MARKS[i], pts: 0
+  }));
+  WIN = winFor(setupN);
+  LINES = buildLines();
+  document.body.classList.toggle("many", setupN > 2);
+  appliedKey = setupKey();
+}
+const setupKey = () => setupN + "|" + setupCountries.slice(0, setupN).join("|");
 
 function drawScores() {
   const wrap = document.getElementById("scores");
@@ -1680,7 +1960,7 @@ function drawScores() {
     name.title = "Rename";
     name.addEventListener("blur", () => {
       const v = name.textContent.trim().slice(0, 22);
-      tm.name = v || DEFAULT_NAMES[idx];
+      tm.name = v || missOf(tm.country);
       name.textContent = tm.name;
     });
     name.addEventListener("keydown", e => {
@@ -1695,7 +1975,11 @@ function drawScores() {
     hints.className = "hintsline";
     hints.innerHTML = '<span class="htxt">Hints</span><span class="pips"></span>';
 
-    meta.append(name, role, hints);
+    const pts = document.createElement("span");
+    pts.className = "ptsline";
+    pts.innerHTML = '<span class="pv">' + (tm.pts || 0) + '</span><small>pts</small>';
+
+    meta.append(name, pts, role, hints);
     card.append(chip, meta);
     wrap.appendChild(card);
   });
@@ -1705,7 +1989,7 @@ function drawScores() {
 
 /* Three pips per team; a spent hint turns into an empty ring. */
 function drawHints() {
-  [1, 2].forEach(n => {
+  teams.forEach((_, k) => { const n = k + 1;
     const card = document.getElementById("s" + n);
     if (!card) return;
     const box = card.querySelector(".pips");
@@ -1724,10 +2008,10 @@ function drawHints() {
 }
 
 /* ================= STATE ================= */
-let cells, player, over, used;
+let cells, player, over, used, tiles = [], turnsTaken = 0;
 let activeIndex, ticker, audioCtx, player_el;
 let playsLeft, heard, currentQ, currentSeconds, audioFailed, cancelled;
-let hintsLeft = [HINTS_PER_TEAM, HINTS_PER_TEAM];
+let hintsLeft = [];
 let hintUsedHere = false;   /* has this team already spent a hint on this square? */
 
 function shuffle(a) {
@@ -1760,40 +2044,64 @@ function newGame() {
   stopWinSong();        /* so it never plays over the top of the next round */
   clearTimeout(walkTimer); walkTimer = null;
   closePanel();
-  cells = Array.from({length: COLS * ROWS}, () => ({ owner:0 }));
+  cells = [];
   player = 1;
   over = false;
   used = [];
-  hintsLeft = [HINTS_PER_TEAM, HINTS_PER_TEAM];
-  hintUsedHere = false;
-  drawHints();
-  drawBoard();
-  setStatus("");
+  turnsTaken = 0;
+  teams.forEach(t => { t.pts = 0; });
+  drawPoints();
+  tiles = shuffle(Array.from({length: TILES}, (_, k) => k % 2 === 1)).map(g => dealTile(g));
+  drawBoard(true);
+  setStatus("Round 1 of " + ROUNDS + ". " + nameOf(player) + " to pick a tile.");
   markTurn();
   wiggleXO();
 }
 
-function drawBoard() {
+/* A fresh tile: a question from the pile on a silver or gold tile.
+   The board starts half silver, half gold, and a played tile is
+   replaced with the same metal, so the mix stays even. */
+function dealTile(gold) {
+  return { q: pickQuestion(), gold: !!gold };
+}
+const tileSecs = t => (t && t.gold ? WH_SECONDS : QUICK_SECONDS);
+const tileBonus = t => (t && t.gold ? TILE_BONUS_GOLD : TILE_BONUS_SILVER);
+
+function tileFace(t) {
+  const secs = tileSecs(t);
+  return '<span class="tval"><span class="tplus">+</span>' + tileBonus(t) + '</span>' +
+         '<span class="trule"></span><span class="tsec">' + secs + ' sec</span>';
+}
+
+function drawBoard(dealAll, fresh) {
   const board = document.getElementById("board");
   board.innerHTML = "";
-  cells.forEach((cell, i) => {
-    const sq = document.createElement("div");
-    sq.className = "sq";
-    if (cell.owner) {
-      sq.classList.add("taken", "p" + cell.owner);
-      const m = document.createElement("div");
-      m.className = "claim";
-      m.innerHTML = teams[cell.owner - 1].mark;
-      sq.appendChild(m);
-    } else {
-      sq.addEventListener("click", () => openTopic(i));
+  tiles.forEach((t, i) => {
+    const sq = document.createElement("button");
+    sq.type = "button";
+    sq.className = "sq tile " + (t.gold ? "gold" : "silver");
+    if (dealAll || i === fresh) {
+      sq.classList.add("deal");
+      sq.style.animationDelay = (dealAll ? i * 45 : 0) + "ms";
     }
+    sq.style.setProperty("--shine-delay", (i * 0.37 % 4).toFixed(2) + "s");
+    sq.innerHTML = tileFace(t);
+    sq.setAttribute("aria-label", (t.gold ? "Gold" : "Silver") + " tile, " + tileSecs(t) + " seconds, bonus " + tileBonus(t));
+    if (over) sq.disabled = true;
+    else sq.addEventListener("click", () => openTopic(i));
     board.appendChild(sq);
   });
 }
 
+function drawPoints() {
+  teams.forEach((tm, k) => {
+    const v = document.querySelector("#s" + (k + 1) + " .pv");
+    if (v) v.textContent = tm.pts;
+  });
+}
+
 function markTurn() {
-  [1, 2].forEach(n => {
+  teams.forEach((_, k) => { const n = k + 1;
     const card = document.getElementById("s" + n);
     if (!card) return;
     const isTurn = player === n && !over;
@@ -1947,16 +2255,16 @@ function pickQuestion() {
 }
 
 function openTopic(i) {
-  if (over || cells[i].owner) return;
+  if (over || !tiles[i]) return;
   activeIndex = i;
-  currentQ = pickQuestion();
+  currentQ = tiles[i].q;
   playsLeft = AUTO_START ? 1 : MAX_PLAYS;
   heard = false;
   audioFailed = false;
   cancelled = false;
   hintUsedHere = false;
 
-  currentSeconds = secondsFor(currentQ);
+  currentSeconds = tileSecs(tiles[i]);
 
   const lvlEl = document.getElementById("plvl");
   lvlEl.className = "lvl topic" + (currentSeconds <= QUICK_SECONDS ? " quick" : "");
@@ -1966,21 +2274,38 @@ function openTopic(i) {
   tl.textContent = nameOf(player) + " ";
   tl.insertAdjacentHTML("beforeend", teams[player - 1].mark);
 
-  /* the card takes the colour of the team whose turn it is */
-  document.getElementById("panel").dataset.team = player;
+  /* the envelope is the tile's metal: silver or gold */
+  const panel = document.getElementById("panel");
+  panel.dataset.team = tiles[i].gold ? 2 : 1;
+  const back = document.getElementById("tileback");
+  back.className = "tileback " + (tiles[i].gold ? "gold" : "silver");
+  back.innerHTML = tileFace(tiles[i]);
+  const wrap = panel.querySelector(".cardwrap");
+  wrap.classList.remove("flip"); void wrap.offsetWidth; wrap.classList.add("flip");
 
   const topic = document.getElementById("topic");
   topic.textContent = currentQ.text || "(no text set for this question)";
-  topic.classList.remove("revealed");
+  topic.classList.add("revealed");      /* the question is written on the card */
   alignRuledLines();
 
   showClock(currentSeconds);
-  document.getElementById("clock").classList.remove("low");
+  document.getElementById("clock").classList.remove("low", "encore", "won");
+  spokeSecs = 0;
+  controlState = "listen";
+  showWorth();
+  showClock(0);
   document.getElementById("wave").classList.remove("on");
 
   renderControls("listen");
   document.getElementById("panel").classList.add("open");
   tinkle();
+
+  /* Game-show style: once the card has turned over, the host reads it out. */
+  const opened = currentQ;
+  setTimeout(() => {
+    if (currentQ === opened && controlState === "listen" && !heard && playsLeft > 0 &&
+        document.getElementById("panel").classList.contains("open")) playQuestion();
+  }, 950);
 }
 
 function playsLabel() {
@@ -1998,6 +2323,28 @@ function playsLabel() {
 }
 
 let controlState = "listen";
+let spokeSecs = 0;          /* seconds spoken on this turn, counted up by runTimer */
+
+const reachedTarget = () => spokeSecs >= currentSeconds;
+const turnPoints = () => spokeSecs + (reachedTarget() ? tileBonus(tiles[activeIndex]) : 0);
+const pl = n => n + " point" + (n === 1 ? "" : "s");
+
+function showWorth() {
+  const w = document.getElementById("worth");
+  if (!w) return;
+  const bonus = tileBonus(tiles[activeIndex]);
+  if (controlState === "listen" || controlState === "playing") {
+    w.innerHTML = "1 point a second &middot; reach <b>" + currentSeconds + "s</b> for <b>+" + bonus + "</b>";
+  } else if (controlState === "done") {
+    w.innerHTML = "Spoke for " + spokeSecs + "s" + (reachedTarget() ? " + bonus " + bonus : "") +
+                  " &middot; <b>" + pl(turnPoints()) + "</b>";
+  } else if (!reachedTarget()) {
+    w.innerHTML = "<b>" + pl(spokeSecs) + "</b> &middot; " + (currentSeconds - spokeSecs) + "s to the +" + bonus + " bonus";
+  } else {
+    w.innerHTML = "Bonus! <b>" + pl(turnPoints()) + "</b> &middot; keep going";
+  }
+}
+function stopEncore() {}
 
 function useHint() {
   if (hintUsedHere || hintsLeft[player - 1] <= 0) return;
@@ -2006,6 +2353,7 @@ function useHint() {
   document.getElementById("topic").classList.add("revealed");
   drawHints();
   renderControls(controlState);
+  showWorth();
 }
 
 function renderControls(state) {
@@ -2035,24 +2383,18 @@ function renderControls(state) {
   if (state === "listen") {
     if (playsLeft > 0) add(heard ? "Play again" : "Play the question", "btn-primary", playQuestion);
     if (heard) add("Start answering", "btn-primary", () => runTimer(currentSeconds));
-    addHint();
     add("Back", "btn-quiet", closePanel);
   } else if (state === "playing") {
     add("Stop the audio", "btn-quiet", () => {
       cancelled = true; stopAudio(); heard = true; renderControls("listen");
     });
   } else if (state === "running") {
-    addHint();
-    add("Stop — pass the turn", "btn-quiet", () => {
-      stopTimer(); closePanel(); swapPlayer();
-      setStatus("Turn passed. " + nameOf(player) + " to choose.");
-    });
+    const f = add("Finished", "btn-primary", finishTalking);
+    f.id = "finishBtn";
   } else if (state === "done") {
-    add("Claim the square", "btn-primary", claimSquare);
-    add("Not quite — pass", "btn-quiet", () => {
-      closePanel(); swapPlayer();
-      setStatus("Square left open. " + nameOf(player) + " to choose.");
-    });
+    const c = add("Bank the points (+" + turnPoints() + ")", "btn-primary", () => endTurn(turnPoints()));
+    c.id = "claimBtn";
+    add("Not quite — no points", "btn-quiet", () => endTurn(0));
   }
 }
 
@@ -2095,24 +2437,42 @@ function showClock(remaining) {
 
 function runTimer(seconds) {
   stopAudio();
-  const red = lowAt(seconds);
-  const end = Date.now() + seconds * 1000;
+  const start = Date.now();
+  spokeSecs = 0;
   renderControls("running");
+  showWorth();
   stopTimer();
-  let lastTick = null;
+  const clock = document.getElementById("clock");
+  clock.classList.remove("low", "won");
+  showClock(0);
   ticker = setInterval(() => {
-    const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
-    if (left > 0 && left !== lastTick) { lastTick = left; clockTick(left, left <= red); }
-    showClock(left);
-    document.getElementById("clock").classList.toggle("low", left <= red && left > 0);
-    if (left <= 0) {
-      stopTimer();
-      document.getElementById("clock").textContent = "TIME";
-      document.getElementById("clock").classList.remove("low");
+    let secs = Math.floor((Date.now() - start) / 1000);
+    if (MAX_SECONDS > 0) secs = Math.min(secs, MAX_SECONDS);
+    if (secs === spokeSecs) return;
+    spokeSecs = secs;
+    showClock(secs);
+    const left = seconds - secs;
+    if (left > 0) {
+      clockTick(left, left <= lowAt(seconds));
+      clock.classList.toggle("low", left <= lowAt(seconds));
+    } else if (left === 0) {
+      clock.classList.remove("low");
+      clock.classList.add("won");
       if (TIME_UP_BRAVO) bravo(); else beep();
-      renderControls("done");
+    } else if (secs % 10 === 0) {
+      tinkle();                      /* a little sparkle every ten seconds of encore */
     }
+    showWorth();
+    if (MAX_SECONDS > 0 && secs >= MAX_SECONDS) finishTalking();
   }, 200);
+}
+
+/* "Finished": stop the clock and let the judges decide. */
+function finishTalking() {
+  if (controlState !== "running") return;
+  stopTimer();
+  renderControls("done");
+  showWorth();
 }
 
 function stopTimer() { if (ticker) { clearInterval(ticker); ticker = null; } }
@@ -2750,39 +3110,65 @@ function fanfare() {
   } catch (e) {}
 }
 
-function claimSquare() {
-  cells[activeIndex].owner = player;
+/* The judges have decided: bank the points, deal a fresh tile, next finalist. */
+function endTurn(gained) {
+  const who = player;
+  teams[who - 1].pts += gained;
+  tiles[activeIndex] = dealTile(tiles[activeIndex].gold);
+  turnsTaken++;
   closePanel();
-  drawBoard();
+  drawPoints();
+  if (gained > 0) tinkle();
 
-  const line = winningLine(player);
-  if (line) {
-    over = true;
-    line.forEach(i => document.getElementById("board").children[i].classList.add("win"));
-    winnersWalk();    /* cheer, "take your walk", then MissCon.mp3 */
-    setStatus("Four in a row! Winner: " + nameOf(player));
-    markTurn();
-    return;
-  }
-  if (cells.every(c => c.owner)) {
-    over = true;
-    setStatus("Every square taken — it is a draw.");
-    markTurn();
-    return;
-  }
+  if (turnsTaken >= ROUNDS * teams.length) { crowning(); return; }
+
   swapPlayer();
-  setStatus("Square won. " + nameOf(player) + " to choose.");
+  drawBoard(false, activeIndex);
+  const round = Math.floor(turnsTaken / teams.length) + 1;
+  const lead = gained > 0 ? nameOf(who) + " banks " + pl(gained) + ". "
+                          : "The judges said no to " + nameOf(who) + ". ";
+  const roundTxt = turnsTaken % teams.length === 0
+    ? (round === ROUNDS ? "Final round! " : "Round " + round + " of " + ROUNDS + ". ")
+    : "";
+  setStatus(lead + roundTxt + nameOf(player) + " to pick a tile.");
 }
 
-function winningLine(p) {
-  return LINES.find(l => l.every(i => cells[i].owner === p)) || null;
+function crowning() {
+  over = true;
+  drawBoard();
+  markTurn();
+  const top = Math.max(...teams.map(t => t.pts));
+  const leaders = teams.map((t, k) => k + 1).filter(k => teams[k - 1].pts === top);
+  winnersWalk();
+  if (leaders.length === 1) {
+    showResults(leaders[0], "That's the final question! The judges count the points:");
+  } else {
+    showResults(0, "A tie! " + leaders.map(nameOf).join(" and ") + " share the crown on " + top + " points.");
+  }
 }
 
-function swapPlayer() { player = player === 1 ? 2 : 1; markTurn(); }
+/* The crown, then the runners-up in points order, pageant style. */
+function showResults(winner, lead) {
+  const el = document.getElementById("status");
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const others = teams.map((t, k) => ({ t, k: k + 1 })).filter(o => o.k !== winner)
+                      .sort((a, b) => b.t.pts - a.t.pts);
+  const place = ["1st", "2nd", "3rd", "4th"];
+  let html = '<span class="crowned">' + esc(lead) +
+             (winner ? " " + esc(nameOf(winner)) + " takes the crown with " + teams[winner - 1].pts + " points." : "") + "</span>";
+  if (winner && others.length) {
+    html += '<span class="ranks">' + others.map((o, i) =>
+      (place[i] || (i + 1) + "th") + " runner-up: " + esc(o.t.name) + " (" + o.t.pts + ")").join(" &middot; ") + "</span>";
+  }
+  el.innerHTML = html;
+}
+
+function swapPlayer() { player = player % teams.length + 1; markTurn(); }
 
 function closePanel() {
   cancelled = true;
   stopTimer();
+  stopEncore();
   stopAudio();
   document.getElementById("panel").classList.remove("open");
 }
@@ -2815,7 +3201,8 @@ function runDemo() {
   const reduced = window.matchMedia &&
                   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   clearDemo();
-  const step = DEMO[demoStep % DEMO.length];
+  const base = DEMO[demoStep % DEMO.length];
+  const step = { cells: base.cells.slice(0, WIN_SHOWN()), label: base.label };
   const mini = document.getElementById("mini");
   document.getElementById("minicap").textContent = step.label;
 
@@ -2834,34 +3221,90 @@ function runDemo() {
   step.cells.forEach((_, k) =>
     demoTimers.push(setTimeout(() => place(k), 130 + k * 260)));
 
-  demoTimers.push(setTimeout(() => { demoStep++; runDemo(); }, 130 + 4 * 260 + 850));
+  demoTimers.push(setTimeout(() => { demoStep++; runDemo(); }, 130 + step.cells.length * 260 + 850));
 }
 
 /* True once anybody has claimed a square and the game has not ended. */
 function gameInProgress() {
-  return Array.isArray(cells) && !over && cells.some(c => c.owner);
+  return !over && turnsTaken > 0;
 }
 
+/* The demo and the rules follow what the setup currently shows. */
+const WIN_SHOWN = () => winFor(setupN);
+
+function renderSetup() {
+  document.querySelectorAll(".topn button").forEach(b =>
+    b.setAttribute("aria-pressed", String(+b.dataset.n === setupN)));
+  const w = WIN_SHOWN(), word = WORDS[w];
+  const cap = word.charAt(0).toUpperCase() + word.slice(1);
+  const rw = WORDS[ROUNDS] || ROUNDS;
+  document.getElementById("winrule").textContent =
+    "Top " + setupN + " · " + rw + " question" + (ROUNDS === 1 ? "" : "s") + " each · " + (setupN * ROUNDS) + " turns in all";
+  document.getElementById("ruleRounds").innerHTML = "<strong>" + rw.charAt(0).toUpperCase() + rw.slice(1) +
+    " question" + (ROUNDS === 1 ? "" : "s") + " each.</strong> When everyone has answered, the finalist with the most points takes the crown.";
+  document.getElementById("ruleBonus").textContent = "+" + TILE_BONUS_SILVER + " on silver, +" + TILE_BONUS_GOLD + " on gold";
+  const box = document.getElementById("finalists");
+  box.innerHTML = "";
+  for (let i = 0; i < setupN; i++) {
+    const row = document.createElement("label");
+    row.className = "frow";
+    row.htmlFor = "country" + i;
+    row.innerHTML = '<span class="score fmark p' + (i + 1) + '"><span class="chip">' + MARKS[i] + '</span></span><span class="miss">Miss</span>';
+    const sel = document.createElement("select");
+    sel.id = "country" + i;
+    COUNTRIES.forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; sel.appendChild(o); });
+    if (!COUNTRIES.includes(setupCountries[i])) {
+      const o = document.createElement("option"); o.value = setupCountries[i]; o.textContent = setupCountries[i]; sel.prepend(o);
+    }
+    sel.value = setupCountries[i];
+    sel.addEventListener("change", () => { setupCountries[i] = sel.value; updateGoButton(); });
+    row.appendChild(sel);
+    box.appendChild(row);
+  }
+  updateGoButton();
+
+}
+
+function updateGoButton() {
+  const btn = document.getElementById("introGo");
+  if (!btn) return;
+  const changed = setupKey() !== appliedKey;
+  btn.textContent = gameInProgress() ? (changed ? "Start a new game" : "Back to the game") : "Ready to go";
+  const note = document.getElementById("setnote");
+  if (note) note.textContent = gameInProgress() && changed
+    ? "Changing the finalists starts a new game."
+    : "You can also tap a name on the scoreboard to type your own.";
+}
+
+document.querySelectorAll(".topn button").forEach(b => b.addEventListener("click", () => {
+  setupN = +b.dataset.n;
+  /* keep every finalist on a different country where we can */
+  for (let i = 0; i < 5; i++) if (!setupCountries[i]) setupCountries[i] = DEFAULT_COUNTRIES[i];
+  renderSetup();
+}));
+
 function openIntro() {
-  buildMini();
+  renderSetup();
   buildVoicePicker();
   demoStep = 0;
   /* Checking the rules mid-game must not cost you the game, so the button
      says what it will actually do. */
-  const btn = document.getElementById("introGo");
-  if (btn) btn.textContent = gameInProgress() ? "Back to the game" : "Ready to go";
+  updateGoButton();
   document.getElementById("intro").classList.add("open");
   stopWinSong();        /* the intro music takes over from any win song */
   introMusic(true);
   wiggleXO();
-  runDemo();
 }
 
 function startFromIntro() {
-  clearDemo();
   introMusic(false);
   document.getElementById("intro").classList.remove("open");
-  if (!gameInProgress()) newGame();   /* only start fresh if nothing is underway */
+  /* A new line-up always starts fresh; otherwise only start if nothing is underway. */
+  if (setupKey() !== appliedKey || !gameInProgress()) {
+    buildTeams();
+    drawScores();
+    newGame();
+  }
 }
 
 /* ================= THE RULED LINES ON THE CARD =================
@@ -2950,6 +3393,7 @@ document.addEventListener("keydown", e => {
   });
 })();
 
+buildTeams();
 drawScores();
 newGame();
 
@@ -2959,4 +3403,3 @@ openIntro();
 </script>
 
 </body>
-</html>
