@@ -1273,6 +1273,98 @@ body.many .chip { width:clamp(30px, 8.5vw, 44px); height:clamp(30px, 8.5vw, 44px
   .sq.tile::after, .sq.tile.deal, #panel .cardwrap.flip, #panel .cardwrap.flip .tileback { animation:none; }
 }
 #panel #clock.won { color:#9a6b0c; }
+
+/* ===== Played tiles stay turned: the finalist's colour, mark and points ===== */
+/* A played tile sinks back into the board: dark, recessed, wearing the
+   finalist's mark in her colour and the points she banked. */
+.sq.tile.played {
+  cursor:default; filter:none; gap:.35em; opacity:1;
+  background:linear-gradient(160deg, #183478 0%, #12296a 60%, #0d1f55 100%);
+  border:1px solid rgba(255,255,255,.08); color:var(--ink);
+  box-shadow:inset 0 3px 10px rgba(0,0,0,.45), inset 0 -1px 0 rgba(255,255,255,.06);
+}
+.sq.tile.played::after { animation:none; background:none; }
+.sq.tile.played:hover { transform:none; box-shadow:inset 0 3px 10px rgba(0,0,0,.45), inset 0 -1px 0 rgba(255,255,255,.06); }
+.sq.tile.played .pmark {
+  display:grid; place-items:center; border-radius:5px;
+  width:clamp(26px, 5.6vw, 40px); height:clamp(26px, 5.6vw, 40px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 3px 8px rgba(0,0,0,.35);
+}
+.sq.tile.played.p1 .pmark { background:linear-gradient(160deg, var(--tile-hi), var(--tile) 55%, var(--tile-deep)); color:var(--tile-ink); }
+.sq.tile.played.p2 .pmark { background:linear-gradient(160deg, var(--p2-hi), var(--p2) 55%, var(--p2-deep)); color:var(--p2-ink); }
+.sq.tile.played.p3 .pmark { background:linear-gradient(160deg, var(--p3-hi), var(--p3) 55%, var(--p3-deep)); color:var(--p3-ink); }
+.sq.tile.played.p4 .pmark { background:linear-gradient(160deg, var(--p4-hi), var(--p4) 55%, var(--p4-deep)); color:var(--p4-ink); }
+.sq.tile.played.p5 .pmark { background:linear-gradient(160deg, var(--p5-hi), var(--p5) 55%, var(--p5-deep)); color:var(--p5-ink); }
+.sq.tile.played .pmark .ico { width:62%; height:62%; }
+.sq.tile.played .ppts { font-size:clamp(.62rem, 1.9vw, .82rem); font-weight:700; letter-spacing:1px; font-variant-numeric:tabular-nums; color:var(--muted); }
+.sq.tile.turned { animation:turnover .6s cubic-bezier(.3,.7,.25,1) both; backface-visibility:hidden; }
+@keyframes turnover { 0% { transform:rotateY(180deg); } 100% { transform:rotateY(0); } }
+
+/* ===== The finale ===== */
+.sq.tile.leave { animation:leave .6s cubic-bezier(.5,0,.75,0) both; pointer-events:none; }
+@keyframes leave { 0% { transform:none; opacity:1; } 100% { transform:translateY(-30px) rotateX(70deg) scale(.4); opacity:0; } }
+body.finale #board { display:none; }
+#stage {
+  position:relative; width:min(96vw, 760px); height:clamp(260px, 48svh, 460px);
+  margin:clamp(8px, 1.8vw, 16px) auto 0; overflow:hidden;
+  display:flex; align-items:flex-end; justify-content:center;
+  background:radial-gradient(70% 60% at 50% 92%, rgba(4,10,32,.5), rgba(4,10,32,0) 75%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 90%, transparent);
+          mask-image:linear-gradient(to bottom, #000 90%, transparent);
+}
+#stage[hidden] { display:none; }
+#stage .beam {
+  position:absolute; top:-10%; width:46%; height:120%; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(255,250,225,.55), rgba(255,250,225,.10) 70%, rgba(255,250,225,0));
+  clip-path:polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+  filter:blur(6px); mix-blend-mode:screen; transform-origin:50% 0;
+}
+#stage .beam.left  { left:-6%;  animation:sweepL 2.4s cubic-bezier(.3,.7,.3,1) both; }
+#stage .beam.right { right:-6%; animation:sweepR 2.4s cubic-bezier(.3,.7,.3,1) both; }
+@keyframes sweepL { 0% { transform:rotate(38deg); opacity:0; } 20% { opacity:1; } 100% { transform:rotate(-24deg); opacity:1; } }
+@keyframes sweepR { 0% { transform:rotate(-38deg); opacity:0; } 20% { opacity:1; } 100% { transform:rotate(24deg); opacity:1; } }
+#stage .pool {
+  position:absolute; left:50%; bottom:6%; width:72%; height:26%; transform:translateX(-50%);
+  background:radial-gradient(closest-side, rgba(255,248,220,.75), rgba(255,248,220,.18) 60%, rgba(255,248,220,0));
+  filter:blur(4px); animation:poolon 1.2s 1.4s ease-out both;
+}
+@keyframes poolon { from { opacity:0; transform:translateX(-50%) scale(.5); } to { opacity:1; transform:translateX(-50%) scale(1); } }
+#stage .winner {
+  position:relative; z-index:2; text-align:center; padding:0 1rem 13%;
+  animation:winnerup .9s 1.7s cubic-bezier(.2,.8,.3,1.1) both;
+}
+@keyframes winnerup { from { opacity:0; transform:translateY(24px) scale(.9); } to { opacity:1; transform:none; } }
+#stage .wmarks { display:flex; gap:10px; justify-content:center; margin-bottom:.6rem; }
+#stage .wmarks .score { padding:0; flex:none; }
+#stage .wmarks .chip { width:clamp(52px, 13vw, 72px); height:clamp(52px, 13vw, 72px); font-size:clamp(1.6rem, 6vw, 2.3rem); box-shadow:0 0 30px rgba(255,248,220,.6), 0 6px 18px rgba(0,0,0,.4); }
+#stage .wname {
+  font-family:"Playfair Display", "Iowan Old Style", Georgia, serif; font-style:italic; font-weight:700;
+  font-size:clamp(1.9rem, 7.5vw, 3.4rem); line-height:1.05; color:#fff; text-wrap:balance;
+  text-shadow:0 0 24px rgba(255,248,220,.75), 0 2px 6px rgba(0,0,0,.35);
+}
+#stage .wline {
+  margin-top:.5rem; font-size:clamp(.7rem, 2.4vw, .9rem); font-weight:700; letter-spacing:2.4px;
+  text-transform:uppercase; color:var(--p2-hi);
+}
+.streamers { z-index:9998; }
+@media (prefers-reduced-motion: reduce) {
+  .sq.tile.turned, .sq.tile.leave, #stage .beam, #stage .pool, #stage .winner { animation:none; }
+}
+
+/* ===== The two scene videos ===== */
+.scenevid {
+  position:fixed; inset:0; width:100%; height:100%; object-fit:cover;
+  pointer-events:none; opacity:0; transition:opacity .8s ease;
+}
+.scenevid.on { opacity:var(--strength, .6); }
+/* a touch darker, so the white writing on top stays easy to read */
+.scenevid { filter:brightness(.72); }
+.demo[hidden] { display:none; }
+#celebVideo { z-index:-1; }                    /* above the page's own background, behind everything else */
+#intro .scenevid { position:absolute; z-index:0; }
+#intro .sheet { position:relative; z-index:1; }
+body.finale #bgVideo, body.finale #bgGif { opacity:0; transition:opacity .8s ease; }
+@media (prefers-reduced-motion: reduce) { .scenevid { transition:none; } }
 </style>
 </head>
 
@@ -1330,6 +1422,7 @@ body.many .chip { width:clamp(30px, 8.5vw, 44px); height:clamp(30px, 8.5vw, 44px
   <div id="hint">Tap a name to rename</div>
 
   <div id="board"></div>
+  <div id="stage" hidden aria-live="polite"></div>
   <div id="status"></div>
 
   <div class="row actions">
@@ -1370,7 +1463,10 @@ body.many .chip { width:clamp(30px, 8.5vw, 44px); height:clamp(30px, 8.5vw, 44px
   <div>&copy; 2026 Justine Leigh Kelly. All rights reserved.</div>
 </footer>
 
+<video id="celebVideo" class="scenevid" muted playsinline loop preload="none" aria-hidden="true"></video>
+
 <div id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <video id="introVideo" class="scenevid" muted playsinline loop preload="none" aria-hidden="true"></video>
   <div class="sheet">
     <h2 id="introTitle">How to play</h2>
     <div class="lead">Miss Congeniality</div>
@@ -1382,7 +1478,7 @@ body.many .chip { width:clamp(30px, 8.5vw, 44px); height:clamp(30px, 8.5vw, 44px
         <button type="button" data-n="4" aria-pressed="false">Top 4</button>
         <button type="button" data-n="5" aria-pressed="false">Top 5</button>
       </div>
-      <p class="winrule" id="winrule">Top 2 · three questions each</p>
+      <p class="winrule" id="winrule">Top 2 · 12 tiles · 6 questions each</p>
       <div class="setlbl">Choose your countries</div>
       <div class="finalists" id="finalists"></div>
       <p class="setnote" id="setnote">You can also tap a name on the scoreboard to type your own.</p>
@@ -1390,9 +1486,9 @@ body.many .chip { width:clamp(30px, 8.5vw, 44px); height:clamp(30px, 8.5vw, 44px
 
     <ol class="rules">
       <li><strong>Pick a tile.</strong> Silver tiles are 20-second questions and gold tiles are 30-second questions. The tile turns over, the question appears, and the host reads it out.</li>
-      <li><strong>One point for every second you speak.</strong> The clock counts up as soon as the question has been read. Smile, take a breath, keep going, and press <em>Finished</em> when you stop.</li>
+      <li><strong>One point for every second you speak, up to 30.</strong> The clock counts up as soon as the question has been read and stops at 30 seconds. Smile, take a breath, keep going, and press <em>Finished</em> if you stop sooner.</li>
       <li><strong>Reach the time on the tile for its bonus:</strong> <span id="ruleBonus">+5 on silver, +10 on gold</span>. Stop early and you keep your points but miss the bonus.</li>
-      <li id="ruleRounds"><strong>Three questions each.</strong> When everyone has answered, the finalist with the most points takes the crown.</li>
+      <li id="ruleRounds"><strong>Twelve tiles, each answered once.</strong> A turned tile stays turned. When the last one is played, the finalist with the most points takes the crown.</li>
     </ol>
 
 
@@ -1659,22 +1755,43 @@ const HINTS_PER_TEAM = 3;
    still banks its points, but the square stays open.
 
      MAX_SECONDS ...... the clock stops counting here (0 = no limit)     */
-const MAX_SECONDS  = 90;
+const MAX_SECONDS  = 30;   /* every answer stops at 30 seconds */
 
 /* ----------------------------------------------------------------------
    THE GAME-SHOW BOARD
    ----------------------------------------------------------------------
-   Twelve tiles are on the board at all times. Silver tiles hold the
+   Twelve tiles, six silver and six gold. Silver tiles hold the
    20-second questions and gold tiles the 30-second ones. When a tile
-   is played, a fresh one is dealt into its place.
+   is played it stays turned over, showing who answered it and the
+   points they banked.
 
      TILE_BONUS_SILVER ... bonus for reaching the time on a silver tile
      TILE_BONUS_GOLD ..... bonus for reaching the time on a gold tile
-     ROUNDS .............. questions each finalist answers before the
-                           crowning                                    */
+     TILES ............... how many tiles are on the board. Each one is
+                           answered once; when they have all been turned
+                           over, the finalist with the most points wins. */
+/* ----------------------------------------------------------------------
+   TWO MORE VIDEOS
+   ----------------------------------------------------------------------
+   Put the files next to this page and type their names here, exactly
+   as they are spelt (capital letters matter on a web server).
+
+     INTRO_VIDEO ............. plays full screen behind the How to play card
+     CELEBRATION_VIDEO ....... plays full screen behind the spotlight at
+                               the end of the game
+     CELEBRATION_VIDEO_SOUND . true plays its sound too (it then mixes with
+                               the win song, so you may want WIN_SONG = "")
+     SCENE_VIDEO_STRENGTH .... how strongly they show, 0 to 1
+
+   Leave a name as "" to go without. A file that is missing is simply
+   skipped, and the browser console (F12) says so.                       */
+const INTRO_VIDEO             = "intro.mp4";
+const CELEBRATION_VIDEO       = "celebration.mp4";
+const CELEBRATION_VIDEO_SOUND = false;
+const SCENE_VIDEO_STRENGTH    = 0.6;
+
 const TILE_BONUS_SILVER = 5;
 const TILE_BONUS_GOLD   = 10;
-const ROUNDS            = 3;
 const TILES             = 12;
 
 /* ----------------------------------------------------------------------
@@ -2053,7 +2170,8 @@ function newGame() {
   drawPoints();
   tiles = shuffle(Array.from({length: TILES}, (_, k) => k % 2 === 1)).map(g => dealTile(g));
   drawBoard(true);
-  setStatus("Round 1 of " + ROUNDS + ". " + nameOf(player) + " to pick a tile.");
+  endFinale();
+  setStatus(TILES + " tiles to play. " + nameOf(player) + " to pick a tile.");
   markTurn();
   wiggleXO();
 }
@@ -2080,15 +2198,25 @@ function drawBoard(dealAll, fresh) {
     const sq = document.createElement("button");
     sq.type = "button";
     sq.className = "sq tile " + (t.gold ? "gold" : "silver");
-    if (dealAll || i === fresh) {
+    if (dealAll) {
       sq.classList.add("deal");
       sq.style.animationDelay = (dealAll ? i * 45 : 0) + "ms";
     }
     sq.style.setProperty("--shine-delay", (i * 0.37 % 4).toFixed(2) + "s");
-    sq.innerHTML = tileFace(t);
-    sq.setAttribute("aria-label", (t.gold ? "Gold" : "Silver") + " tile, " + tileSecs(t) + " seconds, bonus " + tileBonus(t));
-    if (over) sq.disabled = true;
-    else sq.addEventListener("click", () => openTopic(i));
+    if (t.played) {
+      const tm = teams[t.played.owner - 1];
+      sq.classList.add("played", "p" + t.played.owner);
+      sq.innerHTML = '<span class="pmark">' + tm.mark + '</span><span class="ppts">' +
+                     (t.played.pts ? "+" + t.played.pts : "No points") + '</span>';
+      sq.setAttribute("aria-label", "Answered by " + tm.name + ", " + t.played.pts + " points");
+      sq.disabled = true;
+      if (i === fresh) sq.classList.add("turned");
+    } else {
+      sq.innerHTML = tileFace(t);
+      sq.setAttribute("aria-label", (t.gold ? "Gold" : "Silver") + " tile, " + tileSecs(t) + " seconds, bonus " + tileBonus(t));
+      if (over) sq.disabled = true;
+      else sq.addEventListener("click", () => openTopic(i));
+    }
     board.appendChild(sq);
   });
 }
@@ -2255,7 +2383,7 @@ function pickQuestion() {
 }
 
 function openTopic(i) {
-  if (over || !tiles[i]) return;
+  if (over || !tiles[i] || tiles[i].played) return;
   activeIndex = i;
   currentQ = tiles[i].q;
   playsLeft = AUTO_START ? 1 : MAX_PLAYS;
@@ -2341,7 +2469,7 @@ function showWorth() {
   } else if (!reachedTarget()) {
     w.innerHTML = "<b>" + pl(spokeSecs) + "</b> &middot; " + (currentSeconds - spokeSecs) + "s to the +" + bonus + " bonus";
   } else {
-    w.innerHTML = "Bonus! <b>" + pl(turnPoints()) + "</b> &middot; keep going";
+    w.innerHTML = "Bonus! <b>" + pl(turnPoints()) + "</b>" + (spokeSecs < MAX_SECONDS ? " &middot; keep going to " + MAX_SECONDS + "s" : "");
   }
 }
 function stopEncore() {}
@@ -2737,7 +2865,6 @@ function tinselFall() {
 /* The whole winner's moment: tinsel, cheer, the announcement, then the music. */
 let walkTimer = null;
 function winnersWalk() {
-  tinselFall();
   fanfare();
   bigCheer();
   clearTimeout(walkTimer);
@@ -3114,37 +3241,142 @@ function fanfare() {
 function endTurn(gained) {
   const who = player;
   teams[who - 1].pts += gained;
-  tiles[activeIndex] = dealTile(tiles[activeIndex].gold);
+  tiles[activeIndex].played = { owner: who, pts: gained };
   turnsTaken++;
   closePanel();
   drawPoints();
   if (gained > 0) tinkle();
 
-  if (turnsTaken >= ROUNDS * teams.length) { crowning(); return; }
+  const left = tiles.filter(t => !t.played).length;
+  if (left === 0) { drawBoard(false, activeIndex); setTimeout(crowning, 900); over = true; return; }
 
   swapPlayer();
   drawBoard(false, activeIndex);
-  const round = Math.floor(turnsTaken / teams.length) + 1;
   const lead = gained > 0 ? nameOf(who) + " banks " + pl(gained) + ". "
                           : "The judges said no to " + nameOf(who) + ". ";
-  const roundTxt = turnsTaken % teams.length === 0
-    ? (round === ROUNDS ? "Final round! " : "Round " + round + " of " + ROUNDS + ". ")
-    : "";
-  setStatus(lead + roundTxt + nameOf(player) + " to pick a tile.");
+  const leftTxt = left === 1 ? "Last tile! " : left + " tiles left. ";
+  setStatus(lead + leftTxt + nameOf(player) + " to pick a tile.");
 }
 
 function crowning() {
   over = true;
-  drawBoard();
   markTurn();
   const top = Math.max(...teams.map(t => t.pts));
   const leaders = teams.map((t, k) => k + 1).filter(k => teams[k - 1].pts === top);
+  startFinale(leaders, top);
   winnersWalk();
   if (leaders.length === 1) {
     showResults(leaders[0], "That's the final question! The judges count the points:");
   } else {
     showResults(0, "A tie! " + leaders.map(nameOf).join(" and ") + " share the crown on " + top + " points.");
   }
+}
+
+/* ===== THE FINALE: the tiles fly away, a spotlight finds the winner,
+   and confetti pours down. ===== */
+let streamerStop = null;
+function startFinale(leaders, top) {
+  const board = document.getElementById("board");
+  [...board.children].forEach((sq, k) => {
+    sq.style.animationDelay = (k * 55) + "ms";
+    sq.classList.add("leave");
+  });
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const stage = document.getElementById("stage");
+  const one = leaders.length === 1;
+  const marks = leaders.map(k => '<span class="score p' + k + '"><span class="chip">' + teams[k - 1].mark + '</span></span>').join("");
+  stage.innerHTML =
+    '<div class="beam left"></div><div class="beam right"></div><div class="pool"></div>' +
+    '<div class="winner">' +
+      '<div class="wmarks">' + marks + '</div>' +
+      '<div class="wname">' + leaders.map(k => esc(nameOf(k))).join(" &amp; ") + '</div>' +
+      '<div class="wline">' + (one ? "takes the crown" : "share the crown") + ' &middot; ' + top + ' points</div>' +
+    '</div>';
+  setTimeout(() => {
+    if (!over) return;
+    document.body.classList.add("finale");
+    stage.hidden = false;
+    sceneVideo("celebVideo", CELEBRATION_VIDEO, true, CELEBRATION_VIDEO_SOUND);
+    streamers();
+  }, 950);
+}
+
+function endFinale() {
+  document.body.classList.remove("finale");
+  sceneVideo("celebVideo", CELEBRATION_VIDEO, false);
+  const stage = document.getElementById("stage");
+  if (stage) { stage.hidden = true; stage.innerHTML = ""; }
+  if (streamerStop) streamerStop();
+}
+
+/* Confetti in the finalists' colours, silver and gold: little paper
+   squares and strips that flutter, spin and flip as they fall. */
+function streamers() {
+  if (streamerStop) streamerStop();
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = document.createElement("canvas");
+  cv.className = "tinsel streamers";
+  document.body.appendChild(cv);
+  const ctx = cv.getContext("2d");
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const size = () => { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+  size(); addEventListener("resize", size);
+  const css = getComputedStyle(document.documentElement);
+  const cols = ["#f6d37a", "#e5b13c", "#ffffff", "#c3c9d4", "#fae7ae"]
+    .concat(teams.map((_, k) => css.getPropertyValue(k === 0 ? "--tile" : "--p" + (k + 1)).trim()).filter(Boolean));
+  const W = () => innerWidth, H = () => innerHeight;
+  const count = Math.round(Math.min(260, Math.max(120, W() * H() / 7000)));
+  const make = (y, burst) => {
+    const strip = Math.random() < .35;
+    return {
+      x: burst ? W() / 2 + (Math.random() - .5) * W() * .3 : Math.random() * W(),
+      y: y,
+      w: strip ? 3 + Math.random() * 2 : 6 + Math.random() * 5,
+      h: strip ? 10 + Math.random() * 6 : 6 + Math.random() * 5,
+      vx: burst ? (Math.random() - .5) * 9 : (Math.random() - .5) * 1.2,
+      vy: burst ? -6 - Math.random() * 6 : 1.5 + Math.random() * 2,
+      rot: Math.random() * 6.28, vr: (Math.random() - .5) * .25,
+      flip: Math.random() * 6.28, vf: .08 + Math.random() * .14,
+      sway: Math.random() * 6.28, round: !strip && Math.random() < .25,
+      c: cols[Math.floor(Math.random() * cols.length)]
+    };
+  };
+  /* a burst from the stage, then a steady fall from the top */
+  let list = Array.from({length: Math.round(count * .45)}, () => make(H() * .55, true))
+    .concat(Array.from({length: count}, () => make(-Math.random() * H(), false)));
+  const until = Date.now() + 12000;
+  let raf, alpha = 1;
+  const frame = () => {
+    ctx.clearRect(0, 0, W(), H());
+    const ending = Date.now() > until;
+    if (ending) alpha -= .02;
+    ctx.globalAlpha = Math.max(0, alpha);
+    list.forEach(c => {
+      c.vy = Math.min(c.vy + .12, 2.6 + c.w * .05);      /* gravity, then paper drag */
+      c.vx *= .985;
+      c.sway += .05;
+      c.x += c.vx + Math.sin(c.sway) * .6;
+      c.y += c.vy;
+      c.rot += c.vr; c.flip += c.vf;
+      if (c.y > H() + 20 && !ending) Object.assign(c, make(-10 - Math.random() * 40, false));
+      const sy = Math.cos(c.flip);                        /* the flip: the piece turns edge-on and back */
+      ctx.save();
+      ctx.translate(c.x, c.y); ctx.rotate(c.rot); ctx.scale(1, sy);
+      ctx.fillStyle = c.c;
+      if (c.round) { ctx.beginPath(); ctx.arc(0, 0, c.w / 2, 0, 6.28); ctx.fill(); }
+      else ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+      if (sy < 0) { ctx.fillStyle = "rgba(0,0,0,.18)"; ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h); } /* the back is a shade darker */
+      ctx.restore();
+    });
+    if (alpha <= 0) { finish(); return; }
+    raf = requestAnimationFrame(frame);
+  };
+  const finish = () => {
+    cancelAnimationFrame(raf); removeEventListener("resize", size); cv.remove();
+    if (streamerStop === finish) streamerStop = null;
+  };
+  streamerStop = finish;
+  raf = requestAnimationFrame(frame);
 }
 
 /* The crown, then the runners-up in points order, pageant style. */
@@ -3237,11 +3469,11 @@ function renderSetup() {
     b.setAttribute("aria-pressed", String(+b.dataset.n === setupN)));
   const w = WIN_SHOWN(), word = WORDS[w];
   const cap = word.charAt(0).toUpperCase() + word.slice(1);
-  const rw = WORDS[ROUNDS] || ROUNDS;
-  document.getElementById("winrule").textContent =
-    "Top " + setupN + " · " + rw + " question" + (ROUNDS === 1 ? "" : "s") + " each · " + (setupN * ROUNDS) + " turns in all";
-  document.getElementById("ruleRounds").innerHTML = "<strong>" + rw.charAt(0).toUpperCase() + rw.slice(1) +
-    " question" + (ROUNDS === 1 ? "" : "s") + " each.</strong> When everyone has answered, the finalist with the most points takes the crown.";
+  const each = Math.floor(TILES / setupN), extra = TILES % setupN;
+  document.getElementById("winrule").textContent = "Top " + setupN + " · " + TILES + " tiles · " +
+    (extra ? each + " or " + (each + 1) + " questions each" : each + " questions each");
+  document.getElementById("ruleRounds").innerHTML = "<strong>" + TILES + " tiles, each answered once.</strong> " +
+    "A turned tile stays turned. When the last one is played, the finalist with the most points takes the crown.";
   document.getElementById("ruleBonus").textContent = "+" + TILE_BONUS_SILVER + " on silver, +" + TILE_BONUS_GOLD + " on gold";
   const box = document.getElementById("finalists");
   box.innerHTML = "";
@@ -3283,8 +3515,31 @@ document.querySelectorAll(".topn button").forEach(b => b.addEventListener("click
   renderSetup();
 }));
 
+/* Start or stop one of the two scene videos. */
+function sceneVideo(id, file, on, sound) {
+  const v = document.getElementById(id);
+  if (!v) return;
+  if (!on || !file) {
+    v.classList.remove("on");
+    try { v.pause(); } catch (e) {}
+    return;
+  }
+  v.style.setProperty("--strength", SCENE_VIDEO_STRENGTH);
+  if (v.dataset.src !== file) {
+    v.dataset.src = file;
+    v.onerror = () => { v.classList.remove("on"); console.warn('Video "' + file + '" would not play — is the file next to this page?'); };
+    v.src = file;
+  }
+  v.muted = !sound;
+  try { v.currentTime = 0; } catch (e) {}
+  v.classList.add("on");
+  const pr = v.play();
+  if (pr && pr.catch) pr.catch(() => { if (sound) { v.muted = true; v.play().catch(() => {}); } });
+}
+
 function openIntro() {
   renderSetup();
+  sceneVideo("introVideo", INTRO_VIDEO, true, false);
   buildVoicePicker();
   demoStep = 0;
   /* Checking the rules mid-game must not cost you the game, so the button
@@ -3297,6 +3552,7 @@ function openIntro() {
 }
 
 function startFromIntro() {
+  sceneVideo("introVideo", INTRO_VIDEO, false);
   introMusic(false);
   document.getElementById("intro").classList.remove("open");
   /* A new line-up always starts fresh; otherwise only start if nothing is underway. */
