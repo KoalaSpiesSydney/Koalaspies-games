@@ -62,10 +62,10 @@
         "name": "Favourite Koalaspies games",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "What Would Miss Congeniality Say?", "url": "https://koalaspies-games.site/misscongeniality/game.html" },
-          { "@type": "ListItem", "position": 2, "name": "Small Talk Noughts & Crosses", "url": "https://koalaspies-games.site/smalltalktictactoe.html" },
-          { "@type": "ListItem", "position": 3, "name": "What Matters Most!", "url": "https://koalaspies-games.site/matchinggame/whatmattersmost.html" },
-          { "@type": "ListItem", "position": 4, "name": "Chemistry: The Periodic Table", "url": "https://koalaspies-games.site/chemistry/table/index.html" },
-          { "@type": "ListItem", "position": 5, "name": "Japanese: Your First 800 Kanji", "url": "https://koalaspies-games.site/kanjigame/index.html" },
+          { "@type": "ListItem", "position": 2, "name": "Small Talk Noughts & Crosses", "url": "https://koalaspies-games.site/tictactoe/smalltalkspeakinggame.html" },
+          { "@type": "ListItem", "position": 3, "name": "What Matters Most!", "url": "https://koalaspies-games.site/whatmattersmost/criticalthinkingandspeaking.html" },
+          { "@type": "ListItem", "position": 4, "name": "Chemistry: The Periodic Table", "url": "https://koalaspies-games.site/chemistrytablechallenge/k12game.html" },
+          { "@type": "ListItem", "position": 5, "name": "Japanese: Your First 800 Kanji", "url": "https://koalaspies-games.site/Japanese/kanjigame.html" },
           { "@type": "ListItem", "position": 6, "name": "English Idioms", "url": "https://modernenglish.au/vocabularygames.html" },
           { "@type": "ListItem", "position": 7, "name": "It’s Existential!", "url": "https://koalaspies-games.site/Itsexistential/itsexistential.html" }
         ]
@@ -803,6 +803,11 @@
       box-shadow: 0 2px 0 rgba(0,0,0,.22);
     }
     .game:hover .play { filter: none; }
+    /* "How" and "Who" lines on a game card. Use in place of <p class="note">. */
+    .game .hw { margin: 0 0 16px; flex: 1; display: grid; align-content: start; gap: 10px; font-size: 1rem; line-height: 1.5; color: rgba(27,29,51,.88); }
+    .game .hw div { display: grid; grid-template-columns: 3.1em 1fr; gap: 8px; align-items: baseline; }
+    .game .hw dt { font-weight: 800; font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(27,29,51,.72); }
+    .game .hw dd { margin: 0; }
     .cat .go { color: #1b1d33; }
     @media (prefers-reduced-motion: reduce) { .game:hover, .cat:hover { transform: none; } }
   </style>
@@ -841,23 +846,32 @@
         <a class="game party mc" href="misscongeniality/game.html">
           <span class="top"><span class="kicker">Party</span><span class="icon" aria-hidden="true">👑</span></span>
           <h3>What Would Miss Congeniality Say?</h3>
-          <p class="note">Real Miss Universe questions, answered with beauty and grace. Harder than you think.</p>
+          <dl class="hw">
+            <div><dt>How</dt><dd>A game show to project on a board or share on a device. Players choose a country to represent, score points for how long they speak, and their peers can award bonus points for great answers.</dd></div>
+            <div><dt>Who</dt><dd>A great party game for people who don’t take themselves too seriously, and for real pageant fans.</dd></div>
+          </dl>
           <span class="play">Play →</span>
         </a>
       </li>
       <li>
-        <a class="game party stt" href="game/smalltalktictactoe.html">
+        <a class="game party stt" href="tictactoe/smalltalkspeakinggame.html">
           <span class="top"><span class="kicker">Party</span><span class="icon" aria-hidden="true">⭕</span></span>
           <h3>Small Talk Noughts &amp; Crosses</h3>
-          <p class="note">Answer a small-talk question to claim your square. Four in a row wins.</p>
+          <dl class="hw">
+            <div><dt>How</dt><dd>A board game to project on a whiteboard or share on a table. Answer short questions to win a square; four in a row wins.</dd></div>
+            <div><dt>Who</dt><dd>Anyone who wants to practise small talk, as an icebreaker or for IELTS Speaking Part 1 practice.</dd></div>
+          </dl>
           <span class="play">Play →</span>
         </a>
       </li>
       <li>
-        <a class="game party wmm" href="matchinggame/whatmattersmost.html">
+        <a class="game party wmm" href="whatmattersmost/criticalthinkingandspeaking.html">
           <span class="top"><span class="kicker">Party</span><span class="icon" aria-hidden="true">💬</span></span>
           <h3>What Matters Most!</h3>
-          <p class="note">Speak from the heart on a random topic. Could be deep, could be silly.</p>
+          <dl class="hw">
+            <div><dt>How</dt><dd>Click a balloon to reveal a topic, then explain why that thing matters. Keep talking for up to 30 seconds to score.</dd></div>
+            <div><dt>Who</dt><dd>Families, icebreakers and get-to-know-you sessions, and advanced ESL such as IELTS Speaking practice.</dd></div>
+          </dl>
           <span class="play">Play →</span>
         </a>
       </li>
@@ -865,7 +879,10 @@
         <a class="game brain exi" href="Itsexistential/itsexistential.html">
           <span class="top"><span class="kicker">Brain</span><span class="icon" aria-hidden="true">🔮</span></span>
           <h3>It’s Existential!</h3>
-          <p class="note">Catch a crystal ball, face the famous quote inside, and say what you really think. Wisdom or whackjob? The judges decide.</p>
+          <dl class="hw">
+            <div><dt>How</dt><dd>A game show to project or share on a device. Choose a philosopher, writer or celebrity, get a random quote of theirs and win points for giving your opinion on it. Scored on speaking time and by your peers.</dd></div>
+            <div><dt>Who</dt><dd>An icebreaker, and a critical-thinking builder for teenagers and adults.</dd></div>
+          </dl>
           <span class="play">Play →</span>
         </a>
       </li>
@@ -873,15 +890,21 @@
         <a class="game family top5" href="topgame/guessthetop.html">
           <span class="top"><span class="kicker">Family</span><span class="icon" aria-hidden="true">🏡</span></span>
           <h3>Guess the Top 5</h3>
-          <p class="note">Two to four teams guess the top 5 answers on a secret topic, game-show style. One screen, no sign-up.</p>
+          <dl class="hw">
+            <div><dt>How</dt><dd>An old-fashioned game show, best played with someone acting as host. Project it or share it on a device, and guess the top 5 answers in different categories, according to Claude.</dd></div>
+            <div><dt>Who</dt><dd>A party game, family game, rainy-day game, team builder and icebreaker.</dd></div>
+          </dl>
           <span class="play">Play →</span>
         </a>
       </li>
       <li>
-    <a class="game k12 chem" href="k12/chemistrytable.html">
+    <a class="game k12 chem" href="chemistrytablechallenge/k12game.html">
   <span class="top"><span class="kicker">K-12 &amp; Revision</span><span class="icon" aria-hidden="true">🧪</span></span>
   <h3>Chemistry: The Periodic Table</h3>
-  <p class="note">Six matching games on element symbols, everyday uses, formulas, ores and reactions. Six questions a round, perfect for a class starter.</p>
+  <dl class="hw">
+            <div><dt>How</dt><dd>A memory-matching game to project on a board or play on a phone. Choose from six games and match elements to their symbols, uses and ores, everyday substances to their formulas, and reactants to their products.</dd></div>
+            <div><dt>Who</dt><dd>High school science students, exam revision, class warm-ups and homework practice.</dd></div>
+          </dl>
   <span class="play">Play →</span>
 </a>
       </li>
@@ -889,7 +912,10 @@
         <a class="game k12 kanji" href="Japanese/kanjigame.html">
           <span class="top"><span class="kicker">K-12 &amp; Revision</span><span class="icon" aria-hidden="true">🎌</span></span>
           <h3>Japanese: Your First 800 Kanji</h3>
-          <p class="note">Eighty characters at a time, in the order Japanese schools teach them.</p>
+          <dl class="hw">
+            <div><dt>How</dt><dd>A memory-matching game to project on a board or play on a phone. Turn over cards to match each kanji to its hiragana reading, through twelve levels in the order Japanese schools teach them.</dd></div>
+            <div><dt>Who</dt><dd>Japanese learners from beginner to intermediate, JLPT preparation, class warm-ups and self-study.</dd></div>
+          </dl>
           <span class="play">Play →</span>
         </a>
       </li>
