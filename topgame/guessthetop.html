@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
 <head>
      <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-355ESVVE6D"></script>
@@ -12,11 +12,76 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Guess the Top 5 · Free Team Quiz Game with an AI Oracle · Koalaspies</title>
-<meta name="description" content="Catch a crystal ball, reveal a secret question and guess the AI oracle's top 5 answers. A free party quiz game for teams and classrooms. No sign-up.">
+<title>Guess the Top 5 · Free Team Guessing Game for Classrooms &amp; Parties · Koalaspies</title>
+<meta name="description" content="Guess the Top 5 is a free team guessing game for classrooms, parties and family game night. Catch a crystal ball, reveal a secret topic and guess the AI oracle's top 5 answers on one shared screen. No sign-up, no download.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <!-- The page's real address. Change it here and in og:url if the file moves. -->
 <link rel="canonical" href="https://koalaspies-games.site/topgame/guessthetop.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Guess the Top 5",
+      "alternateName": "Ask the AI Oracle",
+      "url": "https://koalaspies-games.site/topgame/guessthetop.html",
+      "description": "A free team guessing game for classrooms, parties and family game night. Teams catch a crystal ball, reveal a secret topic and guess the AI oracle's top 5 answers on one shared screen.",
+      "image": "https://koalaspies-games.site/share-guessthetop.jpg",
+      "applicationCategory": "GameApplication",
+      "genre": [
+        "Party game",
+        "Team quiz game",
+        "Guessing game"
+      ],
+      "operatingSystem": "Any (runs in a web browser)",
+      "inLanguage": "en-AU",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "AUD"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Teachers, ESL classes, families and party groups"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Justine Kelly"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Koalaspies",
+        "url": "https://koalaspies-games.site/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Koalaspies",
+          "item": "https://koalaspies-games.site/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Party Games",
+          "item": "https://koalaspies-games.site/party-games.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Guess the Top 5",
+          "item": "https://koalaspies-games.site/topgame/guessthetop.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <!-- Link previews (Facebook, WhatsApp, Instagram DMs). Upload a 1200x630
      "share-guessthetop.jpg" to the site's top folder. -->
@@ -287,6 +352,20 @@ body.in-game .scoreline{background:rgba(255,255,255,.82);border-radius:12px;padd
 .splash .tap{font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--azure)}
 .rulecard{max-width:640px;margin:0 auto;background:rgba(255,255,255,.94);border:1.5px solid var(--sky);border-radius:24px;padding:clamp(22px,4vw,36px);box-shadow:0 30px 60px -30px rgba(11,42,85,.55);display:flex;flex-direction:column;gap:18px}
 .rulecard h2{text-align:center;letter-spacing:.06em}
+.kick-h1{font-family:var(--body);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.5}
+/* ===== ABOUT THIS GAME: plain text under the start screen, for players and for search engines.
+   It hides itself once a game starts. ===== */
+.about{position:relative;z-index:1;max-width:760px;margin:48px auto 0;background:rgba(255,255,255,.92);border:1.5px solid var(--mist);border-radius:24px;padding:clamp(20px,4vw,34px);color:var(--ink);line-height:1.65}
+.about h2{margin-bottom:10px;letter-spacing:.02em}
+.about h3{margin:22px 0 8px;font-size:13px}
+.about p{margin:0 0 12px}
+.about ol,.about ul{margin:0 0 12px;padding-left:1.3em}
+.about li{margin-bottom:6px}
+.about dt{font-weight:700;margin-top:12px}
+.about dd{margin:2px 0 0}
+.about a{color:var(--blue);font-weight:700}
+.about .more{margin-top:20px;padding-top:14px;border-top:1px solid var(--mist);font-size:15px}
+body.playing .about{display:none}
 .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
 .steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;counter-increment:s}
 .steps li::before{content:counter(s,upper-roman);font-family:var(--display);font-weight:700;color:var(--azure);font-size:17px;text-align:center;border:1.5px solid var(--sky);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px}
@@ -322,8 +401,8 @@ html.lite .bigx{text-shadow:none}
 </head>
 <body>
 
-<audio id="bgAudio" src="Numberoneprimetime.mp3" loop preload="auto"></audio>
-<audio id="welcomeAudio" src="Welcome.mp3" loop preload="auto"></audio>
+<audio id="bgAudio" src="Numberoneprimetime.mp3" loop preload="none"></audio>
+<audio id="welcomeAudio" src="Welcome.mp3" loop preload="none"></audio>
 
 <div class="bg" id="bg" aria-hidden="true">
   <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
@@ -366,6 +445,51 @@ html.lite .bigx{text-shadow:none}
     <div class="hdr-right"><button class="btn-ghost btn-small" id="sfxBtn" aria-pressed="true">Sound on</button><button class="btn-ghost btn-small" id="voiceBtn" aria-pressed="true">Voice on</button><button class="btn-ghost btn-small" id="settingsBtn" hidden>Teams &amp; topics</button><span id="modePill" class="pill" hidden></span></div>
   </header>
   <main id="app"></main>
+
+  <!-- ABOUT THIS GAME. Plain text so search engines and new visitors can read what the game is.
+       Hidden automatically once a game starts. -->
+  <section class="about" id="about" aria-labelledby="aboutTitle">
+    <h2 id="aboutTitle">Guess the Top 5: a free team guessing game</h2>
+    <p>Guess the Top 5 is a free game show for two to four teams, played together on one screen. Each round hides a secret question behind a one-word topic. The AI oracle answers it and hides its top answers on a board, and the teams take turns guessing what is on it. If you have played a Family Feud&ndash;style survey game, you will pick it up in seconds.</p>
+
+    <h3>How to play</h3>
+    <ol>
+      <li>Split into two to four teams and give each team a name.</li>
+      <li>On your turn, catch one of the crystal balls as it floats past. Each one holds a topic with a secret question.</li>
+      <li>The AI oracle answers the question and hides its answers on the board. Higher answers score more points.</li>
+      <li>The team that chose guesses first and keeps going while they are right. Every round has a 90-second timer.</li>
+      <li>A wrong guess is a strike. The first team to shout &ldquo;We&rsquo;ll take it!&rdquo; takes over. Two strikes and you are out for that round.</li>
+      <li>In Fast Money, the leading team writes five quick questions, and two players from the other team race the clock for double points.</li>
+      <li>No phones and no asking AI during the game. The team with the most points wins.</li>
+    </ol>
+
+    <h3>Great for</h3>
+    <ul>
+      <li><strong>ESL and English classes:</strong> fast speaking practice, topic vocabulary and a reason to argue politely.</li>
+      <li><strong>Classrooms:</strong> brain breaks, end-of-term games and revision with your own questions.</li>
+      <li><strong>Family game night and parties:</strong> quick to learn, loud to play, and as good with four people as fourteen.</li>
+      <li><strong>Team building:</strong> an icebreaker for workshops, staff meetings and online calls.</li>
+    </ul>
+
+    <h3>What you need</h3>
+    <p>One screen everyone can see, such as a laptop, a projector or a TV, and two to four teams. There is nothing to download, no account to make and no cost. It runs in the web browser on computers, tablets and phones.</p>
+
+    <h3>Questions</h3>
+    <dl>
+      <dt>Is Guess the Top 5 free?</dt>
+      <dd>Yes. It is free to play, with no sign-up.</dd>
+      <dt>Does every player need a phone?</dt>
+      <dd>No. The whole group plays on one shared screen, and phones stay away during the game.</dd>
+      <dt>How long does a game take?</dt>
+      <dd>Each round lasts up to 90 seconds. You choose how many topics each team picks, so a game can be a quick ten-minute warm-up or a full lesson.</dd>
+      <dt>Can I use it to teach English?</dt>
+      <dd>Yes. Teams have to agree on answers out loud, which makes it a lively speaking activity for ESL classes at most levels.</dd>
+      <dt>Can we play online?</dt>
+      <dd>Yes. Share your screen on Zoom or Teams and let the teams call out their answers.</dd>
+    </dl>
+
+    <p class="more">More free games from Koalaspies: <a href="../party-games.html">Party games</a> · <a href="../family-games.html">Family games</a> · <a href="../brain-games.html">Brain games</a> · <a href="../">Koalaspies home</a></p>
+  </section>
 </div>
 <div class="xover" id="xover" aria-hidden="true"></div>
 
@@ -719,6 +843,7 @@ function render(){
   bgMusic(state.phase==="play");
   if(!["consult","play"].includes(state.phase) && canSpeak()){ try{speechSynthesis.cancel();}catch(e){} }
   modePill();
+  document.body.classList.toggle("playing", !["intro","rules"].includes(state.phase));
   document.getElementById("settingsBtn").hidden=true;
   ({intro:renderIntro,fmWrite:renderFmWrite,fmConsult:renderFmConsult,fmPlay:renderFmPlay,fmReveal:renderFmReveal,rules:renderRules,setup:renderSetup,choose:renderChoose,consult:renderConsult,play:renderPlay,roundEnd:renderRoundEnd,final:renderFinal})[state.phase]();
 }
@@ -984,8 +1109,8 @@ function startBalls(){
 /* ---------- INTRO + INSTRUCTIONS ---------- */
 function renderIntro(){
   app.innerHTML=`<div class="splash" id="splash" role="button" tabindex="0" aria-label="Enter the game">
-    <h1>Ask the AI oracle</h1>
-    <p class="sub">The party game where teams try to read the mind of the machine.</p>
+    <h1>Guess the Top 5</h1>
+    <p class="sub">Ask the AI oracle: the party game where teams try to read the mind of the machine.</p>
     <div class="meander" style="width:180px"></div>
     <p class="tap glow">Tap anywhere to enter</p>
   </div>`;
@@ -996,7 +1121,7 @@ function renderIntro(){
 }
 function renderRules(){
   app.innerHTML=`<div class="rulecard pop">
-    <h3 style="text-align:center">Before you play</h3>
+    <h1 class="kick-h1">Guess the Top 5 · Before you play</h1>
     <h2>The AI oracle’s Rules</h2>
     <div class="meander"></div>
     <ol class="steps">
