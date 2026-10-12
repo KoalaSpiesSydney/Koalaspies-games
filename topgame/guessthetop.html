@@ -12,8 +12,9 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
 <title>Guess the Top 5 · Free Team Guessing Game for Classrooms &amp; Parties · Koalaspies</title>
-<meta name="description" content="Guess the Top 5 is a free team guessing game for classrooms, parties and family game night. Catch a crystal ball, reveal a secret topic and guess the AI oracle's top 5 answers on one shared screen. No sign-up, no download.">
+<meta name="description" content="A free team guessing game for classrooms, parties and family game night: guess the AI oracle's top 5 answers on one shared screen. No sign-up.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <!-- The page's real address. Change it here and in og:url if the file moves. -->
 <link rel="canonical" href="https://koalaspies-games.site/topgame/guessthetop.html">
@@ -157,7 +158,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 .pill.live{color:var(--azure)} .pill.off{color:var(--muted)}
 .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 20%,transparent)}
 h1,h2,h3{margin:0;text-wrap:balance}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.12;color:var(--navy);letter-spacing:.02em}
+h1,.sp-h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.12;color:var(--navy);letter-spacing:.02em}
 h2{font-family:var(--display);font-weight:700;font-size:clamp(21px,3.4vw,30px);line-height:1.2;color:var(--navy)}
 h3{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 p{margin:0}
@@ -347,7 +348,7 @@ body.in-game .scoreline{background:rgba(255,255,255,.82);border-radius:12px;padd
 @media (prefers-reduced-motion:reduce){.arena{aspect-ratio:auto;height:auto;display:flex;flex-wrap:wrap;gap:16px;justify-content:center;padding:20px}.ball{position:relative;transform:none!important}}
 /* Intro + instructions */
 .splash{min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;cursor:pointer;user-select:none}
-.splash h1{font-size:clamp(40px,9vw,88px);letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.splash h1,.splash .sp-h1{font-size:clamp(40px,9vw,88px);letter-spacing:.08em;text-transform:uppercase;line-height:1}
 .splash .sub{font-size:clamp(16px,2.4vw,20px);color:var(--muted);max-width:40ch}
 .splash .tap{font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--azure)}
 .rulecard{max-width:640px;margin:0 auto;background:rgba(255,255,255,.94);border:1.5px solid var(--sky);border-radius:24px;padding:clamp(22px,4vw,36px);box-shadow:0 30px 60px -30px rgba(11,42,85,.55);display:flex;flex-direction:column;gap:18px}
@@ -356,7 +357,8 @@ body.in-game .scoreline{background:rgba(255,255,255,.82);border-radius:12px;padd
 /* ===== ABOUT THIS GAME: plain text under the start screen, for players and for search engines.
    It hides itself once a game starts. ===== */
 .about{position:relative;z-index:1;max-width:760px;margin:48px auto 0;background:rgba(255,255,255,.92);border:1.5px solid var(--mist);border-radius:24px;padding:clamp(20px,4vw,34px);color:var(--ink);line-height:1.65}
-.about h2{margin-bottom:10px;letter-spacing:.02em}
+.about h1{font-size:clamp(21px,3.4vw,30px);line-height:1.2}
+.about h2,.about h1{margin-bottom:10px;letter-spacing:.02em}
 .about h3{margin:22px 0 8px;font-size:13px}
 .about p{margin:0 0 12px}
 .about ol,.about ul{margin:0 0 12px;padding-left:1.3em}
@@ -449,7 +451,7 @@ html.lite .bigx{text-shadow:none}
   <!-- ABOUT THIS GAME. Plain text so search engines and new visitors can read what the game is.
        Hidden automatically once a game starts. -->
   <section class="about" id="about" aria-labelledby="aboutTitle">
-    <h2 id="aboutTitle">Guess the Top 5: a free team guessing game</h2>
+    <h1 id="aboutTitle">Guess the Top 5: a free team guessing game</h1>
     <p>Guess the Top 5 is a free game show for two to four teams, played together on one screen. Each round hides a secret question behind a one-word topic. The AI oracle answers it and hides its top answers on a board, and the teams take turns guessing what is on it. If you have played a Family Feud&ndash;style survey game, you will pick it up in seconds.</p>
 
     <h3>How to play</h3>
@@ -1109,7 +1111,7 @@ function startBalls(){
 /* ---------- INTRO + INSTRUCTIONS ---------- */
 function renderIntro(){
   app.innerHTML=`<div class="splash" id="splash" role="button" tabindex="0" aria-label="Enter the game">
-    <h1>Guess the Top 5</h1>
+    <h2 class="sp-h1">Guess the Top 5</h2>
     <p class="sub">Ask the AI oracle: the party game where teams try to read the mind of the machine.</p>
     <div class="meander" style="width:180px"></div>
     <p class="tap glow">Tap anywhere to enter</p>
@@ -1121,7 +1123,7 @@ function renderIntro(){
 }
 function renderRules(){
   app.innerHTML=`<div class="rulecard pop">
-    <h1 class="kick-h1">Guess the Top 5 · Before you play</h1>
+    <h2 class="kick-h1 sp-h1">Guess the Top 5 · Before you play</h2>
     <h2>The AI oracle’s Rules</h2>
     <div class="meander"></div>
     <ol class="steps">
