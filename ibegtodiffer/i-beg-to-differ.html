@@ -9,7 +9,9 @@
 <title>I Beg to Differ · Polite Disagreement Game · Koalaspies</title>
 <meta name="description" content="Whatever the card says, you must politely disagree. A free speaking game for 2 to 4 players or teams that builds critical thinking, tact and empathy. No sign-up.">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<!-- ADD ONCE THE PAGE HAS ITS FINAL ADDRESS: <link rel="canonical">, og:url and og:image (1200x630 share picture) -->
+<link rel="canonical" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<meta property="og:url" content="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<!-- ADD WHEN READY: og:image (a 1200x630 share picture) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Koalaspies">
 <meta property="og:title" content="I Beg to Differ · Free Polite Disagreement Game">
@@ -561,13 +563,30 @@ function fizz(){
 function celebrate(){
   const song = $("song");
   const chimes = () => [523, 659, 784, 1047].forEach((f,i) => setTimeout(() => beep(f, .5), i*140));
+  const canSpeak = state.voice && ("speechSynthesis" in window);
+  // The song starts straight away (phones only allow it from the tap), softly while the lady speaks, then rises.
+  const fadeUp = () => {
+    const start = song.volume, t0 = performance.now();
+    (function step(t){ const k = Math.min(1, (t - t0)/1200); song.volume = start + (.8 - start)*k; if(k < 1 && state.screen === "final") requestAnimationFrame(step); })(t0);
+  };
   try{
-    song.currentTime = 0; song.volume = .8;
+    song.currentTime = 0; song.volume = canSpeak ? .2 : .8;
     const pl = song.play();
     if(pl && pl.catch) pl.catch(chimes);
   }catch(e){ chimes(); }
   fizz();
   try{ speechSynthesis.cancel(); }catch(e){}
+  if(canSpeak){
+    try{
+      const u = new SpeechSynthesisUtterance("Congratulations darling, you are simply a marvellous companion. Do come again.");
+      const v = poshLady(); if(v) u.voice = v;
+      u.lang = "en-GB"; u.rate = .88; u.pitch = 1.05;
+      let done = false; const finish = () => { if(!done){ done = true; fadeUp(); } };
+      u.onend = finish; u.onerror = finish;
+      setTimeout(finish, 7000);           // in case the browser never reports the end
+      setTimeout(() => { try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){ finish(); } }, 150);
+    }catch(e){ fadeUp(); }
+  }
 }
 const speaker = () => state.turn % state.names.length;
 const judge = () => (state.turn + 1) % state.names.length;
@@ -694,7 +713,7 @@ function renderBoard(){
     const n = document.createElement("span"); n.className = "num"; n.textContent = String(i+1).padStart(2,"0");
     const t = document.createElement("span"); t.className = "txt"; t.textContent = p.text;
     el.append(n,t);
-    el.addEventListener("click", () => { bling(); state.current = i; state.phase = "ready"; state.elapsed = 0; renderTurn(); show("turn"); setTimeout(() => say(p.text), 1100); });
+    el.addEventListener("click", () => { bling(); state.current = i; state.phase = "ready"; state.elapsed = 0; renderTurn(); show("turn"); setTimeout(() => { if(state.screen === "turn" && state.current === i && state.phase === "ready") say(p.text); }, 1100); });
     b.append(el);
   });
   quitArmed = false; $("quitBtn").textContent = "End game";
