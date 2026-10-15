@@ -41,6 +41,26 @@
   .grid span{font-size:15px;color:var(--muted)}
   .home{display:inline-block;background:var(--accent);color:#fff;font-weight:700;padding:12px 22px;border-radius:999px;text-decoration:none}
 </style>
+<script>
+/* Old addresses: the games have moved folders over time. Send visitors with old links to the right page. */
+(function(){
+  var p = location.pathname.toLowerCase().replace(/\/+$/, "/");
+  var chem = ["chem-atom-counts","chem-common-names","chem-ores","chem-reactions","element-symbols","element-uses"];
+  var go = null, m;
+  if((m = p.match(/^\/(?:chemistry\/table|k12|chemistry)\/([a-z0-9\-_]+)(?:\.html)?$/))){
+    var name = m[1].replace(/_\d+$/, "");
+    go = chem.indexOf(name) > -1 ? "/chemistrytablechallenge/" + name + ".html" : "/chemistrytablechallenge/k12game.html";
+  }
+  else if(/^\/(?:chemistry\/table|k12|chemistry)\/?$/.test(p)) go = "/chemistrytablechallenge/k12game.html";
+  else if(/^\/game\/(?:smalltalk|smalltalkxo|smalltalktictactoe)(?:\.html)?$/.test(p)) go = "/tictactoe/smalltalkspeakinggame.html";
+  else if(/^\/game(?:\/|\/index\.html|\/mis+[a-z_0-9]*\.html)?$/.test(p)) go = "/misscongeniality/game.html";
+  else if(/^\/matchinggame\/mandela/.test(p)) go = "/whatmattersmost/mandela-lesson_1.html";
+  else if(/^\/matchinggame\/guessthetop/.test(p)) go = "/topgame/guessthetop.html";
+  else if(/^\/matchinggame(\/|$)/.test(p) || p === "/whatmattersmost.html") go = "/whatmattersmost/criticalthinkingandspeaking.html";
+  else if(/^\/chemistrytablechallenge\/?$/.test(p)) go = "/chemistrytablechallenge/k12game.html";
+  if(go && go.toLowerCase() !== p) location.replace(go + location.hash);
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
