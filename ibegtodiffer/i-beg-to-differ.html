@@ -7,11 +7,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>I Beg to Differ · Polite Disagreement Game · Koalaspies</title>
-<meta name="description" content="Whatever the card says, you must politely disagree. A free speaking game for 2 to 4 players or teams that builds critical thinking, tact and empathy. No sign-up.">
+<meta name="description" content="Whatever the card says, you must politely disagree. A free speaking game for 2 to 4 players that builds critical thinking, tact and empathy. No sign-up.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
 <meta property="og:url" content="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
-<!-- ADD WHEN READY: og:image (a 1200x630 share picture) -->
+<meta property="og:image" content="https://koalaspies-games.site/share-ibegtodiffer.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="I Beg to Differ: a 1920s parlour game of polite disagreement from Koalaspies">
+<meta name="twitter:image" content="https://koalaspies-games.site/share-ibegtodiffer.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Koalaspies">
 <meta property="og:title" content="I Beg to Differ · Free Polite Disagreement Game">
@@ -262,7 +267,7 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
 <video id="bgVideo" muted loop playsinline preload="auto" hidden></video>
 <video id="winVideo" muted loop playsinline preload="auto" hidden></video>
 <canvas id="fizz" hidden></canvas>
-<audio id="song" preload="auto" src="babyface.mp4"></audio>
+<audio id="song" preload="auto" src="babyface.mp3"></audio>
 <div class="wrap" id="app">
 
   <div class="topbar" role="banner"><button type="button" class="qr-btn" id="qrBtn" aria-label="Show a QR code for this game"><span id="qrSmall"></span></button><div class="brand">Koalaspies</div></div>
@@ -464,7 +469,6 @@ const STARTER = [
   "Bring back afternoon siestas",
   "Homework should be banned",
   "Everyone should meditate every day",
-  "Pineapple belongs on pizza",
   "Breakfast is the most important meal of the day",
   "Dogs are better than cats",
   "Everyone should learn a second language",
@@ -494,7 +498,6 @@ const STARTER = [
   "Money can buy happiness",
   "Cricket is boring",
   "Toilet paper should hang over, not under",
-  "Vegemite is the best spread in the world",
   "Cooking should be a compulsory school subject",
   "Emojis are ruining the language",
   "Music was better in the old days",
