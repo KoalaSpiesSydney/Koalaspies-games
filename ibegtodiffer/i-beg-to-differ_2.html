@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<!-- Google tag (gtag.js), same as the other Koalaspies games -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-355ESVVE6D"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-355ESVVE6D');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>I Beg to Differ · Polite Disagreement Game · Koalaspies</title>
+<meta name="description" content="Whatever the card says, you must politely disagree. A free speaking game for 2 to 4 players that builds critical thinking, tact and empathy. No sign-up.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<meta property="og:url" content="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<meta property="og:image" content="https://koalaspies-games.site/share-ibegtodiffer.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="I Beg to Differ: a 1920s parlour game of polite disagreement from Koalaspies">
+<meta name="twitter:image" content="https://koalaspies-games.site/share-ibegtodiffer.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Koalaspies">
+<meta property="og:title" content="I Beg to Differ · Free Polite Disagreement Game">
+<meta property="og:description" content="Whatever the card says, you must politely disagree. Free, no sign-up.">
+<meta property="og:locale" content="en_AU">
+<meta name="twitter:card" content="summary_large_image">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=Limelight&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap">
+<style>
+/* Layout: a 1920s dining room. Gilt-framed table of engraved place cards centre stage, one screen at a time. */
+:root{
+  color-scheme: dark;
+  --room:#0a1310;        /* lamplit dining room */
+  --panel:#10231c;       /* bottle-green baize */
+  --edge:#2f4d40;
+  --ivory:#f4ecd8;       /* card stock and linen */
+  --gold:#c9a24a;
+  --gold-hi:#ecd391;
+  --claret:#6e1423;
+  --ink:#1a1611;
+  --muted:#b9ad90;
+  --display:"Limelight","Copperplate","Didot",Georgia,serif;
+  --sign:"Cinzel","Copperplate","Trajan Pro",Georgia,serif;
+  --body:"Cormorant Garamond","Garamond","Baskerville",Georgia,serif;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  background:
+    radial-gradient(ellipse at 50% -10%, #23463a 0%, transparent 62%),
+    repeating-linear-gradient(45deg, rgba(201,162,74,.035) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-45deg, rgba(201,162,74,.035) 0 1px, transparent 1px 22px),
+    var(--room);
+  color:var(--ivory);
+  font-family:var(--body);
+  font-weight:500;
+  font-size:20px;
+  line-height:1.45;
+  padding-inline:16px;
+  padding-block:20px 48px;
+}
+.wrap{max-width:980px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+strong,b{font-weight:700}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+/* ---------- masthead ---------- */
+.mast{text-align:center;position:relative;padding-block:18px 10px;overflow:hidden}
+.mast::before{
+  content:"";position:absolute;inset:-60% -20%;z-index:0;
+  background:repeating-conic-gradient(from 0deg at 50% 70%, rgba(201,162,74,.2) 0 3deg, transparent 3deg 9deg);
+  -webkit-mask-image:radial-gradient(circle at 50% 70%, #000 0, transparent 60%);
+          mask-image:radial-gradient(circle at 50% 70%, #000 0, transparent 60%);
+}
+.mast > *{position:relative;z-index:1}
+.logo{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2.4rem, 8.5vw, 5rem);line-height:1.05;letter-spacing:.03em;
+  color:var(--gold-hi);text-wrap:balance;
+  text-shadow:0 2px 0 #6b5220, 0 6px 18px rgba(0,0,0,.6);
+  padding-bottom:10px;
+}
+.mast.small .logo{font-size:clamp(1.5rem, 4.6vw, 2.1rem);padding-bottom:0}
+.tag{font-family:var(--sign);text-transform:uppercase;letter-spacing:.3em;color:var(--gold);font-size:.72rem}
+.tag::before,.tag::after{content:"\25C6";margin-inline:.9em;font-size:.7em;vertical-align:.15em}
+
+/* ---------- shared pieces ---------- */
+.panel{background:var(--panel);border:1px solid var(--gold);outline:1px solid var(--edge);outline-offset:-6px;border-radius:2px;padding:24px}
+.eyebrow{font-family:var(--sign);text-transform:uppercase;letter-spacing:.24em;font-size:.66rem;color:var(--gold)}
+.h2{font-family:var(--sign);font-weight:500;font-size:1.35rem;line-height:1.25;letter-spacing:.04em;text-wrap:balance}
+.muted{color:var(--muted)}
+.btn{
+  font-family:var(--sign);font-weight:700;text-transform:uppercase;letter-spacing:.16em;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:var(--ink);border:0;border-radius:2px;
+  padding:14px 28px;font-size:.82rem;cursor:pointer;
+  box-shadow:inset 0 0 0 3px var(--gold), inset 0 0 0 4px rgba(26,22,17,.55), 0 4px 0 #6b5220, 0 8px 16px rgba(0,0,0,.45);
+  transition:transform .08s, box-shadow .08s;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(3px);box-shadow:inset 0 0 0 3px var(--gold), inset 0 0 0 4px rgba(26,22,17,.55), 0 1px 0 #6b5220}
+.btn.stop{background:var(--claret);color:var(--ivory);box-shadow:inset 0 0 0 3px var(--claret), inset 0 0 0 4px var(--gold), 0 4px 0 #3a0a12, 0 8px 16px rgba(0,0,0,.45)}
+.btn.ghost{background:transparent;color:var(--ivory);box-shadow:none;border:1px solid var(--gold);padding:10px 18px;font-size:.68rem;font-weight:500}
+.btn.ghost:hover{background:rgba(201,162,74,.12)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.center{justify-content:center;text-align:center}
+
+/* ---------- setup ---------- */
+.setup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.rules{display:flex;flex-direction:column;gap:12px}
+.rules p{max-width:62ch}
+.instruction{font-style:italic;font-size:1.45rem;line-height:1.25;color:var(--gold-hi);border-left:1px solid var(--gold);padding-left:16px}
+.grandma{background:var(--ivory);color:var(--ink);border-radius:2px;padding:18px 20px;box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold)}
+.grandma .eyebrow{color:var(--claret)}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.points li{display:flex;gap:14px;align-items:baseline}
+.points b{font-family:var(--sign);color:var(--gold-hi);min-width:2.6em;text-align:right;font-variant-numeric:tabular-nums}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.64rem;color:var(--gold)}
+.field input,.field select,textarea{
+  background:var(--room);border:1px solid var(--edge);border-radius:2px;padding:10px 12px;color:var(--ivory);width:100%;
+}
+textarea{min-height:260px;resize:vertical;line-height:1.5}
+.form{display:flex;flex-direction:column;gap:16px}
+details summary{cursor:pointer;font-family:var(--sign);font-size:.95rem;letter-spacing:.06em}
+details[open] summary{margin-bottom:12px}
+.err{color:#f0a9a0;font-weight:700}
+.check{display:flex;gap:10px;align-items:center}
+.check input{width:20px;height:20px;accent-color:var(--gold);flex:none}
+
+/* ---------- score pods ---------- */
+.pods{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.podwrap{display:flex;flex-direction:column;gap:8px}
+.pod{background:var(--panel);border:1px solid var(--edge);border-radius:2px;padding:10px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.pod.speaking{border-color:var(--gold);box-shadow:inset 0 0 0 3px var(--panel), inset 0 0 0 4px var(--gold)}
+.pod .name{font-family:var(--sign);font-size:.95rem;letter-spacing:.05em;overflow-wrap:anywhere}
+.pod .role{font-family:var(--sign);text-transform:uppercase;letter-spacing:.24em;font-size:.58rem;color:var(--muted)}
+.pod.speaking .role{color:var(--gold-hi)}
+.pod .score{font-family:var(--display);font-size:2.2rem;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--gold-hi)}
+.pod.idle{opacity:.8}
+.turnno{align-self:center;font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.6rem;color:var(--muted);text-align:center}
+
+/* ---------- the table of cards ---------- */
+.frame{
+  padding:10px;border-radius:2px;background:#07100d;
+  border:2px solid var(--gold);
+  box-shadow:inset 0 0 0 5px #07100d, inset 0 0 0 6px var(--gold), 0 14px 40px rgba(0,0,0,.6);
+}
+.board{
+  background:linear-gradient(180deg,#143328,#0d241c);border-radius:2px;padding:16px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+}
+.plaque{
+  position:relative;min-height:116px;border:0;cursor:pointer;border-radius:2px;
+  padding:28px 16px 18px;display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:var(--sign);font-weight:500;text-transform:uppercase;letter-spacing:.07em;font-size:.76rem;line-height:1.35;
+  color:var(--ink);background:var(--ivory);
+  box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold), inset 0 0 0 9px var(--ivory), inset 0 0 0 10px var(--gold), 0 4px 10px rgba(0,0,0,.5);
+  transition:transform .12s;
+}
+.plaque:nth-child(3n+2){color:var(--gold-hi);background:#0b1f18;box-shadow:inset 0 0 0 5px #0b1f18, inset 0 0 0 6px var(--gold), inset 0 0 0 9px #0b1f18, inset 0 0 0 10px var(--gold), 0 4px 10px rgba(0,0,0,.5)}
+.plaque:nth-child(3n){color:var(--ivory);background:var(--claret);box-shadow:inset 0 0 0 5px var(--claret), inset 0 0 0 6px var(--gold), inset 0 0 0 9px var(--claret), inset 0 0 0 10px var(--gold), 0 4px 10px rgba(0,0,0,.5)}
+.plaque:hover:not(:disabled){transform:translateY(-3px)}
+.plaque .num{position:absolute;top:14px;left:0;right:0;font-size:.56rem;letter-spacing:.3em;opacity:.7}
+.plaque .txt{overflow-wrap:anywhere}
+.plaque:disabled,.plaque:disabled:nth-child(n){
+  cursor:default;color:#56695f;background:#0d1d17;
+  box-shadow:inset 0 0 0 5px #0d1d17, inset 0 0 0 6px #2a3f35, 0 0 0 transparent;
+}
+.plaque:disabled .txt{text-decoration:line-through}
+.board .plaque.info{grid-column:1 / -1;min-height:0;padding:16px;color:var(--ink);background:linear-gradient(180deg,var(--gold-hi),var(--gold));box-shadow:inset 0 0 0 5px var(--gold), inset 0 0 0 6px var(--ink), 0 4px 10px rgba(0,0,0,.5)}
+#bgVideo,#winVideo{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.35;pointer-events:none}
+#winVideo{opacity:.5}
+#fizz{position:fixed;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+.toast{font-style:italic;font-size:1.4rem;line-height:1.3;color:var(--ivory);max-width:30ch;text-wrap:balance}
+#app{position:relative;z-index:1}
+.overlay{position:fixed;inset:0;z-index:5;background:rgba(5,10,8,.9);overflow:auto;padding:24px 16px;display:flex;justify-content:center;align-items:flex-start}
+.overlay .inner{max-width:620px;width:100%;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- the turn ---------- */
+.big-plaque{
+  border-radius:2px;padding:44px 28px;text-align:center;
+  font-family:var(--sign);font-weight:500;text-transform:uppercase;letter-spacing:.07em;
+  font-size:clamp(1.3rem,4.4vw,2.3rem);line-height:1.25;text-wrap:balance;overflow-wrap:anywhere;
+  color:var(--ink);background:var(--ivory);
+  box-shadow:inset 0 0 0 8px var(--ivory), inset 0 0 0 9px var(--gold), inset 0 0 0 14px var(--ivory), inset 0 0 0 16px var(--gold), 0 10px 30px rgba(0,0,0,.55);
+}
+.believe{display:block;font-family:var(--body);font-style:italic;text-transform:none;letter-spacing:0;font-size:.62em;color:var(--claret);margin-bottom:.25em}
+.clock{display:flex;flex-direction:column;align-items:center;gap:16px}
+.lamps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;width:100%;max-width:480px}
+.lamp{
+  aspect-ratio:1;max-width:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--sign);font-size:clamp(.7rem,2.6vw,1rem);font-variant-numeric:tabular-nums;
+  background:#0a1814;color:#5f7469;border:1px solid var(--edge);position:relative;overflow:hidden;
+  box-shadow:inset 0 0 0 3px #0a1814, inset 0 0 0 4px var(--edge);
+}
+.lamp i{position:absolute;left:0;right:0;bottom:0;height:0;background:rgba(201,162,74,.3)}
+.lamp span{position:relative}
+.lamp.lit{background:radial-gradient(circle at 40% 35%, #fff6d6, var(--gold) 65%);color:var(--ink);border-color:var(--gold-hi);box-shadow:inset 0 0 0 3px var(--gold), inset 0 0 0 4px rgba(26,22,17,.5), 0 0 20px rgba(236,211,145,.55)}
+.lamp.lit i{height:0!important}
+.readout{display:flex;gap:32px;flex-wrap:wrap;justify-content:center}
+.readout div{text-align:center}
+.readout .n{font-family:var(--display);font-size:3rem;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--gold-hi)}
+.phrases{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center}
+.phrases span{font-style:italic;color:var(--muted)}
+
+/* ---------- scorecard ---------- */
+.card{background:var(--ivory);color:var(--ink);border-radius:2px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 0 0 7px var(--ivory), inset 0 0 0 8px var(--gold), 0 10px 30px rgba(0,0,0,.55)}
+.card .eyebrow{color:var(--claret)}
+.card .muted{color:#5d5340}
+.award{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid #cdbf9a;border-radius:2px;cursor:pointer;background:#fbf6e8}
+.award:has(input:checked){border-color:var(--claret);background:#f0e2b8}
+.award input{width:24px;height:24px;accent-color:var(--claret)}
+.award .what{min-width:0}
+.award .what b{font-family:var(--sign);font-size:.9rem;letter-spacing:.05em;display:block}
+.award .what small{font-size:.92rem;color:#5d5340}
+.award .pts{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--claret)}
+.sum{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:3px double var(--gold);padding-top:12px;font-family:var(--sign);letter-spacing:.08em}
+.sum .total{font-family:var(--display);font-size:2.2rem;font-variant-numeric:tabular-nums}
+.line{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+
+/* ---------- final ---------- */
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--edge)}
+th{font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.6rem;color:var(--gold);font-weight:500}
+td.r,th.r{text-align:right}
+.winner{font-family:var(--display);font-size:clamp(1.8rem,6.5vw,3.4rem);line-height:1.1;color:var(--gold-hi);text-wrap:balance;text-shadow:0 2px 0 #6b5220}
+
+/* ---------- Koalaspies site chrome (matches the rest of the site) ---------- */
+.topbar{position:relative;min-height:52px;display:flex;align-items:center;justify-content:center}
+.qr-btn{position:absolute;left:0;top:0;width:52px;height:52px;padding:3px;background:#fff;border:1px solid var(--gold);border-radius:2px;cursor:pointer}
+.qr-btn:hover{box-shadow:0 0 0 2px var(--gold)}
+/* Music on/off, top right, opposite the QR code */
+.music-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);background:transparent;border:1px solid var(--gold);border-radius:2px;cursor:pointer;
+  font-family:var(--sign);text-transform:uppercase;letter-spacing:.16em;font-size:.6rem;color:var(--ivory);padding:9px 12px}
+.music-btn:hover{background:rgba(201,162,74,.12)}
+.music-btn[aria-pressed=false]{color:var(--muted);border-color:var(--edge)}
+.qr-btn svg,#qrBig svg{display:block;width:100%;height:auto}
+.qr-card{background:var(--ivory);color:var(--ink);padding:22px;width:min(340px,100%);margin-inline:auto;text-align:center;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold)}
+.qr-card #qrBig{background:#fff;padding:6px}
+.qr-url{font-family:Jost,"Avenir Next",sans-serif;font-size:.72rem;overflow-wrap:anywhere;color:#5d5340}
+.brand{font-family:Jost,"Avenir Next",sans-serif;font-weight:500;letter-spacing:4px;font-size:clamp(.6rem,2.1vw,.76rem);color:var(--gold-hi);text-transform:uppercase;opacity:.85}
+footer{width:100%;text-align:center;background:transparent;color:var(--muted);font-family:Jost,"Avenir Next",sans-serif;padding:.8rem 0;border-top:1px solid rgba(255,255,255,.12);font-size:clamp(.68rem,2.2vw,.9rem);margin-top:20px}
+.share-row{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;align-items:center;margin:.1rem auto .5rem;padding:0 .8rem}
+.share-lbl{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-right:.2rem}
+.soc{font-family:inherit;font-size:.82rem;font-weight:700;letter-spacing:.02em;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:.35rem 1rem;border-radius:999px;border:1px solid rgba(255,255,255,.35);cursor:pointer;color:#fff;text-decoration:none;transition:filter .15s,transform .15s}
+.soc:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.soc.fb{background:#1877f2}
+.soc.ig{background:linear-gradient(45deg,#f09433,#dc2743 50%,#bc1888)}
+.soc.tt{background:#111}
+.share-msg{min-height:1.2em;font-size:.8rem;color:var(--muted);padding:0 1rem .3rem}
+.foot-nav{display:flex;flex-wrap:wrap;gap:.3rem 1rem;justify-content:center;margin:.2rem 0 .4rem}
+.foot-nav a,.foot-note a{color:var(--ivory);text-underline-offset:3px}
+.foot-nav a{display:inline-block;padding:.25rem .1rem}
+.foot-note{max-width:62ch;margin:.2rem auto .5rem;padding:0 1rem;font-weight:400;font-size:.78rem;line-height:1.5;color:var(--muted)}
+
+@media (max-width:520px){
+  .pods{grid-template-columns:1fr 1fr}
+  .board{grid-template-columns:1fr}
+  .plaque{min-height:76px}
+  .pod .score{font-size:1.8rem}
+  .panel{padding:20px 16px}
+  .award{grid-template-columns:auto 1fr}
+  .award .pts{grid-column:2}
+  .brand{letter-spacing:2px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<video id="bgVideo" muted loop playsinline preload="auto" hidden></video>
+<video id="winVideo" muted loop playsinline preload="auto" hidden></video>
+<canvas id="fizz" hidden></canvas>
+<!-- The game's music: loops from "Start the game" to the final scores (see musicSync) -->
+<audio id="song" preload="auto" loop src="babyface.mp3"></audio>
+<div class="wrap" id="app">
+
+  <div class="topbar" role="banner"><button type="button" class="qr-btn" id="qrBtn" aria-label="Show a QR code for this game"><span id="qrSmall"></span></button><div class="brand">Koalaspies</div><button type="button" class="music-btn" id="musicBtn" aria-pressed="true">Music on</button></div>
+
+  <header class="mast" id="mast">
+    <h1 class="logo">I Beg to Differ</h1>
+    <p class="tag" id="mastTag">A parlour game of polite disagreement</p>
+  </header>
+
+  <!-- SETUP -->
+  <section id="s-setup" class="setup-grid">
+    <div class="panel rules">
+      <span class="eyebrow">The instruction</span>
+      <p class="instruction">Whatever statement you are given, no matter what it says, you MUST politely disagree.</p>
+      <p>Your opposition picks a plaque. You speak against it for up to 60 seconds, even if you secretly agree. It builds critical thinking, tact and empathy.</p>
+      <p><strong>So break out of your bubble and experience somebody else's bubble.</strong></p>
+      <div class="grandma">
+        <span class="eyebrow">The dinner table rule</span>
+        <p>In the old days Grandma said you should never speak about sex, religion or politics at the dinner table. The dinner table rule applies here.</p>
+      </div>
+      <span class="eyebrow">How you score</span>
+      <ul class="points">
+        <li><b>10</b><span>for every 10 seconds you speak, up to 60 seconds (when the timer is on)</span></li>
+        <li><b>1</b><span>for disagreeing</span></li>
+        <li><b>5</b><span>for doing it politely</span></li>
+        <li><b>15</b><span>for giving evidence or reasons</span></li>
+        <li><b>20</b><span>for explaining</span></li>
+      </ul>
+      <p class="muted">Your opposition fills out your scorecard. They must be fair and consistent, because their own turn to be scored is coming.</p>
+      <p><strong>Nine cards are on the table.</strong> When all nine have been played the game is over, and the highest score wins.</p>
+    </div>
+
+    <div class="form">
+      <div class="panel form">
+        <span class="eyebrow">The guests</span>
+        <div class="field"><label for="count">How many players or teams</label>
+          <select id="count"><option selected>2</option><option>3</option><option>4</option></select>
+        </div>
+        <div class="field"><label for="name0">Player or team one</label><input id="name0" maxlength="24" value="The Duchess"></div>
+        <div class="field"><label for="name1">Player or team two</label><input id="name1" maxlength="24" value="The Colonel"></div>
+        <div class="field" id="f2"><label for="name2">Player or team three</label><input id="name2" maxlength="24" value="The Countess"></div>
+        <div class="field" id="f3"><label for="name3">Player or team four</label><input id="name3" maxlength="24" value="The Admiral"></div>
+        <label class="check" for="useTimer"><input type="checkbox" id="useTimer" checked><span>Use the speaking timer (speakers start it themselves)</span></label>
+        <p class="err" id="setupErr" hidden></p>
+        <div class="row"><button class="btn" id="startBtn">Start the game</button></div>
+      </div>
+
+      <details class="panel" id="editor">
+        <summary>Edit the plaques (<span id="poolCount">0</span> statements)</summary>
+        <div class="form">
+          <p class="muted">One statement per line. Each game lays out 9 at random. Your list is saved in this browser only.</p>
+          <textarea id="poolText" spellcheck="true" aria-label="Statements, one per line"></textarea>
+          <div class="row">
+            <button class="btn ghost" id="savePool">Save list</button>
+            <button class="btn ghost" id="resetPool">Restore starter list</button>
+            <span class="muted" id="poolMsg" role="status"></span>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- BOARD -->
+  <section id="s-board" hidden>
+    <div class="wrap" style="gap:16px">
+      <div class="center row" style="flex-direction:column;gap:4px">
+        <span class="eyebrow" id="lastTurn"></span>
+        <h2 class="h2" id="pickPrompt"></h2>
+        <p class="muted">Remember the dinner table rule. Pick something they will have to work for.</p>
+      </div>
+      <div class="frame"><div class="board" id="board"></div></div>
+      <div class="row center">
+        <button class="btn ghost" id="shuffleBtn">Lay fresh cards</button>
+        <button class="btn ghost" id="quitBtn">End game</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURN -->
+  <section id="s-turn" hidden>
+    <div class="wrap" style="gap:20px">
+      <div class="center row" style="flex-direction:column;gap:4px">
+        <span class="eyebrow" id="turnWho"></span>
+        <h2 class="h2">Politely disagree with this</h2>
+      </div>
+      <div class="big-plaque"><span class="believe">I believe</span><span id="bigPlaque"></span></div>
+      <div class="panel clock">
+        <div class="lamps" id="lamps"></div>
+        <div class="readout" id="readout">
+          <div><div class="n" id="secs">0</div><div class="eyebrow">seconds</div></div>
+          <div><div class="n" id="tpts">0</div><div class="eyebrow">time points</div></div>
+        </div>
+        <div class="row center">
+          <button class="btn" id="goBtn">Start speaking</button>
+          <button class="btn stop" id="stopBtn" hidden>I'm finished</button>
+          <button class="btn" id="toCardBtn" hidden>Hand over for scoring</button>
+          <button class="btn ghost" id="backBtn">Pick a different plaque</button>
+        </div>
+        <div class="phrases" aria-label="Polite openers">
+          <span>I beg to differ…</span><span>My dear friend, I must disagree…</span><span>I see it differently, because…</span><span>With respect…</span><span>Have you considered…</span><span>I understand why you'd say that, but…</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORECARD -->
+  <section id="s-card" hidden>
+    <div class="card">
+      <span class="eyebrow" id="cardWho"></span>
+      <h2 class="h2" id="cardTitle"></h2>
+      <p class="muted" id="cardStmt"></p>
+      <label class="award" for="a1"><input type="checkbox" id="a1" data-pts="1"><span class="what"><b>They disagreed</b><small>They took the other side and stuck to it.</small></span><span class="pts">+1</span></label>
+      <label class="award" for="a2"><input type="checkbox" id="a2" data-pts="5"><span class="what"><b>They did it politely</b><small>No sneering or put-downs. They respected the person while opposing the view.</small></span><span class="pts">+5</span></label>
+      <label class="award" for="a3"><input type="checkbox" id="a3" data-pts="15"><span class="what"><b>They gave evidence or reasons</b><small>At least one fact, example or reason, not just "because I say so".</small></span><span class="pts">+15</span></label>
+      <label class="award" for="a4"><input type="checkbox" id="a4" data-pts="20"><span class="what"><b>They explained</b><small>They walked you through their thinking so you could follow how they got there.</small></span><span class="pts">+20</span></label>
+      <div class="line" id="timeLine"><span>Time points (<span id="cardSecs">0</span> seconds)</span><b id="cardTime">0</b></div>
+      <div class="line"><span>Your awards</span><b id="cardAwards">0</b></div>
+      <div class="sum"><span>Turn total</span><span class="total" id="cardTotal">0</span></div>
+      <p class="muted">Be fair and consistent. Your turn to be scored is coming.</p>
+      <div class="row"><button class="btn" id="lockBtn">Lock in the score</button></div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section id="s-final" hidden>
+    <div class="wrap" style="gap:20px">
+      <div class="center row" style="flex-direction:column;gap:6px">
+        <span class="eyebrow">Final scores</span>
+        <p class="winner" id="winner"></p>
+        <p class="toast">“Congratulations darling, you are simply a marvellous companion.”<br>“Do come again.”</p>
+        <p class="muted" id="standings"></p>
+      </div>
+      <div class="panel tablewrap">
+        <table>
+          <thead><tr><th>Speaker</th><th>Statement they opposed</th><th class="r">Time</th><th class="r">Awards</th><th class="r">Total</th></tr></thead>
+          <tbody id="histBody"></tbody>
+        </table>
+      </div>
+      <div class="row center">
+        <button class="btn" id="againBtn">Play again</button>
+        <button class="btn ghost" id="toSetupBtn">Change players or plaques</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- scoreboard: sits below the game, above the footer -->
+  <section class="podwrap" id="pods" hidden>
+    <div class="turnno" id="turnNo"></div>
+    <div class="pods" id="podRow"></div>
+  </section>
+
+  <footer>
+    <div class="share-row" aria-label="Share this game">
+      <span class="share-lbl">Share the game</span>
+      <a class="soc fb" id="shareFb" href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener">Facebook</a>
+      <button type="button" class="soc ig" data-app="Instagram">Instagram</button>
+      <button type="button" class="soc tt" data-app="TikTok">TikTok</button>
+    </div>
+    <div class="share-msg" id="shareMsg" aria-live="polite"></div>
+    <nav class="foot-nav">
+      <a href="https://koalaspies-games.site/index.html">All games</a>
+      <a href="https://koalaspies-games.site/party-games.html">Party games</a>
+      <a href="https://koalaspies-games.site/privacy.html">Privacy &amp; Cookies</a>
+      <a href="mailto:KoalaSpiesSydney@outlook.com">Contact</a>
+    </nav>
+    <p class="foot-note">Koalaspies is free and supported by advertising. Ads may be served by Google and its
+      partners, who use cookies. See <a href="https://koalaspies-games.site/privacy.html">Privacy &amp; Cookies</a> for details.</p>
+    <p class="foot-note">Games are for education and entertainment. Young players should use the site with a parent, carer or teacher.</p>
+    <div>© 2026 Justine Leigh Kelly. All rights reserved.</div>
+  </footer>
+</div>
+
+<div class="overlay" id="qrOverlay" hidden>
+  <div class="inner">
+    <div class="qr-card">
+      <span class="eyebrow" style="color:var(--claret)">Scan to play</span>
+      <div id="qrBig"></div>
+      <p>Point a phone camera at the code to open this game.</p>
+      <p class="qr-url" id="qrUrl"></p>
+    </div>
+    <div class="row center"><button class="btn" id="closeQr">Close</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="rulesOverlay" hidden>
+  <div class="inner">
+    <div id="rulesBody"></div>
+    <div class="row center"><button class="btn" id="closeRules">Back to the table</button></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+const STARTER = [
+  "Cats are evil",
+  "Men are better cooks than women",
+  "Soccer is the only real football",
+  "Cockroaches should be eradicated",
+  "Bring back afternoon siestas",
+  "Homework should be banned",
+  "Everyone should meditate every day",
+  "Breakfast is the most important meal of the day",
+  "Dogs are better than cats",
+  "Everyone should learn a second language",
+  "Phones should be banned at the dinner table",
+  "School should start at 10am",
+  "Winter is better than summer",
+  "The book is always better than the movie",
+  "Zoos should be closed",
+  "Everyone should work a four-day week",
+  "Children should be paid for doing chores",
+  "Video games are a waste of time",
+  "Tea is better than coffee",
+  "Everybody should have to play a team sport",
+  "Handwriting is no longer worth teaching",
+  "Social media does more harm than good",
+  "Daylight saving should be scrapped",
+  "Reality TV is good for you",
+  "Everyone should grow their own vegetables",
+  "Early birds get more done than night owls",
+  "Camping beats a hotel every time",
+  "Homemade gifts are better than bought ones",
+  "Sharks deserve their bad reputation",
+  "School uniforms should be compulsory",
+  "Robots would make better teachers than people",
+  "Open-plan offices are the best way to work",
+  "Never eat dessert before dinner",
+  "Money can buy happiness",
+  "Cricket is boring",
+  "Toilet paper should hang over, not under",
+  "Cooking should be a compulsory school subject",
+  "Emojis are ruining the language",
+  "Music was better in the old days",
+  "Cereal is a perfectly good dinner",
+  "Everyone should take a cold shower every morning",
+  "Birthdays stop mattering after 21",
+  "Naps are for the lazy",
+  "Cars should be banned from city centres",
+  "Museums should always be free",
+  "Nobody needs more than three pairs of shoes"
+];
+const KEY = "ibtd.statements", BOARD_SIZE = 9, MAX_SECS = 60;
+const MUSIC_KEY = "ibtd.music";
+const $ = id => document.getElementById(id);
+
+let pool = loadPool();
+let state = { screen:"setup", names:["The Duchess","The Colonel"], target:500, useTimer:true, voice:true, scores:[0,0], turn:0,
+              board:[], used:[], current:null, phase:"ready", elapsed:0, history:[], last:"" };
+let raf = 0, t0 = 0, audio = null, quitArmed = false, hasVideo = false;
+let musicOn = true, celebrating = false, fadeRaf = 0;
+try{ musicOn = localStorage.getItem(MUSIC_KEY) !== "off"; }catch(e){}
+
+function loadPool(){
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(Array.isArray(s) && s.length) return s; }catch(e){}
+  return STARTER.slice();
+}
+function savePool(list){ try{ localStorage.setItem(KEY, JSON.stringify(list)); return true; }catch(e){ return false; } }
+function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function timePts(s){ return Math.min(6, Math.floor(s/10))*10; }
+const lowerFirst = t => /^[A-Z][a-z]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t;
+
+/* ---------- the music: babyface.mp3, all through the game ----------
+   It starts when "Start the game" is pressed and loops until the game ends.
+   It plays softly at the table, dips while the statement is read aloud, drops right down while someone is speaking,
+   and comes back up for the scorecard. On the final screen celebrate() takes over and turns it up.
+   The "Music on / off" button (top right) turns it off, and the choice is remembered in this browser. */
+const MUSIC_LEVEL = { board:.45, card:.4, ready:.22, running:.1, done:.3 };
+function fadeTo(target, ms){
+  const song = $("song"); cancelAnimationFrame(fadeRaf);
+  const from = song.volume, start = performance.now();
+  (function step(t){
+    const k = Math.min(1, (t - start)/ms);
+    song.volume = Math.max(0, Math.min(1, from + (target - from)*k));
+    if(k < 1) fadeRaf = requestAnimationFrame(step);
+    else if(target === 0){ try{ song.pause(); }catch(e){} }
+  })(start);
+}
+function musicLevel(){
+  if(state.screen === "board") return MUSIC_LEVEL.board;
+  if(state.screen === "card") return MUSIC_LEVEL.card;
+  if(state.screen === "turn") return MUSIC_LEVEL[state.phase] ?? MUSIC_LEVEL.ready;
+  return 0;
+}
+function musicSync(){
+  const song = $("song");
+  if(state.screen === "final"){                       // celebrate() sets the volume here
+    if(!musicOn){ fadeTo(0, 300); }
+    else if(!celebrating) fadeTo(.8, 600);
+    if(musicOn && song.paused){ try{ const p = song.play(); if(p && p.catch) p.catch(() => {}); }catch(e){} }
+    return;
+  }
+  const level = musicOn ? musicLevel() : 0;
+  if(level > 0 && song.paused){
+    try{ song.volume = 0; const p = song.play(); if(p && p.catch) p.catch(() => {}); }catch(e){}
+  }
+  fadeTo(level, 500);
+}
+function paintMusicBtn(){ const b = $("musicBtn"); b.textContent = musicOn ? "Music on" : "Music off"; b.setAttribute("aria-pressed", String(musicOn)); }
+
+/* ---------- posh voice ---------- */
+function poshVoice(){
+  const vs = speechSynthesis.getVoices();
+  return vs.find(v => /en-GB/i.test(v.lang) && /Daniel|Arthur|Oliver|George|Malcolm|Ryan|Male/i.test(v.name))
+      || vs.find(v => /en-GB/i.test(v.lang)) || null;
+}
+function say(text){
+  if(!state.voice || !("speechSynthesis" in window)) return;
+  try{
+    const u = new SpeechSynthesisUtterance("I believe, " + lowerFirst(text) + ".");
+    const v = poshVoice(); if(v) u.voice = v;
+    u.lang = "en-GB"; u.rate = .85; u.pitch = .8;
+    const go = () => { try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){} };
+    // Chrome sometimes drops speech that starts straight after a cancel, so wait a moment only when something is still talking
+    if(speechSynthesis.speaking || speechSynthesis.pending){ speechSynthesis.cancel(); setTimeout(go, 120); } else go();
+  }catch(e){}
+}
+// voices load in the background on most browsers; ask for them now and again when they arrive
+try{ speechSynthesis.getVoices(); speechSynthesis.addEventListener("voiceschanged", () => speechSynthesis.getVoices()); }catch(e){}
+let hasWin = false;
+function poshLady(){
+  const gb = speechSynthesis.getVoices().filter(v => /en-GB/i.test(v.lang));
+  return gb.find(v => /Female|Kate|Serena|Martha|Stephanie|Hazel|Susan|Libby|Sonia|Maisie|Fiona|Flo|Shelley|Sandy/i.test(v.name))
+      || gb.find(v => !/Male|Daniel|Arthur|Oliver|George|Malcolm|Ryan|Thomas|Eddy|Reed|Rocko|Grandpa/i.test(v.name)) || gb[0] || null;
+}
+function fizz(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = $("fizz"), x = c.getContext("2d"); c.hidden = false; c.width = innerWidth; c.height = innerHeight;
+  const bs = Array.from({length:80}, () => ({x:Math.random()*c.width, y:c.height + Math.random()*c.height, r:2 + Math.random()*6, v:1.5 + Math.random()*3, w:Math.random()*6}));
+  const begun = performance.now();
+  (function frame(t){
+    x.clearRect(0,0,c.width,c.height); x.strokeStyle = "rgba(236,211,145,.85)"; x.lineWidth = 1.5;
+    bs.forEach(b => { b.y -= b.v; if(b.y < -10) b.y = c.height + 10;
+      x.beginPath(); x.arc(b.x + Math.sin(t/400 + b.w)*8, b.y, b.r, 0, 7); x.stroke(); });
+    if(t - begun < 10000 && state.screen === "final") requestAnimationFrame(frame); else c.hidden = true;
+  })(begun);
+}
+function celebrate(){
+  const song = $("song");
+  const chimes = () => [523, 659, 784, 1047].forEach((f,i) => setTimeout(() => beep(f, .5), i*140));
+  const canSpeak = state.voice && ("speechSynthesis" in window);
+  // The song is already playing from the game. It stays soft while the lady speaks, then rises.
+  celebrating = true;
+  const fadeUp = () => { celebrating = false; if(musicOn && state.screen === "final") fadeTo(.8, 1200); };
+  if(musicOn){
+    try{
+      fadeTo(canSpeak ? .2 : .8, 400);
+      if(song.paused){ const pl = song.play(); if(pl && pl.catch) pl.catch(chimes); }
+    }catch(e){ chimes(); }
+  } else chimes();
+  fizz();
+  try{ speechSynthesis.cancel(); }catch(e){}
+  if(canSpeak){
+    try{
+      const u = new SpeechSynthesisUtterance("Congratulations darling, you are simply a marvellous companion. Do come again.");
+      const v = poshLady(); if(v) u.voice = v;
+      u.lang = "en-GB"; u.rate = .88; u.pitch = 1.05;
+      let done = false; const finish = () => { if(!done){ done = true; fadeUp(); } };
+      u.onend = finish; u.onerror = finish;
+      setTimeout(finish, 7000);           // in case the browser never reports the end
+      setTimeout(() => { try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){ finish(); } }, 150);
+    }catch(e){ fadeUp(); }
+  } else fadeUp();
+}
+const speaker = () => state.turn % state.names.length;
+const judge = () => (state.turn + 1) % state.names.length;
+const DEFAULT_NAMES = ["The Duchess","The Colonel","The Countess","The Admiral"];
+function refresh(){
+  const onBoard = state.board.map(p => p.text);
+  const fresh = shuffle(pool.filter(t => !onBoard.includes(t) && !state.used.includes(t)));
+  state.board.forEach(p => { if(!p.used && fresh.length) p.text = fresh.pop(); });
+}
+function syncCount(){ const n = +$("count").value; $("f2").hidden = n < 3; $("f3").hidden = n < 4; }
+
+function deal(){
+  let fresh = pool.filter(t => !state.used.includes(t));
+  if(fresh.length < 2){ state.used = []; fresh = pool.slice(); }
+  state.board = shuffle(fresh).slice(0, BOARD_SIZE).map(t => ({text:t, used:false}));
+}
+
+/* ---------- sound ---------- */
+function beep(freq, dur, type, vol){
+  try{
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(audio.state === "suspended") audio.resume();
+    const o = audio.createOscillator(), g = audio.createGain();
+    o.type = type || "sine"; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || .18, audio.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, audio.currentTime + dur);
+    o.connect(g); g.connect(audio.destination); o.start(); o.stop(audio.currentTime + dur);
+  }catch(e){}
+}
+
+// An old-fashioned brass dinner bell, rung three times, when a plaque is chosen.
+// Each strike mixes the bell's own uneven overtones (not musical harmonics), slightly detuned so it shimmers, then rings away.
+function bellStrike(f, at, vol){
+  const a = audio, t = a.currentTime + at;
+  const out = a.createGain(); out.gain.value = vol; out.connect(a.destination);
+  [[1,1],[2,.55],[2.76,.4],[4.07,.22],[5.4,.14],[8.93,.06]].forEach(([r,amp]) => {
+    [0, 1.8].forEach(detune => {
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = "sine"; o.frequency.value = f*r + detune;
+      const len = 1.6 / Math.sqrt(r);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(amp*.5, t + .004);
+      g.gain.exponentialRampToValueAtTime(.0005, t + len);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + len + .05);
+    });
+  });
+  // a tiny metallic "tink" as the clapper hits
+  const n = a.createOscillator(), ng = a.createGain();
+  n.type = "square"; n.frequency.value = f*6.3;
+  ng.gain.setValueAtTime(vol*.15, t); ng.gain.exponentialRampToValueAtTime(.0001, t + .03);
+  n.connect(ng); ng.connect(a.destination); n.start(t); n.stop(t + .05);
+}
+function bling(){
+  try{
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(audio.state === "suspended") audio.resume();
+    bellStrike(988, 0, .2); bellStrike(1010, .22, .17); bellStrike(992, .44, .2);
+  }catch(e){}
+}
+// A soft click for the buttons.
+function click(){ beep(520, .07, "sine", .08); }
+
+// Phones only allow sound after a tap. Unlock everything on the first tap so later beeps and the song can play.
+function unlockAudio(){
+  try{
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(audio.state === "suspended") audio.resume();
+    const g = audio.createGain(); g.gain.value = 0; const o = audio.createOscillator(); o.connect(g); g.connect(audio.destination); o.start(); o.stop(audio.currentTime + .01);
+  }catch(e){}
+  try{ const song = $("song"); if(song.paused && song.readyState < 2) song.load(); }catch(e){}
+  try{ if("speechSynthesis" in window){ const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } }catch(e){}
+  // a game restored mid-way couldn't start the music without a tap, so start it now
+  if(state.screen !== "setup") musicSync();
+}
+document.addEventListener("pointerdown", unlockAudio, {once:true});
+
+document.addEventListener("click", e => {
+  const b = e.target.closest(".btn, .plaque.info, .qr-btn, .music-btn");
+  if(!b || b.disabled || ["goBtn","stopBtn","lockBtn"].includes(b.id)) return;
+  click();
+});
+
+/* ---------- render ---------- */
+function show(name){
+  state.screen = name;
+  ["setup","board","turn","card","final"].forEach(s => $("s-"+s).hidden = s !== name);
+  const inGame = name !== "setup";
+  $("pods").hidden = !inGame || name === "final";
+  $("mast").classList.toggle("small", inGame);
+  $("mastTag").hidden = inGame;
+  const v = $("bgVideo"), on = hasVideo && ["board","turn","card"].includes(name);
+  v.hidden = !on;
+  try{ if(on) v.play().catch(() => {}); else v.pause(); }catch(e){}
+  if(name !== "final") celebrating = false;
+  musicSync();
+  const w = $("winVideo"), won = hasWin && name === "final";
+  w.hidden = !won;
+  try{ if(won){ w.currentTime = 0; w.play().catch(() => {}); } else w.pause(); }catch(e){}
+  window.scrollTo(0,0);
+}
+function renderPods(){
+  const row = $("podRow"); row.textContent = "";
+  state.names.forEach((name,i) => {
+    const sp = i === speaker(), jd = i === judge();
+    const p = document.createElement("div");
+    p.className = "pod" + (sp ? " speaking" : jd ? "" : " idle");
+    [["role", sp ? "Speaking" : jd ? "Choosing and scoring" : "At the table"], ["name", name], ["score", state.scores[i] || 0]]
+      .forEach(([c,v]) => { const s = document.createElement("span"); s.className = c; s.textContent = v; p.append(s); });
+    row.append(p);
+  });
+  const played = state.board.filter(p => p.used).length;
+  $("turnNo").textContent = "Card " + Math.min(played+1, state.board.length) + " of " + state.board.length;
+}
+function renderBoard(){
+  renderPods();
+  $("lastTurn").textContent = state.last;
+  $("pickPrompt").textContent = state.names[judge()] + ", pick a plaque for " + state.names[speaker()];
+  const b = $("board"); b.textContent = "";
+  const info = document.createElement("button");
+  info.className = "plaque info";
+  info.innerHTML = '<span class="txt">Instructions</span>';
+  info.addEventListener("click", () => { $("rulesOverlay").hidden = false; $("closeRules").focus(); });
+  b.append(info);
+  state.board.forEach((p,i) => {
+    const el = document.createElement("button");
+    el.className = "plaque"; el.disabled = p.used;
+    const n = document.createElement("span"); n.className = "num"; n.textContent = String(i+1).padStart(2,"0");
+    const t = document.createElement("span"); t.className = "txt"; t.textContent = p.text;
+    el.append(n,t);
+    el.addEventListener("click", () => { bling(); state.current = i; state.phase = "ready"; state.elapsed = 0; renderTurn(); show("turn"); setTimeout(() => { if(state.screen === "turn" && state.current === i && state.phase === "ready") say(p.text); }, 1100); });
+    b.append(el);
+  });
+  quitArmed = false; $("quitBtn").textContent = "End game";
+  show("board");
+}
+function renderLamps(){
+  const s = state.elapsed, lamps = $("lamps").children;
+  for(let i=0;i<6;i++){
+    const lit = s >= (i+1)*10;
+    lamps[i].classList.toggle("lit", lit);
+    const frac = Math.max(0, Math.min(1, (s - i*10)/10));
+    lamps[i].firstChild.style.height = (frac*100) + "%";
+  }
+  $("secs").textContent = Math.floor(s);
+  $("tpts").textContent = timePts(s);
+}
+function renderTurn(){
+  renderPods();
+  $("turnWho").textContent = state.names[speaker()] + " to speak";
+  $("bigPlaque").textContent = state.board[state.current].text;
+  const timed = state.useTimer;
+  $("lamps").hidden = !timed; $("readout").hidden = !timed;
+  $("goBtn").hidden = !timed || state.phase !== "ready";
+  $("backBtn").hidden = state.phase !== "ready";
+  $("stopBtn").hidden = state.phase !== "running";
+  $("toCardBtn").hidden = timed && state.phase !== "done";
+  $("toCardBtn").textContent = "Hand over to " + state.names[judge()] + " for scoring";
+  renderLamps();
+  if(state.screen === "turn") musicSync();     // quieter while someone is speaking
+}
+function tick(now){
+  const prev = state.elapsed;
+  state.elapsed = Math.min(MAX_SECS, (now - t0)/1000);
+  if(Math.floor(state.elapsed/10) > Math.floor(prev/10) && state.elapsed < MAX_SECS) beep(880, .18);
+  else if(state.elapsed >= MAX_SECS - 10 && Math.floor(state.elapsed) > Math.floor(prev) && state.elapsed < MAX_SECS) beep(1200, .05, "square", .05);
+  renderLamps();
+  if(state.elapsed >= MAX_SECS){ stopClock(true); return; }
+  raf = requestAnimationFrame(tick);
+}
+function stopClock(buzzer){
+  cancelAnimationFrame(raf);
+  if(buzzer){ beep(196, 1.8, "sine"); } else { beep(440, .2); }
+  state.phase = "done"; renderTurn();
+}
+function renderCard(){
+  ["a1","a2","a3","a4"].forEach(id => $(id).checked = false);
+  $("cardWho").textContent = "Scorecard, filled out by " + state.names[judge()];
+  $("cardTitle").textContent = "How did " + state.names[speaker()] + " go?";
+  $("cardStmt").textContent = "They were disagreeing with: “" + state.board[state.current].text + "”";
+  $("cardSecs").textContent = Math.floor(state.elapsed);
+  $("timeLine").hidden = !state.useTimer;
+  updateCard(); show("card");
+}
+function awards(){ return ["a1","a2","a3","a4"].reduce((n,id) => n + ($(id).checked ? +$(id).dataset.pts : 0), 0); }
+function updateCard(){
+  const t = timePts(state.elapsed), a = awards();
+  $("cardTime").textContent = t; $("cardAwards").textContent = a; $("cardTotal").textContent = t + a;
+}
+function renderFinal(){
+  const top = Math.max(...state.scores);
+  const winners = state.names.filter((n,i) => state.scores[i] === top);
+  $("winner").textContent = winners.length === 1 ? winners[0] + " wins with " + top + " points"
+    : winners.join(" and ") + " share the honours on " + top + " points";
+  $("standings").textContent = state.names.map((n,i) => ({n, s:state.scores[i]})).sort((a,b) => b.s - a.s)
+    .map(x => x.n + " " + x.s).join("  ·  ");
+  const body = $("histBody"); body.textContent = "";
+  state.history.forEach(h => {
+    const tr = document.createElement("tr");
+    [[h.name],[h.text],[h.time,"r"],[h.awards,"r"],[h.time+h.awards,"r"]].forEach(([v,c]) => {
+      const td = document.createElement("td"); td.textContent = v; if(c) td.className = c; tr.append(td);
+    });
+    body.append(tr);
+  });
+  show("final");
+}
+function renderEditor(){ $("poolText").value = pool.join("\n"); $("poolCount").textContent = pool.length; }
+
+/* ---------- actions ---------- */
+function newGame(){
+  state.scores = state.names.map(() => 0); state.turn = 0; state.history = []; state.used = []; state.last = ""; state.current = null;
+  deal(); renderBoard();
+}
+$("startBtn").addEventListener("click", () => {
+  const err = $("setupErr");
+  if(pool.length < 2){ err.textContent = "You need at least 2 statements to play. Add more plaques below."; err.hidden = false; return; }
+  err.hidden = true;
+  state.names = DEFAULT_NAMES.slice(0, +$("count").value).map((d,i) => $("name"+i).value.trim() || d);
+  state.useTimer = $("useTimer").checked; state.voice = true;
+  try{ $("song").currentTime = 0; }catch(e){}      // the music starts from the top with each new game
+  newGame();
+});
+$("musicBtn").addEventListener("click", () => {
+  musicOn = !musicOn; paintMusicBtn();
+  try{ localStorage.setItem(MUSIC_KEY, musicOn ? "on" : "off"); }catch(e){}
+  if(state.screen !== "setup") musicSync();
+});
+$("savePool").addEventListener("click", () => {
+  const list = [...new Set($("poolText").value.split("\n").map(s => s.trim().replace(/^[\[{(]+|[\]})]+$/g,"").trim()).filter(Boolean))];
+  if(!list.length){ $("poolMsg").textContent = "Add at least one statement first."; return; }
+  pool = list; const ok = savePool(pool); renderEditor();
+  $("poolMsg").textContent = ok ? "Saved " + pool.length + " statements." : "In use for this session, but this browser would not save it.";
+});
+$("resetPool").addEventListener("click", () => {
+  pool = STARTER.slice(); try{ localStorage.removeItem(KEY); }catch(e){}
+  renderEditor(); $("poolMsg").textContent = "Starter list restored.";
+});
+$("shuffleBtn").addEventListener("click", () => { refresh(); renderBoard(); });
+$("count").addEventListener("change", syncCount);
+$("quitBtn").addEventListener("click", () => {
+  if(!quitArmed){ quitArmed = true; $("quitBtn").textContent = "Tap again to end this game"; return; }
+  show("setup");
+});
+$("backBtn").addEventListener("click", renderBoard);
+$("goBtn").addEventListener("click", () => {
+  state.phase = "running"; state.elapsed = 0; renderTurn(); beep(660, .15);
+  t0 = performance.now(); raf = requestAnimationFrame(tick);
+});
+$("stopBtn").addEventListener("click", () => stopClock(false));
+$("toCardBtn").addEventListener("click", renderCard);
+["a1","a2","a3","a4"].forEach(id => $(id).addEventListener("change", updateCard));
+$("lockBtn").addEventListener("click", () => {
+  beep(784, .15, "triangle", .14); setTimeout(() => beep(1047, .25, "triangle", .14), 110);
+  const p = state.board[state.current], t = timePts(state.elapsed), a = awards(), who = speaker();
+  p.used = true; state.used.push(p.text);
+  state.scores[who] += t + a;
+  state.history.push({name:state.names[who], text:p.text, time:t, awards:a});
+  state.last = state.names[who] + " scored " + (t+a) + " last turn";
+  state.turn++; state.current = null;
+  if(state.board.every(c => c.used)){ celebrating = true; renderFinal(); celebrate(); } else renderBoard();
+});
+$("closeRules").addEventListener("click", () => { $("rulesOverlay").hidden = true; });
+$("bgVideo").addEventListener("loadeddata", () => {
+  hasVideo = true;
+  if(["board","turn","card"].includes(state.screen)){ const v = $("bgVideo"); v.hidden = false; try{ v.play().catch(() => {}); }catch(e){} }
+});
+$("bgVideo").src = "begtodiffer.mp4";
+$("winVideo").addEventListener("loadeddata", () => {
+  hasWin = true;
+  if(state.screen === "final"){ const w = $("winVideo"); w.hidden = false; try{ w.play().catch(() => {}); }catch(e){} }
+});
+$("winVideo").src = "champagne.mp4";
+$("rulesBody").append(document.querySelector("#s-setup .rules").cloneNode(true));
+$("againBtn").addEventListener("click", () => { try{ $("song").currentTime = 0; }catch(e){} newGame(); });
+$("toSetupBtn").addEventListener("click", () => show("setup"));
+
+/* ---------- share buttons (same behaviour as the other Koalaspies games) ----------
+   Facebook opens its share window. Instagram and TikTok have no web address for sharing a link,
+   so on phones those buttons open the phone's own share menu; on a computer they copy the link. */
+(function(){
+  const url = window.location.href.split("#")[0];
+  const msg = $("shareMsg"), fb = $("shareFb");
+  if(fb) fb.href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+  const copyLink = app => {
+    const tell = t => { if(msg) msg.textContent = t; };
+    const ok = () => tell("Link copied. Open " + app + " and paste it into your post, story or bio.");
+    const manual = () => tell("Copy this link and paste it into " + app + ": " + url);
+    try{ navigator.clipboard.writeText(url).then(ok, manual); }catch(e){ manual(); }
+  };
+  document.querySelectorAll(".soc[data-app]").forEach(b => b.addEventListener("click", () => {
+    const app = b.dataset.app;
+    const phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if(phone && navigator.share){
+      navigator.share({title:"I Beg to Differ", text:"Whatever the card says, you must politely disagree.", url}).catch(() => copyLink(app));
+    } else copyLink(app);
+  }));
+})();
+
+/* ---------- QR code for this page, drawn in the browser (nothing is sent anywhere) ---------- */
+(function(){
+  const url = window.location.href.split("#")[0];
+  try{
+    const q = qrcode(0, "M"); q.addData(url); q.make();
+    const n = q.getModuleCount(), m = 2; let d = "";
+    for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d += "M" + (c+m) + " " + (r+m) + "h1v1h-1z";
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + (n+2*m) + ' ' + (n+2*m) + '" shape-rendering="crispEdges" role="img" aria-label="QR code"><rect width="100%" height="100%" fill="#fff"/><path fill="#000" d="' + d + '"/></svg>';
+    $("qrSmall").innerHTML = svg; $("qrBig").innerHTML = svg; $("qrUrl").textContent = url;
+  }catch(e){ $("qrBtn").hidden = true; return; }
+  $("qrBtn").addEventListener("click", () => { $("qrOverlay").hidden = false; $("closeQr").focus(); });
+  $("closeQr").addEventListener("click", () => { $("qrOverlay").hidden = true; });
+})();
+
+/* ---------- boot ---------- */
+(function buildLamps(){
+  for(let i=1;i<=6;i++){ const d = document.createElement("div"); d.className = "lamp"; d.innerHTML = "<i></i><span>" + (i*10) + "</span>"; $("lamps").append(d); }
+})();
+paintMusicBtn();
+function start(data){
+  renderEditor(); syncCount();
+  if(data && data.screen && data.screen !== "setup" && Array.isArray(data.board)){
+    state = Object.assign(state, data);
+    $("count").value = state.names.length; state.names.forEach((n,i) => { $("name"+i).value = n; });
+    while(state.scores.length < state.names.length) state.scores.push(0); $("useTimer").checked = state.useTimer;
+    if(state.screen === "final") renderFinal();
+    else if(state.current != null && state.screen !== "board"){
+      if(state.phase === "running"){ state.phase = "ready"; state.elapsed = 0; }
+      renderTurn(); show("turn");
+    } else renderBoard();
+    syncCount();
+  } else show("setup");
+}
+window.claude?.hot?.snapshot?.(() => state);
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+
+</body>
+</html>
