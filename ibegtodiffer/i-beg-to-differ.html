@@ -114,6 +114,7 @@ strong,b{font-weight:700}
 .points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .points li{display:flex;gap:14px;align-items:baseline}
 .points b{font-family:var(--sign);color:var(--gold-hi);min-width:2.6em;text-align:right;font-variant-numeric:tabular-nums}
+.points li.minus b{color:#f0a9a0}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.64rem;color:var(--gold)}
 .field input,.field select,textarea{
@@ -214,6 +215,19 @@ details[open] summary{margin-bottom:12px}
 .award .what b{font-family:var(--sign);font-size:.9rem;letter-spacing:.05em;display:block}
 .award .what small{font-size:.92rem;color:#5d5340}
 .award .pts{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--claret)}
+/* deductions: the opposition picks 0 to 5 points off */
+.deduct{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid #cdbf9a;border-radius:2px;background:#fbf6e8}
+.deduct .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.deduct .head b{font-family:var(--sign);font-size:.9rem;letter-spacing:.05em}
+.deduct .head .pts{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--claret)}
+.deduct small{font-size:.92rem;color:#5d5340}
+.scale{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;border:0;margin:0;padding:0;min-width:0}
+.scale label{position:relative;display:block}
+.scale input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+.scale span{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid #cdbf9a;border-radius:2px;background:#fff;
+  font-family:var(--sign);font-variant-numeric:tabular-nums;pointer-events:none}
+.scale input:checked + span{background:var(--claret);color:var(--ivory);border-color:var(--claret)}
+.scale input:focus-visible + span{outline:2px solid var(--claret);outline-offset:2px}
 .sum{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:3px double var(--gold);padding-top:12px;font-family:var(--sign);letter-spacing:.08em}
 .sum .total{font-family:var(--display);font-size:2.2rem;font-variant-numeric:tabular-nums}
 .line{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
@@ -239,7 +253,8 @@ td.r,th.r{text-align:right}
 .qr-card{background:var(--ivory);color:var(--ink);padding:22px;width:min(340px,100%);margin-inline:auto;text-align:center;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold)}
 .qr-card #qrBig{background:#fff;padding:6px}
 .qr-url{font-family:Jost,"Avenir Next",sans-serif;font-size:.72rem;overflow-wrap:anywhere;color:#5d5340}
-.brand{font-family:Jost,"Avenir Next",sans-serif;font-weight:500;letter-spacing:4px;font-size:clamp(.6rem,2.1vw,.76rem);color:var(--gold-hi);text-transform:uppercase;opacity:.85}
+.brand{font-family:Jost,"Avenir Next",sans-serif;font-weight:500;letter-spacing:4px;font-size:clamp(.6rem,2.1vw,.76rem);color:var(--gold-hi);text-transform:uppercase;opacity:.85;text-decoration:none;padding:.5rem .25rem}
+a.brand:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
 footer{width:100%;text-align:center;background:transparent;color:var(--muted);font-family:Jost,"Avenir Next",sans-serif;padding:.8rem 0;border-top:1px solid rgba(255,255,255,.12);font-size:clamp(.68rem,2.2vw,.9rem);margin-top:20px}
 .share-row{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;align-items:center;margin:.1rem auto .5rem;padding:0 .8rem}
 .share-lbl{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-right:.2rem}
@@ -263,6 +278,7 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
   .award{grid-template-columns:auto 1fr}
   .award .pts{grid-column:2}
   .brand{letter-spacing:2px}
+  .scale{gap:4px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -277,7 +293,7 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
 <audio id="song" preload="auto" loop src="babyface.mp3"></audio>
 <div class="wrap" id="app">
 
-  <div class="topbar" role="banner"><button type="button" class="qr-btn" id="qrBtn" aria-label="Show a QR code for this game"><span id="qrSmall"></span></button><div class="brand">Koalaspies</div><button type="button" class="music-btn" id="musicBtn" aria-pressed="true">Music on</button></div>
+  <div class="topbar" role="banner"><button type="button" class="qr-btn" id="qrBtn" aria-label="Show a QR code for this game"><span id="qrSmall"></span></button><a class="brand" href="https://koalaspies-games.site/" title="All Koalaspies games">Koalaspies</a><button type="button" class="music-btn" id="musicBtn" aria-pressed="true">Music on</button></div>
 
   <header class="mast" id="mast">
     <h1 class="logo">I Beg to Differ</h1>
@@ -302,8 +318,10 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
         <li><b>5</b><span>for doing it politely</span></li>
         <li><b>15</b><span>for giving evidence or reasons</span></li>
         <li><b>20</b><span>for explaining</span></li>
+        <li class="minus"><b>−5</b><span>up to 5 off for repeating yourself (your opposition chooses 0 to 5)</span></li>
+        <li class="minus"><b>−5</b><span>up to 5 off for going on a tangent and speaking off topic (0 to 5)</span></li>
       </ul>
-      <p class="muted">Your opposition fills out your scorecard. They must be fair and consistent, because their own turn to be scored is coming.</p>
+      <p class="muted">Your opposition fills out your scorecard. They must be fair and consistent, because their own turn to be scored is coming. A turn never scores below zero.</p>
       <p><strong>Nine cards are on the table.</strong> When all nine have been played the game is over, and the highest score wins.</p>
     </div>
 
@@ -390,8 +408,22 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
       <label class="award" for="a2"><input type="checkbox" id="a2" data-pts="5"><span class="what"><b>They did it politely</b><small>No sneering or put-downs. They respected the person while opposing the view.</small></span><span class="pts">+5</span></label>
       <label class="award" for="a3"><input type="checkbox" id="a3" data-pts="15"><span class="what"><b>They gave evidence or reasons</b><small>At least one fact, example or reason, not just "because I say so".</small></span><span class="pts">+15</span></label>
       <label class="award" for="a4"><input type="checkbox" id="a4" data-pts="20"><span class="what"><b>They explained</b><small>They walked you through their thinking so you could follow how they got there.</small></span><span class="pts">+20</span></label>
+
+      <span class="eyebrow" style="margin-top:8px">Deductions · choose 0 to 5 points off</span>
+      <div class="deduct">
+        <div class="head"><b>Repetition</b><span class="pts" id="d1Show">0</span></div>
+        <small>They said the same thing over and over to fill the time.</small>
+        <fieldset class="scale" id="d1" aria-label="Points off for repetition, 0 to 5"></fieldset>
+      </div>
+      <div class="deduct">
+        <div class="head"><b>Going on a tangent</b><span class="pts" id="d2Show">0</span></div>
+        <small>They wandered off topic and stopped talking about the statement.</small>
+        <fieldset class="scale" id="d2" aria-label="Points off for going on a tangent, 0 to 5"></fieldset>
+      </div>
+
       <div class="line" id="timeLine"><span>Time points (<span id="cardSecs">0</span> seconds)</span><b id="cardTime">0</b></div>
       <div class="line"><span>Your awards</span><b id="cardAwards">0</b></div>
+      <div class="line"><span>Deductions</span><b id="cardDed">0</b></div>
       <div class="sum"><span>Turn total</span><span class="total" id="cardTotal">0</span></div>
       <p class="muted">Be fair and consistent. Your turn to be scored is coming.</p>
       <div class="row"><button class="btn" id="lockBtn">Lock in the score</button></div>
@@ -409,7 +441,7 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
       </div>
       <div class="panel tablewrap">
         <table>
-          <thead><tr><th>Speaker</th><th>Statement they opposed</th><th class="r">Time</th><th class="r">Awards</th><th class="r">Total</th></tr></thead>
+          <thead><tr><th>Speaker</th><th>Statement they opposed</th><th class="r">Time</th><th class="r">Awards</th><th class="r">Off</th><th class="r">Total</th></tr></thead>
           <tbody id="histBody"></tbody>
         </table>
       </div>
@@ -435,7 +467,7 @@ footer{width:100%;text-align:center;background:transparent;color:var(--muted);fo
     </div>
     <div class="share-msg" id="shareMsg" aria-live="polite"></div>
     <nav class="foot-nav">
-      <a href="https://koalaspies-games.site/index.html">All games</a>
+      <a href="https://koalaspies-games.site/">All games</a>
       <a href="https://koalaspies-games.site/party-games.html">Party games</a>
       <a href="https://koalaspies-games.site/privacy.html">Privacy &amp; Cookies</a>
       <a href="mailto:KoalaSpiesSydney@outlook.com">Contact</a>
@@ -518,6 +550,7 @@ const STARTER = [
 ];
 const KEY = "ibtd.statements", BOARD_SIZE = 9, MAX_SECS = 60;
 const MUSIC_KEY = "ibtd.music";
+const DEDUCTIONS = ["d1","d2"], MAX_OFF = 5;     // repetition, going on a tangent
 const $ = id => document.getElementById(id);
 
 let pool = loadPool();
@@ -535,6 +568,7 @@ function savePool(list){ try{ localStorage.setItem(KEY, JSON.stringify(list)); r
 function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function timePts(s){ return Math.min(6, Math.floor(s/10))*10; }
 const lowerFirst = t => /^[A-Z][a-z]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t;
+const minus = n => n ? "−" + n : "0";
 
 /* ---------- the music: babyface.mp3, all through the game ----------
    It starts when "Start the game" is pressed and loops until the game ends.
@@ -813,6 +847,7 @@ function stopClock(buzzer){
 }
 function renderCard(){
   ["a1","a2","a3","a4"].forEach(id => $(id).checked = false);
+  DEDUCTIONS.forEach(name => { const zero = document.querySelector('input[name="' + name + '"][value="0"]'); if(zero) zero.checked = true; });
   $("cardWho").textContent = "Scorecard, filled out by " + state.names[judge()];
   $("cardTitle").textContent = "How did " + state.names[speaker()] + " go?";
   $("cardStmt").textContent = "They were disagreeing with: “" + state.board[state.current].text + "”";
@@ -821,9 +856,15 @@ function renderCard(){
   updateCard(); show("card");
 }
 function awards(){ return ["a1","a2","a3","a4"].reduce((n,id) => n + ($(id).checked ? +$(id).dataset.pts : 0), 0); }
+function offFor(name){ const c = document.querySelector('input[name="' + name + '"]:checked'); return c ? +c.value : 0; }
+function deductions(){ return DEDUCTIONS.reduce((n,name) => n + offFor(name), 0); }
+// A turn can lose points but never goes below zero.
+function turnTotal(){ return Math.max(0, timePts(state.elapsed) + awards() - deductions()); }
 function updateCard(){
-  const t = timePts(state.elapsed), a = awards();
-  $("cardTime").textContent = t; $("cardAwards").textContent = a; $("cardTotal").textContent = t + a;
+  const t = timePts(state.elapsed), a = awards(), d = deductions();
+  DEDUCTIONS.forEach(name => { $(name + "Show").textContent = minus(offFor(name)); });
+  $("cardTime").textContent = t; $("cardAwards").textContent = a; $("cardDed").textContent = minus(d);
+  $("cardTotal").textContent = turnTotal();
 }
 function renderFinal(){
   const top = Math.max(...state.scores);
@@ -834,8 +875,9 @@ function renderFinal(){
     .map(x => x.n + " " + x.s).join("  ·  ");
   const body = $("histBody"); body.textContent = "";
   state.history.forEach(h => {
+    const ded = h.ded || 0, total = h.total ?? Math.max(0, h.time + h.awards - ded);
     const tr = document.createElement("tr");
-    [[h.name],[h.text],[h.time,"r"],[h.awards,"r"],[h.time+h.awards,"r"]].forEach(([v,c]) => {
+    [[h.name],[h.text],[h.time,"r"],[h.awards,"r"],[minus(ded),"r"],[total,"r"]].forEach(([v,c]) => {
       const td = document.createElement("td"); td.textContent = v; if(c) td.className = c; tr.append(td);
     });
     body.append(tr);
@@ -889,11 +931,11 @@ $("toCardBtn").addEventListener("click", renderCard);
 ["a1","a2","a3","a4"].forEach(id => $(id).addEventListener("change", updateCard));
 $("lockBtn").addEventListener("click", () => {
   beep(784, .15, "triangle", .14); setTimeout(() => beep(1047, .25, "triangle", .14), 110);
-  const p = state.board[state.current], t = timePts(state.elapsed), a = awards(), who = speaker();
+  const p = state.board[state.current], t = timePts(state.elapsed), a = awards(), d = deductions(), total = turnTotal(), who = speaker();
   p.used = true; state.used.push(p.text);
-  state.scores[who] += t + a;
-  state.history.push({name:state.names[who], text:p.text, time:t, awards:a});
-  state.last = state.names[who] + " scored " + (t+a) + " last turn";
+  state.scores[who] += total;
+  state.history.push({name:state.names[who], text:p.text, time:t, awards:a, ded:d, total});
+  state.last = state.names[who] + " scored " + total + " last turn";
   state.turn++; state.current = null;
   if(state.board.every(c => c.used)){ celebrating = true; renderFinal(); celebrate(); } else renderBoard();
 });
@@ -951,6 +993,20 @@ $("toSetupBtn").addEventListener("click", () => show("setup"));
 /* ---------- boot ---------- */
 (function buildLamps(){
   for(let i=1;i<=6;i++){ const d = document.createElement("div"); d.className = "lamp"; d.innerHTML = "<i></i><span>" + (i*10) + "</span>"; $("lamps").append(d); }
+})();
+// The 0 to 5 buttons for each deduction on the scorecard.
+(function buildDeductions(){
+  DEDUCTIONS.forEach(name => {
+    const fs = $(name);
+    for(let v=0; v<=MAX_OFF; v++){
+      const l = document.createElement("label"), i = document.createElement("input"), s = document.createElement("span");
+      i.type = "radio"; i.name = name; i.value = v; i.checked = v === 0;
+      i.setAttribute("aria-label", v + (v === 1 ? " point" : " points") + " off");
+      i.addEventListener("change", () => { click(); updateCard(); });
+      s.textContent = v;
+      l.append(i, s); fs.append(l);
+    }
+  });
 })();
 paintMusicBtn();
 function start(data){
