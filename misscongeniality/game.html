@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
 <title>Miss Congeniality · Pageant Speaking Game · Koalaspies</title>
-<meta name="description" content="Answer real Miss Universe questions like a finalist. A free game-show speaking game for 2 to 4 teams: score a point for every second you speak.">
+<meta name="description" content="Answer real beauty pageant questions like a finalist. A free game-show speaking game for 2 to 4 teams: score a point for every second you speak.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <!-- The canonical address must be the page's real address. The home page links to
      misscongeniality/game.html — if this file lives somewhere else, change it here
@@ -27,7 +27,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Koalaspies">
 <meta property="og:title" content="What Would Miss Congeniality Say? · Free Pageant Speaking Game">
-<meta property="og:description" content="Answer real Miss Universe questions like a finalist. Pick your country, score points, take the crown. Free, no sign-up.">
+<meta property="og:description" content="Answer real beauty pageant questions like a finalist. Pick your country, score points, take the crown. Free, no sign-up.">
 <meta property="og:url" content="https://koalaspies-games.site/misscongeniality/game.html">
 <meta property="og:image" content="https://koalaspies-games.site/share-misscongeniality.jpg">
 <meta property="og:image:width" content="1200">
@@ -54,7 +54,7 @@
 <style>
 :root {
 /* A royal blue stage lit in pearl, with the two contestants in metal:
-   Miss Universe in silver, Miss World in gold. */
+   the first finalist in silver, the second in gold. */
   --bg:#102a6d;          /* royal blue */
   --bg-2:#1b3f9c;        /* the lighter wash behind the board */
   --card:#1d3a86;        /* an empty square */
@@ -67,13 +67,13 @@
   --ink:#f5f7fc;         /* everything is written in near-white */
   --muted:#b5c1e0;       /* soft blue grey */
   --line:#3d5cb4;        /* rule line on the blue ground */
-  --tile:#c3c9d4;        /* MISS UNIVERSE — silver */
+  --tile:#c3c9d4;        /* FINALIST 1 — silver */
   --tile-soft:#26355e;
   --tile-hi:#eef1f6;
   --tile-deep:#8f96a3;
   --tile-card:#d6dae2;   /* her question card */
   --tile-ink:#22262e;    /* and the writing on it */
-  --p2:#e5b13c;          /* MISS WORLD — gold */
+  --p2:#e5b13c;          /* FINALIST 2 — gold */
   --p2-soft:#3a2f14;
   --p2-hi:#f6d37a;
   --p2-deep:#b3861d;
@@ -770,8 +770,8 @@ button:focus-visible {
    THE QUESTION CARD  —  handwriting on paper, in a metal envelope
    ══════════════════════════════════════════════════════════════════════
    The question is written by hand on a sheet of cream card, lifted just
-   out of an envelope: silver while Miss Universe is playing, gold for
-   Miss World. The envelope is the only thing that carries the team
+   out of an envelope: silver while the first finalist is playing, gold for
+   the second. The envelope is the only thing that carries the team
    colour now — the card itself is always paper.
 
    The three things you are most likely to want to change:
@@ -1957,7 +1957,7 @@ const QUESTIONS = [
      BEFORE YOU TELL A CLASS THESE ARE THE REAL ONES, CHECK THESE FIVE:
        - "1998 - Honolulu" is used twice, on two different questions.
        - 1968 and 1969 each appear twice, once as Miami and once as London.
-       - The three London years are Miss World finals, not Miss Universe.
+       - The three London years are from a different international pageant.
        - 2017 is missing, and 1991 sits out of order between 2016 and 2018.
        - Several are near-twins in play: three "change one thing", three
          "most important lesson", two "biggest challenge women face today".
@@ -1989,7 +1989,7 @@ const QUESTIONS = [
     es:"¿Cuál es el mayor desafío que enfrentan las mujeres hoy?" },
   { topic:"2000", audio:"",
     text:"Right now, there is a protest outside calling beauty pageants disrespectful to women. Convince them they are wrong.",
-    es:"En este momento hay una protesta afuera que dice que el concurso Miss Universo es una falta de respeto hacia las mujeres. Convéncelos de que están equivocados." },
+    es:"En este momento hay una protesta afuera que dice que los concursos de belleza son una falta de respeto hacia las mujeres. Convéncelos de que están equivocados." },
   { topic:"2001", audio:"",
     text:"If you could change one thing about your past, what would it be and why?",
     es:"Si pudieras cambiar una cosa de tu pasado, ¿qué sería y por qué?" },
@@ -2131,13 +2131,9 @@ const QUESTIONS = [
   text:"Give us three words that describe you and explain why.",
   es:"Danos tres palabras que te describan y explica por qué." },
 
-{ topic:"1999", audio:"",
-  text:"If Miss Universe became pregnant during her reign, should she be allowed to continue as Miss Universe?",
-  es:"Si Miss Universo quedara embarazada durante su reinado, ¿debería poder continuar como Miss Universo?" },
-
 { topic:"2012", audio:"",
-  text:"Should speaking English be a prerequisite for Miss Universe?",
-  es:"¿Debería hablar inglés ser un requisito para Miss Universo?" },
+  text:"Should speaking English be a requirement to win an international beauty pageant?",
+  es:"¿Debería hablar inglés ser un requisito para ganar un concurso internacional de belleza?" },
 
 { topic:"2014", audio:"",
   text:"What can women learn from men?",
