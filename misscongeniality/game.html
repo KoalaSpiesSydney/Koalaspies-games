@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
 <title>Miss Congeniality · Pageant Speaking Game · Koalaspies</title>
-<meta name="description" content="Answer real Miss Universe questions like a finalist. A free game-show speaking game for 2 to 5 teams: score a point for every second you speak.">
+<meta name="description" content="Answer real Miss Universe questions like a finalist. A free game-show speaking game for 2 to 4 teams: score a point for every second you speak.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <!-- The canonical address must be the page's real address. The home page links to
      misscongeniality/game.html — if this file lives somewhere else, change it here
@@ -1141,10 +1141,10 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
 .tinsel { position:fixed; inset:0; width:100%; height:100%; z-index:9999; pointer-events:none; transition:opacity .6s ease; }
 
 /* ═════════════════════════════════════════════════════════════════
-   TOP 2 TO TOP 5: three more finalists, points and the setup screen
+   TOP 2 TO TOP 4: two more finalists, points and the setup screen
    ═════════════════════════════════════════════════════════════════
-   Finalists 1 and 2 keep silver and gold. Finalists 3 to 5 wear rose,
-   emerald and amethyst, each with a light, mid and deep shade for the
+   Finalists 1 and 2 keep silver and gold. Finalists 3 and 4 wear rose
+   and emerald (amethyst is left over from Top 5 and is not used), each with a light, mid and deep shade for the
    polished squares and a dark ink for the mark on top.               */
 :root {
   --p3:#e98fae; --p3-hi:#f8cad9; --p3-deep:#b5587b; --p3-ink:#3a0f1f;
@@ -1178,7 +1178,7 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display:none !important; }
 }
 .ptsline small { font-size:.72em; font-weight:700; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-left:.25em; }
 
-/* Three or more finalists: each one stacks (mark, name, points) so five fit in a row on a phone. */
+/* Three or more finalists: each one stacks (mark, name, points) so four fit in a row on a phone. */
 body.many #scores { gap:clamp(2px, 1vw, 10px); }
 body.many .score {
   flex:1 1 0; flex-direction:column; align-items:center; text-align:center;
@@ -1554,7 +1554,6 @@ body.finale #bgVideo, body.finale #bgGif { opacity:0; transition:opacity .8s eas
         <button type="button" data-n="2" aria-pressed="true">Top 2</button>
         <button type="button" data-n="3" aria-pressed="false">Top 3</button>
         <button type="button" data-n="4" aria-pressed="false">Top 4</button>
-        <button type="button" data-n="5" aria-pressed="false">Top 5</button>
       </div>
       <p class="winrule" id="winrule">Top 2 · 12 tiles · 6 questions each</p>
       <div class="setlbl" data-es="Elige los países">Choose your countries</div>
@@ -1618,9 +1617,9 @@ body.finale #bgVideo, body.finale #bgGif { opacity:0; transition:opacity .8s eas
    ██                                                                  ██
    ██████████████████████████████████████████████████████████████████████
 
-   The game: two to five finalists (Top 2 to Top 5), a 5 x 5 board, and
+   The game: two to four finalists (Top 2 to Top 4), a 5 x 5 board, and
    the first to claim a line wins: four in a row for Top 2, three in a
-   row for Top 3 to Top 5. Every square also scores points (see POINTS).
+   row for Top 3 and Top 4. Every square also scores points (see POINTS).
 
    ----------------------------------------------------------------------
    HOW TO ADD YOUR OWN QUESTIONS
@@ -1879,7 +1878,7 @@ const TILES             = 12;
    ----------------------------------------------------------------------
    The list on the How to play screen. Add or remove any; the game puts
    "Miss" in front. DEFAULT_COUNTRIES are the ones already picked for
-   finalists 1 to 5 when the page opens.                                 */
+   finalists 1 to 4 when the page opens.                                 */
 const COUNTRIES = [
   "Argentina","Australia","Brazil","Canada","Chile","China","Colombia",
   "Costa Rica","Dominican Republic","Ecuador","Egypt","England","France",
@@ -1890,7 +1889,7 @@ const COUNTRIES = [
   "South Africa","Spain","Sri Lanka","Sweden","Thailand","Trinidad and Tobago",
   "Turkey","Ukraine","USA","Uzbekistan","Venezuela","Vietnam","Wales"
 ];
-const DEFAULT_COUNTRIES = ["Venezuela","Philippines","USA","Colombia","South Africa"];
+const DEFAULT_COUNTRIES = ["Venezuela","Philippines","USA","Colombia"];
 
 /* ----------------------------------------------------------------------
    MORE SOUNDS
@@ -2287,7 +2286,7 @@ const QUESTIONS = [
    ██████████████████████████████████████████████████████████████████████ */
 
 const COLS = 5, ROWS = 5;
-let WIN = 4;                       /* 4 in a row for Top 2, 3 for Top 3 to Top 5 */
+let WIN = 4;                       /* 4 in a row for Top 2, 3 for Top 3 and Top 4 */
 const winFor = n => (n <= 2 ? 4 : 3);
 const WORDS = ["", "one", "two", "three", "four", "five"];
 
@@ -2348,7 +2347,7 @@ const CROWN = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="
 
 const SASH = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 2h8.8v18.4l-4.4-4-4.4 4Z" transform="rotate(-26 12 12)"/></svg>';
 
-/* Finalists 3 to 5 wear a star, a gem and a rose-heart. */
+/* Finalists 3 and 4 wear a star and a gem (the fifth mark is no longer used). */
 const STAR  = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.8 6.2 6.7.7-5 4.5 1.4 6.6L12 17.2l-5.9 3.4 1.4-6.6-5-4.5 6.7-.7Z"/></svg>';
 const GEM   = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10l4.5 5.6L12 21 2.5 9.1Z"/></svg>';
 const HEART = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6s-8.6-5.2-8.6-11a4.9 4.9 0 0 1 8.6-3.2 4.9 4.9 0 0 1 8.6 3.2c0 5.8-8.6 11-8.6 11Z"/></svg>';
@@ -3856,7 +3855,7 @@ function updateGoButton() {
 document.querySelectorAll(".topn button").forEach(b => b.addEventListener("click", () => {
   setupN = +b.dataset.n;
   /* keep every finalist on a different country where we can */
-  for (let i = 0; i < 5; i++) if (!setupCountries[i]) setupCountries[i] = DEFAULT_COUNTRIES[i];
+  for (let i = 0; i < 4; i++) if (!setupCountries[i]) setupCountries[i] = DEFAULT_COUNTRIES[i];
   renderSetup();
 }));
 
