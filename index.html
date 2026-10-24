@@ -991,6 +991,36 @@
       color: #f5f7fc; border: 1px solid rgba(214,222,240,.6); }
     .mc-howto:hover { background: rgba(255,255,255,.12); }
     @media (max-width: 560px) { .mc-howto { left: 16px; } }
+
+    /* ===== WINNING ANSWERS button, under How to play on the Miss Congeniality card ===== */
+    .games li.with-answers > .game { padding-bottom: 130px; }
+    .games li.with-answers > .mc-howto:not(.answers-link) { bottom: 74px; }
+    .answers-link { cursor: pointer; background: transparent; line-height: inherit; }
+    .answers-link::before { content: "\2726"; border: 0; color: #e3c56b; font-size: .9em; }
+    .games li.with-answers:hover > .answers-link { transform: translateY(-6px); }
+
+    /* the Winning answers pop-up */
+    .amodal { padding: 0; border: 0; width: min(680px, 94vw); max-width: none; max-height: 90vh; max-height: 90svh;
+      border-radius: 10px; color: #f5f7fc; overflow: auto;
+      background: linear-gradient(175deg, #1b3f9c 0%, #102a6d 55%, #081a48 100%);
+      box-shadow: 0 24px 70px rgba(0,0,0,.6); }
+    .amodal::backdrop { background: rgba(6,10,28,.86); }
+    .amodal .abox { padding: clamp(20px, 5vw, 36px); position: relative; }
+    .amodal .aclose { position: absolute; top: 12px; right: 12px; font: inherit; font-weight: 800; color: #102a6d; background: #fff;
+      border: 0; border-radius: 3px; min-height: 40px; padding: 8px 14px; cursor: pointer; }
+    .amodal .aclose:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .amodal h2 { margin: 6px 0 4px; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 700;
+      font-size: clamp(1.5rem, 5vw, 2rem); color: #fff; text-align: center; }
+    .amodal .alead { margin: 0 auto 18px; max-width: 44ch; text-align: center; font-family: "Jost", system-ui, sans-serif;
+      font-weight: 500; color: #d6def0; line-height: 1.5; }
+    .amodal .ans { border-top: 1px solid rgba(214,222,240,.25); padding: 18px 0 16px; font-family: "Jost", system-ui, sans-serif; }
+    .amodal .who { margin: 0; font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 1.3rem; color: #fff; }
+    .amodal .when { display: block; margin-top: 3px; font-family: "Jost", system-ui, sans-serif; font-size: .7rem; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase; color: #e3c56b; }
+    .amodal .q { margin: 10px 0 0; font-weight: 600; font-size: 1.02rem; line-height: 1.45; }
+    .amodal .a { margin: 8px 0 0; font-weight: 400; font-size: 1rem; line-height: 1.6; color: #eef2fa; }
+    @media (max-width: 560px) { .amodal h2 { margin-top: 46px; } }
+    .amodal .lbl { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #b5c1e0; margin-right: .5em; }
     @media (prefers-reduced-motion: reduce) {
       .howto-link { transition: none; }
       .games li.with-howto:hover > .game, .games li.with-howto:hover > .howto-link { transform: none; }
@@ -1091,7 +1121,7 @@
         </a>
         <a class="howto-link ibtd-howto" href="i-beg-to-differ-how-to-play.mp4" data-video="i-beg-to-differ-how-to-play.mp4" data-poster="i-beg-to-differ-how-to-play.jpg" data-title="How to play I Beg to Differ">How to play <small>1:33</small></a>
       </li>
-      <li class="with-howto">
+      <li class="with-howto with-answers">
         <a class="game party mc themed" href="misscongeniality/game.html">
           <span class="top"><span class="kicker">Party</span><span class="icon" aria-hidden="true">👑</span></span>
           <h3>What Would Miss Congeniality Say?</h3>
@@ -1103,6 +1133,7 @@
           <span class="play">Take the stage →</span>
         </a>
         <a class="howto-link mc-howto" href="miss-congeniality-how-to-play.mp4" data-video="miss-congeniality-how-to-play.mp4" data-poster="miss-congeniality-how-to-play.jpg" data-title="How to play Miss Congeniality">How to play <small>1:26</small></a>
+        <button type="button" class="howto-link mc-howto answers-link" id="answersOpen" aria-haspopup="dialog">Winning answers</button>
       </li>
       <li>
         <a class="game family top5 themed" href="topgame/guessthetop.html">
@@ -1349,6 +1380,49 @@
   </div>
 </dialog>
 
+<!-- ══════════════════════════════════════════════════════════════════
+     WINNING ANSWERS — the pop-up opened by the button under
+     How to play on the Miss Congeniality card.
+
+     EACH ANSWER HAS A MARKED SPOT FOR YOU. Look for:
+        ✍️ WRITE HER FULL ANSWER HERE
+     Replace the whole <p class="a"> paragraph under that note with her
+     answer. The short version there now is a stand-in so the page
+     looks finished until you add yours. Keep the <p class="a"> and
+     </p> tags; put a new <p class="a"> ... </p> for each paragraph.
+     ══════════════════════════════════════════════════════════════════ -->
+<dialog class="amodal" id="amodal" aria-labelledby="atitle">
+  <div class="abox">
+    <button type="button" class="aclose" id="aclose">Close ✕</button>
+    <h2 id="atitle">Winning answers</h2>
+    <p class="alead">Real Miss Universe answers, in the winners' own words. Read how they open, build and finish in under a minute.</p>
+
+    <article class="ans">
+      <h3 class="who">Sushmita Sen <span class="when">India · Miss Universe 1994</span></h3>
+      <p class="q"><span class="lbl">Question</span>What is the essence of being a woman?</p>
+      <!-- ✍️ WRITE HER FULL ANSWER HERE (Sushmita Sen, 1994) — replace the paragraph below -->
+      <p class="a"><span class="lbl">Answer</span>&ldquo;Just being a woman is God&rsquo;s gift that all of us must appreciate.&rdquo; She went on to say every child begins with a mother, and that women show men what sharing, caring and loving are about.</p>
+      <!-- ✍️ END OF SUSHMITA SEN'S ANSWER -->
+    </article>
+
+    <article class="ans">
+      <h3 class="who">Zozibini Tunzi <span class="when">South Africa · Miss Universe 2019</span></h3>
+      <p class="q"><span class="lbl">Question</span>What is the most important thing we should be teaching young girls today?</p>
+      <!-- ✍️ WRITE HER FULL ANSWER HERE (Zozibini Tunzi, 2019) — replace the paragraph below -->
+      <p class="a"><span class="lbl">Answer</span>&ldquo;I think the most important thing we should be teaching young girls today is leadership.&rdquo; She said girls and women have gone without it for too long, and they should learn to claim their place in society.</p>
+      <!-- ✍️ END OF ZOZIBINI TUNZI'S ANSWER -->
+    </article>
+
+    <article class="ans">
+      <h3 class="who">Sheynnis Palacios <span class="when">Nicaragua · Miss Universe 2023</span></h3>
+      <p class="q"><span class="lbl">Question</span>If you could live one year in another woman's shoes, who would you choose and why?</p>
+      <!-- ✍️ WRITE HER FULL ANSWER HERE (Sheynnis Palacios, 2023) — replace the paragraph below -->
+      <p class="a"><span class="lbl">Answer</span>She chose Mary Wollstonecraft, the 18th-century writer and pioneer of women&rsquo;s rights, because she &ldquo;opened the gap to give an opportunity to many women.&rdquo;</p>
+      <!-- ✍️ END OF SHEYNNIS PALACIOS'S ANSWER -->
+    </article>
+  </div>
+</dialog>
+
 <script>
   /* QR code points at wherever this page is actually open. */
   const qrIcon = document.getElementById("qrIcon");
@@ -1415,6 +1489,22 @@
     close.addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });   /* a click on the dark backdrop */
     dlg.addEventListener("close", function () { v.pause(); v.removeAttribute("src"); v.load(); });
+  })();
+
+  /* WINNING ANSWERS button on the Miss Congeniality card: opens the answers pop-up.
+     Escape, the Close button or a click on the dark backdrop closes it. */
+  (function () {
+    var dlg = document.getElementById("amodal"), open = document.getElementById("answersOpen"),
+        close = document.getElementById("aclose");
+    if (!dlg || !open) return;
+    if (typeof dlg.showModal !== "function") { open.hidden = true; return; }
+    open.addEventListener("click", function () {
+      var home = document.getElementById("howtoVideo");
+      if (home && !home.paused) home.pause();
+      dlg.showModal(); dlg.scrollTop = 0;
+    });
+    close.addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
   })();
 </script>
 
