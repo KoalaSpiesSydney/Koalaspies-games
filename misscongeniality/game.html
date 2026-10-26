@@ -1917,7 +1917,7 @@ const CLOCK_TICK       = true;  /* game-show tick-tock while they speak */
 const CLOCK_TICK_LEVEL = 0.12;  /* its volume: .06 soft, .2 loud       */
 const BRAVO_SECONDS    = 4.5;   /* how long the clapping goes on */
 const BRAVO_LEVEL      = 3;     /* how loud: stays clean to about 4 */
-const INTRO_SONG       = "";   /* no music on the How to play card; type a file name here to bring it back */
+const INTRO_SONG       = "so-on-and-so-forth.com.mp3";   /* music on the How to play card; "" for none */
 const INTRO_SONG_START = WIN_SONG_START;
 const INTRO_SONG_LEVEL = 0.5;
 
@@ -4010,6 +4010,7 @@ openIntro();
   let started = false, fade = null;
   const target = () => {
     if (!on || document.body.classList.contains("finale")) return 0;
+    if (document.getElementById("intro").classList.contains("open")) return 0;   /* the intro song has the floor */
     const q = document.getElementById("panel");
     return BG_MUSIC_LEVEL * (q && q.classList.contains("open") ? BG_MUSIC_DUCK : 1);
   };
@@ -4051,6 +4052,7 @@ openIntro();
   const watch = new MutationObserver(settle);
   watch.observe(document.getElementById("panel"), { attributes:true, attributeFilter:["class"] });
   watch.observe(document.body, { attributes:true, attributeFilter:["class"] });
+  watch.observe(document.getElementById("intro"), { attributes:true, attributeFilter:["class"] });
   window.musicLabel = label;
   label();
 })();
