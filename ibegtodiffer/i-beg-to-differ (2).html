@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<!-- Google tag (gtag.js), same as the other Koalaspies games -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-355ESVVE6D"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-355ESVVE6D');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>I Beg to Differ · Polite Disagreement Game · Koalaspies</title>
+<meta name="description" content="Whatever the card says, you must politely disagree. A free speaking game for 2 to 4 players that builds critical thinking, tact and empathy. No sign-up.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<!-- Language versions: English and Latin American Spanish (?lang=es) -->
+<link rel="alternate" hreflang="en" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<link rel="alternate" hreflang="es-419" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<meta property="og:url" content="https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html">
+<meta property="og:image" content="https://koalaspies-games.site/share-ibegtodiffer.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="I Beg to Differ: a 1920s parlour game of polite disagreement from Koalaspies">
+<meta name="twitter:image" content="https://koalaspies-games.site/share-ibegtodiffer.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2718%27 fill=%27%2314161c%27/%3E%3Cg fill=%27%23f8fafc%27%3E%3Ccircle cx=%2726%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2774%27 cy=%2734%27 r=%2713%27/%3E%3Ccircle cx=%2750%27 cy=%2758%27 r=%2726%27/%3E%3C/g%3E%3Cellipse cx=%2750%27 cy=%2758%27 rx=%278%27 ry=%276%27 fill=%27%2314161c%27/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Koalaspies">
+<meta property="og:title" content="I Beg to Differ · Free Polite Disagreement Game">
+<meta property="og:description" content="Whatever the card says, you must politely disagree. Free, no sign-up.">
+<meta property="og:locale" content="en_AU">
+<meta property="og:locale:alternate" content="es_LA">
+<meta name="twitter:card" content="summary_large_image">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=Limelight&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap">
+<style>
+/* Layout: a 1920s dining room. Gilt-framed table of engraved place cards centre stage, one screen at a time. */
+:root{
+  color-scheme: dark;
+  --room:#0a1310;        /* lamplit dining room */
+  --panel:#10231c;       /* bottle-green baize */
+  --edge:#2f4d40;
+  --ivory:#f4ecd8;       /* card stock and linen */
+  --gold:#c9a24a;
+  --gold-hi:#ecd391;
+  --claret:#6e1423;
+  --ink:#1a1611;
+  --muted:#b9ad90;
+  --display:"Limelight","Copperplate","Didot",Georgia,serif;
+  --sign:"Cinzel","Copperplate","Trajan Pro",Georgia,serif;
+  --body:"Cormorant Garamond","Garamond","Baskerville",Georgia,serif;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  background:
+    radial-gradient(ellipse at 50% -10%, #23463a 0%, transparent 62%),
+    repeating-linear-gradient(45deg, rgba(201,162,74,.035) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-45deg, rgba(201,162,74,.035) 0 1px, transparent 1px 22px),
+    var(--room);
+  color:var(--ivory);
+  font-family:var(--body);
+  font-weight:500;
+  font-size:20px;
+  line-height:1.45;
+  padding-inline:16px;
+  padding-block:20px 48px;
+}
+.wrap{max-width:980px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+strong,b{font-weight:700}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+
+/* ---------- masthead ---------- */
+.mast{text-align:center;position:relative;padding-block:18px 10px;overflow:hidden}
+.mast::before{
+  content:"";position:absolute;inset:-60% -20%;z-index:0;
+  background:repeating-conic-gradient(from 0deg at 50% 70%, rgba(201,162,74,.2) 0 3deg, transparent 3deg 9deg);
+  -webkit-mask-image:radial-gradient(circle at 50% 70%, #000 0, transparent 60%);
+          mask-image:radial-gradient(circle at 50% 70%, #000 0, transparent 60%);
+}
+.mast > *{position:relative;z-index:1}
+.logo{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2.4rem, 8.5vw, 5rem);line-height:1.05;letter-spacing:.03em;
+  color:var(--gold-hi);text-wrap:balance;
+  text-shadow:0 2px 0 #6b5220, 0 6px 18px rgba(0,0,0,.6);
+  padding-bottom:10px;
+}
+.mast.small .logo{font-size:clamp(1.5rem, 4.6vw, 2.1rem);padding-bottom:0}
+.tag{font-family:var(--sign);text-transform:uppercase;letter-spacing:.3em;color:var(--gold);font-size:.72rem}
+.tag::before,.tag::after{content:"\25C6";margin-inline:.9em;font-size:.7em;vertical-align:.15em}
+
+/* ---------- shared pieces ---------- */
+.panel{background:var(--panel);border:1px solid var(--gold);outline:1px solid var(--edge);outline-offset:-6px;border-radius:2px;padding:24px}
+.eyebrow{font-family:var(--sign);text-transform:uppercase;letter-spacing:.24em;font-size:.66rem;color:var(--gold)}
+.h2{font-family:var(--sign);font-weight:500;font-size:1.35rem;line-height:1.25;letter-spacing:.04em;text-wrap:balance}
+.muted{color:var(--muted)}
+.btn{
+  font-family:var(--sign);font-weight:700;text-transform:uppercase;letter-spacing:.16em;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:var(--ink);border:0;border-radius:2px;
+  padding:14px 28px;font-size:.82rem;cursor:pointer;
+  box-shadow:inset 0 0 0 3px var(--gold), inset 0 0 0 4px rgba(26,22,17,.55), 0 4px 0 #6b5220, 0 8px 16px rgba(0,0,0,.45);
+  transition:transform .08s, box-shadow .08s;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(3px);box-shadow:inset 0 0 0 3px var(--gold), inset 0 0 0 4px rgba(26,22,17,.55), 0 1px 0 #6b5220}
+.btn.stop{background:var(--claret);color:var(--ivory);box-shadow:inset 0 0 0 3px var(--claret), inset 0 0 0 4px var(--gold), 0 4px 0 #3a0a12, 0 8px 16px rgba(0,0,0,.45)}
+.btn.ghost{background:transparent;color:var(--ivory);box-shadow:none;border:1px solid var(--gold);padding:10px 18px;font-size:.68rem;font-weight:500}
+.btn.ghost:hover{background:rgba(201,162,74,.12)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.center{justify-content:center;text-align:center}
+
+/* ---------- setup ---------- */
+.setup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.rules{display:flex;flex-direction:column;gap:12px}
+.rules p{max-width:62ch}
+.instruction{font-style:italic;font-size:1.45rem;line-height:1.25;color:var(--gold-hi);border-left:1px solid var(--gold);padding-left:16px}
+.grandma{background:var(--ivory);color:var(--ink);border-radius:2px;padding:18px 20px;box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold)}
+.grandma .eyebrow{color:var(--claret)}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.points li{display:flex;gap:14px;align-items:baseline}
+.points b{font-family:var(--sign);color:var(--gold-hi);min-width:2.6em;text-align:right;font-variant-numeric:tabular-nums}
+.points li.minus b{color:#f0a9a0}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.64rem;color:var(--gold)}
+.field input,.field select,textarea{
+  background:var(--room);border:1px solid var(--edge);border-radius:2px;padding:10px 12px;color:var(--ivory);width:100%;
+}
+textarea{min-height:260px;resize:vertical;line-height:1.5}
+.form{display:flex;flex-direction:column;gap:16px}
+details summary{cursor:pointer;font-family:var(--sign);font-size:.95rem;letter-spacing:.06em}
+details[open] summary{margin-bottom:12px}
+.err{color:#f0a9a0;font-weight:700}
+.check{display:flex;gap:10px;align-items:center}
+.check input{width:20px;height:20px;accent-color:var(--gold);flex:none}
+
+/* ---------- score pods ---------- */
+.pods{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.podwrap{display:flex;flex-direction:column;gap:8px}
+.pod{background:var(--panel);border:1px solid var(--edge);border-radius:2px;padding:10px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.pod.speaking{border-color:var(--gold);box-shadow:inset 0 0 0 3px var(--panel), inset 0 0 0 4px var(--gold)}
+.pod .name{font-family:var(--sign);font-size:.95rem;letter-spacing:.05em;overflow-wrap:anywhere}
+.pod .role{font-family:var(--sign);text-transform:uppercase;letter-spacing:.24em;font-size:.58rem;color:var(--muted)}
+.pod.speaking .role{color:var(--gold-hi)}
+.pod .score{font-family:var(--display);font-size:2.2rem;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--gold-hi)}
+.pod.idle{opacity:.8}
+.turnno{align-self:center;font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.6rem;color:var(--muted);text-align:center}
+
+/* ---------- the table of cards ---------- */
+.frame{
+  padding:10px;border-radius:2px;background:#07100d;
+  border:2px solid var(--gold);
+  box-shadow:inset 0 0 0 5px #07100d, inset 0 0 0 6px var(--gold), 0 14px 40px rgba(0,0,0,.6);
+}
+.board{
+  background:linear-gradient(180deg,#143328,#0d241c);border-radius:2px;padding:16px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+}
+.plaque{
+  position:relative;min-height:116px;border:0;cursor:pointer;border-radius:2px;
+  padding:28px 16px 18px;display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:var(--sign);font-weight:500;text-transform:uppercase;letter-spacing:.07em;font-size:.76rem;line-height:1.35;
+  color:var(--ink);background:var(--ivory);
+  box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold), inset 0 0 0 9px var(--ivory), inset 0 0 0 10px var(--gold), 0 4px 10px rgba(0,0,0,.5);
+  transition:transform .12s;
+}
+.plaque:nth-child(3n+2){color:var(--gold-hi);background:#0b1f18;box-shadow:inset 0 0 0 5px #0b1f18, inset 0 0 0 6px var(--gold), inset 0 0 0 9px #0b1f18, inset 0 0 0 10px var(--gold), 0 4px 10px rgba(0,0,0,.5)}
+.plaque:nth-child(3n){color:var(--ivory);background:var(--claret);box-shadow:inset 0 0 0 5px var(--claret), inset 0 0 0 6px var(--gold), inset 0 0 0 9px var(--claret), inset 0 0 0 10px var(--gold), 0 4px 10px rgba(0,0,0,.5)}
+.plaque:hover:not(:disabled){transform:translateY(-3px)}
+.plaque .num{position:absolute;top:14px;left:0;right:0;font-size:.56rem;letter-spacing:.3em;opacity:.7}
+.plaque .txt{overflow-wrap:anywhere}
+.plaque:disabled,.plaque:disabled:nth-child(n){
+  cursor:default;color:#56695f;background:#0d1d17;
+  box-shadow:inset 0 0 0 5px #0d1d17, inset 0 0 0 6px #2a3f35, 0 0 0 transparent;
+}
+.plaque:disabled .txt{text-decoration:line-through}
+.board .plaque.info{grid-column:1 / -1;min-height:0;padding:16px;color:var(--ink);background:linear-gradient(180deg,var(--gold-hi),var(--gold));box-shadow:inset 0 0 0 5px var(--gold), inset 0 0 0 6px var(--ink), 0 4px 10px rgba(0,0,0,.5)}
+#bgVideo,#winVideo{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.35;pointer-events:none}
+#winVideo{opacity:.5}
+#fizz{position:fixed;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+.toast{font-style:italic;font-size:1.4rem;line-height:1.3;color:var(--ivory);max-width:30ch;text-wrap:balance}
+#app{position:relative;z-index:1}
+.overlay{position:fixed;inset:0;z-index:5;background:rgba(5,10,8,.9);overflow:auto;padding:24px 16px;display:flex;justify-content:center;align-items:flex-start}
+.overlay .inner{max-width:620px;width:100%;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- the turn ---------- */
+.big-plaque{
+  border-radius:2px;padding:44px 28px;text-align:center;
+  font-family:var(--sign);font-weight:500;text-transform:uppercase;letter-spacing:.07em;
+  font-size:clamp(1.3rem,4.4vw,2.3rem);line-height:1.25;text-wrap:balance;overflow-wrap:anywhere;
+  color:var(--ink);background:var(--ivory);
+  box-shadow:inset 0 0 0 8px var(--ivory), inset 0 0 0 9px var(--gold), inset 0 0 0 14px var(--ivory), inset 0 0 0 16px var(--gold), 0 10px 30px rgba(0,0,0,.55);
+}
+.believe{display:block;font-family:var(--body);font-style:italic;text-transform:none;letter-spacing:0;font-size:.62em;color:var(--claret);margin-bottom:.25em}
+.clock{display:flex;flex-direction:column;align-items:center;gap:16px}
+.lamps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;width:100%;max-width:480px}
+.lamp{
+  aspect-ratio:1;max-width:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--sign);font-size:clamp(.7rem,2.6vw,1rem);font-variant-numeric:tabular-nums;
+  background:#0a1814;color:#5f7469;border:1px solid var(--edge);position:relative;overflow:hidden;
+  box-shadow:inset 0 0 0 3px #0a1814, inset 0 0 0 4px var(--edge);
+}
+.lamp i{position:absolute;left:0;right:0;bottom:0;height:0;background:rgba(201,162,74,.3)}
+.lamp span{position:relative}
+.lamp.lit{background:radial-gradient(circle at 40% 35%, #fff6d6, var(--gold) 65%);color:var(--ink);border-color:var(--gold-hi);box-shadow:inset 0 0 0 3px var(--gold), inset 0 0 0 4px rgba(26,22,17,.5), 0 0 20px rgba(236,211,145,.55)}
+.lamp.lit i{height:0!important}
+.readout{display:flex;gap:32px;flex-wrap:wrap;justify-content:center}
+.readout div{text-align:center}
+.readout .n{font-family:var(--display);font-size:3rem;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--gold-hi)}
+.phrases{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center}
+.phrases span{font-style:italic;color:var(--muted)}
+
+/* ---------- scorecard ---------- */
+.card{background:var(--ivory);color:var(--ink);border-radius:2px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 0 0 7px var(--ivory), inset 0 0 0 8px var(--gold), 0 10px 30px rgba(0,0,0,.55)}
+.card .eyebrow{color:var(--claret)}
+.card .muted{color:#5d5340}
+.award{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid #cdbf9a;border-radius:2px;cursor:pointer;background:#fbf6e8}
+.award:has(input:checked){border-color:var(--claret);background:#f0e2b8}
+.award input{width:24px;height:24px;accent-color:var(--claret)}
+.award .what{min-width:0}
+.award .what b{font-family:var(--sign);font-size:.9rem;letter-spacing:.05em;display:block}
+.award .what small{font-size:.92rem;color:#5d5340}
+.award .pts{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--claret)}
+/* deductions: the opposition picks 0 to 5 points off */
+.deduct{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border:1px solid #cdbf9a;border-radius:2px;background:#fbf6e8}
+.deduct .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.deduct .head b{font-family:var(--sign);font-size:.9rem;letter-spacing:.05em}
+.deduct .head .pts{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--claret)}
+.deduct small{font-size:.92rem;color:#5d5340}
+.scale{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;border:0;margin:0;padding:0;min-width:0}
+.scale label{position:relative;display:block}
+.scale input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+.scale span{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid #cdbf9a;border-radius:2px;background:#fff;
+  font-family:var(--sign);font-variant-numeric:tabular-nums;pointer-events:none}
+.scale input:checked + span{background:var(--claret);color:var(--ivory);border-color:var(--claret)}
+.scale input:focus-visible + span{outline:2px solid var(--claret);outline-offset:2px}
+.sum{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:3px double var(--gold);padding-top:12px;font-family:var(--sign);letter-spacing:.08em}
+.sum .total{font-family:var(--display);font-size:2.2rem;font-variant-numeric:tabular-nums}
+.line{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+
+/* ---------- final ---------- */
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--edge)}
+th{font-family:var(--sign);text-transform:uppercase;letter-spacing:.2em;font-size:.6rem;color:var(--gold);font-weight:500}
+td.r,th.r{text-align:right}
+.winner{font-family:var(--display);font-size:clamp(1.8rem,6.5vw,3.4rem);line-height:1.1;color:var(--gold-hi);text-wrap:balance;text-shadow:0 2px 0 #6b5220}
+
+/* ---------- Koalaspies site chrome (matches the rest of the site) ---------- */
+.topbar{position:relative;min-height:52px;display:flex;align-items:center;justify-content:center}
+.qr-btn{position:absolute;left:0;top:0;width:52px;height:52px;padding:3px;background:#fff;border:1px solid var(--gold);border-radius:2px;cursor:pointer}
+.qr-btn:hover{box-shadow:0 0 0 2px var(--gold)}
+/* Language and music switches, stacked top right, opposite the QR code */
+.tb-right{position:absolute;right:0;top:0;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.music-btn,.lang-btn{background:transparent;border:1px solid var(--gold);border-radius:2px;cursor:pointer;line-height:1.2;
+  font-family:var(--sign);text-transform:uppercase;letter-spacing:.14em;font-size:.58rem;color:var(--ivory);padding:5px 10px}
+.music-btn:hover,.lang-btn:hover{background:rgba(201,162,74,.12)}
+.music-btn[aria-pressed=false]{color:var(--muted);border-color:var(--edge)}
+.qr-btn svg,#qrBig svg{display:block;width:100%;height:auto}
+.qr-card{background:var(--ivory);color:var(--ink);padding:22px;width:min(340px,100%);margin-inline:auto;text-align:center;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 0 0 5px var(--ivory), inset 0 0 0 6px var(--gold)}
+.qr-card #qrBig{background:#fff;padding:6px}
+.qr-url{font-family:Jost,"Avenir Next",sans-serif;font-size:.72rem;overflow-wrap:anywhere;color:#5d5340}
+.brand{font-family:Jost,"Avenir Next",sans-serif;font-weight:500;letter-spacing:4px;font-size:clamp(.6rem,2.1vw,.76rem);color:var(--gold-hi);text-transform:uppercase;opacity:.85;text-decoration:none;padding:.5rem .25rem}
+a.brand:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+footer{width:100%;text-align:center;background:transparent;color:var(--muted);font-family:Jost,"Avenir Next",sans-serif;padding:.8rem 0;border-top:1px solid rgba(255,255,255,.12);font-size:clamp(.68rem,2.2vw,.9rem);margin-top:20px}
+.share-row{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;align-items:center;margin:.1rem auto .5rem;padding:0 .8rem}
+.share-lbl{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-right:.2rem}
+.soc{font-family:inherit;font-size:.82rem;font-weight:700;letter-spacing:.02em;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:.35rem 1rem;border-radius:999px;border:1px solid rgba(255,255,255,.35);cursor:pointer;color:#fff;text-decoration:none;transition:filter .15s,transform .15s}
+.soc:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.soc.fb{background:#1877f2}
+.soc.ig{background:linear-gradient(45deg,#f09433,#dc2743 50%,#bc1888)}
+.soc.tt{background:#111}
+.share-msg{min-height:1.2em;font-size:.8rem;color:var(--muted);padding:0 1rem .3rem}
+.foot-nav{display:flex;flex-wrap:wrap;gap:.3rem 1rem;justify-content:center;margin:.2rem 0 .4rem}
+.foot-nav a,.foot-note a{color:var(--ivory);text-underline-offset:3px}
+.foot-nav a{display:inline-block;padding:.25rem .1rem}
+.foot-note{max-width:62ch;margin:.2rem auto .5rem;padding:0 1rem;font-weight:400;font-size:.78rem;line-height:1.5;color:var(--muted)}
+
+@media (max-width:520px){
+  .pods{grid-template-columns:1fr 1fr}
+  .board{grid-template-columns:1fr}
+  .plaque{min-height:76px}
+  .pod .score{font-size:1.8rem}
+  .panel{padding:20px 16px}
+  .award{grid-template-columns:auto 1fr}
+  .award .pts{grid-column:2}
+  .brand{letter-spacing:2px}
+  .scale{gap:4px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<video id="bgVideo" muted loop playsinline preload="auto" hidden></video>
+<video id="winVideo" muted loop playsinline preload="auto" hidden></video>
+<canvas id="fizz" hidden></canvas>
+<!-- The game's music: loops from "Start the game" to the final scores (see musicSync) -->
+<audio id="song" preload="auto" loop src="babyface.mp3"></audio>
+<div class="wrap" id="app">
+
+  <div class="topbar" role="banner">
+    <button type="button" class="qr-btn" id="qrBtn" data-i18n-aria="qr.aria" aria-label="Show a QR code for this game"><span id="qrSmall"></span></button>
+    <a class="brand" href="https://koalaspies-games.site/" data-i18n-title="brand.title" title="All Koalaspies games">Koalaspies</a>
+    <div class="tb-right">
+      <button type="button" class="lang-btn" id="langBtn">Español</button>
+      <button type="button" class="music-btn" id="musicBtn" aria-pressed="true">Music on</button>
+    </div>
+  </div>
+
+  <header class="mast" id="mast">
+    <h1 class="logo" data-i18n="logo">I Beg to Differ</h1>
+    <p class="tag" id="mastTag" data-i18n="tag">A parlour game of polite disagreement</p>
+  </header>
+
+  <!-- SETUP -->
+  <section id="s-setup" class="setup-grid">
+    <div class="panel rules">
+      <span class="eyebrow" data-i18n="rules.eyebrow">The instruction</span>
+      <p class="instruction" data-i18n="rules.instruction">Whatever statement you are given, no matter what it says, you MUST politely disagree.</p>
+      <p data-i18n="rules.p1">Your opposition picks a plaque. You speak against it for up to 60 seconds, even if you secretly agree. It builds critical thinking, tact and empathy.</p>
+      <p data-i18n-html="rules.p2"><strong>So break out of your bubble and experience somebody else's bubble.</strong></p>
+      <div class="grandma">
+        <span class="eyebrow" data-i18n="grandma.eyebrow">The dinner table rule</span>
+        <p data-i18n="grandma.p">In the old days Grandma said you should never speak about sex, religion or politics at the dinner table. The dinner table rule applies here.</p>
+      </div>
+      <span class="eyebrow" data-i18n="score.eyebrow">How you score</span>
+      <ul class="points">
+        <li><b>10</b><span data-i18n="pts.time">for every 10 seconds you speak, up to 60 seconds (when the timer is on)</span></li>
+        <li><b>1</b><span data-i18n="pts.dis">for disagreeing</span></li>
+        <li><b>5</b><span data-i18n="pts.polite">for doing it politely</span></li>
+        <li><b>15</b><span data-i18n="pts.evidence">for giving evidence or reasons</span></li>
+        <li><b>20</b><span data-i18n="pts.explain">for explaining</span></li>
+        <li class="minus"><b>−5</b><span data-i18n="pts.rep">up to 5 off for repeating yourself (your opposition chooses 0 to 5)</span></li>
+        <li class="minus"><b>−5</b><span data-i18n="pts.tan">up to 5 off for going on a tangent and speaking off topic (0 to 5)</span></li>
+      </ul>
+      <p class="muted" data-i18n="rules.fair">Your opposition fills out your scorecard. They must be fair and consistent, because their own turn to be scored is coming. A turn never scores below zero.</p>
+      <p data-i18n-html="rules.cards"><strong>Everyone gets the same number of turns.</strong> 12 cards are dealt for 2 or 4 players and 9 for 3. When all the cards have been played the game is over, and the highest score wins.</p>
+    </div>
+
+    <div class="form">
+      <div class="panel form">
+        <span class="eyebrow" data-i18n="guests">The guests</span>
+        <div class="field"><label for="count" data-i18n="count.label">How many players or teams</label>
+          <select id="count"><option selected>2</option><option>3</option><option>4</option></select>
+        </div>
+        <div class="field"><label for="name0" data-i18n="name0">Player or team one</label><input id="name0" maxlength="24" value="The Duchess"></div>
+        <div class="field"><label for="name1" data-i18n="name1">Player or team two</label><input id="name1" maxlength="24" value="The Colonel"></div>
+        <div class="field" id="f2"><label for="name2" data-i18n="name2">Player or team three</label><input id="name2" maxlength="24" value="The Countess"></div>
+        <div class="field" id="f3"><label for="name3" data-i18n="name3">Player or team four</label><input id="name3" maxlength="24" value="The Admiral"></div>
+        <label class="check" for="useTimer"><input type="checkbox" id="useTimer" checked><span data-i18n="timer">Use the speaking timer (speakers start it themselves)</span></label>
+        <p class="err" id="setupErr" hidden></p>
+        <div class="row"><button class="btn" id="startBtn" data-i18n="start">Start the game</button></div>
+      </div>
+
+      <details class="panel" id="editor">
+        <summary><span data-i18n="editor.sum">Edit the plaques</span> (<span id="poolCount">0</span> <span data-i18n="editor.statements">statements</span>)</summary>
+        <div class="form">
+          <p class="muted" data-i18n="editor.help">One statement per line. Each game lays out 9 or 12 at random. Write each one so it reads well after “I believe”. Your list is saved in this browser only, and each language keeps its own list.</p>
+          <textarea id="poolText" spellcheck="true" data-i18n-aria="editor.aria" aria-label="Statements, one per line"></textarea>
+          <div class="row">
+            <button class="btn ghost" id="savePool" data-i18n="editor.save">Save list</button>
+            <button class="btn ghost" id="resetPool" data-i18n="editor.reset">Restore starter list</button>
+            <span class="muted" id="poolMsg" role="status"></span>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- BOARD -->
+  <section id="s-board" hidden>
+    <div class="wrap" style="gap:16px">
+      <div class="center row" style="flex-direction:column;gap:4px">
+        <span class="eyebrow" id="lastTurn"></span>
+        <h2 class="h2" id="pickPrompt"></h2>
+        <p class="muted" data-i18n="board.reminder">Remember the dinner table rule. Pick something they will have to work for.</p>
+      </div>
+      <div class="frame"><div class="board" id="board"></div></div>
+      <div class="row center">
+        <button class="btn ghost" id="shuffleBtn" data-i18n="board.shuffle">Lay fresh cards</button>
+        <button class="btn ghost" id="quitBtn">End game</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURN -->
+  <section id="s-turn" hidden>
+    <div class="wrap" style="gap:20px">
+      <div class="center row" style="flex-direction:column;gap:4px">
+        <span class="eyebrow" id="turnWho"></span>
+        <h2 class="h2" data-i18n="turn.h2">Politely disagree with this</h2>
+      </div>
+      <div class="big-plaque"><span class="believe" data-i18n="believe">I believe</span><span id="bigPlaque"></span></div>
+      <div class="panel clock">
+        <div class="lamps" id="lamps"></div>
+        <div class="readout" id="readout">
+          <div><div class="n" id="secs">0</div><div class="eyebrow" data-i18n="secs">seconds</div></div>
+          <div><div class="n" id="tpts">0</div><div class="eyebrow" data-i18n="tpts">time points</div></div>
+        </div>
+        <div class="row center">
+          <button class="btn" id="goBtn" data-i18n="turn.go">Start speaking</button>
+          <button class="btn stop" id="stopBtn" hidden data-i18n="turn.stop">I'm finished</button>
+          <button class="btn" id="toCardBtn" hidden>Hand over for scoring</button>
+          <button class="btn ghost" id="backBtn" data-i18n="turn.back">Pick a different plaque</button>
+        </div>
+        <div class="phrases" id="phrases" data-i18n-aria="phrases.aria" aria-label="Polite openers"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORECARD -->
+  <section id="s-card" hidden>
+    <div class="card">
+      <span class="eyebrow" id="cardWho"></span>
+      <h2 class="h2" id="cardTitle"></h2>
+      <p class="muted" id="cardStmt"></p>
+      <label class="award" for="a1"><input type="checkbox" id="a1" data-pts="1"><span class="what"><b data-i18n="a1.b">They disagreed</b><small data-i18n="a1.s">They took the other side and stuck to it.</small></span><span class="pts">+1</span></label>
+      <label class="award" for="a2"><input type="checkbox" id="a2" data-pts="5"><span class="what"><b data-i18n="a2.b">They did it politely</b><small data-i18n="a2.s">No sneering or put-downs. They respected the person while opposing the view.</small></span><span class="pts">+5</span></label>
+      <label class="award" for="a3"><input type="checkbox" id="a3" data-pts="15"><span class="what"><b data-i18n="a3.b">They gave evidence or reasons</b><small data-i18n="a3.s">At least one fact, example or reason, not just “because I say so”.</small></span><span class="pts">+15</span></label>
+      <label class="award" for="a4"><input type="checkbox" id="a4" data-pts="20"><span class="what"><b data-i18n="a4.b">They explained</b><small data-i18n="a4.s">They walked you through their thinking so you could follow how they got there.</small></span><span class="pts">+20</span></label>
+
+      <span class="eyebrow" style="margin-top:8px" data-i18n="ded.eyebrow">Deductions · choose 0 to 5 points off</span>
+      <div class="deduct">
+        <div class="head"><b data-i18n="d1.b">Repetition</b><span class="pts" id="d1Show">0</span></div>
+        <small data-i18n="d1.s">They said the same thing over and over to fill the time.</small>
+        <fieldset class="scale" id="d1" data-i18n-aria="d1.aria" aria-label="Points off for repetition, 0 to 5"></fieldset>
+      </div>
+      <div class="deduct">
+        <div class="head"><b data-i18n="d2.b">Going on a tangent</b><span class="pts" id="d2Show">0</span></div>
+        <small data-i18n="d2.s">They wandered off topic and stopped talking about the statement.</small>
+        <fieldset class="scale" id="d2" data-i18n-aria="d2.aria" aria-label="Points off for going on a tangent, 0 to 5"></fieldset>
+      </div>
+
+      <div class="line" id="timeLine"><span><span data-i18n="card.time">Time points</span> (<span id="cardSecs">0</span> <span data-i18n="secs">seconds</span>)</span><b id="cardTime">0</b></div>
+      <div class="line"><span data-i18n="card.awards">Your awards</span><b id="cardAwards">0</b></div>
+      <div class="line"><span data-i18n="card.ded">Deductions</span><b id="cardDed">0</b></div>
+      <div class="sum"><span data-i18n="card.total">Turn total</span><span class="total" id="cardTotal">0</span></div>
+      <p class="muted" data-i18n="card.fair">Be fair and consistent. Your turn to be scored is coming.</p>
+      <div class="row"><button class="btn" id="lockBtn" data-i18n="card.lock">Lock in the score</button></div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section id="s-final" hidden>
+    <div class="wrap" style="gap:20px">
+      <div class="center row" style="flex-direction:column;gap:6px">
+        <span class="eyebrow" data-i18n="final.eyebrow">Final scores</span>
+        <p class="winner" id="winner"></p>
+        <p class="toast" data-i18n-html="final.toast">“Congratulations darling, you are simply a marvellous companion.”<br>“Do come again.”</p>
+        <p class="muted" id="standings"></p>
+      </div>
+      <div class="panel tablewrap">
+        <table>
+          <thead><tr><th data-i18n="th.speaker">Speaker</th><th data-i18n="th.stmt">Statement they opposed</th><th class="r" data-i18n="th.time">Time</th><th class="r" data-i18n="th.awards">Awards</th><th class="r" data-i18n="th.off">Off</th><th class="r" data-i18n="th.total">Total</th></tr></thead>
+          <tbody id="histBody"></tbody>
+        </table>
+      </div>
+      <div class="row center">
+        <button class="btn" id="againBtn" data-i18n="final.again">Play again</button>
+        <button class="btn ghost" id="toSetupBtn" data-i18n="final.setup">Change players or plaques</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- scoreboard: sits below the game, above the footer -->
+  <section class="podwrap" id="pods" hidden>
+    <div class="turnno" id="turnNo"></div>
+    <div class="pods" id="podRow"></div>
+  </section>
+
+  <footer>
+    <div class="share-row" data-i18n-aria="share.aria" aria-label="Share this game">
+      <span class="share-lbl" data-i18n="share.lbl">Share the game</span>
+      <a class="soc fb" id="shareFb" href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener">Facebook</a>
+      <button type="button" class="soc ig" data-app="Instagram">Instagram</button>
+      <button type="button" class="soc tt" data-app="TikTok">TikTok</button>
+    </div>
+    <div class="share-msg" id="shareMsg" aria-live="polite"></div>
+    <nav class="foot-nav">
+      <a href="https://koalaspies-games.site/" data-i18n="nav.all">All games</a>
+      <a href="https://koalaspies-games.site/party-games.html" data-i18n="nav.party">Party games</a>
+      <a href="https://koalaspies-games.site/privacy.html" data-i18n="nav.privacy">Privacy &amp; Cookies</a>
+      <a href="mailto:KoalaSpiesSydney@outlook.com" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <p class="foot-note" data-i18n-html="foot.ads">Koalaspies is free and supported by advertising. Ads may be served by Google and its
+      partners, who use cookies. See <a href="https://koalaspies-games.site/privacy.html">Privacy &amp; Cookies</a> for details.</p>
+    <p class="foot-note" data-i18n="foot.kids">Games are for education and entertainment. Young players should use the site with a parent, carer or teacher.</p>
+    <div data-i18n="foot.copy">© 2026 Justine Leigh Kelly. All rights reserved.</div>
+  </footer>
+</div>
+
+<div class="overlay" id="qrOverlay" hidden>
+  <div class="inner">
+    <div class="qr-card">
+      <span class="eyebrow" style="color:var(--claret)" data-i18n="qr.scan">Scan to play</span>
+      <div id="qrBig"></div>
+      <p data-i18n="qr.point">Point a phone camera at the code to open this game.</p>
+      <p class="qr-url" id="qrUrl"></p>
+    </div>
+    <div class="row center"><button class="btn" id="closeQr" data-i18n="close">Close</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="rulesOverlay" hidden>
+  <div class="inner">
+    <div id="rulesBody"></div>
+    <div class="row center"><button class="btn" id="closeRules" data-i18n="rules.close">Back to the table</button></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+/* ======================================================================
+   STARTER STATEMENTS, one list per language.
+   Write each one so it reads naturally after "I believe" / "Creo que".
+   ====================================================================== */
+const STARTERS = {
+en: [
+  "Cats are evil",
+  "Men are better cooks than women",
+  "Soccer is the only real football",
+  "Cockroaches should be eradicated",
+  "Bring back afternoon siestas",
+  "Homework should be banned",
+  "Everyone should meditate every day",
+  "Breakfast is the most important meal of the day",
+  "Dogs are better than cats",
+  "Everyone should learn a second language",
+  "Phones should be banned at the dinner table",
+  "School should start at 10am",
+  "Winter is better than summer",
+  "The book is always better than the movie",
+  "Zoos should be closed",
+  "Everyone should work a four-day week",
+  "Children should be paid for doing chores",
+  "Video games are a waste of time",
+  "Tea is better than coffee",
+  "Everybody should have to play a team sport",
+  "Handwriting is no longer worth teaching",
+  "Social media does more harm than good",
+  "Daylight saving should be scrapped",
+  "Reality TV is good for you",
+  "Everyone should grow their own vegetables",
+  "Early birds get more done than night owls",
+  "Camping beats a hotel every time",
+  "Homemade gifts are better than bought ones",
+  "Sharks deserve their bad reputation",
+  "School uniforms should be compulsory",
+  "Robots would make better teachers than people",
+  "Open-plan offices are the best way to work",
+  "Never eat dessert before dinner",
+  "Money can buy happiness",
+  "Cricket is boring",
+  "Toilet paper should hang over, not under",
+  "Cooking should be a compulsory school subject",
+  "People shouldn't wear shoes inside a house",
+  "Music was better in the old days",
+  "Cereal is a perfectly good dinner",
+  "Everyone should take a cold shower every morning",
+  "Birthdays stop mattering after 21",
+  "Rap music is a bad influence on the youth",
+  "Everyone should retire at 45 years old",
+  "Sports stars make terrible role models for kids",
+  "Your first impression is always true",
+  "A pet should be treated like a child",
+  "Plastic surgery can improve a person's self-esteem",
+  "City parks should grow vegetables instead of flowers",
+  "You should never tip in a restaurant",
+  "Beauty pageants are dated",
+  "Order is for the ordinary",
+  "Teenagers shouldn't use AI",
+  "Universities should be free",
+  "Nobody should pay tax",
+  "Cars should be banned from city centres",
+  "Museums should always be free",
+  "Nobody needs more than three pairs of shoes",
+  "Rock 'n roll music is dead",
+  "Most influencers are talentless"
+],
+es: [
+  "Los gatos son malvados",
+  "Los hombres cocinan mejor que las mujeres",
+  "El fútbol está sobrevalorado",
+  "Hay que acabar con todas las cucarachas",
+  "Deberíamos recuperar la siesta de la tarde",
+  "Las tareas escolares deberían prohibirse",
+  "Todo el mundo debería meditar todos los días",
+  "El desayuno es la comida más importante del día",
+  "Los perros son mejores que los gatos",
+  "Todo el mundo debería aprender un segundo idioma",
+  "Los celulares deberían estar prohibidos en la mesa",
+  "Las clases deberían empezar a las diez de la mañana",
+  "El invierno es mejor que el verano",
+  "El libro siempre es mejor que la película",
+  "Los zoológicos deberían cerrar",
+  "Todos deberíamos trabajar cuatro días a la semana",
+  "A los niños hay que pagarles por ayudar en la casa",
+  "Los videojuegos son una pérdida de tiempo",
+  "El té es mejor que el café",
+  "Todo el mundo debería practicar un deporte en equipo",
+  "Ya no vale la pena enseñar a escribir a mano",
+  "Las redes sociales hacen más daño que bien",
+  "Hay que eliminar el horario de verano",
+  "Los reality shows son buenos para uno",
+  "Todo el mundo debería cultivar sus propias verduras",
+  "Los madrugadores logran más que los trasnochadores",
+  "Acampar siempre es mejor que quedarse en un hotel",
+  "Los regalos hechos a mano son mejores que los comprados",
+  "Los tiburones se merecen su mala fama",
+  "El uniforme escolar debería ser obligatorio",
+  "Los robots serían mejores maestros que las personas",
+  "Las oficinas abiertas son la mejor forma de trabajar",
+  "Nunca hay que comer el postre antes de la comida",
+  "El dinero sí compra la felicidad",
+  "El béisbol es aburrido",
+  "El papel higiénico debe colgar por delante, no por detrás",
+  "La cocina debería ser una materia obligatoria en la escuela",
+  "Nadie debería usar zapatos dentro de la casa",
+  "La música de antes era mejor",
+  "El cereal es una cena perfectamente aceptable",
+  "Todo el mundo debería bañarse con agua fría cada mañana",
+  "Los cumpleaños dejan de importar después de los 18",
+  "Las fiestas de quince años son un gasto innecesario",
+  "El reguetón es una mala influencia para los jóvenes",
+  "Todo el mundo debería jubilarse a los 45 años",
+  "Los deportistas famosos son malos ejemplos para los niños",
+  "La primera impresión siempre es la correcta",
+  "Una mascota debe tratarse como a un hijo",
+  "La cirugía plástica puede mejorar la autoestima",
+  "Los parques de la ciudad deberían tener huertos en lugar de flores",
+  "Nunca hay que dejar propina en un restaurante",
+  "Los concursos de belleza son cosa del pasado",
+  "El orden es para los aburridos",
+  "Los adolescentes no deberían usar la inteligencia artificial",
+  "La universidad debería ser gratuita",
+  "Nadie debería pagar impuestos",
+  "Los autos deberían estar prohibidos en el centro de las ciudades",
+  "Los museos siempre deberían ser gratuitos",
+  "Nadie necesita más de tres pares de zapatos",
+  "El rock está muerto",
+  "La mayoría de los influencers no tiene talento"
+]
+};
+
+/* ======================================================================
+   INTERFACE TEXT. {name} style placeholders are filled in by t().
+   ====================================================================== */
+const I18N = {
+en: {
+  "doc.title":"I Beg to Differ · Polite Disagreement Game · Koalaspies",
+  "doc.desc":"Whatever the card says, you must politely disagree. A free speaking game for 2 to 4 players that builds critical thinking, tact and empathy. No sign-up.",
+  "og.title":"I Beg to Differ · Free Polite Disagreement Game",
+  "og.desc":"Whatever the card says, you must politely disagree. Free, no sign-up.",
+  "og.locale":"en_AU",
+  "lang.other":"Español", "lang.otherCode":"es", "lang.aria":"Cambiar a español",
+  "music.on":"Music on", "music.off":"Music off",
+  "qr.aria":"Show a QR code for this game", "qr.scan":"Scan to play", "qr.point":"Point a phone camera at the code to open this game.", "close":"Close",
+  "brand.title":"All Koalaspies games",
+  "logo":"I Beg to Differ", "tag":"A parlour game of polite disagreement",
+  "rules.eyebrow":"The instruction",
+  "rules.instruction":"Whatever statement you are given, no matter what it says, you MUST politely disagree.",
+  "rules.p1":"Your opposition picks a plaque. You speak against it for up to 60 seconds, even if you secretly agree. It builds critical thinking, tact and empathy.",
+  "rules.p2":"<strong>So break out of your bubble and experience somebody else's bubble.</strong>",
+  "grandma.eyebrow":"The dinner table rule",
+  "grandma.p":"In the old days Grandma said you should never speak about sex, religion or politics at the dinner table. The dinner table rule applies here.",
+  "score.eyebrow":"How you score",
+  "pts.time":"for every 10 seconds you speak, up to 60 seconds (when the timer is on)",
+  "pts.dis":"for disagreeing", "pts.polite":"for doing it politely", "pts.evidence":"for giving evidence or reasons", "pts.explain":"for explaining",
+  "pts.rep":"up to 5 off for repeating yourself (your opposition chooses 0 to 5)",
+  "pts.tan":"up to 5 off for going on a tangent and speaking off topic (0 to 5)",
+  "rules.fair":"Your opposition fills out your scorecard. They must be fair and consistent, because their own turn to be scored is coming. A turn never scores below zero.",
+  "rules.cards":"<strong>Everyone gets the same number of turns.</strong> 12 cards are dealt for 2 or 4 players and 9 for 3. When all the cards have been played the game is over, and the highest score wins.",
+  "rules.close":"Back to the table",
+  "guests":"The guests", "count.label":"How many players or teams",
+  "name0":"Player or team one", "name1":"Player or team two", "name2":"Player or team three", "name3":"Player or team four",
+  "timer":"Use the speaking timer (speakers start it themselves)",
+  "start":"Start the game",
+  "err.few":"You need at least {n} statements to play. Add more plaques below.",
+  "editor.sum":"Edit the plaques", "editor.statements":"statements",
+  "editor.help":"One statement per line. Each game lays out 9 or 12 at random. Write each one so it reads well after “I believe”. Your list is saved in this browser only, and each language keeps its own list.",
+  "editor.aria":"Statements, one per line", "editor.save":"Save list", "editor.reset":"Restore starter list",
+  "pool.empty":"Add at least one statement first.", "pool.saved":"Saved {n} statements.",
+  "pool.nosave":"In use for this session, but this browser would not save it.", "pool.reset":"Starter list restored.",
+  "board.reminder":"Remember the dinner table rule. Pick something they will have to work for.",
+  "board.shuffle":"Lay fresh cards", "board.pick":"{judge}, pick a plaque for {speaker}",
+  "board.last":"{name} scored {n} last turn", "instructions":"Instructions",
+  "quit":"End game", "quit.again":"Tap again to end this game",
+  "role.speaking":"Speaking", "role.judge":"Choosing and scoring", "role.idle":"At the table",
+  "turnNo":"Card {a} of {b}",
+  "turn.who":"{name} to speak", "turn.h2":"Politely disagree with this", "believe":"I believe",
+  "secs":"seconds", "tpts":"time points",
+  "turn.go":"Start speaking", "turn.stop":"I'm finished", "turn.back":"Pick a different plaque",
+  "turn.hand":"Hand over to {name} for scoring",
+  "phrases.aria":"Polite openers",
+  "phrases":["I beg to differ…","My dear friend, I must disagree…","I see it differently, because…","With respect…","Have you considered…","I understand why you'd say that, but…"],
+  "card.who":"Scorecard, filled out by {name}", "card.title":"How did {name} go?", "card.stmt":"They were disagreeing with: “{text}”",
+  "a1.b":"They disagreed", "a1.s":"They took the other side and stuck to it.",
+  "a2.b":"They did it politely", "a2.s":"No sneering or put-downs. They respected the person while opposing the view.",
+  "a3.b":"They gave evidence or reasons", "a3.s":"At least one fact, example or reason, not just “because I say so”.",
+  "a4.b":"They explained", "a4.s":"They walked you through their thinking so you could follow how they got there.",
+  "ded.eyebrow":"Deductions · choose 0 to 5 points off",
+  "d1.b":"Repetition", "d1.s":"They said the same thing over and over to fill the time.", "d1.aria":"Points off for repetition, 0 to 5",
+  "d2.b":"Going on a tangent", "d2.s":"They wandered off topic and stopped talking about the statement.", "d2.aria":"Points off for going on a tangent, 0 to 5",
+  "off.one":"1 point off", "off.many":"{n} points off",
+  "card.time":"Time points", "card.awards":"Your awards", "card.ded":"Deductions", "card.total":"Turn total",
+  "card.fair":"Be fair and consistent. Your turn to be scored is coming.", "card.lock":"Lock in the score",
+  "final.eyebrow":"Final scores",
+  "final.one":"{name} wins with {n} points", "final.tie":"{names} share the honours on {n} points", "and":" and ",
+  "final.toast":"“Congratulations darling, you are simply a marvellous companion.”<br>“Do come again.”",
+  "th.speaker":"Speaker", "th.stmt":"Statement they opposed", "th.time":"Time", "th.awards":"Awards", "th.off":"Off", "th.total":"Total",
+  "final.again":"Play again", "final.setup":"Change players or plaques",
+  "share.aria":"Share this game", "share.lbl":"Share the game",
+  "share.text":"Whatever the card says, you must politely disagree.",
+  "share.ok":"Link copied. Open {app} and paste it into your post, story or bio.",
+  "share.manual":"Copy this link and paste it into {app}: {url}",
+  "nav.all":"All games", "nav.party":"Party games", "nav.privacy":"Privacy & Cookies", "nav.contact":"Contact",
+  "foot.ads":"Koalaspies is free and supported by advertising. Ads may be served by Google and its partners, who use cookies. See <a href=\"https://koalaspies-games.site/privacy.html\">Privacy &amp; Cookies</a> for details.",
+  "foot.kids":"Games are for education and entertainment. Young players should use the site with a parent, carer or teacher.",
+  "foot.copy":"© 2026 Justine Leigh Kelly. All rights reserved.",
+  "speak.believe":"I believe, {text}.",
+  "speak.win":"Congratulations darling, you are simply a marvellous companion. Do come again.",
+  "names":["The Duchess","The Colonel","The Countess","The Admiral"]
+},
+es: {
+  "doc.title":"Permítame discrepar · Juego para discrepar con cortesía · Koalaspies",
+  "doc.desc":"Diga lo que diga la tarjeta, usted debe discrepar con cortesía. Un juego de conversación gratis para 2 a 4 jugadores que desarrolla el pensamiento crítico, el tacto y la empatía. Sin registro.",
+  "og.title":"Permítame discrepar · Juego gratis para discrepar con cortesía",
+  "og.desc":"Diga lo que diga la tarjeta, usted debe discrepar con cortesía. Gratis y sin registro.",
+  "og.locale":"es_LA",
+  "lang.other":"English", "lang.otherCode":"en", "lang.aria":"Switch to English",
+  "music.on":"Música sí", "music.off":"Música no",
+  "qr.aria":"Mostrar un código QR de este juego", "qr.scan":"Escanee para jugar", "qr.point":"Apunte la cámara de un celular al código para abrir este juego.", "close":"Cerrar",
+  "brand.title":"Todos los juegos de Koalaspies",
+  "logo":"Permítame discrepar", "tag":"Un juego de salón para discrepar con cortesía",
+  "rules.eyebrow":"La instrucción",
+  "rules.instruction":"Le toque la frase que le toque, diga lo que diga, usted DEBE discrepar con cortesía.",
+  "rules.p1":"Su oponente elige una tarjeta. Usted habla en contra durante un máximo de 60 segundos, aunque en secreto esté de acuerdo. Así se ejercitan el pensamiento crítico, el tacto y la empatía.",
+  "rules.p2":"<strong>Así que salga de su burbuja y conozca la burbuja de alguien más.</strong>",
+  "grandma.eyebrow":"La regla de la mesa",
+  "grandma.p":"Antes, la abuela decía que en la mesa nunca se habla de sexo, religión ni política. Aquí se aplica la regla de la mesa.",
+  "score.eyebrow":"Cómo se suman puntos",
+  "pts.time":"por cada 10 segundos que hable, hasta 60 segundos (con el cronómetro activado)",
+  "pts.dis":"por discrepar", "pts.polite":"por hacerlo con cortesía", "pts.evidence":"por dar pruebas o razones", "pts.explain":"por explicar",
+  "pts.rep":"hasta 5 puntos menos por repetirse (su oponente elige de 0 a 5)",
+  "pts.tan":"hasta 5 puntos menos por irse por las ramas y salirse del tema (de 0 a 5)",
+  "rules.fair":"Su oponente llena su hoja de puntaje. Debe ser justo y coherente, porque pronto será su turno de recibir puntaje. Un turno nunca baja de cero.",
+  "rules.cards":"<strong>Todos tienen la misma cantidad de turnos.</strong> Se reparten 12 tarjetas para 2 o 4 jugadores y 9 para 3. Cuando se han jugado todas, el juego termina y gana el puntaje más alto.",
+  "rules.close":"Volver a la mesa",
+  "guests":"Los invitados", "count.label":"Cuántos jugadores o equipos",
+  "name0":"Jugador o equipo uno", "name1":"Jugador o equipo dos", "name2":"Jugador o equipo tres", "name3":"Jugador o equipo cuatro",
+  "timer":"Usar el cronómetro (cada quien lo inicia al hablar)",
+  "start":"Comenzar el juego",
+  "err.few":"Necesita al menos {n} frases para jugar. Agregue más tarjetas abajo.",
+  "editor.sum":"Editar las tarjetas", "editor.statements":"frases",
+  "editor.help":"Una frase por línea. Cada juego reparte 9 o 12 al azar. Escriba cada frase de modo que se lea bien después de “Creo que”. Su lista se guarda solo en este navegador, y cada idioma tiene su propia lista.",
+  "editor.aria":"Frases, una por línea", "editor.save":"Guardar lista", "editor.reset":"Restaurar la lista inicial",
+  "pool.empty":"Primero agregue al menos una frase.", "pool.saved":"Se guardaron {n} frases.",
+  "pool.nosave":"Se usará en esta sesión, pero este navegador no pudo guardarla.", "pool.reset":"Se restauró la lista inicial.",
+  "board.reminder":"Recuerde la regla de la mesa. Elija algo que le cueste rebatir.",
+  "board.shuffle":"Repartir tarjetas nuevas", "board.pick":"{judge}, elija una tarjeta para {speaker}",
+  "board.last":"{name} sumó {n} puntos en el turno anterior", "instructions":"Instrucciones",
+  "quit":"Terminar el juego", "quit.again":"Toque otra vez para terminar",
+  "role.speaking":"Habla", "role.judge":"Elige y califica", "role.idle":"En la mesa",
+  "turnNo":"Tarjeta {a} de {b}",
+  "turn.who":"Turno de {name}", "turn.h2":"Discrepe con cortesía de esto", "believe":"Creo que",
+  "secs":"segundos", "tpts":"puntos por tiempo",
+  "turn.go":"Empezar a hablar", "turn.stop":"Terminé", "turn.back":"Elegir otra tarjeta",
+  "turn.hand":"Pasar a {name} para calificar",
+  "phrases.aria":"Frases corteses para empezar",
+  "phrases":["Permítame discrepar…","Con todo respeto, no estoy de acuerdo…","Lo veo de otra manera, porque…","Con el debido respeto…","¿Ha considerado usted…?","Entiendo por qué lo dice, pero…"],
+  "card.who":"Hoja de puntaje, la llena {name}", "card.title":"¿Cómo le fue a {name}?", "card.stmt":"Discrepaba de: “{text}”",
+  "a1.b":"Discrepó", "a1.s":"Tomó la postura contraria y la sostuvo.",
+  "a2.b":"Lo hizo con cortesía", "a2.s":"Sin burlas ni menosprecios. Respetó a la persona aunque se opuso a la idea.",
+  "a3.b":"Dio pruebas o razones", "a3.s":"Al menos un dato, ejemplo o razón, no solo “porque lo digo yo”.",
+  "a4.b":"Explicó", "a4.s":"Mostró su razonamiento paso a paso para que se entendiera cómo llegó a su conclusión.",
+  "ded.eyebrow":"Descuentos · elija de 0 a 5 puntos menos",
+  "d1.b":"Repetición", "d1.s":"Dijo lo mismo una y otra vez para llenar el tiempo.", "d1.aria":"Puntos menos por repetirse, de 0 a 5",
+  "d2.b":"Irse por las ramas", "d2.s":"Se salió del tema y dejó de hablar de la frase.", "d2.aria":"Puntos menos por irse por las ramas, de 0 a 5",
+  "off.one":"1 punto menos", "off.many":"{n} puntos menos",
+  "card.time":"Puntos por tiempo", "card.awards":"Premios", "card.ded":"Descuentos", "card.total":"Total del turno",
+  "card.fair":"Sea justo y coherente. Pronto será su turno de recibir puntaje.", "card.lock":"Confirmar el puntaje",
+  "final.eyebrow":"Puntajes finales",
+  "final.one":"{name} gana con {n} puntos", "final.tie":"{names} comparten los honores con {n} puntos", "and":" y ",
+  "final.toast":"“Felicidades, cariño, es usted una compañía sencillamente maravillosa.”<br>“Vuelva pronto.”",
+  "th.speaker":"Quién habló", "th.stmt":"Frase que rebatió", "th.time":"Tiempo", "th.awards":"Premios", "th.off":"Menos", "th.total":"Total",
+  "final.again":"Jugar otra vez", "final.setup":"Cambiar jugadores o tarjetas",
+  "share.aria":"Compartir este juego", "share.lbl":"Compartir el juego",
+  "share.text":"Diga lo que diga la tarjeta, usted debe discrepar con cortesía.",
+  "share.ok":"Enlace copiado. Abra {app} y péguelo en su publicación, historia o biografía.",
+  "share.manual":"Copie este enlace y péguelo en {app}: {url}",
+  "nav.all":"Todos los juegos", "nav.party":"Juegos para fiestas", "nav.privacy":"Privacidad y cookies", "nav.contact":"Contacto",
+  "foot.ads":"Koalaspies es gratis y se mantiene con publicidad. Google y sus socios pueden mostrar anuncios y usan cookies. Consulte <a href=\"https://koalaspies-games.site/privacy.html\">Privacidad y cookies</a> para más detalles (en inglés).",
+  "foot.kids":"Los juegos son para educación y entretenimiento. Los jugadores jóvenes deben usar el sitio con su madre, padre, tutor o maestro.",
+  "foot.copy":"© 2026 Justine Leigh Kelly. Todos los derechos reservados.",
+  "speak.believe":"Creo que {text}.",
+  "speak.win":"Felicidades, cariño, es usted una compañía sencillamente maravillosa. Vuelva pronto.",
+  "names":["La Duquesa","El Coronel","La Condesa","El Almirante"]
+}
+};
+
+const KEY = "ibtd.statements", LANG_KEY = "ibtd.lang", MAX_SECS = 60;
+const MUSIC_KEY = "ibtd.music";
+const BOARD_FOR = {2:12, 3:9, 4:12};               // every player gets the same number of turns
+const DEDUCTIONS = ["d1","d2"], MAX_OFF = 5;     // repetition, going on a tangent
+const $ = id => document.getElementById(id);
+
+/* ---------- language ---------- */
+function detectLang(){
+  try{ const p = (new URLSearchParams(location.search).get("lang") || "").slice(0,2).toLowerCase(); if(I18N[p]) return p; }catch(e){}
+  try{ const s = localStorage.getItem(LANG_KEY); if(I18N[s]) return s; }catch(e){}
+  return /^es/i.test(navigator.language || "") ? "es" : "en";
+}
+let lang = detectLang();
+function t(k, vars){
+  let s = (I18N[lang] && I18N[lang][k] != null) ? I18N[lang][k] : (I18N.en[k] != null ? I18N.en[k] : k);
+  if(vars && typeof s === "string") s = s.replace(/\{(\w+)\}/g, (m,p) => vars[p] != null ? vars[p] : m);
+  return s;
+}
+const defaultNames = () => I18N[lang].names;
+
+let pool = loadPool();
+let state = { screen:"setup", names:defaultNames().slice(0,2), useTimer:true, voice:true, scores:[0,0], turn:0,
+              board:[], used:[], current:null, phase:"ready", elapsed:0, history:[], last:null };
+let raf = 0, t0 = 0, audio = null, quitArmed = false, hasVideo = false;
+let musicOn = true, celebrating = false, fadeRaf = 0;
+try{ musicOn = localStorage.getItem(MUSIC_KEY) !== "off"; }catch(e){}
+
+const poolKey = () => lang === "en" ? KEY : KEY + "." + lang;   // English keeps the original key, so saved lists survive
+function loadPool(){
+  try{ const s = JSON.parse(localStorage.getItem(poolKey())); if(Array.isArray(s) && s.length) return s; }catch(e){}
+  return STARTERS[lang].slice();
+}
+function savePool(list){ try{ localStorage.setItem(poolKey(), JSON.stringify(list)); return true; }catch(e){ return false; } }
+function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function timePts(s){ return Math.min(6, Math.floor(s/10))*10; }
+const lowerFirst = s => /^\p{Lu}\p{Ll}/u.test(s) ? s[0].toLowerCase() + s.slice(1) : s;
+const minus = n => n ? "−" + n : "0";
+const boardSize = () => BOARD_FOR[state.names.length] || 9;
+const pageUrl = () => window.location.href.split("#")[0];
+
+/* ---------- the music: babyface.mp3, all through the game ----------
+   It starts when "Start the game" is pressed and loops until the game ends.
+   It plays softly at the table, dips while the statement is read aloud, drops right down while someone is speaking,
+   and comes back up for the scorecard. On the final screen celebrate() takes over and turns it up.
+   The "Music on / off" button (top right) turns it off, and the choice is remembered in this browser. */
+const MUSIC_LEVEL = { board:.45, card:.4, ready:.22, running:.1, done:.3 };
+function fadeTo(target, ms){
+  const song = $("song"); cancelAnimationFrame(fadeRaf);
+  const from = song.volume, start = performance.now();
+  (function step(now){
+    const k = Math.min(1, (now - start)/ms);
+    song.volume = Math.max(0, Math.min(1, from + (target - from)*k));
+    if(k < 1) fadeRaf = requestAnimationFrame(step);
+    else if(target === 0){ try{ song.pause(); }catch(e){} }
+  })(start);
+}
+function musicLevel(){
+  if(state.screen === "board") return MUSIC_LEVEL.board;
+  if(state.screen === "card") return MUSIC_LEVEL.card;
+  if(state.screen === "turn") return MUSIC_LEVEL[state.phase] ?? MUSIC_LEVEL.ready;
+  return 0;
+}
+function musicSync(){
+  const song = $("song");
+  if(state.screen === "final"){                       // celebrate() sets the volume here
+    if(!musicOn){ fadeTo(0, 300); }
+    else if(!celebrating) fadeTo(.8, 600);
+    if(musicOn && song.paused){ try{ const p = song.play(); if(p && p.catch) p.catch(() => {}); }catch(e){} }
+    return;
+  }
+  const level = musicOn ? musicLevel() : 0;
+  if(level > 0 && song.paused){
+    try{ song.volume = 0; const p = song.play(); if(p && p.catch) p.catch(() => {}); }catch(e){}
+  }
+  fadeTo(level, 500);
+}
+function paintMusicBtn(){ const b = $("musicBtn"); b.textContent = musicOn ? t("music.on") : t("music.off"); b.setAttribute("aria-pressed", String(musicOn)); }
+
+/* ---------- voices ----------
+   English: a posh British gentleman reads the plaque and a posh British lady congratulates the winner.
+   Spanish: Latin American voices (Mexico, US Spanish, etc.) are preferred, then any Spanish voice.
+   If the device has no Spanish voice at all, the game stays silent rather than reading Spanish with an English accent. */
+const LATAM = /^es[-_](MX|US|419|AR|BO|CL|CO|CR|CU|DO|EC|GT|HN|NI|PA|PE|PR|PY|SV|UY|VE)/i;
+const ES_MAN = /Jorge|Juan|Diego|Carlos|Andr[eé]s|Pablo|Gerardo|Ra[uú]l|Enrique|Male|Hombre/i;
+const ES_LADY = /Paulina|Dalia|Sabina|Renata|Camila|Ang[eé]lica|Elena|Larissa|Marisol|Female|Mujer|Google espa/i;
+function pickVoice(kind){
+  const vs = speechSynthesis.getVoices();
+  if(lang === "es"){
+    const es = vs.filter(v => /^es([-_]|$)/i.test(v.lang));
+    if(!es.length) return vs.length ? false : null;    // false: voices exist but none Spanish, so stay quiet
+    const la = es.filter(v => LATAM.test(v.lang)), list = la.length ? la : es;
+    if(kind === "man") return list.find(v => ES_MAN.test(v.name)) || list.find(v => !ES_LADY.test(v.name)) || list[0];
+    return list.find(v => ES_LADY.test(v.name)) || list.find(v => !ES_MAN.test(v.name)) || list[0];
+  }
+  const gb = vs.filter(v => /en-GB/i.test(v.lang));
+  if(kind === "man") return gb.find(v => /Daniel|Arthur|Oliver|George|Malcolm|Ryan|Male/i.test(v.name)) || gb[0] || null;
+  return gb.find(v => /Female|Kate|Serena|Martha|Stephanie|Hazel|Susan|Libby|Sonia|Maisie|Fiona|Flo|Shelley|Sandy/i.test(v.name))
+      || gb.find(v => !/Male|Daniel|Arthur|Oliver|George|Malcolm|Ryan|Thomas|Eddy|Reed|Rocko|Grandpa/i.test(v.name)) || gb[0] || null;
+}
+const fallbackLang = () => lang === "es" ? "es-MX" : "en-GB";
+function say(text){
+  if(!state.voice || !("speechSynthesis" in window)) return;
+  try{
+    const v = pickVoice("man"); if(v === false) return;
+    const clean = text.replace(/[\s.,;:!?]+$/, "");
+    const u = new SpeechSynthesisUtterance(t("speak.believe", {text: lowerFirst(clean)}));
+    if(v) u.voice = v;
+    u.lang = v ? v.lang : fallbackLang();
+    u.rate = lang === "es" ? .9 : .85; u.pitch = lang === "es" ? .85 : .8;
+    const go = () => { try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){} };
+    // Chrome sometimes drops speech that starts straight after a cancel, so wait a moment only when something is still talking
+    if(speechSynthesis.speaking || speechSynthesis.pending){ speechSynthesis.cancel(); setTimeout(go, 120); } else go();
+  }catch(e){}
+}
+function hush(){ try{ if("speechSynthesis" in window) speechSynthesis.cancel(); }catch(e){} }
+// voices load in the background on most browsers; ask for them now and again when they arrive
+try{ speechSynthesis.getVoices(); speechSynthesis.addEventListener("voiceschanged", () => speechSynthesis.getVoices()); }catch(e){}
+let hasWin = false;
+function fizz(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = $("fizz"), x = c.getContext("2d"); c.hidden = false; c.width = innerWidth; c.height = innerHeight;
+  const bs = Array.from({length:80}, () => ({x:Math.random()*c.width, y:c.height + Math.random()*c.height, r:2 + Math.random()*6, v:1.5 + Math.random()*3, w:Math.random()*6}));
+  const begun = performance.now();
+  (function frame(now){
+    x.clearRect(0,0,c.width,c.height); x.strokeStyle = "rgba(236,211,145,.85)"; x.lineWidth = 1.5;
+    bs.forEach(b => { b.y -= b.v; if(b.y < -10) b.y = c.height + 10;
+      x.beginPath(); x.arc(b.x + Math.sin(now/400 + b.w)*8, b.y, b.r, 0, 7); x.stroke(); });
+    if(now - begun < 10000 && state.screen === "final") requestAnimationFrame(frame); else c.hidden = true;
+  })(begun);
+}
+function celebrate(){
+  const song = $("song");
+  const chimes = () => [523, 659, 784, 1047].forEach((f,i) => setTimeout(() => beep(f, .5), i*140));
+  let lady = null, canSpeak = state.voice && ("speechSynthesis" in window);
+  if(canSpeak){ try{ lady = pickVoice("lady"); if(lady === false) canSpeak = false; }catch(e){ canSpeak = false; } }
+  // The song is already playing from the game. It stays soft while the lady speaks, then rises.
+  celebrating = true;
+  const fadeUp = () => { celebrating = false; if(musicOn && state.screen === "final") fadeTo(.8, 1200); };
+  if(musicOn){
+    try{
+      fadeTo(canSpeak ? .2 : .8, 400);
+      if(song.paused){ const pl = song.play(); if(pl && pl.catch) pl.catch(chimes); }
+    }catch(e){ chimes(); }
+  } else chimes();
+  fizz();
+  hush();
+  if(canSpeak){
+    try{
+      const u = new SpeechSynthesisUtterance(t("speak.win"));
+      if(lady) u.voice = lady;
+      u.lang = lady ? lady.lang : fallbackLang(); u.rate = lang === "es" ? .92 : .88; u.pitch = 1.05;
+      let done = false; const finish = () => { if(!done){ done = true; fadeUp(); } };
+      u.onend = finish; u.onerror = finish;
+      setTimeout(finish, 7000);           // in case the browser never reports the end
+      setTimeout(() => { try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){ finish(); } }, 150);
+    }catch(e){ fadeUp(); }
+  } else fadeUp();
+}
+const speaker = () => state.turn % state.names.length;
+const judge = () => (state.turn + 1) % state.names.length;
+function refresh(){
+  const onBoard = state.board.map(p => p.text);
+  const fresh = shuffle(pool.filter(x => !onBoard.includes(x) && !state.used.includes(x)));
+  state.board.forEach(p => { if(!p.used && fresh.length) p.text = fresh.pop(); });
+}
+function syncCount(){ const n = +$("count").value; $("f2").hidden = n < 3; $("f3").hidden = n < 4; }
+
+// Deal a board whose size divides evenly by the number of players, so nobody gets an extra turn.
+function deal(){
+  const players = state.names.length;
+  let fresh = pool.filter(x => !state.used.includes(x));
+  if(fresh.length < players){ state.used = []; fresh = pool.slice(); }
+  let size = Math.min(boardSize(), fresh.length);
+  size -= size % players;
+  if(size < players) size = Math.min(boardSize(), fresh.length);
+  state.board = shuffle(fresh).slice(0, size).map(x => ({text:x, used:false}));
+}
+
+/* ---------- sound ---------- */
+function beep(freq, dur, type, vol){
+  try{
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(audio.state === "suspended") audio.resume();
+    const o = audio.createOscillator(), g = audio.createGain();
+    o.type = type || "sine"; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || .18, audio.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, audio.currentTime + dur);
+    o.connect(g); g.connect(audio.destination); o.start(); o.stop(audio.currentTime + dur);
+  }catch(e){}
+}
+
+// An old-fashioned brass dinner bell, rung three times, when a plaque is chosen.
+// Each strike mixes the bell's own uneven overtones (not musical harmonics), slightly detuned so it shimmers, then rings away.
+function bellStrike(f, at, vol){
+  const a = audio, st = a.currentTime + at;
+  const out = a.createGain(); out.gain.value = vol; out.connect(a.destination);
+  [[1,1],[2,.55],[2.76,.4],[4.07,.22],[5.4,.14],[8.93,.06]].forEach(([r,amp]) => {
+    [0, 1.8].forEach(detune => {
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = "sine"; o.frequency.value = f*r + detune;
+      const len = 1.6 / Math.sqrt(r);
+      g.gain.setValueAtTime(0, st);
+      g.gain.linearRampToValueAtTime(amp*.5, st + .004);
+      g.gain.exponentialRampToValueAtTime(.0005, st + len);
+      o.connect(g); g.connect(out); o.start(st); o.stop(st + len + .05);
+    });
+  });
+  // a tiny metallic "tink" as the clapper hits
+  const n = a.createOscillator(), ng = a.createGain();
+  n.type = "square"; n.frequency.value = f*6.3;
+  ng.gain.setValueAtTime(vol*.15, st); ng.gain.exponentialRampToValueAtTime(.0001, st + .03);
+  n.connect(ng); ng.connect(a.destination); n.start(st); n.stop(st + .05);
+}
+function bling(){
+  try{
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(audio.state === "suspended") audio.resume();
+    bellStrike(988, 0, .2); bellStrike(1010, .22, .17); bellStrike(992, .44, .2);
+  }catch(e){}
+}
+// A soft click for the buttons.
+function click(){ beep(520, .07, "sine", .08); }
+
+// Phones only allow sound after a tap. Unlock everything on the first tap so later beeps and the song can play.
+function unlockAudio(){
+  try{
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if(audio.state === "suspended") audio.resume();
+    const g = audio.createGain(); g.gain.value = 0; const o = audio.createOscillator(); o.connect(g); g.connect(audio.destination); o.start(); o.stop(audio.currentTime + .01);
+  }catch(e){}
+  try{ const song = $("song"); if(song.paused && song.readyState < 2) song.load(); }catch(e){}
+  try{ if("speechSynthesis" in window){ const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } }catch(e){}
+  // a game restored mid-way couldn't start the music without a tap, so start it now
+  if(state.screen !== "setup") musicSync();
+}
+document.addEventListener("pointerdown", unlockAudio, {once:true});
+
+document.addEventListener("click", e => {
+  const b = e.target.closest(".btn, .plaque.info, .qr-btn, .music-btn, .lang-btn");
+  if(!b || b.disabled || ["goBtn","stopBtn","lockBtn"].includes(b.id)) return;
+  click();
+});
+
+/* ---------- render ---------- */
+function show(name){
+  state.screen = name;
+  ["setup","board","turn","card","final"].forEach(s => $("s-"+s).hidden = s !== name);
+  const inGame = name !== "setup";
+  $("pods").hidden = !inGame || name === "final";
+  $("mast").classList.toggle("small", inGame);
+  $("mastTag").hidden = inGame;
+  const v = $("bgVideo"), on = hasVideo && ["board","turn","card"].includes(name);
+  v.hidden = !on;
+  try{ if(on) v.play().catch(() => {}); else v.pause(); }catch(e){}
+  if(name !== "final") celebrating = false;
+  musicSync();
+  const w = $("winVideo"), won = hasWin && name === "final";
+  w.hidden = !won;
+  try{ if(won){ w.currentTime = 0; w.play().catch(() => {}); } else w.pause(); }catch(e){}
+  window.scrollTo(0,0);
+}
+function renderPods(){
+  const row = $("podRow"); row.textContent = "";
+  state.names.forEach((name,i) => {
+    const sp = i === speaker(), jd = i === judge();
+    const p = document.createElement("div");
+    p.className = "pod" + (sp ? " speaking" : jd ? "" : " idle");
+    [["role", sp ? t("role.speaking") : jd ? t("role.judge") : t("role.idle")], ["name", name], ["score", state.scores[i] || 0]]
+      .forEach(([c,v]) => { const s = document.createElement("span"); s.className = c; s.textContent = v; p.append(s); });
+    row.append(p);
+  });
+  const played = state.board.filter(p => p.used).length;
+  $("turnNo").textContent = t("turnNo", {a: Math.min(played+1, state.board.length), b: state.board.length});
+}
+function lastText(){
+  const l = state.last;
+  if(!l) return "";
+  return typeof l === "string" ? l : t("board.last", {name: l.name, n: l.n});   // older saved games stored plain text
+}
+function fillBoardText(){
+  $("lastTurn").textContent = lastText();
+  $("pickPrompt").textContent = t("board.pick", {judge: state.names[judge()], speaker: state.names[speaker()]});
+  $("quitBtn").textContent = quitArmed ? t("quit.again") : t("quit");
+  const info = document.querySelector("#board .plaque.info .txt"); if(info) info.textContent = t("instructions");
+}
+function renderBoard(){
+  hush();
+  renderPods();
+  const b = $("board"); b.textContent = "";
+  const info = document.createElement("button");
+  info.className = "plaque info";
+  const it = document.createElement("span"); it.className = "txt"; info.append(it);
+  info.addEventListener("click", () => { $("rulesOverlay").hidden = false; $("closeRules").focus(); });
+  b.append(info);
+  state.board.forEach((p,i) => {
+    const el = document.createElement("button");
+    el.className = "plaque"; el.disabled = p.used;
+    const n = document.createElement("span"); n.className = "num"; n.textContent = String(i+1).padStart(2,"0");
+    const tx = document.createElement("span"); tx.className = "txt"; tx.textContent = p.text;
+    el.append(n,tx);
+    el.addEventListener("click", () => { bling(); state.current = i; state.phase = "ready"; state.elapsed = 0; renderTurn(); show("turn"); setTimeout(() => { if(state.screen === "turn" && state.current === i && state.phase === "ready") say(p.text); }, 1100); });
+    b.append(el);
+  });
+  quitArmed = false;
+  fillBoardText();
+  show("board");
+}
+function renderLamps(){
+  const s = state.elapsed, lamps = $("lamps").children;
+  for(let i=0;i<6;i++){
+    const lit = s >= (i+1)*10;
+    lamps[i].classList.toggle("lit", lit);
+    const frac = Math.max(0, Math.min(1, (s - i*10)/10));
+    lamps[i].firstChild.style.height = (frac*100) + "%";
+  }
+  $("secs").textContent = Math.floor(s);
+  $("tpts").textContent = timePts(s);
+}
+function renderTurn(){
+  renderPods();
+  $("turnWho").textContent = t("turn.who", {name: state.names[speaker()]});
+  $("bigPlaque").textContent = state.board[state.current].text;
+  const timed = state.useTimer;
+  $("lamps").hidden = !timed; $("readout").hidden = !timed;
+  $("goBtn").hidden = !timed || state.phase !== "ready";
+  $("backBtn").hidden = state.phase !== "ready";
+  $("stopBtn").hidden = state.phase !== "running";
+  $("toCardBtn").hidden = timed && state.phase !== "done";
+  $("toCardBtn").textContent = t("turn.hand", {name: state.names[judge()]});
+  renderLamps();
+  if(state.screen === "turn") musicSync();     // quieter while someone is speaking
+}
+function tick(now){
+  const prev = state.elapsed;
+  state.elapsed = Math.min(MAX_SECS, (now - t0)/1000);
+  if(Math.floor(state.elapsed/10) > Math.floor(prev/10) && state.elapsed < MAX_SECS) beep(880, .18);
+  else if(state.elapsed >= MAX_SECS - 10 && Math.floor(state.elapsed) > Math.floor(prev) && state.elapsed < MAX_SECS) beep(1200, .05, "square", .05);
+  renderLamps();
+  if(state.elapsed >= MAX_SECS){ stopClock(true); return; }
+  raf = requestAnimationFrame(tick);
+}
+function stopClock(buzzer){
+  cancelAnimationFrame(raf);
+  if(buzzer){ beep(196, 1.8, "sine"); } else { beep(440, .2); }
+  state.phase = "done"; renderTurn();
+}
+function fillCardText(){
+  $("cardWho").textContent = t("card.who", {name: state.names[judge()]});
+  $("cardTitle").textContent = t("card.title", {name: state.names[speaker()]});
+  $("cardStmt").textContent = t("card.stmt", {text: state.board[state.current].text});
+  $("cardSecs").textContent = Math.floor(state.elapsed);
+  $("timeLine").hidden = !state.useTimer;
+}
+function renderCard(){
+  ["a1","a2","a3","a4"].forEach(id => $(id).checked = false);
+  DEDUCTIONS.forEach(name => { const zero = document.querySelector('input[name="' + name + '"][value="0"]'); if(zero) zero.checked = true; });
+  fillCardText();
+  updateCard(); show("card");
+}
+function awards(){ return ["a1","a2","a3","a4"].reduce((n,id) => n + ($(id).checked ? +$(id).dataset.pts : 0), 0); }
+function offFor(name){ const c = document.querySelector('input[name="' + name + '"]:checked'); return c ? +c.value : 0; }
+function deductions(){ return DEDUCTIONS.reduce((n,name) => n + offFor(name), 0); }
+// A turn can lose points but never goes below zero.
+function turnTotal(){ return Math.max(0, timePts(state.elapsed) + awards() - deductions()); }
+function updateCard(){
+  const tp = timePts(state.elapsed), a = awards(), d = deductions();
+  DEDUCTIONS.forEach(name => { $(name + "Show").textContent = minus(offFor(name)); });
+  $("cardTime").textContent = tp; $("cardAwards").textContent = a; $("cardDed").textContent = minus(d);
+  $("cardTotal").textContent = turnTotal();
+}
+function fillFinal(){
+  const top = Math.max(...state.scores);
+  const winners = state.names.filter((n,i) => state.scores[i] === top);
+  $("winner").textContent = winners.length === 1 ? t("final.one", {name: winners[0], n: top})
+    : t("final.tie", {names: winners.join(t("and")), n: top});
+  $("standings").textContent = state.names.map((n,i) => ({n, s:state.scores[i]})).sort((a,b) => b.s - a.s)
+    .map(x => x.n + " " + x.s).join("  ·  ");
+  const body = $("histBody"); body.textContent = "";
+  state.history.forEach(h => {
+    const ded = h.ded || 0, total = h.total ?? Math.max(0, h.time + h.awards - ded);
+    const tr = document.createElement("tr");
+    [[h.name],[h.text],[h.time,"r"],[h.awards,"r"],[minus(ded),"r"],[total,"r"]].forEach(([v,c]) => {
+      const td = document.createElement("td"); td.textContent = v; if(c) td.className = c; tr.append(td);
+    });
+    body.append(tr);
+  });
+}
+function renderFinal(){ fillFinal(); show("final"); }
+function renderEditor(){ $("poolText").value = pool.join("\n"); $("poolCount").textContent = pool.length; }
+
+/* ---------- applying a language to the page ---------- */
+function setMeta(sel, attr, val){ const m = document.querySelector(sel); if(m) m.setAttribute(attr, val); }
+function applyStatic(){
+  document.documentElement.lang = lang === "es" ? "es-419" : "en-AU";
+  document.title = t("doc.title");
+  setMeta('meta[name="description"]', "content", t("doc.desc"));
+  setMeta('meta[property="og:title"]', "content", t("og.title"));
+  setMeta('meta[property="og:description"]', "content", t("og.desc"));
+  setMeta('meta[property="og:locale"]', "content", t("og.locale"));
+  setMeta('meta[property="og:locale:alternate"]', "content", lang === "es" ? "en_AU" : "es_LA");
+  const base = "https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html", here = lang === "es" ? base + "?lang=es" : base;
+  setMeta('link[rel="canonical"]', "href", here);
+  setMeta('meta[property="og:url"]', "content", here);
+
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+  document.querySelectorAll("[data-i18n-title]").forEach(el => { el.title = t(el.dataset.i18nTitle); });
+
+  const ph = $("phrases"); ph.textContent = "";
+  t("phrases").forEach(p => { const s = document.createElement("span"); s.textContent = p; ph.append(s); });
+
+  const lb = $("langBtn");
+  lb.textContent = t("lang.other"); lb.lang = t("lang.otherCode"); lb.setAttribute("aria-label", t("lang.aria"));
+  paintMusicBtn();
+
+  document.querySelectorAll(".scale input").forEach(i => {
+    const v = +i.value; i.setAttribute("aria-label", v === 1 ? t("off.one") : t("off.many", {n: v}));
+  });
+  // the Instructions pop-up is a copy of the rules panel, so copy it again in the new language
+  $("rulesBody").textContent = ""; $("rulesBody").append(document.querySelector("#s-setup .rules").cloneNode(true));
+  $("setupErr").hidden = true; $("poolMsg").textContent = "";
+}
+function setLang(next){
+  if(!I18N[next]) return;
+  const before = I18N[lang].names;
+  lang = next;
+  try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+  // keep the address in step, so a copied link, the QR code or a share opens in this language
+  try{
+    const u = new URL(location.href);
+    if(lang === "en") u.searchParams.delete("lang"); else u.searchParams.set("lang", lang);
+    history.replaceState(history.state, "", u.toString());
+  }catch(e){}
+  // swap the default guest names, but leave names people have typed alone
+  for(let i=0;i<4;i++){ const inp = $("name"+i); if(!inp.value.trim() || inp.value === before[i]) inp.value = defaultNames()[i]; }
+  pool = loadPool(); renderEditor();
+  applyStatic(); drawQR(); paintShare();
+  // refresh whatever is on screen (cards already on the table keep their statements; "Lay fresh cards" deals new-language ones)
+  if(state.screen !== "setup") renderPods();
+  if(state.screen === "board") fillBoardText();
+  else if(state.screen === "turn") renderTurn();
+  else if(state.screen === "card") fillCardText();
+  else if(state.screen === "final") fillFinal();
+}
+
+/* ---------- actions ---------- */
+function newGame(){
+  state.scores = state.names.map(() => 0); state.turn = 0; state.history = []; state.used = []; state.last = null; state.current = null;
+  deal(); renderBoard();
+}
+$("startBtn").addEventListener("click", () => {
+  const err = $("setupErr"), players = +$("count").value;
+  if(pool.length < players){ err.textContent = t("err.few", {n: players}); err.hidden = false; return; }
+  err.hidden = true;
+  state.names = defaultNames().slice(0, players).map((d,i) => $("name"+i).value.trim() || d);
+  state.useTimer = $("useTimer").checked; state.voice = true;
+  try{ $("song").currentTime = 0; }catch(e){}      // the music starts from the top with each new game
+  newGame();
+});
+$("langBtn").addEventListener("click", () => setLang(lang === "es" ? "en" : "es"));
+$("musicBtn").addEventListener("click", () => {
+  musicOn = !musicOn; paintMusicBtn();
+  try{ localStorage.setItem(MUSIC_KEY, musicOn ? "on" : "off"); }catch(e){}
+  if(state.screen !== "setup") musicSync();
+});
+$("savePool").addEventListener("click", () => {
+  const list = [...new Set($("poolText").value.split("\n").map(s => s.trim().replace(/^[\[{(]+|[\]})]+$/g,"").trim()).filter(Boolean))];
+  if(!list.length){ $("poolMsg").textContent = t("pool.empty"); return; }
+  pool = list; const ok = savePool(pool); renderEditor();
+  $("poolMsg").textContent = ok ? t("pool.saved", {n: pool.length}) : t("pool.nosave");
+});
+$("resetPool").addEventListener("click", () => {
+  pool = STARTERS[lang].slice(); try{ localStorage.removeItem(poolKey()); }catch(e){}
+  renderEditor(); $("poolMsg").textContent = t("pool.reset");
+});
+$("shuffleBtn").addEventListener("click", () => { refresh(); renderBoard(); });
+$("count").addEventListener("change", syncCount);
+$("quitBtn").addEventListener("click", () => {
+  if(!quitArmed){ quitArmed = true; $("quitBtn").textContent = t("quit.again"); return; }
+  show("setup");
+});
+$("backBtn").addEventListener("click", () => { hush(); renderBoard(); });
+$("goBtn").addEventListener("click", () => {
+  state.phase = "running"; state.elapsed = 0; renderTurn(); beep(660, .15);
+  t0 = performance.now(); raf = requestAnimationFrame(tick);
+});
+$("stopBtn").addEventListener("click", () => stopClock(false));
+$("toCardBtn").addEventListener("click", () => { hush(); renderCard(); });
+["a1","a2","a3","a4"].forEach(id => $(id).addEventListener("change", updateCard));
+$("lockBtn").addEventListener("click", () => {
+  beep(784, .15, "triangle", .14); setTimeout(() => beep(1047, .25, "triangle", .14), 110);
+  const p = state.board[state.current], tp = timePts(state.elapsed), a = awards(), d = deductions(), total = turnTotal(), who = speaker();
+  p.used = true; state.used.push(p.text);
+  state.scores[who] += total;
+  state.history.push({name:state.names[who], text:p.text, time:tp, awards:a, ded:d, total});
+  state.last = {name: state.names[who], n: total};
+  state.turn++; state.current = null;
+  if(state.board.every(c => c.used)){ celebrating = true; renderFinal(); celebrate(); } else renderBoard();
+});
+$("closeRules").addEventListener("click", () => { $("rulesOverlay").hidden = true; });
+// Escape closes the QR code and the instructions
+document.addEventListener("keydown", e => {
+  if(e.key !== "Escape") return;
+  $("qrOverlay").hidden = true; $("rulesOverlay").hidden = true;
+});
+$("bgVideo").addEventListener("loadeddata", () => {
+  hasVideo = true;
+  if(["board","turn","card"].includes(state.screen)){ const v = $("bgVideo"); v.hidden = false; try{ v.play().catch(() => {}); }catch(e){} }
+});
+$("bgVideo").src = "begtodiffer.mp4";
+$("winVideo").addEventListener("loadeddata", () => {
+  hasWin = true;
+  if(state.screen === "final"){ const w = $("winVideo"); w.hidden = false; try{ w.play().catch(() => {}); }catch(e){} }
+});
+$("winVideo").src = "champagne.mp4";
+$("againBtn").addEventListener("click", () => { try{ $("song").currentTime = 0; }catch(e){} newGame(); });
+$("toSetupBtn").addEventListener("click", () => show("setup"));
+
+/* ---------- share buttons (same behaviour as the other Koalaspies games) ----------
+   Facebook opens its share window. Instagram and TikTok have no web address for sharing a link,
+   so on phones those buttons open the phone's own share menu; on a computer they copy the link.
+   The link includes ?lang=es when the game is in Spanish. */
+function paintShare(){ const fb = $("shareFb"); if(fb) fb.href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(pageUrl()); }
+(function(){
+  const msg = $("shareMsg");
+  const copyLink = (app, url) => {
+    const tell = s => { if(msg) msg.textContent = s; };
+    const ok = () => tell(t("share.ok", {app}));
+    const manual = () => tell(t("share.manual", {app, url}));
+    try{ navigator.clipboard.writeText(url).then(ok, manual); }catch(e){ manual(); }
+  };
+  document.querySelectorAll(".soc[data-app]").forEach(b => b.addEventListener("click", () => {
+    const app = b.dataset.app, url = pageUrl();
+    const phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if(phone && navigator.share){
+      navigator.share({title: t("logo"), text: t("share.text"), url}).catch(() => copyLink(app, url));
+    } else copyLink(app, url);
+  }));
+})();
+
+/* ---------- QR code for this page, drawn in the browser (nothing is sent anywhere) ---------- */
+function drawQR(){
+  const url = pageUrl();
+  try{
+    const q = qrcode(0, "M"); q.addData(url); q.make();
+    const n = q.getModuleCount(), m = 2; let d = "";
+    for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d += "M" + (c+m) + " " + (r+m) + "h1v1h-1z";
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + (n+2*m) + ' ' + (n+2*m) + '" shape-rendering="crispEdges" role="img" aria-label="QR"><rect width="100%" height="100%" fill="#fff"/><path fill="#000" d="' + d + '"/></svg>';
+    $("qrSmall").innerHTML = svg; $("qrBig").innerHTML = svg; $("qrUrl").textContent = url;
+    return true;
+  }catch(e){ $("qrBtn").hidden = true; return false; }
+}
+$("qrBtn").addEventListener("click", () => { $("qrOverlay").hidden = false; $("closeQr").focus(); });
+$("closeQr").addEventListener("click", () => { $("qrOverlay").hidden = true; });
+
+/* ---------- boot ---------- */
+(function buildLamps(){
+  for(let i=1;i<=6;i++){ const d = document.createElement("div"); d.className = "lamp"; d.innerHTML = "<i></i><span>" + (i*10) + "</span>"; $("lamps").append(d); }
+})();
+// The 0 to 5 buttons for each deduction on the scorecard.
+(function buildDeductions(){
+  DEDUCTIONS.forEach(name => {
+    const fs = $(name);
+    for(let v=0; v<=MAX_OFF; v++){
+      const l = document.createElement("label"), i = document.createElement("input"), s = document.createElement("span");
+      i.type = "radio"; i.name = name; i.value = v; i.checked = v === 0;
+      i.addEventListener("change", () => { click(); updateCard(); });
+      s.textContent = v;
+      l.append(i, s); fs.append(l);
+    }
+  });
+})();
+// Start in the detected language (this also sets the guest names, the plaques, the QR code and the share link).
+(function(){ const first = lang; lang = "en"; setLang(first); })();
+
+function start(data){
+  renderEditor(); syncCount();
+  if(data && data.screen && data.screen !== "setup" && Array.isArray(data.board)){
+    state = Object.assign(state, data);
+    $("count").value = state.names.length; state.names.forEach((n,i) => { $("name"+i).value = n; });
+    while(state.scores.length < state.names.length) state.scores.push(0); $("useTimer").checked = state.useTimer;
+    if(state.screen === "final") renderFinal();
+    else if(state.current != null && state.screen === "card"){ renderTurn(); renderCard(); }
+    else if(state.current != null && state.screen !== "board"){
+      if(state.phase === "running"){ state.phase = "ready"; state.elapsed = 0; }
+      renderTurn(); show("turn");
+    } else renderBoard();
+    syncCount();
+  } else show("setup");
+}
+window.claude?.hot?.snapshot?.(() => state);
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+
+</body>
+</html>
