@@ -51,10 +51,8 @@
         "@type": "ItemList",
         "name": "Koalaspies game categories",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Party Games", "url": "https://koalaspies-games.site/party-games.html" },
-          { "@type": "ListItem", "position": 2, "name": "Family Games", "url": "https://koalaspies-games.site/family-games.html" },
-          { "@type": "ListItem", "position": 3, "name": "Brain Games", "url": "https://koalaspies-games.site/brain-games.html" },
-          { "@type": "ListItem", "position": 4, "name": "K-12 & Revision Games", "url": "https://koalaspies-games.site/k12-revision-games.html" }
+          { "@type": "ListItem", "position": 1, "name": "Party & Family Games", "url": "https://koalaspies-games.site/party-family-games.html" },
+          { "@type": "ListItem", "position": 2, "name": "Brain & Revision Games", "url": "https://koalaspies-games.site/brain-revision-games.html" }
         ]
       },
       {
@@ -1212,7 +1210,42 @@
     .sister-btn { display: inline-block; background: #1c1c1c; color: #fff; font-weight: 800; font-size: .92rem; padding: 9px 20px; border-radius: 3px; }
     .sister:hover .sister-btn { background: #2563eb; }
     @media (prefers-reduced-motion: reduce) { .sister { transition: none; } .sister:hover { transform: none; } }
+
+    /* ===== THE TWO GAME SECTIONS: heading on the left, "See all" link on the right ===== */
+    .room-preview + .room-preview { margin-top: -10px; }
+    .room-head {
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+      gap: 6px 24px; margin-bottom: 22px;
+    }
+    .room-head .sub { margin-bottom: 0; max-width: 62ch; }
+    .room-link {
+      --c: var(--accent);
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 8px 20px; border-radius: 999px;
+      border: 2px solid var(--c); color: var(--c); background: rgba(255,255,255,.85);
+      font-weight: 800; font-size: .95rem; text-decoration: none; white-space: nowrap;
+      transition: background .15s ease, color .15s ease;
+    }
+    .room-link.party { --c: var(--party); }
+    .room-link.brain { --c: var(--brain); }
+    .room-link:hover { background: var(--c); color: #fff; }
+    .room-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    @media (max-width: 560px) { .room-link { white-space: normal; width: 100%; justify-content: center; } }
   </style>
+<style id="ks-sister-css">
+  /* Modern English Australia links: a quiet line under the header and one at the bottom.
+     Colours come from the page itself (inherit + opacity) so they suit light and dark pages. */
+  .ks-sister-top { display: table; margin: 8px auto; padding: 3px 14px; border-radius: 999px;
+    font: 500 .78rem/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: 0; text-transform: none;
+    text-align: center; color: #2b2f3a; background: rgba(255,255,255,.72);
+    box-shadow: 0 1px 2px rgba(0,0,0,.08); position: relative; z-index: 2; max-width: calc(100% - 32px); }
+  .ks-sister-top a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .ks-sister-foot a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .ks-sister-top a:hover, .ks-sister-foot a:hover { opacity: 1; text-decoration-thickness: 2px; }
+  .ks-sister-foot { display: block; text-align: center; font-size: .85rem; line-height: 1.5;
+    padding: 10px 16px; margin: 8px 0 0; opacity: .9; }
+  footer.ks-sister-wrap { padding: 18px 16px 22px; }
+</style>
 </head>
 <body>
 
@@ -1229,6 +1262,8 @@
     </div>
   </div>
 </header>
+<p class="ks-sister-top">Free English lessons at <a href="https://modernenglish.au/" target="_top" rel="noopener">Modern English Australia</a></p>
+
 
 <main class="wrap">
 
@@ -1267,10 +1302,16 @@
     </div>
   </section>
 
-  <!-- ===== THE GAMES, FIRST ===== -->
-  <section class="wide" aria-labelledby="play">
-    <h2 id="play" class="big">Start playing</h2>
-    <span class="sub">Tap a game to open it. Put it on the board, a TV or a phone.</span>
+  <!-- ===== THE GAMES, FIRST: two sections, one for each games page =====
+       To add a game, copy a card <li> into the right section. -->
+  <section class="wide room-preview" aria-labelledby="play">
+    <div class="room-head">
+      <div>
+        <h2 id="play" class="big">Party &amp; Family Games</h2>
+        <span class="sub">Game shows, speaking games and board-game classics. Tap a game to open it, then put it on the board, a TV or a phone.</span>
+      </div>
+      <a class="room-link party" href="party-family-games.html">See all party &amp; family games →</a>
+    </div>
 
     <ul class="games">
       <li class="with-howto with-answers">
@@ -1337,6 +1378,19 @@
           <span class="play">Play →</span>
         </a>
       </li>
+    </ul>
+  </section>
+
+  <section class="wide room-preview" aria-labelledby="play-brain">
+    <div class="room-head">
+      <div>
+        <h2 id="play-brain" class="big">Brain &amp; Revision Games</h2>
+        <span class="sub">Memory matching, critical thinking and revision for chemistry, Japanese and English.</span>
+      </div>
+      <a class="room-link brain" href="brain-revision-games.html">See all brain &amp; revision games →</a>
+    </div>
+
+    <ul class="games">
       <li>
         <a class="game brain exi" href="Itsexistential/itsexistential.html">
           <span class="top"><span class="kicker">Brain <span class="testing-tag">Under testing</span></span><span class="icon" aria-hidden="true">🔮</span></span>
@@ -1350,7 +1404,7 @@
       </li>
       <li>
         <a class="game k12 chem" href="chemistrytablechallenge/k12game.html">
-          <span class="top"><span class="kicker">K-12 &amp; Revision <span class="testing-tag">Under testing</span></span><span class="icon" aria-hidden="true">🧪</span></span>
+          <span class="top"><span class="kicker">Revision <span class="testing-tag">Under testing</span></span><span class="icon" aria-hidden="true">🧪</span></span>
           <h3>Chemistry: The Periodic Table</h3>
           <dl class="hw">
             <div><dt>The Plot</dt><dd>A memory-matching game to project on a board or play on a phone. Choose from six games and match elements to their symbols, uses and ores, everyday substances to their formulas, and reactants to their products.</dd></div>
@@ -1361,7 +1415,7 @@
       </li>
       <li>
         <a class="game k12 kanji" href="Japanese/kanjigame.html">
-          <span class="top"><span class="kicker">K-12 &amp; Revision <span class="testing-tag">Under testing</span></span><span class="icon" aria-hidden="true">🎌</span></span>
+          <span class="top"><span class="kicker">Revision <span class="testing-tag">Under testing</span></span><span class="icon" aria-hidden="true">🎌</span></span>
           <h3>Japanese: Your First 800 Kanji</h3>
           <dl class="hw">
             <div><dt>The Plot</dt><dd>A memory-matching game to project on a board or play on a phone. Turn over cards to match each kanji to its hiragana reading, through twelve levels in the order Japanese schools teach them.</dd></div>
@@ -1370,7 +1424,6 @@
           <span class="play">Play →</span>
         </a>
       </li>
-
     </ul>
   </section>
 
@@ -1389,42 +1442,28 @@
     </a>
   </aside>
 
-  <!-- ===== THE FOUR CATEGORIES ===== -->
+  <!-- ===== THE TWO GAMES PAGES ===== -->
   <section class="wide" aria-labelledby="pick">
     <h2 id="pick" class="mid">More games by type</h2>
-    <span class="sub">Four rooms. Walk into whichever suits the crowd.</span>
+    <span class="sub">Two rooms. Walk into whichever suits the crowd.</span>
 
     <ul class="cats small">
       <li>
-        <a class="cat party" href="party-games.html">
+        <a class="cat party" href="party-family-games.html">
           <span class="icon" aria-hidden="true">🎉</span>
-          <span class="name">Party Games</span>
-          <span class="note">Icebreakers, small talk and speaking challenges for a room full of people.</span>
-          <span class="go">Play party games →</span>
+          <span class="name">Party &amp; Family Games</span>
+          <span class="note">Icebreakers, speaking challenges and game shows for a room full of people, and board-game
+            classics for the kitchen table, from little ones to grandparents.</span>
+          <span class="go">Play party &amp; family games →</span>
         </a>
       </li>
       <li>
-        <a class="cat family" href="family-games.html">
-          <span class="icon" aria-hidden="true">🏡</span>
-          <span class="name">Family Games</span>
-          <span class="note">For the kitchen table or a long car trip, from little ones to grandparents.</span>
-          <span class="go">Play family games →</span>
-        </a>
-      </li>
-      <li>
-        <a class="cat brain" href="brain-games.html">
+        <a class="cat brain" href="brain-revision-games.html">
           <span class="icon" aria-hidden="true">🧠</span>
-          <span class="name">Brain Games</span>
-          <span class="note">Memory, matching, logic and word puzzles, alone or head-to-head.</span>
-          <span class="go">Play brain games →</span>
-        </a>
-      </li>
-      <li>
-        <a class="cat k12" href="k12-revision-games.html">
-          <span class="icon" aria-hidden="true">📚</span>
-          <span class="name">K-12 &amp; Revision</span>
-          <span class="note">Chemistry, Japanese kanji, English idioms and more: revision that actually sticks.</span>
-          <span class="go">Start revising →</span>
+          <span class="name">Brain &amp; Revision Games</span>
+          <span class="note">Memory matching and idioms, alone or head-to-head, plus chemistry, Japanese kanji and
+            English revision that actually sticks.</span>
+          <span class="go">Play brain &amp; revision games →</span>
         </a>
       </li>
     </ul>

@@ -61,8 +61,24 @@
   if(go && go.toLowerCase() !== p) location.replace(go + location.hash);
 })();
 </script>
+<style id="ks-sister-css">
+  /* Modern English Australia links: a quiet line under the header and one at the bottom.
+     Colours come from the page itself (inherit + opacity) so they suit light and dark pages. */
+  .ks-sister-top { display: table; margin: 8px auto; padding: 3px 14px; border-radius: 999px;
+    font: 500 .78rem/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: 0; text-transform: none;
+    text-align: center; color: #2b2f3a; background: rgba(255,255,255,.72);
+    box-shadow: 0 1px 2px rgba(0,0,0,.08); position: relative; z-index: 2; max-width: calc(100% - 32px); }
+  .ks-sister-top a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .ks-sister-foot a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .ks-sister-top a:hover, .ks-sister-foot a:hover { opacity: 1; text-decoration-thickness: 2px; }
+  .ks-sister-foot { display: block; text-align: center; font-size: .85rem; line-height: 1.5;
+    padding: 10px 16px; margin: 8px 0 0; opacity: .9; }
+  footer.ks-sister-wrap { padding: 18px 16px 22px; }
+</style>
 </head>
 <body>
+<p class="ks-sister-top">Free English lessons at <a href="https://modernenglish.au/" target="_top" rel="noopener">Modern English Australia</a></p>
+
 <div class="wrap">
   <!-- Links start with "/" so they work from any missing address, even inside a folder. -->
   <a class="brand" href="/"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="18" fill="#14161c"/><g fill="#f8fafc"><circle cx="26" cy="34" r="13"/><circle cx="74" cy="34" r="13"/><circle cx="50" cy="58" r="26"/></g><ellipse cx="50" cy="58" rx="8" ry="6" fill="#14161c"/></svg>KOALASPIES</a>
@@ -70,13 +86,14 @@
     <h1>That page isn’t here</h1>
     <p>The game may have moved, or the address has a typo. All the games are still free, with no sign-up. Pick a room:</p>
     <ul class="grid">
-      <li><a href="/party-games.html" style="--c:var(--party)"><b>Party games</b><span>Speaking and team games for groups and ESL classes</span></a></li>
-      <li><a href="/family-games.html" style="--c:var(--family)"><b>Family games</b><span>One shared screen for game night</span></a></li>
-      <li><a href="/brain-games.html" style="--c:var(--brain)"><b>Brain games</b><span>Idiom memory matching</span></a></li>
-      <li><a href="/k12-revision-games.html" style="--c:var(--k12)"><b>Revision games</b><span>Chemistry, kanji and English idioms</span></a></li>
+      <li><a href="/party-family-games.html" style="--c:var(--party)"><b>Party &amp; family games</b><span>Speaking games, game shows and one shared screen for game night</span></a></li>
+      <li><a href="/brain-revision-games.html" style="--c:var(--brain)"><b>Brain &amp; revision games</b><span>Idiom memory matching, chemistry, kanji and English</span></a></li>
     </ul>
     <a class="home" href="/">Go to the home page</a>
   </main>
 </div>
+<footer class="ks-sister-wrap">
+  <p class="ks-sister-foot">Our sister site: <a href="https://modernenglish.au/" target="_top" rel="noopener">Modern English Australia</a> — free English lessons, vocabulary games and IELTS &amp; PTE practice.</p>
+</footer>
 </body>
 </html>
