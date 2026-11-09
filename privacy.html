@@ -616,6 +616,20 @@
       }
     }
   </style>
+<style id="ks-sister-css">
+  /* Modern English Australia links: a quiet line under the header and one at the bottom.
+     Colours come from the page itself (inherit + opacity) so they suit light and dark pages. */
+  .ks-sister-top { display: table; margin: 8px auto; padding: 3px 14px; border-radius: 999px;
+    font: 500 .78rem/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: 0; text-transform: none;
+    text-align: center; color: #2b2f3a; background: rgba(255,255,255,.72);
+    box-shadow: 0 1px 2px rgba(0,0,0,.08); position: relative; z-index: 2; max-width: calc(100% - 32px); }
+  .ks-sister-top a { color: #1d4ed8; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .ks-sister-foot a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .ks-sister-top a:hover, .ks-sister-foot a:hover { opacity: 1; text-decoration-thickness: 2px; }
+  .ks-sister-foot { display: block; text-align: center; font-size: .85rem; line-height: 1.5;
+    padding: 10px 16px; margin: 8px 0 0; opacity: .9; }
+  footer.ks-sister-wrap { padding: 18px 16px 22px; }
+</style>
 </head>
 <body>
 
@@ -632,6 +646,8 @@
     </div>
   </div>
 </header>
+<p class="ks-sister-top">Free English lessons at <a href="https://modernenglish.au/" target="_top" rel="noopener">Modern English Australia</a></p>
+
 
 <main class="wrap">
   <article class="policy">
@@ -769,10 +785,8 @@
   <div class="footer-inner">
     <div class="footer-nav">
       <a href="index.html">Home</a>
-      <a href="party-games.html">Party</a>
-      <a href="family-games.html">Family</a>
-      <a href="brain-games.html">Brain</a>
-      <a href="k12-revision-games.html">K-12 &amp; Revision</a>
+      <a href="party-family-games.html">Party &amp; Family</a>
+      <a href="brain-revision-games.html">Brain &amp; Revision</a>
     </div>
     <div class="footer-nav">
       <a href="privacy.html" aria-current="page">Privacy &amp; Cookies</a>
@@ -781,6 +795,7 @@
     </div>
     <div>© Justine Kelly 2026 · Sydney, Australia</div>
   </div>
+  <p class="ks-sister-foot">Our sister site: <a href="https://modernenglish.au/" target="_top" rel="noopener">Modern English Australia</a> — free English lessons, vocabulary games and IELTS &amp; PTE practice.</p>
 </footer>
 
 <script>

@@ -1,34 +1,30 @@
-KOALASPIES PHASE 1 SEO FIXES (13 Oct 2026)
+KOALASPIES UPDATE (9 Nov 2026)
 
 HOW TO UPLOAD
 1. On GitHub, open the repo and choose Add file > Upload files.
 2. Drag in everything in this folder EXCEPT this READ-ME-FIRST.txt.
-   Keep the folders (Itsexistential, Japanese, k12, ...) so each file replaces
-   its original. Commit to main.
-3. Delete these four unused files on GitHub (open each > ... > Delete file):
-     Itsexistential/game          (empty file)
-     game/smalltalk               (empty file)
-     heartbg.mp4                  (root copy; the games use matchinggame/heartbg.mp4)
-     matchinggame/umm.mp3.mp3     (not used by any page)
+   Keep the folders (Japanese, chemistrytablechallenge, ...) so each file
+   replaces its original. Commit to main.
+
+WHAT CHANGED
+1. TWO GAME PAGES INSTEAD OF FOUR
+- party-family-games.html (new): Party Games + Family Games in one page.
+- brain-revision-games.html (new): Brain Games + K-12 & Revision in one page.
+- index.html: game cards in two headed sections, "Party & Family Games" and
+  "Brain & Revision Games", each with a "See all ..." button.
+- party-games.html, family-games.html, brain-games.html and
+  k12-revision-games.html are now redirect pages so old links and Google
+  results still work. Don't delete them.
+
+2. MODERN ENGLISH AUSTRALIA LINKS ON EVERY PAGE
+- A small "Free English lessons at Modern English Australia" pill under the
+  header, and a "Our sister site" line at the bottom, on all 33 pages.
+
+3. SMALL FIXES
+- Miss Congeniality header no longer pushes the page sideways on very
+  small phones.
+- Links updated in the game pages, privacy, 404 and sitemap.xml.
 
 AFTER IT GOES LIVE (Search Console)
 - Sitemaps: resubmit https://koalaspies-games.site/sitemap.xml
-- URL Inspection > Request indexing for: the home page, the five hub pages,
-  Itsexistential/itsexistential.html and kanji-level-5, -6, -7.
-- Pages report: note how many pages are "Indexed" vs "Discovered/Crawled -
-  currently not indexed" so you can compare next month.
-
-WHAT CHANGED
-- 404.html (new): friendly not-found page linking to the four rooms; noindex.
-- share-existential.jpg (new): 1200x630 link-preview image.
-- It's Existential: title, description, canonical, Open Graph, structured data,
-  favicon, analytics, and an About section (H1, how to play, who it's for, FAQ,
-  links to other speaking games). Shown under the start screen only.
-- Kanji Levels 5, 6, 7: rebuilt on the Level 4/8 template (grade-based titles,
-  description, canonical, OG tags, About text, Level links, back to kanji hub).
-  Their own 80 kanji are unchanged.
-- Guess the Top 5 and Kanji Match: one proper H1 each.
-- Shorter meta descriptions (under 155 characters) on 11 pages.
-- Favicon added to 11 game pages.
-- Mandela lesson: new title + Open Graph tags. Privacy: Open Graph tags.
-- sitemap.xml: lastmod set to 2026-10-13 for every changed page.
+- URL Inspection > Request indexing for the home page and the two new pages.
