@@ -2,82 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://koalaspies-games.site/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
-    <loc>https://koalaspies-games.site/party-games.html</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://koalaspies-games.site/party-family-games.html</loc>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
-    <loc>https://koalaspies-games.site/family-games.html</loc>
-    <lastmod>2026-10-12</lastmod>
+    <loc>https://koalaspies-games.site/brain-revision-games.html</loc>
+    <lastmod>2026-11-09</lastmod>
   </url>
   <url>
-    <loc>https://koalaspies-games.site/brain-games.html</loc>
-    <lastmod>2026-10-12</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/k12-revision-games.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/tictactoe/smalltalkspeakinggame.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/misscongeniality/game.html</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://koalaspies-games.site/about.html</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://koalaspies-games.site/Itsexistential/itsexistential.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/topgame/guessthetop.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/whatmattersmost/criticalthinkingandspeaking.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/whatmattersmost/mandela-lesson_1.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/k12game.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/element-symbols.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/element-uses.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-atom-counts.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-common-names.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-ores.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-reactions.html</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/Japanese/kanjigame.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://koalaspies-games.site/Japanese/kanji-level-1.html</loc>
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/Japanese/kanji-level-10.html</loc>
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/Japanese/kanji-level-11.html</loc>
+    <lastmod>2026-10-02</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/Japanese/kanji-level-12.html</loc>
     <lastmod>2026-10-02</lastmod>
   </url>
   <url>
@@ -113,27 +69,67 @@
     <lastmod>2026-10-02</lastmod>
   </url>
   <url>
-    <loc>https://koalaspies-games.site/Japanese/kanji-level-10.html</loc>
-    <lastmod>2026-10-02</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/Japanese/kanji-level-11.html</loc>
-    <lastmod>2026-10-02</lastmod>
-  </url>
-  <url>
-    <loc>https://koalaspies-games.site/Japanese/kanji-level-12.html</loc>
-    <lastmod>2026-10-02</lastmod>
-  </url>
-  <url>
     <loc>https://koalaspies-games.site/Japanese/kanji-match.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://koalaspies-games.site/privacy.html</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://koalaspies-games.site/Japanese/kanjigame.html</loc>
+    <lastmod>2026-10-05</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-atom-counts.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-common-names.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-ores.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/chem-reactions.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/element-symbols.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/element-uses.html</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/chemistrytablechallenge/k12game.html</loc>
+    <lastmod>2026-10-24</lastmod>
   </url>
   <url>
     <loc>https://koalaspies-games.site/ibegtodiffer/i-beg-to-differ.html</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/misscongeniality/game.html</loc>
+    <lastmod>2026-10-26</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/privacy.html</loc>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/tictactoe/smalltalkspeakinggame.html</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/topgame/guessthetop.html</loc>
+    <lastmod>2026-11-03</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/whatmattersmost/criticalthinkingandspeaking.html</loc>
+    <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://koalaspies-games.site/whatmattersmost/mandela-lesson_1.html</loc>
+    <lastmod>2026-10-13</lastmod>
   </url>
 </urlset>
